@@ -35,11 +35,17 @@ dependencies = [
     "typing-extensions (==4.15.0)",
     "uvicorn (==0.39.0)",
     "numpy (>=2.4.6,<3.0.0)",
-    "chromadb (>=1.5.9,<2.0.0)"
+    "chromadb (>=1.5.9,<2.0.0)",
+    "python-dotenv (>=1.2.2,<2.0.0)"
 ]
 
 [tool.poetry]
 package-mode = false
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple"
+priority = "primary"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
