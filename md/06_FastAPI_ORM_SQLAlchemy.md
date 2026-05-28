@@ -11,10 +11,12 @@
 1. [架构概览](#一架构概览)
 2. [数据库连接配置](#二数据库连接配置)
 3. [ORM 模型定义](#三orm-模型定义)
-4. [核心概念：IoC 与 DI 深度解析](#四核心概念ioc-与-di-深度解析)
-5. [为什么 get_db() 使用 yield](#五为什么-get_db-使用-yield)
-6. [CRUD 操作详解](#六crud-操作详解)
-7. [完整执行流程追踪](#七完整执行流程追踪)
+4. [表关系：ForeignKey 与 Relationship](#四表关系foreignkey-与-relationship)
+5. [多数据库兼容说明](#五多数据库兼容说明)
+6. [核心概念：IoC 与 DI 深度解析](#六核心概念ioc-与-di-深度解析)
+7. [为什么 get_db() 使用 yield](#七为什么-get_db-使用-yield)
+8. [CRUD 操作详解](#八crud-操作详解)
+9. [完整执行流程追踪](#九完整执行流程追踪)
 
 ---
 
@@ -250,7 +252,202 @@ print(todo.id)  # 1（数据库自动生成的 ID）
 
 ---
 
-## 四、核心概念：IoC 与 DI 深度解析
+## 四、表关系：ForeignKey 与 Relationship
+
+在实际项目中，表与表之间往往存在关联。比如：一篇**文档（Document）**可以有多个**切片（Chunk）**。
+
+### 4.1 核心概念
+
+```python
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+
+class Document(Base):
+    """完整文档（藏书仓库里的整本书）"""
+    __tablename__ = "documents"
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200), nullable=False)
+    source = Column(String(500))
+    content = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.now)
+
+    chunks = relationship("DocumentChunk", back_populates="document",
+                          cascade="all, delete-orphan")
+
+class DocumentChunk(Base):
+    """文档切片（索引卡片）"""
+    __tablename__ = "document_chunks"
+
+    id = Column(Integer, primary_key=True)
+    document_id = Column(Integer, ForeignKey("documents.id"), nullable=False)
+    chunk_index = Column(Integer, nullable=False)
+    content = Column(Text, nullable=False)
+    embedding_id = Column(String(100), unique=True)
+
+    document = relationship("Document", back_populates="chunks")
+```
+
+### 4.2 关联定义在两个地方
+
+#### 物理连接：ForeignKey（外键）
+
+在**子表**（DocumentChunk）中定义：
+
+```python
+document_id = Column(Integer, ForeignKey("documents.id"), nullable=False)
+```
+
+- 告诉数据库：`document_id` 字段的值**必须**存在于 `documents` 表的 `id` 列中
+- 这是**数据库层面的外键约束**，保证数据完整性
+
+#### ORM 导航：relationship（关系）
+
+分别在**两张表**中定义：
+
+```python
+# Document 表中：
+chunks = relationship("DocumentChunk", back_populates="document")
+
+# DocumentChunk 表中：
+document = relationship("Document", back_populates="chunks")
+```
+
+- `back_populates` 告诉 SQLAlchemy：这两个 relationship 是配对的
+- 建立**双向导航**：从 Document 能访问它的 chunks，从 Chunk 能访问它的 document
+
+### 4.3 关联关系图解
+
+```
+Document (父表)                     DocumentChunk (子表)
+┌─────────────────┐               ┌──────────────────┐
+│ id (PK)         │◄──────FK──────│ document_id (FK) │
+│ title           │               │ chunk_index      │
+│ source          │               │ content          │
+│ content         │               │ embedding_id     │
+│ created_at      │               └──────────────────┘
+│                 │                        ▲
+│ chunks ─────────┼─── relationship ───────┘
+└─────────────────┘        │
+        ▲                  │
+        └── relationship ──┘
+          (双向导航)
+```
+
+### 4.4 如何使用 relationship
+
+```python
+# 从 Document 访问其所有 chunks
+doc = session.query(Document).first()
+for chunk in doc.chunks:           # doc.chunks 自动查询所有关联的 DocumentChunk
+    print(chunk.content)
+
+# 从 DocumentChunk 访问其所属的 Document
+chunk = session.query(DocumentChunk).first()
+print(chunk.document.title)        # chunk.document 自动查询所属的 Document
+```
+
+### 4.5 cascade 级联删除
+
+```python
+chunks = relationship("DocumentChunk", back_populates="document",
+                      cascade="all, delete-orphan")
+```
+
+| 级联选项 | 含义 |
+|----------|------|
+| `delete-orphan` | 删除父记录时，自动删除所有子记录 |
+| `all` | 包含所有级联操作（save-update, merge, delete 等） |
+
+```python
+# 删除 Document 时，它的所有 DocumentChunk 也会被自动删除
+session.delete(doc)
+session.commit()          # doc 和它的所有 chunks 一起被删除
+```
+
+### 4.6 建立关联的两种方式
+
+```python
+doc = Document(title="Python教程", content="...")
+chunk1 = DocumentChunk(chunk_index=0, content="第一部分...")
+chunk2 = DocumentChunk(chunk_index=1, content="第二部分...")
+
+# 方式1：通过外键手动赋值
+chunk1.document_id = doc.id
+
+# 方式2：通过 relationship（更直观、推荐）
+doc.chunks.append(chunk1)
+doc.chunks.append(chunk2)
+
+session.add(doc)
+session.commit()
+# SQLAlchemy 自动处理外键的赋值
+```
+
+### 4.7 ForeignKey vs relationship 总结
+
+| | ForeignKey | relationship |
+|------|------------|--------------|
+| **在哪定义** | 子表中 | 两张表都定义 |
+| **作用层面** | 数据库层面 | ORM/Python 层面 |
+| **作用** | 建立物理外键约束 | 提供便捷的对象导航 |
+| **必须配合** | ✅ 两者必须配合使用 | |
+
+---
+
+## 五、多数据库兼容说明
+
+SQLAlchemy 作为 ORM 框架，提供了**数据库抽象层**，同样的代码可以在不同数据库上运行。
+
+### 5.1 只需修改连接字符串
+
+```python
+# SQLite（开发/测试）
+DATABASE_URL = "sqlite:///./app.db"
+
+# PostgreSQL（生产环境）
+DATABASE_URL = "postgresql://user:password@localhost/dbname"
+
+# MySQL
+DATABASE_URL = "mysql+pymysql://user:password@localhost/dbname"
+```
+
+**代码本身不需要任何改动！** 模型定义、CRUD 操作、关系定义全部通用。
+
+### 5.2 底层自动适配
+
+```python
+id = Column(Integer, primary_key=True)
+```
+
+| 数据库 | 实际生成的类型 |
+|--------|---------------|
+| SQLite | `INTEGER PRIMARY KEY`（自动自增） |
+| PostgreSQL | `SERIAL`（自动创建序列） |
+| MySQL | `INT AUTO_INCREMENT` |
+
+```python
+content = Column(Text)
+```
+
+| 数据库 | 实际生成的类型 |
+|--------|---------------|
+| SQLite | `TEXT` |
+| PostgreSQL | `TEXT` |
+| MySQL | `LONGTEXT` 或 `TEXT` |
+
+### 5.3 ForeignKey 和 relationship 完全兼容
+
+外键和关系定义在所有主要数据库中都得到支持，无需修改：
+
+```python
+document_id = Column(Integer, ForeignKey("documents.id"))
+chunks = relationship("DocumentChunk", back_populates="document")
+```
+
+---
+
+## 六、核心概念：IoC 与 DI 深度解析
 
 ### 4.1 问题背景：传统写法的问题
 
@@ -380,7 +577,7 @@ def create_todo(
 
 ---
 
-## 五、为什么 get_db() 使用 yield
+## 七、为什么 get_db() 使用 yield
 
 这是理解 FastAPI 依赖注入的关键！
 
@@ -499,7 +696,7 @@ def get_db():
 
 ---
 
-## 六、CRUD 操作详解
+## 八、CRUD 操作详解
 
 ### 6.1 Create（增）
 
@@ -603,7 +800,7 @@ DELETE /todos/1
 
 ---
 
-## 七、完整执行流程追踪
+## 九、完整执行流程追踪
 
 让我们追踪一个完整的请求生命周期：
 
