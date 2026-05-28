@@ -111,6 +111,73 @@ db.commit()                                              # 提交，执行 UPDAT
 4. **动手实验**: 修改代码，观察结果变化
 5. **教别人**: 能讲清楚才是真正的理解
 
+## RAG 核心概念
+
+### 5. 双存储架构（SQLite + ChromaDB）
+
+**一句话理解**: ChromaDB 负责快速语义检索找到相关碎片ID，SQLite 负责回查完整文档和上下文。
+
+**类比**: 图书馆系统
+- ChromaDB = 索引卡片柜（快速找主题）
+- SQLite = 藏书仓库（取完整内容）
+
+**为什么需要双存储**:
+1. ChromaDB 碎片太小（80字），不够回答复杂问题 → 需要回 SQLite 取全文
+2. 元数据过滤（按时间、来源筛选）→ SQLite 更擅长
+3. 避免冗余存储 → ChromaDB 只存碎片，SQLite 存全文一次
+
+**两条"绳子"连接两个数据库**:
+
+| 绳子 | 位置 | 值 | 作用 |
+|------|------|-----|------|
+| 绳子① `embedding_id` | SQLite DocumentChunk + ChromaDB ids | `"doc1_chunk0"` | 唯一标识，精确匹配 |
+| 绳子② `metadatas` | ChromaDB | `{"document_id": 1, "chunk_index": 0}` | 查询返回时直接定位 SQLite 数据 |
+
+**存入流程**:
+```
+1. 完整文档 → SQLite documents 表 (拿到 doc.id)
+2. 文本切片 → 逐片存入 SQLite document_chunks 表
+3. 每片调 get_embedding() 生成向量 → 存入 ChromaDB
+4. 两边用相同的 embedding_id 关联
+```
+
+**查询流程**:
+```
+1. 用户问题 → get_embedding() → query_vector
+2. ChromaDB 查询 → 返回 metadatas（含 document_id, chunk_index）
+3. SQLite 查 DocumentChunk + Document → 获取完整上下文
+4. 拼 Prompt → 调 LLM
+```
+
+**`collection.add()` 四个参数**:
+| 参数 | 类型 | 参与计算？ | 作用 |
+|------|------|-----------|------|
+| `ids` | `list[str]` | ❌ | 唯一标识，绳子① |
+| `embeddings` | `list[list[float]]` | ✅ 唯一参与 | 语义相似度计算 |
+| `documents` | `list[str]` | ❌ | 查询返回时展示 |
+| `metadatas` | `list[dict]` | ❌ | 绳子②，存关联信息 |
+
+**关键澄清**: `metadatas` 标签是手动构造的，不是通过 ID 去数据库查出来的。来源是已有的 Python 变量（doc.id、循环变量 idx、函数参数 title）。
+
+**ORM 模型**:
+```python
+class Document(Base):
+    __tablename__ = "documents"
+    id = Column(Integer, primary_key=True)
+    title = Column(String(200))
+    content = Column(Text)  # 完整文档
+    chunks = relationship("DocumentChunk", back_populates="document")
+
+class DocumentChunk(Base):
+    __tablename__ = "document_chunks"
+    id = Column(Integer, primary_key=True)
+    document_id = Column(Integer, ForeignKey("documents.id"))
+    chunk_index = Column(Integer)      # 第几个碎片
+    content = Column(Text)             # 碎片文本
+    embedding_id = Column(String(100)) # 绳子①：和 ChromaDB ids 一致
+    document = relationship("Document", back_populates="chunks")
+```
+
 ## 待解决问题
 
 - [ ] 异步编程 async/await 的原理
@@ -118,3 +185,5 @@ db.commit()                                              # 提交，执行 UPDAT
 - [ ] 数据库迁移工具 Alembic 的使用
 - [ ] 如何编写单元测试
 - [ ] Docker 容器化部署
+- [ ] FastAPI + Chroma 最小原型封装
+- [ ] 手搓最小 RAG 闭环（切片→Embedding→存储→检索→拼Prompt→调LLM）

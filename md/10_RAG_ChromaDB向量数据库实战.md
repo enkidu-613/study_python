@@ -153,6 +153,64 @@ ChromaDB 计算余弦相似度
 
 **关键**：文字通过 `get_embedding()` **真正变成**有语义的向量。
 
+### 4.3 `collection.query()` 参数详解
+
+```python
+chroma_results = collection.query(
+    query_embeddings=[query_vec],
+    n_results=3,
+    include=["metadatas", "distances"]
+)
+```
+
+| 参数 | 说明 |
+|------|------|
+| `query_embeddings` | 查询向量（必须用 `get_embedding()` 提前算好） |
+| `n_results` | 返回最相似的 N 条结果 |
+| `include` | 指定要返回哪些字段（默认只返回 `ids` + `distances`） |
+
+#### `include` 参数：我要哪些字段？
+
+| 字段 | 默认返回？ | `include` 里声明？ |
+|------|:---:|:---:|
+| `ids` | ✅ 总是返回 | 不需要 |
+| `distances` | ✅ 总是返回 | 不需要 |
+| `metadatas` | ❌ | 需要明确写 `"metadatas"` |
+| `documents` | ❌ | 需要明确写 `"documents"` |
+| `embeddings` | ❌ | 需要明确写 `"embeddings"` |
+
+```python
+# 只要标签（用于回查 SQLite）
+include=["metadatas"]
+
+# 要标签 + 距离（用于展示相似度）
+include=["metadatas", "distances"]
+
+# 只要距离（纯粹看排名）
+include=[]  # 或 include=["distances"]
+```
+
+> ⚠️ 双存储架构中，通常不 include `"documents"` 和 `"embeddings"`，因为碎片文本和向量在 SQLite 里都有，不需要 ChoraDB 重复返回。
+
+#### `similarity = 1 - distance` 是什么？
+
+ChromaDB 返回的 `distance` 是**余弦距离**（越小越相似），不直观：
+
+```
+distance = 0.6  ← 用户看不懂是及格了还是没及格
+```
+
+翻转成**余弦相似度**（越大越相似），一眼明白：
+
+```python
+similarity = 1 - distance  # = cos(θ)，还原回余弦相似度
+# 0.6 → 0.4（40% 相关，不太像）
+# 0.3 → 0.7（70% 相关，比较像）
+# 0.0 → 1.0（100% 相关，完全一样）
+```
+
+> **数学关系**：余弦距离 = 1 - 余弦相似度，所以两者相加恒等于 1。`1 - distance` 就是在把距离翻回相似度，纯粹展示用途，不影响检索结果。
+
 ---
 
 ## 五、代码示例详解
@@ -251,6 +309,12 @@ results = collection.query(
 ### Q4: 为什么下标要对应？
 
 `documents[0]` 的语义向量必须是 `embeddings[0]`，否则"苹果"绑定了"Python"的向量，检索就乱套了。
+
+### Q5: `include` 参数不写会怎样？`similarity = 1 - distance` 是在算什么？
+
+**include**: 不写 `"metadatas"` 就不会返回 metadatas 字段，后续代码 `chroma_results["metadatas"]` 直接报错。双存储架构中必须 include `"metadatas"`（要拿到 document_id 回查 SQLite）。
+
+**1 - distance**: ChromaDB 返回的 distance 是余弦距离（越小越相似），`1 - distance` 翻成余弦相似度（越大越相似）给人看。数学关系：余弦距离 = 1 - cos(θ)，所以 `1 - distance` = `1 - (1 - cos(θ))` = `cos(θ)`，兜了一圈还原回原始余弦相似度。
 
 ---
 

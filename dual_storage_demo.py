@@ -117,6 +117,33 @@ def add_document(title: str, content: str, source: str = ""):
         db.commit()
 
         # --- 4.5 存入 ChromaDB：向量 ---
+        # collection.add() 四个参数详解：
+        #
+        # ids: list[str] — 每条数据的唯一标识（身份证号）
+        #   格式: "doc{文档ID}_chunk{碎片序号}"，如 "doc1_chunk0"
+        #   作用: 和 SQLite 的 embedding_id 字段值完全一致，是两库之间的"绳子①"
+        #   示例: ["doc1_chunk0", "doc1_chunk1", "doc1_chunk2"]
+        #
+        # embeddings: list[list[float]] — 每个碎片对应的向量（语义坐标）
+        #   格式: 外层列表和内层 ID 一一对应，每个内层是 4096 个 float
+        #   作用: 语义检索时计算余弦相似度，找到意思最接近的碎片
+        #   来源: 调用 get_embedding(chunk_text) 从 ModelScope API 获取
+        #   示例: [[0.023, -0.011, ...], [0.031, 0.008, ...], ...]
+        #
+        # documents: list[str] — 每个碎片对应的原始文本（人类可读）
+        #   格式: 和 IDs 一一对应的字符串列表
+        #   作用: 查询返回时直接展示给用户看，不参与相似度计算
+        #   注意: 这里只存碎片文本（80字），不是完整文档（200字）
+        #   示例: ["Python 是一种高级编程语言...", "Web 开发、数据分析...", ...]
+        #
+        # metadatas: list[dict] — 每个碎片的附加标签信息
+        #   格式: 和 IDs 一一对应的字典列表
+        #   作用: 查询返回时带上标签，不参与相似度计算
+        #   关键: 存放 document_id 和 chunk_index → 这是和 SQLite 的"绳子②"
+        #   示例: [{"document_id": 1, "chunk_index": 0, "title": "Python..."}, ...]
+        #
+        # 核心规则: 四个参数按数组下标一一对应
+        #   ids[0] ←→ embeddings[0] ←→ documents[0] ←→ metadatas[0] 属于同一个碎片
         collection.add(
             ids=chroma_ids,
             embeddings=chroma_embeddings,

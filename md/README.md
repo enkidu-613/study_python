@@ -29,7 +29,11 @@
     ↓
 第8步: 08_提示词工程与聊天记忆.md    →  System Prompt、多轮对话、上下文记忆
     ↓
-第9步: 09_RAG_向量数据库入门.md      →  Embedding、ChromaDB、语义检索、双存储架构
+第9步: 09_RAG_向量数据库入门.md      →  Embedding、余弦相似度、向量概念
+    ↓
+第10步: 10_RAG_ChromaDB向量数据库实战.md → ChromaDB、Collection、语义检索
+    ↓
+第11步: 11_双存储架构SQLite_ChromaDB.md → 双存储协作、ChunkVector、RAG 存储层
 ```
 
 ---
@@ -187,7 +191,7 @@
 ---
 
 ### [09_RAG_向量数据库入门.md](./09_RAG_向量数据库入门.md)
-**对应代码**: `rag_demo.py`（本章新建）
+**对应代码**: `rag_demo.py`
 
 - **为什么需要向量数据库**: SQL LIKE 的语义盲区
 - **Embedding 核心概念**:
@@ -195,14 +199,45 @@
   - 语义指纹、高维空间
   - 余弦相似度计算
 - **向量数据库 vs 关系型数据库**: 概念映射对比表
-- **ChromaDB 实战**:
-  - 安装与配置
-  - Collection 创建与管理
-  - `add()` 数据入库（自动 Embedding）
+- **余弦相似度数学原理**: 点积、范数、归一化
+- **RAG 最小原型概念**: 切片 → Embedding → 存储 → 检索
+
+---
+
+### [10_RAG_ChromaDB向量数据库实战.md](./10_RAG_ChromaDB向量数据库实战.md)
+**对应代码**: `chroma_demo.py`、`chroma_real.py`
+
+- **ChromaDB 核心概念**:
+  - Client（客户端）与 Collection（集合）
+  - 内存模式 vs 持久化模式
+- **Collection 四大操作**:
+  - `create_collection()` 创建集合
+  - `add()` 存入数据（ids + embeddings + documents + metadatas）
   - `query()` 语义检索
-- **生产级设计**: ChunkVector 结构、双存储架构（CQRS）
-- **RAG 最小原型**: FastAPI + Chroma 实现 /ingest + /search
-- **Embedding API 调用**: OpenAI / ModelScope 获取文本向量
+  - `get()` / `delete()` 管理数据
+- **简化向量 vs 真实 Embedding**:
+  - 简化向量（4维，手工设计，教学用）
+  - 真实 Embedding（4096维，ModelScope API，生产用）
+- **关键澄清**: `metadatas` 不参与相似度计算，只是标签
+- **Embedding Playground 实验**: 语义相近、多义词、跨语言验证
+
+---
+
+### [11_双存储架构SQLite_ChromaDB.md](./11_双存储架构SQLite_ChromaDB.md)
+**对应代码**: `dual_storage_demo.py`、`models.py`
+
+- **为什么需要双存储**: ChromaDB 碎片太小 + SQLite 不能语义搜索 → 互补
+- **图书馆类比**: ChromaDB = 索引卡片柜，SQLite = 藏书仓库
+- **ORM 模型设计**:
+  - `Document` 模型：完整文档（title, content, source）
+  - `DocumentChunk` 模型：切片信息（content, embedding_id, 外键）
+- **两条"绳子"连接机制**:
+  - 绳子① `embedding_id`: 同名字符串双向索引
+  - 绳子② `metadatas`: 查询返回时直接带 document_id
+- **存入流程**: SQLite 存全文+切片 → ChromaDB 存向量 → 用 embedding_id 关联
+- **查询流程**: ChromaDB 快速检索 → 返回 metadatas → SQLite 回查完整上下文
+- **关键澄清**: `metadatas` 标签是手动构造的，不是查库获取的
+- **文本切片**: `split_text()` 函数（chunk_size + overlap 防止断句）
 
 ---
 
@@ -230,7 +265,9 @@
 - [ ] 能解释多轮对话的实现原理（chat_history 机制）
 - [ ] 理解 Embedding 和语义相似度的概念
 - [ ] 能使用 ChromaDB 完成数据的存与取
-- [ ] 理解双存储架构（关系库+向量库）的分工
+- [ ] 理解双存储架构（关系库+向量库）的分工与协作
+- [ ] 能说出 `collection.add()` 四个参数的作用
+- [ ] 理解两条"绳子"（embedding_id + metadatas）的连接机制
 
 ---
 
@@ -245,9 +282,11 @@
 | 04_FastAPI基础.md | `python_接触fastapi之前的补充.py` | ⭐⭐ |
 | 05_FastAPI_CRUD.md | `py_CRUD.py` | ⭐⭐⭐ |
 | 06_FastAPI_ORM_SQLAlchemy.md | `py_ORM.py` | ⭐⭐⭐⭐ |
-| 07_代码分层与模块化架构.md | `main.py` + `routers.py` + `models.py` + `database.py` | ⭐⭐⭐⭐ |
+| 07_代码分层与模块化架构.md | `main.py` + `models.py` + `database.py` | ⭐⭐⭐⭐ |
 | 08_提示词工程与聊天记忆.md | `routers/chat_memory.py` | ⭐⭐⭐ |
 | 09_RAG_向量数据库入门.md | `rag_demo.py` | ⭐⭐⭐⭐ |
+| 10_RAG_ChromaDB向量数据库实战.md | `chroma_demo.py` + `chroma_real.py` + `embedding_playground.py` | ⭐⭐⭐ |
+| 11_双存储架构SQLite_ChromaDB.md | `dual_storage_demo.py` + `models.py` | ⭐⭐⭐⭐ |
 
 ---
 
@@ -313,12 +352,21 @@ def create_item(item: Item, db: Session = Depends(get_db)):
 
 完成本系列学习后，可以探索：
 
-1. **数据库迁移**: Alembic
-2. **用户认证**: JWT、OAuth2
-3. **异步编程**: async/await
-4. **测试**: pytest、TestClient
-5. **部署**: Docker、云服务器
-6. **前端对接**: React/Vue + FastAPI
+### RAG 进阶（当前阶段）
+1. **FastAPI + Chroma 最小原型**: 将检索封装为 API
+2. **手搓最小 RAG 闭环**: 切片→Embedding→存储→检索→拼Prompt→调LLM
+3. **LangChain 集成**: 用框架自动化 RAG 流程
+4. **检索优化**: 混合检索（关键词+语义）、重排序
+
+### 后端进阶
+5. **数据库迁移**: Alembic
+6. **用户认证**: JWT、OAuth2
+7. **异步编程**: async/await
+8. **测试**: pytest、TestClient
+
+### 运维与前端
+9. **部署**: Docker、云服务器
+10. **前端对接**: React/Vue + FastAPI
 
 ---
 
