@@ -697,3 +697,86 @@ cosine = (k×dot(A,A)) / (norm(A) × k×norm(A))
 ### 最后阶段（前端）
 8. 前端框架基础 (React/Vue) ← 后端全通了再学
 9. 前后端对接 (Fetch/Axios) ← 有后端 API 才有对接的意义
+
+---
+
+## 对话 16: ChromaDB 实战教学
+
+**时间**: 2026-05-24
+**用户任务**: 学习 ChromaDB 实战，包括创建 Collection、存入向量、语义检索
+
+### 1. 教学路线规划
+
+根据用户进度，制定了5步学习路线：
+1. ChromaDB 实战（安装、创建 Collection、存入向量、语义搜索）
+2. 双存储架构设计（ChunkVector 结构）
+3. FastAPI + Chroma 最小原型（API 暴露检索接口）
+4. 手搓最小RAG闭环（切片→Embedding→存储→检索→拼Prompt→调LLM）
+5. LangChain 集成（用框架自动化上述流程）
+
+### 2. ChromaDB 核心概念教学
+
+**ChromaDB 是什么**：
+- 专门存向量的数据库
+- 用余弦相似度做语义检索（找意思相近的）
+- 对比关系型数据库：
+  - 关系型：精确匹配（WHERE name = 'xxx'）
+  - 向量型：语义匹配（找方向相近的向量）
+
+**Collection（集合）**：
+- 相当于数据库里的"表"
+- 存一组相关的向量和文本
+- 创建时指定相似度度量方式：`metadata={"hnsw:space": "cosine"}`
+
+### 3. 创建 chroma_demo.py（简化版）
+
+创建了 `/home/enkidu/study_python/chroma_demo.py`：
+- 内存模式创建客户端
+- 创建 Collection
+- 用手工简化向量演示概念（4维向量）
+- 验证语义检索：水果查询返回水果文档，编程查询返回编程文档
+
+**运行结果**：
+```
+水果查询 → 苹果(0.9988)、香蕉(0.9985)
+编程查询 → Python(0.9921)、苹果(0.3133)
+```
+
+### 4. 创建 chroma_real.py（真实 Embedding 版）
+
+用户反馈：不理解简化向量从哪来，add() 参数不清楚。
+
+重新创建 `/home/enkidu/study_python/chroma_real.py`，接入真实 ModelScope API：
+- 调用 `get_embedding()` 生成 4096 维真实向量
+- 详细解释 `collection.add()` 的4个参数：
+  - `ids`: 唯一编号（身份证号）
+  - `documents`: 原始文本（人类可读）
+  - `embeddings`: 向量（做相似度计算用）
+  - `metadatas`: 额外标签信息（可选）
+
+**运行结果**：
+```
+查询: "我喜欢吃甜的水果"
+排名1: 苹果是一种水果，味道酸甜可口 → 相似度 0.6902
+排名2: 香蕉是黄色的热带水果 → 相似度 0.5381
+```
+
+### 5. 用户学习进度更新
+
+- [x] Python 基础
+- [x] FastAPI + SQLAlchemy
+- [x] 代码分层与模块化
+- [x] RAG 第一周：向量数据库 - Embedding 初体验 ✅
+- [x] RAG 第一周：向量数据库 - 余弦相似度理解 ✅
+- [x] AI 应用数学 - 向量与余弦相似度数学基础 ✅
+- [x] AI 应用数学 - 乘法交换律、结合律、提取公因数 ✅
+- [x] AI 应用数学 - 归一化思想与倍数消去原理 ✅
+- [x] RAG 第一周：ChromaDB 实战 ✅
+- [ ] RAG 第一周：双存储架构设计（下一步）
+- [ ] RAG 第一周：FastAPI + Chroma 最小原型
+- [ ] RAG 第一周：手搓最小RAG闭环
+- [ ] RAG 第二周：LangChain 集成
+- [ ] 用户认证 (JWT)
+- [ ] 项目部署 (Docker)
+- [ ] 前端框架基础
+- [ ] 前后端对接

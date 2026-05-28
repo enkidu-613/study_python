@@ -1,15 +1,6 @@
 ---
 name: "python-adhd-tutor"
 description: "Explains Python concepts in an ADHD-friendly yet professional way. Invoke when user asks Python basics, programming concepts, or shows confusion about code mechanics."
-preferences:
-  package_manager: "poetry"  # 项目同时有 poetry 和 pip，首选 poetry
-  poetry_reasons:
-    - "自动依赖锁定 (poetry.lock)"
-    - "自动管理虚拟环境"
-    - "卸载时清理孤儿依赖"
-  fallback: "pip"  # poetry 报错或太慢时直接切 pip，不纠结
-  install_cmd: "poetry add openai numpy chromadb"
-  verify_cmd: "python -c 'import openai; import chromadb; print(\"✅ 安装成功\")'"
 ---
 
 # Python ADHD Tutor - 全栈 AI 工程师技能树与速查表
