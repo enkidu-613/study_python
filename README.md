@@ -10,7 +10,7 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-**当前阶段**：RAG 向量数据库入门（第9步）
+**当前阶段**：双存储架构完成，即将进入 FastAPI + Chroma 最小原型（第11步）
 
 ---
 
@@ -30,6 +30,8 @@ study_python/
 │   ├── 07_代码分层与模块化架构.md
 │   ├── 08_提示词工程与聊天记忆.md
 │   ├── 09_RAG_向量数据库入门.md
+│   ├── 10_RAG_ChromaDB向量数据库实战.md
+│   ├── 11_双存储架构SQLite_ChromaDB.md
 │   └── ai学习应用数学/
 │       └── 01_向量与余弦相似度.md   # 数学基础复习
 │
@@ -47,17 +49,28 @@ study_python/
 │   └── py_ORM.py                   # FastAPI + SQLAlchemy 练习
 │
 ├── 📁 .trae/memory/                # 项目记忆与对话历史
-│   ├── conversations.md            # 完整对话历史（13次）
+│   ├── conversations.md            # 对话索引（19次对话）
+│   ├── conversations/              # 日期对话文件
+│   │   ├── 2024-对话历史.md
+│   │   ├── 2026-05-14-对话历史.md
+│   │   ├── 2026-05-19-对话历史.md
+│   │   ├── 2026-05-21-对话历史.md
+│   │   ├── 2026-05-24-对话历史.md
+│   │   └── 2026-05-28-对话历史.md
 │   ├── project_overview.md         # 项目概览
 │   ├── learning_notes.md           # 学习笔记
 │   └── learning_rag_week1.md       # RAG 第一周学习指南
 │
 ├── main.py                         # FastAPI 应用入口
 ├── database.py                     # 数据库配置（SQLite）
-├── models.py                       # ORM 模型（SQLAlchemy）
+├── models.py                       # ORM 模型（含 Document、DocumentChunk）
 ├── ai_bot.py                       # AI 聊天机器人（ModelScope API）
 ├── rag_demo.py                     # RAG 入门：Embedding 与相似度
 ├── rag_test.py                     # RAG 测试：ModelScope Embedding API
+├── chroma_demo.py                  # ChromaDB 简化版演示
+├── chroma_real.py                  # ChromaDB 真实 Embedding 检索
+├── embedding_playground.py         # Embedding 模型实验
+├── dual_storage_demo.py            # 双存储架构完整演示
 ├── pyproject.toml                  # Poetry 依赖管理
 ├── poetry.lock                     # 依赖锁定文件
 ├── requirements.txt                # pip 依赖（备选）
@@ -81,17 +94,15 @@ study_python/
 | 6 | FastAPI ORM + SQLAlchemy（数据库、IoC/DI） | `py_ORM.py` | ✅ |
 | 7 | 代码分层与模块化架构（APIRouter） | `main.py` + `routers/` | ✅ |
 | 8 | 提示词工程与聊天记忆（System Prompt、多轮对话） | `routers/chat_memory.py` | ✅ |
+| 9 | RAG 向量数据库入门（Embedding、余弦相似度） | `rag_test.py`, `rag_demo.py` | ✅ |
+| 10 | ChromaDB 向量数据库实战（简化+真实） | `chroma_demo.py`, `chroma_real.py`, `embedding_playground.py` | ✅ |
+| 11 | 双存储架构 SQLite + ChromaDB | `dual_storage_demo.py`, `models.py` | ✅ |
 
 ### 🔥 进行中
 
 | 步骤 | 主题 | 对应代码 | 状态 |
 |------|------|----------|------|
-| 9 | **RAG 向量数据库入门** | `rag_test.py`, `rag_demo.py` | 🔥 当前 |
-| | - Embedding 初体验（文本向量化） | `rag_test.py` | ✅ 完成 |
-| | - 余弦相似度数学基础 | `md/ai学习应用数学/` | ✅ 完成 |
-| | - ChromaDB 实战（待开始） | | ⬜ |
-| | - 双存储架构设计（待开始） | | ⬜ |
-| | - FastAPI + Chroma 最小原型（待开始） | | ⬜ |
+| 12 | **FastAPI + Chroma 最小原型** | | 🔥 当前 |
 
 ### 📋 待学习
 
@@ -99,6 +110,7 @@ study_python/
 |------|------|------|
 | **RAG 闭环** | 手搓最小 RAG | 手动实现切片→Embedding→存储→检索→Prompt→LLM |
 | | LangChain 集成 | 自动化 RAG 流程 |
+| | 检索优化 | 混合检索（关键词+语义）、重排序 |
 | **后端深耕** | 用户认证 (JWT) | Depends + OAuth2 的自然延伸 |
 | | 项目部署 (Docker) | 能部署才有完整项目 |
 | **前端** | React/Vue 基础 | 后端全通后再学 |
@@ -112,7 +124,7 @@ study_python/
 |------|------|------|
 | **语言** | Python 3.11+ | 核心编程语言 |
 | **Web 框架** | FastAPI | 高性能异步 Web 框架 |
-| **数据库** | SQLite | 开发阶段轻量数据库 |
+| **数据库** | SQLite + ChromaDB | 关系型 + 向量数据库双存储 |
 | **ORM** | SQLAlchemy | 数据库对象关系映射 |
 | **AI API** | ModelScope (OpenAI 兼容) | 国内 AI 模型接入 |
 | **向量模型** | Qwen/Qwen3-Embedding-8B | 文本向量化 |
@@ -139,9 +151,10 @@ study_python/
 - 依赖注入（DI）实践
 
 ### 4. RAG 向量检索（开发中）
-- 文本 Embedding 向量化
+- 文本 Embedding 向量化（ModelScope Qwen3-Embedding-8B，4096维）
 - 余弦相似度计算
-- ChromaDB 语义检索（待接入）
+- ChromaDB 语义检索（Collection 创建、add、query）
+- 双存储架构：SQLite 存全文 + ChromaDB 存向量，两条绳子关联
 
 ---
 
@@ -203,7 +216,9 @@ poetry run python rag_test.py
 | [06_FastAPI_ORM](md/06_FastAPI_ORM_SQLAlchemy.md) | 数据库、ORM、IoC/DI | ⭐⭐⭐⭐ |
 | [07_代码分层](md/07_代码分层与模块化架构.md) | APIRouter、分层架构 | ⭐⭐⭐⭐ |
 | [08_提示词工程](md/08_提示词工程与聊天记忆.md) | System Prompt、多轮对话 | ⭐⭐⭐ |
-| [09_RAG入门](md/09_RAG_向量数据库入门.md) | Embedding、ChromaDB、语义检索 | ⭐⭐⭐⭐ |
+| [09_RAG入门](md/09_RAG_向量数据库入门.md) | Embedding、余弦相似度、向量数据库概念 | ⭐⭐⭐⭐ |
+| [10_ChromaDB实战](md/10_RAG_ChromaDB向量数据库实战.md) | Collection、add/query、简化vs真实向量 | ⭐⭐⭐ |
+| [11_双存储架构](md/11_双存储架构SQLite_ChromaDB.md) | SQLite+ChromaDB、两条绳子连接 | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
@@ -222,12 +237,13 @@ poetry run python rag_test.py
 - ✅ `yield` 在资源管理中的应用
 - ✅ APIRouter 模块化组织
 - ✅ System Prompt 和多轮对话
-- ✅ Embedding 文本向量化
-- ✅ 余弦相似度计算
+- ✅ Embedding 文本向量化（ModelScope API）
+- ✅ 余弦相似度计算与数学原理
+- ✅ ChromaDB 向量数据库（Collection、add、query）
+- ✅ 双存储架构（SQLite + ChromaDB，两条绳子连接）
 
 ### 待深入学习
-- ⬜ ChromaDB 向量数据库实战
-- ⬜ 双存储架构（CQRS）
+- ⬜ FastAPI + Chroma 最小原型
 - ⬜ 手搓最小 RAG 闭环
 - ⬜ LangChain 集成
 - ⬜ 用户认证 (JWT/OAuth2)
@@ -252,7 +268,7 @@ poetry run python rag_test.py
 
 本项目使用 `.trae/memory/` 目录记录完整的学习历史：
 
-- **conversations.md**：13次完整对话记录
+- **conversations.md**：对话索引，19 次对话记录按日期拆分至 `conversations/` 子目录
 - **project_overview.md**：项目概览与技术栈
 - **learning_notes.md**：学习笔记与重点
 - **learning_rag_week1.md**：RAG 第一周学习指南
