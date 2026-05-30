@@ -49,14 +49,15 @@ study_python/
 │   └── py_ORM.py                   # FastAPI + SQLAlchemy 练习
 │
 ├── 📁 .trae/memory/                # 项目记忆与对话历史
-│   ├── conversations.md            # 对话索引（19次对话）
+│   ├── conversations.md            # 对话索引（23次对话）
 │   ├── conversations/              # 日期对话文件
-│   │   ├── 2024-对话历史.md
-│   │   ├── 2026-05-14-对话历史.md
-│   │   ├── 2026-05-19-对话历史.md
-│   │   ├── 2026-05-21-对话历史.md
-│   │   ├── 2026-05-24-对话历史.md
-│   │   └── 2026-05-28-对话历史.md
+│   │   ├── 2024.md
+│   │   ├── 2026-05-14.md
+│   │   ├── 2026-05-19.md
+│   │   ├── 2026-05-21.md
+│   │   ├── 2026-05-24.md
+│   │   ├── 2026-05-28.md
+│   │   └── 2026-05-29.md
 │   ├── project_overview.md         # 项目概览
 │   ├── learning_notes.md           # 学习笔记
 │   └── learning_rag_week1.md       # RAG 第一周学习指南
