@@ -10,9 +10,11 @@ FastAPI + Chroma 最小原型：将双存储架构封装为 API
 """
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import List
+import json
 
 # 数据库
 from database import SessionLocal
@@ -69,6 +71,11 @@ class SearchResult(BaseModel):
     similarity: float
     document_id: int
     chunk_index: int
+
+
+class ChatRequest(BaseModel):
+    query: str
+    n_results: int = 3
 
 
 # ========== Embedding 工具 ==========
@@ -161,27 +168,23 @@ def add_document(doc: DocumentIn, db: Session = Depends(get_db)):
     }
 
 
-@router.post("/search", response_model=List[SearchResult], summary="语义检索")
-def search(query: SearchIn, db: Session = Depends(get_db)):
+def _semantic_search(query_text: str, n_results: int, db: Session) -> List[SearchResult]:
     """
-    语义检索流程：
-    1. 把查询转成向量
-    2. ChromaDB 找相似向量（返回 metadatas + distances）
-    3. 用 metadatas 里的 document_id 回查 SQLite 取完整信息
+    内部函数：执行语义检索（供 search 和 rag_chat 复用）
     """
     # 1. 查询转向量
-    query_vec = get_embedding(query.query)
+    query_vec = get_embedding(query_text)
 
     # 2. ChromaDB 检索
     chroma_results = collection.query(
         query_embeddings=[query_vec],
-        n_results=query.n_results,
+        n_results=n_results,
         include=["metadatas", "distances"]
     )
 
     # 3. 解析结果，回查 SQLite
     results = []
-    for i in range(query.n_results):
+    for i in range(n_results):
         metadata = chroma_results["metadatas"][0][i]
         distance = chroma_results["distances"][0][i]
         similarity = round(1 - distance, 4)
@@ -206,3 +209,97 @@ def search(query: SearchIn, db: Session = Depends(get_db)):
             ))
 
     return results
+
+
+@router.post("/search", response_model=List[SearchResult], summary="语义检索")
+def search(query: SearchIn, db: Session = Depends(get_db)):
+    """
+    语义检索接口：返回检索到的相关片段
+    """
+    return _semantic_search(query.query, query.n_results, db)
+
+
+def build_system_prompt(results: List[SearchResult]) -> str:
+    """
+    把检索结果拼进 System Prompt
+    """
+    if not results:
+        return "没有检索到与用户问题相关的资料。请礼貌地告诉用户：根据现有知识库无法回答该问题。"
+
+    # 把每个片段格式化成带编号的内容块
+    context_blocks = []
+    for i, r in enumerate(results, start=1):
+        block = f"[{i}] 来源：《{r.title}》第{r.chunk_index}段（相关度：{r.similarity:.2f}）\n{r.chunk_content}"
+        context_blocks.append(block)
+
+    context = "\n\n".join(context_blocks)
+
+    prompt = f"""你是一个基于知识库的问答助手。请严格根据下面提供的资料片段回答用户问题。
+
+【资料片段】
+{context}
+
+【回答要求】
+1. 只基于上面的资料回答，不要编造资料中没有的信息。
+2. 如果资料不足以回答问题，请明确说明"根据现有资料无法回答"。
+3. 如果引用了某个片段，请在回答末尾标注来源，格式如：[来源：《标题》第N段]
+4. 保持简洁清晰。"""
+
+    return prompt
+
+
+async def generate_rag_stream(query: str, results: List[SearchResult]):
+    """
+    异步生成器：调用 LLM 并流式返回
+    """
+    system_prompt = build_system_prompt(results)
+
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": query}
+    ]
+
+    response = client.chat.completions.create(
+        model='deepseek-ai/DeepSeek-V3.2',
+        messages=messages,
+        stream=True,
+        extra_body={"enable_thinking": True}
+    )
+
+    done_thinking = False
+
+    for chunk in response:
+        if chunk.choices:
+            thinking = chunk.choices[0].delta.reasoning_content
+            answer = chunk.choices[0].delta.content
+
+            if thinking and thinking != '':
+                data = {"type": "thinking", "content": thinking}
+            elif answer and answer != '':
+                if not done_thinking:
+                    data = {"type": "divider", "content": "\n\n === Final Answer ===\n"}
+                    done_thinking = True
+                else:
+                    data = {"type": "answer", "content": answer}
+            else:
+                continue
+
+            yield f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+
+@router.post("/chat", summary="RAG 知识库问答")
+async def rag_chat(req: ChatRequest, db: Session = Depends(get_db)):
+    """
+    RAG 闭环接口：
+    1. 语义检索
+    2. 拼 System Prompt
+    3. 流式调 LLM
+    """
+    # 1. 检索
+    results = _semantic_search(req.query, req.n_results, db)
+
+    # 2. 流式返回 LLM 回答
+    return StreamingResponse(
+        generate_rag_stream(req.query, results),
+        media_type="text/event-stream"
+    )

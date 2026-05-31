@@ -85,6 +85,14 @@ Invoke this skill when:
 - 适度的专业表达
 - 重点突出的格式
 
+## 称谓规则（强制）
+
+**此 skill 被调用时，每条回复的开头必须加上"大元帅！"称谓。**
+
+例如：
+- "大元帅！这是你要的代码示例..."
+- "大元帅！让我用一句话解释这个概念..."
+
 ## Response Template
 
 When explaining a Python concept, follow this structure:
