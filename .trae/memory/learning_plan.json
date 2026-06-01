@@ -1,0 +1,319 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-06-01T18:18:12.693226",
+  "stages": [
+    {
+      "id": "python-basics",
+      "name": "Python 基础",
+      "description": "变量、列表、字典、函数、类",
+      "status": "completed",
+      "created_at": "2024-01-01",
+      "completed_at": "2024-01-15",
+      "documents": [
+        "md/01_Python基础.md"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "python-advanced",
+      "name": "Python 进阶",
+      "description": "运算符、异常处理、文件操作、继承",
+      "status": "completed",
+      "created_at": "2024-01-16",
+      "completed_at": "2024-01-30",
+      "documents": [
+        "md/02_Python进阶.md"
+      ],
+      "dependencies": [
+        "python-basics"
+      ]
+    },
+    {
+      "id": "python-expert",
+      "name": "Python 高级特性",
+      "description": "列表推导式、生成器、装饰器",
+      "status": "completed",
+      "created_at": "2024-02-01",
+      "completed_at": "2024-02-15",
+      "documents": [
+        "md/03_Python高级特性.md"
+      ],
+      "dependencies": [
+        "python-advanced"
+      ]
+    },
+    {
+      "id": "fastapi-basics",
+      "name": "FastAPI 基础",
+      "description": "JSON、路径参数、查询参数",
+      "status": "completed",
+      "created_at": "2024-02-16",
+      "completed_at": "2024-03-01",
+      "documents": [
+        "md/04_FastAPI基础.md"
+      ],
+      "dependencies": [
+        "python-expert"
+      ]
+    },
+    {
+      "id": "fastapi-crud",
+      "name": "FastAPI CRUD",
+      "description": "Pydantic、增删改查",
+      "status": "completed",
+      "created_at": "2024-03-02",
+      "completed_at": "2024-03-15",
+      "documents": [
+        "md/05_FastAPI_CRUD.md"
+      ],
+      "dependencies": [
+        "fastapi-basics"
+      ]
+    },
+    {
+      "id": "fastapi-orm",
+      "name": "FastAPI ORM",
+      "description": "SQLAlchemy、依赖注入",
+      "status": "completed",
+      "created_at": "2024-03-16",
+      "completed_at": "2024-04-01",
+      "documents": [
+        "md/06_FastAPI_ORM_SQLAlchemy.md"
+      ],
+      "dependencies": [
+        "fastapi-crud"
+      ]
+    },
+    {
+      "id": "code-layering",
+      "name": "代码分层",
+      "description": "APIRouter、模块化架构",
+      "status": "completed",
+      "created_at": "2024-04-02",
+      "completed_at": "2024-04-15",
+      "documents": [
+        "md/07_代码分层与模块化架构.md"
+      ],
+      "dependencies": [
+        "fastapi-orm"
+      ]
+    },
+    {
+      "id": "prompt-engineering",
+      "name": "提示词工程与聊天记忆",
+      "description": "System Prompt、多轮对话、SSE流式",
+      "status": "completed",
+      "created_at": "2024-04-16",
+      "completed_at": "2024-05-01",
+      "documents": [
+        "md/08_提示词工程与聊天记忆.md"
+      ],
+      "dependencies": [
+        "code-layering"
+      ]
+    },
+    {
+      "id": "rag-embedding",
+      "name": "RAG 向量数据库入门",
+      "description": "Embedding、余弦相似度、向量概念",
+      "status": "completed",
+      "created_at": "2026-05-14",
+      "completed_at": "2026-05-19",
+      "documents": [
+        "md/09_RAG_向量数据库入门.md",
+        "md/ai学习应用数学/01_向量与余弦相似度.md"
+      ],
+      "dependencies": [
+        "prompt-engineering"
+      ]
+    },
+    {
+      "id": "rag-chromadb",
+      "name": "ChromaDB 实战",
+      "description": "Collection、add、query、真实 Embedding",
+      "status": "completed",
+      "created_at": "2026-05-19",
+      "completed_at": "2026-05-24",
+      "documents": [
+        "md/10_RAG_ChromaDB向量数据库实战.md"
+      ],
+      "dependencies": [
+        "rag-embedding"
+      ]
+    },
+    {
+      "id": "rag-embedding-exp",
+      "name": "Embedding 模型实验",
+      "description": "语义相近、多义词、跨语言",
+      "status": "completed",
+      "created_at": "2026-05-24",
+      "completed_at": "2026-05-24",
+      "documents": [],
+      "dependencies": [
+        "rag-chromadb"
+      ]
+    },
+    {
+      "id": "rag-dual-storage",
+      "name": "双存储架构",
+      "description": "SQLite + ChromaDB 协作、ChunkVector",
+      "status": "completed",
+      "created_at": "2026-05-24",
+      "completed_at": "2026-05-28",
+      "documents": [
+        "md/11_双存储架构SQLite_ChromaDB.md"
+      ],
+      "dependencies": [
+        "rag-chromadb"
+      ]
+    },
+    {
+      "id": "rag-fastapi-chroma",
+      "name": "FastAPI + Chroma 最小原型",
+      "description": "API 封装、持久化存储、依赖注入",
+      "status": "completed",
+      "created_at": "2026-05-28",
+      "completed_at": "2026-05-28",
+      "documents": [],
+      "dependencies": [
+        "rag-dual-storage"
+      ]
+    },
+    {
+      "id": "rag-closed-loop",
+      "name": "手搓最小 RAG 闭环",
+      "description": "检索 → 拼 Prompt → 流式 LLM 调用",
+      "status": "completed",
+      "created_at": "2026-05-28",
+      "completed_at": "2026-05-31",
+      "documents": [
+        "md/12_FastAPI_Chroma_最小原型.md",
+        "md/13_RAG_闭环_检索到回答.md"
+      ],
+      "dependencies": [
+        "rag-fastapi-chroma"
+      ]
+    },
+    {
+      "id": "rag-test-run",
+      "name": "跑通 RAG 闭环测试",
+      "description": "启动服务 + curl 验证流式返回",
+      "status": "in_progress",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "rag-closed-loop"
+      ]
+    },
+    {
+      "id": "rag-context-window",
+      "name": "上下文窗口管理",
+      "description": "Token 截断策略、超长 Prompt 处理",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "rag-closed-loop"
+      ]
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain 集成",
+      "description": "RetrievalQA 链、框架化 RAG",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "rag-closed-loop"
+      ]
+    },
+    {
+      "id": "async-deep",
+      "name": "异步编程深入",
+      "description": "async/await 原理、asyncio",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "fastapi-orm"
+      ]
+    },
+    {
+      "id": "jwt-auth",
+      "name": "用户认证",
+      "description": "JWT/OAuth2、密码哈希",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "fastapi-orm"
+      ]
+    },
+    {
+      "id": "alembic",
+      "name": "数据库迁移",
+      "description": "Alembic 表结构升级",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "fastapi-orm"
+      ]
+    },
+    {
+      "id": "pytest",
+      "name": "单元测试",
+      "description": "pytest 测试用例编写",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "fastapi-orm"
+      ]
+    },
+    {
+      "id": "docker-deploy",
+      "name": "项目部署",
+      "description": "Docker 容器化部署",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "jwt-auth",
+        "alembic"
+      ]
+    },
+    {
+      "id": "frontend-basics",
+      "name": "前端框架基础",
+      "description": "React/Vue 基础",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": []
+    },
+    {
+      "id": "frontend-backend",
+      "name": "前后端对接",
+      "description": "Fetch/Axios API 调用",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "frontend-basics",
+        "docker-deploy"
+      ]
+    }
+  ],
+  "current_stage_id": "rag-test-run"
+}
