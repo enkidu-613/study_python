@@ -1,6 +1,6 @@
 # 对话历史索引
 
-> 对话记录已按日期拆分到独立文件中，保存于 `conversations/` 子目录下。当前共 23 次对话。
+> 对话记录已按日期拆分到独立文件中，保存于 `conversations/` 子目录下。当前共 26 次对话。
 
 ---
 
@@ -15,6 +15,7 @@
 | [2026-05-24.md](./conversations/2026-05-24.md) | 对话 16 ~ 17 | ChromaDB 实战、Embedding Playground 实验 |
 | [2026-05-28.md](./conversations/2026-05-28.md) | 对话 18 ~ 21 | 双存储架构、余弦距离 Q&A、错题本机制、FastAPI 最小原型 |
 | [2026-05-29.md](./conversations/2026-05-29.md) | 对话 22 ~ 23 | 模型问答、归档规则制定与文件重命名 |
+| [2026-05-31.md](./conversations/2026-05-31.md) | 对话 24 ~ 26 | RAG闭环代码讲解、BaseModel辨析、掌握度测试 |
 
 ---
 
@@ -45,3 +46,6 @@
 | 21 | 2026-05-28 | FastAPI + Chroma 最小原型 | [05-28](./conversations/2026-05-28.md) |
 | 22 | 2026-05-29 | DocumentIn / DocumentChunk 模型问答 | [05-29](./conversations/2026-05-29.md) |
 | 23 | 2026-05-29 | 对话历史归档规则制定与文件重命名 | [05-29](./conversations/2026-05-29.md) |
+| 24 | 2026-05-31 | RAG 闭环核心代码深度讲解 | [05-31](./conversations/2026-05-31.md) |
+| 25 | 2026-05-31 | BaseModel 与 SQLAlchemy Base 辨析 | [05-31](./conversations/2026-05-31.md) |
+| 26 | 2026-05-31 | RAG 闭环章节掌握度测试 | [05-31](./conversations/2026-05-31.md) |

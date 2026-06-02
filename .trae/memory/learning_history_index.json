@@ -1,7 +1,37 @@
 {
   "version": "1.0",
-  "updated_at": "2026-05-31T12:00:00",
+  "updated_at": "2026-05-31T14:00:00",
   "entries": [
+    {
+      "id": "dialog-26",
+      "date": "2026-05-31",
+      "title": "RAG 闭环章节掌握度测试",
+      "file_path": ".trae/memory/conversations/2026-05-31.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["掌握度测试", "错题本", "RAG闭环"],
+      "summary": "5题掌握度测试，得分3.5/5，记录2道错题"
+    },
+    {
+      "id": "dialog-25",
+      "date": "2026-05-31",
+      "title": "BaseModel 与 SQLAlchemy Base 辨析",
+      "file_path": ".trae/memory/conversations/2026-05-31.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["BaseModel", "SQLAlchemy", "Pydantic", "ORM"],
+      "summary": "深入辨析 Pydantic BaseModel 和 SQLAlchemy Base 的区别和用途"
+    },
+    {
+      "id": "dialog-24",
+      "date": "2026-05-31",
+      "title": "RAG 闭环核心代码深度讲解",
+      "file_path": ".trae/memory/conversations/2026-05-31.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["_semantic_search", "build_system_prompt", "流式返回", "RAG链路"],
+      "summary": "逐个讲解RAG闭环7个关键点的代码，确认用户理解完整数据流"
+    },
     {
       "id": "dialog-23",
       "date": "2026-05-29",

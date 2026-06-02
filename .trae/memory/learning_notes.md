@@ -180,10 +180,35 @@ class DocumentChunk(Base):
 
 ## 待解决问题
 
-- [ ] 异步编程 async/await 的原理
+- [x] 异步编程 async/await 的原理
 - [ ] JWT 认证的完整流程
 - [ ] 数据库迁移工具 Alembic 的使用
 - [ ] 如何编写单元测试
 - [ ] Docker 容器化部署
-- [ ] FastAPI + Chroma 最小原型封装
-- [ ] 手搓最小 RAG 闭环（切片→Embedding→存储→检索→拼Prompt→调LLM）
+- [x] FastAPI + Chroma 最小原型封装
+- [x] 手搓最小 RAG 闭环（切片→Embedding→存储→检索→拼Prompt→调LLM）
+
+---
+
+## 错题本
+
+### 2026-05-31 RAG 闭环掌握度测试（得分 3.5/5）
+
+**错题 1：`enumerate(start=1)` 的作用**
+- **错误理解**: 不理解 `[{i}]` 编号在 Prompt 格式中的作用
+- **正确理解**: `i` 是片段编号（1, 2, 3...），让 LLM 能引用"第几条资料"，用户也能对应上
+- **代码位置**: [rag_router.py#L230-L237](file:///Users/enkidu/PyCharmMiscProject/routers/rag_router.py#L230-L237)
+- **复习次数**: 1
+- **掌握状态**: ⚠️ 需复习
+
+**错题 2：`yield` 的暂停机制**
+- **错误理解**: 知道 yield 可以多次返回，但原理忘记了
+- **正确理解**: `yield` 会暂停函数并保存状态，下次从暂停处继续；配合 StreamingResponse 实现 SSE 流式传输，边生成边推送给用户
+- **代码位置**: [rag_router.py#L266-L285](file:///Users/enkidu/PyCharmMiscProject/routers/rag_router.py#L266-L285)
+- **复习次数**: 1
+- **掌握状态**: ⚠️ 需复习
+
+### 历史错题（已掌握）
+
+- [x] 2026-05-28: 余弦距离与余弦相似度的关系（1 - 距离 = 相似度）
+- [x] 2026-05-28: ChromaDB `metadatas` 是手动构造的，不是查数据库来的
