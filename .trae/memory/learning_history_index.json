@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-05-31T14:00:00",
+  "updated_at": "2026-06-02T12:00:00",
   "entries": [
+    {
+      "id": "dialog-27",
+      "date": "2026-06-02",
+      "title": "StreamingResponse 流式传输原理深度解析",
+      "file_path": ".trae/memory/conversations/2026-06-02.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["StreamingResponse", "__call__", "ContentStream", "Union", "类型别名", "生成器对象"],
+      "summary": "深入理解 StreamingResponse 流式传输原理、Python 类型系统（类/类型/类型提示辨析）、ContentStream 类型别名、Union 联合类型"
+    },
     {
       "id": "dialog-26",
       "date": "2026-05-31",
