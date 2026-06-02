@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-01T18:18:12.693226",
+  "updated_at": "2026-05-31T12:00:00",
   "stages": [
     {
       "id": "python-basics",
@@ -9,9 +9,7 @@
       "status": "completed",
       "created_at": "2024-01-01",
       "completed_at": "2024-01-15",
-      "documents": [
-        "md/01_Python基础.md"
-      ],
+      "documents": ["md/01_Python基础.md"],
       "dependencies": []
     },
     {
@@ -21,12 +19,8 @@
       "status": "completed",
       "created_at": "2024-01-16",
       "completed_at": "2024-01-30",
-      "documents": [
-        "md/02_Python进阶.md"
-      ],
-      "dependencies": [
-        "python-basics"
-      ]
+      "documents": ["md/02_Python进阶.md"],
+      "dependencies": ["python-basics"]
     },
     {
       "id": "python-expert",
@@ -35,12 +29,8 @@
       "status": "completed",
       "created_at": "2024-02-01",
       "completed_at": "2024-02-15",
-      "documents": [
-        "md/03_Python高级特性.md"
-      ],
-      "dependencies": [
-        "python-advanced"
-      ]
+      "documents": ["md/03_Python高级特性.md"],
+      "dependencies": ["python-advanced"]
     },
     {
       "id": "fastapi-basics",
@@ -49,12 +39,8 @@
       "status": "completed",
       "created_at": "2024-02-16",
       "completed_at": "2024-03-01",
-      "documents": [
-        "md/04_FastAPI基础.md"
-      ],
-      "dependencies": [
-        "python-expert"
-      ]
+      "documents": ["md/04_FastAPI基础.md"],
+      "dependencies": ["python-expert"]
     },
     {
       "id": "fastapi-crud",
@@ -63,12 +49,8 @@
       "status": "completed",
       "created_at": "2024-03-02",
       "completed_at": "2024-03-15",
-      "documents": [
-        "md/05_FastAPI_CRUD.md"
-      ],
-      "dependencies": [
-        "fastapi-basics"
-      ]
+      "documents": ["md/05_FastAPI_CRUD.md"],
+      "dependencies": ["fastapi-basics"]
     },
     {
       "id": "fastapi-orm",
@@ -77,12 +59,8 @@
       "status": "completed",
       "created_at": "2024-03-16",
       "completed_at": "2024-04-01",
-      "documents": [
-        "md/06_FastAPI_ORM_SQLAlchemy.md"
-      ],
-      "dependencies": [
-        "fastapi-crud"
-      ]
+      "documents": ["md/06_FastAPI_ORM_SQLAlchemy.md"],
+      "dependencies": ["fastapi-crud"]
     },
     {
       "id": "code-layering",
@@ -91,12 +69,8 @@
       "status": "completed",
       "created_at": "2024-04-02",
       "completed_at": "2024-04-15",
-      "documents": [
-        "md/07_代码分层与模块化架构.md"
-      ],
-      "dependencies": [
-        "fastapi-orm"
-      ]
+      "documents": ["md/07_代码分层与模块化架构.md"],
+      "dependencies": ["fastapi-orm"]
     },
     {
       "id": "prompt-engineering",
@@ -105,12 +79,8 @@
       "status": "completed",
       "created_at": "2024-04-16",
       "completed_at": "2024-05-01",
-      "documents": [
-        "md/08_提示词工程与聊天记忆.md"
-      ],
-      "dependencies": [
-        "code-layering"
-      ]
+      "documents": ["md/08_提示词工程与聊天记忆.md"],
+      "dependencies": ["code-layering"]
     },
     {
       "id": "rag-embedding",
@@ -119,13 +89,8 @@
       "status": "completed",
       "created_at": "2026-05-14",
       "completed_at": "2026-05-19",
-      "documents": [
-        "md/09_RAG_向量数据库入门.md",
-        "md/ai学习应用数学/01_向量与余弦相似度.md"
-      ],
-      "dependencies": [
-        "prompt-engineering"
-      ]
+      "documents": ["md/09_RAG_向量数据库入门.md", "md/ai学习应用数学/01_向量与余弦相似度.md"],
+      "dependencies": ["prompt-engineering"]
     },
     {
       "id": "rag-chromadb",
@@ -134,12 +99,8 @@
       "status": "completed",
       "created_at": "2026-05-19",
       "completed_at": "2026-05-24",
-      "documents": [
-        "md/10_RAG_ChromaDB向量数据库实战.md"
-      ],
-      "dependencies": [
-        "rag-embedding"
-      ]
+      "documents": ["md/10_RAG_ChromaDB向量数据库实战.md"],
+      "dependencies": ["rag-embedding"]
     },
     {
       "id": "rag-embedding-exp",
@@ -149,9 +110,7 @@
       "created_at": "2026-05-24",
       "completed_at": "2026-05-24",
       "documents": [],
-      "dependencies": [
-        "rag-chromadb"
-      ]
+      "dependencies": ["rag-chromadb"]
     },
     {
       "id": "rag-dual-storage",
@@ -160,12 +119,8 @@
       "status": "completed",
       "created_at": "2026-05-24",
       "completed_at": "2026-05-28",
-      "documents": [
-        "md/11_双存储架构SQLite_ChromaDB.md"
-      ],
-      "dependencies": [
-        "rag-chromadb"
-      ]
+      "documents": ["md/11_双存储架构SQLite_ChromaDB.md"],
+      "dependencies": ["rag-chromadb"]
     },
     {
       "id": "rag-fastapi-chroma",
@@ -175,9 +130,7 @@
       "created_at": "2026-05-28",
       "completed_at": "2026-05-28",
       "documents": [],
-      "dependencies": [
-        "rag-dual-storage"
-      ]
+      "dependencies": ["rag-dual-storage"]
     },
     {
       "id": "rag-closed-loop",
@@ -186,13 +139,8 @@
       "status": "completed",
       "created_at": "2026-05-28",
       "completed_at": "2026-05-31",
-      "documents": [
-        "md/12_FastAPI_Chroma_最小原型.md",
-        "md/13_RAG_闭环_检索到回答.md"
-      ],
-      "dependencies": [
-        "rag-fastapi-chroma"
-      ]
+      "documents": ["md/12_FastAPI_Chroma_最小原型.md", "md/13_RAG_闭环_检索到回答.md"],
+      "dependencies": ["rag-fastapi-chroma"]
     },
     {
       "id": "rag-test-run",
@@ -202,9 +150,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "rag-closed-loop"
-      ]
+      "dependencies": ["rag-closed-loop"]
     },
     {
       "id": "rag-context-window",
@@ -214,9 +160,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "rag-closed-loop"
-      ]
+      "dependencies": ["rag-closed-loop"]
     },
     {
       "id": "langchain",
@@ -226,9 +170,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "rag-closed-loop"
-      ]
+      "dependencies": ["rag-closed-loop"]
     },
     {
       "id": "async-deep",
@@ -238,9 +180,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "fastapi-orm"
-      ]
+      "dependencies": ["fastapi-orm"]
     },
     {
       "id": "jwt-auth",
@@ -250,9 +190,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "fastapi-orm"
-      ]
+      "dependencies": ["fastapi-orm"]
     },
     {
       "id": "alembic",
@@ -262,9 +200,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "fastapi-orm"
-      ]
+      "dependencies": ["fastapi-orm"]
     },
     {
       "id": "pytest",
@@ -274,9 +210,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "fastapi-orm"
-      ]
+      "dependencies": ["fastapi-orm"]
     },
     {
       "id": "docker-deploy",
@@ -286,10 +220,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "jwt-auth",
-        "alembic"
-      ]
+      "dependencies": ["jwt-auth", "alembic"]
     },
     {
       "id": "frontend-basics",
@@ -309,10 +240,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": [
-        "frontend-basics",
-        "docker-deploy"
-      ]
+      "dependencies": ["frontend-basics", "docker-deploy"]
     }
   ],
   "current_stage_id": "rag-test-run"

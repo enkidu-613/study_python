@@ -72,12 +72,17 @@ study_python/
 - [x] ChromaDB 实战 (Collection、add、query、真实 Embedding)
 - [x] Embedding 模型实验 (语义相近、多义词、跨语言)
 - [x] 双存储架构 (SQLite + ChromaDB 协作、ChunkVector)
-- [ ] FastAPI + Chroma 最小原型 (下一步)
-- [ ] 手搓最小 RAG 闭环
+- [x] FastAPI + Chroma 最小原型 (API 封装)
+- [x] 手搓最小 RAG 闭环 (代码骨架完成)
+- [ ] 跑通 RAG 闭环测试 (启动服务 + curl 验证)
+- [ ] 上下文窗口管理 (Token 截断策略)
 - [ ] LangChain 集成
-- [ ] 用户认证 (JWT)
+- [ ] 异步编程深入 (async/await 原理)
+- [ ] 用户认证 (JWT/OAuth2)
+- [ ] 数据库迁移 (Alembic)
+- [ ] 单元测试 (pytest)
 - [ ] 项目部署 (Docker)
-- [ ] 前端框架基础
+- [ ] 前端框架基础 (React/Vue)
 - [ ] 前后端对接
 
 ## 核心概念掌握情况
