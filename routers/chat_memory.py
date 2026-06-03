@@ -11,8 +11,11 @@ load_dotenv()
 router = APIRouter(prefix="/chat-memory", tags=["Chat Memory"])
 
 # 初始化 OpenAI 客户端（从环境变量读取 Token）
+model_api_url = os.getenv('MODEL_API_URL', 'https://api-inference.modelscope.cn/v1')
+model_name = os.getenv('MODEL_NAME', 'deepseek-ai/DeepSeek-V3.2')
+
 client = OpenAI(
-    base_url='https://api-inference.modelscope.cn/v1',
+    base_url=model_api_url,
     api_key=os.getenv('MODELSCOPE_API_KEY'),  # 从 .env 文件读取
 )
 
@@ -38,7 +41,7 @@ def chat(req: ChatRequest):
     
     # 3. 【发请求阶段】把【完整的记录本】扔给大模型！
     response = client.chat.completions.create(
-        model='deepseek-ai/DeepSeek-V3.2',
+        model=model_name,
         messages=chat_history,  # ⭐ 不是只发一句，是把整个列表扔进去！
     )
     

@@ -31,8 +31,11 @@ import os
 load_dotenv()
 
 # OpenAI 客户端（ModelScope）
+MODEL_API_URL = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
+MODEL_NAME = os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2")
+
 client = OpenAI(
-    base_url="https://api-inference.modelscope.cn/v1",
+    base_url=MODEL_API_URL,
     api_key=os.getenv("MODELSCOPE_API_KEY")
 )
 
@@ -293,7 +296,7 @@ async def generate_rag_stream(query: str, results: List[SearchResult], max_input
     ]
 
     response = client.chat.completions.create(
-        model='deepseek-ai/DeepSeek-V3.2',
+        model=MODEL_NAME,
         messages=messages,
         stream=True,
         max_tokens=MAX_OUTPUT_TOKENS,

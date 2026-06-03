@@ -4,8 +4,9 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
+model_api_url = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
 client = OpenAI(
-    base_url="https://api-inference.modelscope.cn/v1",
+    base_url=model_api_url,
     api_key=os.getenv("MODELSCOPE_API_KEY")
 )
 

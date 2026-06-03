@@ -13,8 +13,11 @@ load_dotenv()
 router = APIRouter(prefix="/ai", tags=["AI"])
 
 # 初始化 OpenAI 客户端
+MODEL_API_URL = os.getenv('MODEL_API_URL', 'https://api-inference.modelscope.cn/v1')
+MODEL_NAME = os.getenv('MODEL_NAME', 'deepseek-ai/DeepSeek-V3.2')
+
 client = OpenAI(
-    base_url='https://api-inference.modelscope.cn/v1',
+    base_url=MODEL_API_URL,
     api_key=os.getenv('MODELSCOPE_API_KEY'),
 )# 使用OpenAI的规范，去连接自定义的模型，返回一个client对象
 
@@ -28,7 +31,7 @@ async def generate_stream(message: str):
     extra_body = {"enable_thinking": True} # 这个参数触发了模型的思维链（CoT）能力
     
     response = client.chat.completions.create(
-        model='deepseek-ai/DeepSeek-V3.2',# 请求模型名称
+        model=MODEL_NAME,# 请求模型名称
         messages=[{'role': 'user', 'content': message}], # 角色是用户，内容是用户的问题
         stream=True, #开启流式响应
         extra_body=extra_body #传递扩展字典

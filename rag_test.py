@@ -9,8 +9,10 @@ load_dotenv()
 # ModelScope API 配置（使用 OpenAI 兼容接口）
 MODELSCOPE_API_KEY = os.getenv("MODELSCOPE_API_KEY")
 
+MODEL_API_URL = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
+
 client = OpenAI(
-    base_url="https://api-inference.modelscope.cn/v1",
+    base_url=MODEL_API_URL,
     api_key=MODELSCOPE_API_KEY
 )
 

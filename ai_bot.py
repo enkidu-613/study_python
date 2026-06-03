@@ -5,9 +5,13 @@ from dotenv import load_dotenv
 # 加载 .env 文件中的环境变量
 load_dotenv()
 
+# 从环境变量读取配置
+MODEL_API_URL = os.getenv('MODEL_API_URL', 'https://api-inference.modelscope.cn/v1')
+MODEL_NAME = os.getenv('MODEL_NAME', 'deepseek-ai/DeepSeek-V3.2')
+
 # 从环境变量读取 API Key
 client = OpenAI(
-    base_url='https://api-inference.modelscope.cn/v1',
+    base_url=MODEL_API_URL,
     api_key=os.getenv('MODELSCOPE_API_KEY'),
 )
 
@@ -18,7 +22,7 @@ extra_body = {
 }
 
 response = client.chat.completions.create(
-    model='deepseek-ai/DeepSeek-V3.2', # ModelScope Model-Id, required
+    model=MODEL_NAME, # ModelScope Model-Id, required
     messages=[
         {
           'role': 'user',

@@ -59,9 +59,9 @@ from models import Document, DocumentChunk  # SQLAlchemy ORM
 # ========== 初始化配置 ==========
 load_dotenv()
 
-MODELSCOPE_BASE_URL = "https://api-inference.modelscope.cn/v1"
+MODELSCOPE_BASE_URL = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
 MODELSCOPE_API_KEY = os.getenv("MODELSCOPE_API_KEY")
-LLM_MODEL = "deepseek-ai/DeepSeek-V3.2"
+LLM_MODEL = os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2")
 EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-8B"
 
 # 上下文窗口配置

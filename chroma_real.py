@@ -6,8 +6,9 @@ import os
 
 # ========== 第0步：加载环境变量（和rag_test.py一样）==========
 load_dotenv()
+model_api_url = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
 client = OpenAI(
-    base_url="https://api-inference.modelscope.cn/v1",
+    base_url=model_api_url,
     api_key=os.getenv("MODELSCOPE_API_KEY")
 )
 
