@@ -184,9 +184,15 @@ def _semantic_search(query_text: str, n_results: int, db: Session) -> List[Searc
 
     # 3. 解析结果，回查 SQLite
     results = []
-    for i in range(n_results):
-        metadata = chroma_results["metadatas"][0][i]
-        distance = chroma_results["distances"][0][i]
+    metadatas = chroma_results.get("metadatas", [[]])[0]
+    distances = chroma_results.get("distances", [[]])[0]
+
+    if not metadatas:
+        return results  # ChromaDB 没返回结果，直接空列表
+
+    for i in range(len(metadatas)):
+        metadata = metadatas[i]
+        distance = distances[i]
         similarity = round(1 - distance, 4)
 
         doc_id = metadata["document_id"]

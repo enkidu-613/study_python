@@ -146,9 +146,9 @@
       "id": "rag-test-run",
       "name": "跑通 RAG 闭环测试",
       "description": "启动服务 + curl 验证流式返回",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
+      "completed_at": "2026-06-02",
       "documents": [],
       "dependencies": ["rag-closed-loop"]
     },

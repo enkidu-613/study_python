@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-02T12:00:00",
+  "updated_at": "2026-06-02T16:00:00",
   "entries": [
+    {
+      "id": "milestone-test-run",
+      "date": "2026-06-02",
+      "title": "RAG 闭环测试跑通",
+      "file_path": ".trae/memory/conversations/2026-06-02.md",
+      "stage_id": "rag-test-run",
+      "entry_type": "milestone",
+      "topics": ["RAG测试", "Bug修复", "流式返回验证"],
+      "summary": "启动服务，通过curl测试/rag/documents存入、/rag/search检索、/rag/chat流式问答。修复了_semantic_search空结果IndexError Bug。LLM回答成功引用资料来源。"
+    },
     {
       "id": "dialog-27",
       "date": "2026-06-02",
