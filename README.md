@@ -10,7 +10,7 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-**当前阶段**：LangChain 集成（进行中）
+**当前阶段**：LangChain 集成（已完成 ✅）→ RAG 深化 & 工程化
 
 ---
 
@@ -48,9 +48,8 @@ study_python/
 │
 ├── 📁 .trae/memory/                # 项目记忆与对话历史
 │   ├── learning_plan.json          # 学习计划主数据
-│   ├── learning_history_index.json # 学习历史索引
+│   ├── learning_history_index.json # 学习历史索引（含对话记录索引）
 │   ├── roadmap查缺补漏计划.md       # roadmap.sh AI Engineer 查缺补漏
-│   ├── conversations.md            # 对话索引
 │   └── conversations/              # 日期对话文件
 │
 ├── main.py                         # FastAPI 应用入口
@@ -89,12 +88,13 @@ study_python/
 | 12 | FastAPI + Chroma 最小原型 | `routers/rag_router.py` | ✅ |
 | 13 | 手搓最小 RAG 闭环 | `routers/rag_router.py` | ✅ |
 | 14 | 上下文窗口管理（Token 截断、防幻觉） | `routers/rag_router.py` | ✅ |
+| 15 | **LangChain 集成（LCEL 链式语法、DeepSeek 推理链）** | `routers/langchain_rag_router.py` | ✅ |
 
 ### 🔥 进行中
 
 | 步骤 | 主题 | 对应代码 | 状态 |
 |------|------|----------|------|
-| 15 | **LangChain 集成（LCEL 链式语法）** | `routers/langchain_rag_router.py` | 🔥 当前 |
+| 16 | **RAG 深化 & 工程化（记忆注入、Agents、测试）** | - | 🔥 当前 |
 
 ### 📋 待学习
 
@@ -151,6 +151,9 @@ study_python/
 - **框架化**: 使用 LangChain LCEL 链式语法重构 RAG
 - **复用数据**: 与手搓版共用同一个 ChromaDB collection
 - **流式输出**: `chain.astream()` 一步搞定检索 → 拼 Prompt → LLM 生成
+- **推理链**: 集成 ChatDeepSeek，支持深度思考（reasoning_content）流式输出
+- **统一响应**: 标准 API 响应格式（`{"code": 200, "status": "success", "content": ...}`）
+- **文档管理**: 支持文档删除（同步清理 ChromaDB + SQLite）
 - **代码**: [`routers/langchain_rag_router.py`](routers/langchain_rag_router.py)
 
 ---
@@ -201,6 +204,10 @@ study_python/
 - ✅ 上下文窗口管理（Token 估算、三层防御策略）
 - ✅ LangChain LCEL 链式语法（`|` 管道符）
 - ✅ LangChain 核心组件（Document、Embedding、VectorStore、Retriever、LLM）
+- ✅ LangChain ChatDeepSeek 推理链集成（reasoning_content）
+- ✅ 统一 API 响应格式（`ApiResponse` 类，code/status/content）
+- ✅ POJO/DTO 概念及在接口设计中的应用
+- ✅ 对话历史索引管理（JSON 格式索引）
 
 ### 待深入学习
 - ⬜ LangChain Memory（对话记忆注入）
@@ -232,9 +239,8 @@ study_python/
 本项目使用 `.trae/memory/` 目录记录完整的学习历史：
 
 - **learning_plan.json**：学习计划主数据（38 个阶段）
-- **learning_history_index.json**：历史文件索引
+- **learning_history_index.json**：历史文件索引（含对话记录索引，JSON 格式）
 - **roadmap查缺补漏计划.md**：roadmap.sh AI Engineer 查缺补漏完整计划
-- **conversations.md**：对话索引（35 次对话记录）
 - **conversations/**：日期对话文件
 
 ---
