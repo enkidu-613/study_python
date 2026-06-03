@@ -1,8 +1,8 @@
 # 🎯 study_python - 从 Python 到 AI 全栈的 ADHD 友好学习项目
 
-> **适合 ADHD 学习者的 Python 与 FastAPI 完整学习资料**  
-> 从 Python 基础 → FastAPI 后端 → AI 接入 → RAG 向量数据库，一步一个脚印  
-> 📅 创建时间：2024年 | 🐍 Python 3.11+ | ⚡ FastAPI | 🧠 AI 集成
+> **适合 ADHD 学习者的 Python 与 FastAPI 完整学习资料**
+> 从 Python 基础 → FastAPI 后端 → AI 接入 → RAG 向量数据库 → LangChain 框架，一步一个脚印
+> 📅 创建时间：2024年 | 🐍 Python 3.11+ | ⚡ FastAPI | 🧠 AI 集成 | 🔗 LangChain
 
 ---
 
@@ -10,7 +10,7 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-**当前阶段**：双存储架构完成，即将进入 FastAPI + Chroma 最小原型（第11步）
+**当前阶段**：LangChain 集成（进行中）
 
 ---
 
@@ -19,7 +19,6 @@
 ```
 study_python/
 ├── 📁 md/                          # 学习文档（ADHD友好格式）
-│   ├── README.md                   # 学习路线图总览
 │   ├── 00_环境配置与PyCharm使用.md
 │   ├── 01_Python基础.md
 │   ├── 02_Python进阶.md
@@ -32,35 +31,27 @@ study_python/
 │   ├── 09_RAG_向量数据库入门.md
 │   ├── 10_RAG_ChromaDB向量数据库实战.md
 │   ├── 11_双存储架构SQLite_ChromaDB.md
-│   └── ai学习应用数学/
-│       └── 01_向量与余弦相似度.md   # 数学基础复习
+│   ├── 12_FastAPI_Chroma_最小原型.md
+│   ├── 13_RAG_闭环_检索到回答.md
+│   ├── 14_上下文窗口管理.md
+│   ├── 15_LangChain核心概念.md
+│   ├── ai学习应用数学/
+│   │   └── 01_向量与余弦相似度.md
+│   └── 错题本.md
 │
 ├── 📁 routers/                     # FastAPI 路由模块（分层架构）
 │   ├── ai_router.py                # AI 流式对话 /ai/*
 │   ├── chat_memory.py              # 聊天记忆 /chat-memory/*
-│   └── todos_routers.py            # Todo CRUD /todos/*
-│
-├── 📁 python第一月上半学习阶段/     # 早期练习代码
-│   ├── py学习.py                   # Python 基础
-│   ├── py学习_进阶.py              # Python 进阶
-│   ├── py学习_进阶2.py             # Python 高级特性
-│   ├── python_接触fastapi之前的补充.py
-│   ├── py_CRUD.py                  # FastAPI CRUD 练习
-│   └── py_ORM.py                   # FastAPI + SQLAlchemy 练习
+│   ├── todos_routers.py            # Todo CRUD /todos/*
+│   ├── rag_router.py               # 手搓 RAG /rag/*
+│   └── langchain_rag_router.py     # LangChain RAG /langchain-rag/*
 │
 ├── 📁 .trae/memory/                # 项目记忆与对话历史
-│   ├── conversations.md            # 对话索引（23次对话）
-│   ├── conversations/              # 日期对话文件
-│   │   ├── 2024.md
-│   │   ├── 2026-05-14.md
-│   │   ├── 2026-05-19.md
-│   │   ├── 2026-05-21.md
-│   │   ├── 2026-05-24.md
-│   │   ├── 2026-05-28.md
-│   │   └── 2026-05-29.md
-│   ├── project_overview.md         # 项目概览
-│   ├── learning_notes.md           # 学习笔记
-│   └── learning_rag_week1.md       # RAG 第一周学习指南
+│   ├── learning_plan.json          # 学习计划主数据
+│   ├── learning_history_index.json # 学习历史索引
+│   ├── roadmap查缺补漏计划.md       # roadmap.sh AI Engineer 查缺补漏
+│   ├── conversations.md            # 对话索引
+│   └── conversations/              # 日期对话文件
 │
 ├── main.py                         # FastAPI 应用入口
 ├── database.py                     # 数据库配置（SQLite）
@@ -70,12 +61,9 @@ study_python/
 ├── rag_test.py                     # RAG 测试：ModelScope Embedding API
 ├── chroma_demo.py                  # ChromaDB 简化版演示
 ├── chroma_real.py                  # ChromaDB 真实 Embedding 检索
-├── embedding_playground.py         # Embedding 模型实验
 ├── dual_storage_demo.py            # 双存储架构完整演示
 ├── pyproject.toml                  # Poetry 依赖管理
-├── poetry.lock                     # 依赖锁定文件
-├── requirements.txt                # pip 依赖（备选）
-└── .env                            # 环境变量（API Key）
+└── requirements.txt                # pip 依赖（备选）
 ```
 
 ---
@@ -86,7 +74,7 @@ study_python/
 
 | 步骤 | 主题 | 对应代码 | 掌握程度 |
 |------|------|----------|----------|
-| 0 | 环境配置与 PyCharm 使用 | `script.py` | ✅ |
+| 0 | 环境配置与 PyCharm 使用 | - | ✅ |
 | 1 | Python 基础（变量、列表、字典、函数、类） | `py学习.py` | ✅ |
 | 2 | Python 进阶（运算符、异常、文件、继承） | `py学习_进阶.py` | ✅ |
 | 3 | Python 高级特性（列表推导式、生成器、装饰器） | `py学习_进阶2.py` | ✅ |
@@ -96,26 +84,26 @@ study_python/
 | 7 | 代码分层与模块化架构（APIRouter） | `main.py` + `routers/` | ✅ |
 | 8 | 提示词工程与聊天记忆（System Prompt、多轮对话） | `routers/chat_memory.py` | ✅ |
 | 9 | RAG 向量数据库入门（Embedding、余弦相似度） | `rag_test.py`, `rag_demo.py` | ✅ |
-| 10 | ChromaDB 向量数据库实战（简化+真实） | `chroma_demo.py`, `chroma_real.py`, `embedding_playground.py` | ✅ |
+| 10 | ChromaDB 向量数据库实战 | `chroma_demo.py`, `chroma_real.py` | ✅ |
 | 11 | 双存储架构 SQLite + ChromaDB | `dual_storage_demo.py`, `models.py` | ✅ |
+| 12 | FastAPI + Chroma 最小原型 | `routers/rag_router.py` | ✅ |
+| 13 | 手搓最小 RAG 闭环 | `routers/rag_router.py` | ✅ |
+| 14 | 上下文窗口管理（Token 截断、防幻觉） | `routers/rag_router.py` | ✅ |
 
 ### 🔥 进行中
 
 | 步骤 | 主题 | 对应代码 | 状态 |
 |------|------|----------|------|
-| 12 | **FastAPI + Chroma 最小原型** | | 🔥 当前 |
+| 15 | **LangChain 集成（LCEL 链式语法）** | `routers/langchain_rag_router.py` | 🔥 当前 |
 
 ### 📋 待学习
 
 | 阶段 | 内容 | 说明 |
 |------|------|------|
-| **RAG 闭环** | 手搓最小 RAG | 手动实现切片→Embedding→存储→检索→Prompt→LLM |
-| | LangChain 集成 | 自动化 RAG 流程 |
-| | 检索优化 | 混合检索（关键词+语义）、重排序 |
-| **后端深耕** | 用户认证 (JWT) | Depends + OAuth2 的自然延伸 |
-| | 项目部署 (Docker) | 能部署才有完整项目 |
-| **前端** | React/Vue 基础 | 后端全通后再学 |
-| | 前后端对接 | 有后端 API 才有对接意义 |
+| **LangChain 深化** | Memory、Agents、Prompt 进阶 | LangChain 框架深入 |
+| **后端深耕** | 异步编程、用户认证 (JWT)、数据库迁移 (Alembic)、单元测试 (pytest)、Docker 部署 | 工程能力补全 |
+| **前端** | React/Vue 基础、前后端对接 | 全栈能力 |
+| **roadmap 查缺补漏** | RAG 进阶、AI Agents、MCP、多模态、Fine-tuning 等 | 详见 `.trae/memory/roadmap查缺补漏计划.md` |
 
 ---
 
@@ -127,8 +115,10 @@ study_python/
 | **Web 框架** | FastAPI | 高性能异步 Web 框架 |
 | **数据库** | SQLite + ChromaDB | 关系型 + 向量数据库双存储 |
 | **ORM** | SQLAlchemy | 数据库对象关系映射 |
+| **AI 框架** | LangChain (LCEL) | RAG 链式编排 |
 | **AI API** | ModelScope (OpenAI 兼容) | 国内 AI 模型接入 |
-| **向量模型** | Qwen/Qwen3-Embedding-8B | 文本向量化 |
+| **向量模型** | Qwen/Qwen3-Embedding-8B | 文本向量化（4096维） |
+| **LLM 模型** | DeepSeek-V3.2 | 大语言模型问答 |
 | **包管理** | Poetry | 依赖管理与虚拟环境 |
 | **部署** | Uvicorn | ASGI 服务器 |
 
@@ -143,7 +133,7 @@ study_python/
 
 ### 2. 聊天记忆 (`/chat-memory`)
 - 多轮对话上下文记忆
-- System Prompt 人设控制（傲娇猫娘）
+- System Prompt 人设控制
 - 内存存储（后续将持久化）
 
 ### 3. Todo CRUD (`/todos`)
@@ -151,56 +141,17 @@ study_python/
 - SQLAlchemy ORM 操作
 - 依赖注入（DI）实践
 
-### 4. RAG 向量检索（开发中）
-- 文本 Embedding 向量化（ModelScope Qwen3-Embedding-8B，4096维）
-- 余弦相似度计算
-- ChromaDB 语义检索（Collection 创建、add、query）
-- 双存储架构：SQLite 存全文 + ChromaDB 存向量，两条绳子关联
+### 4. 手搓 RAG (`/rag/*`)
+- **存储**: 双存储架构（SQLite 存全文 + ChromaDB 存向量）
+- **检索**: 语义检索 + 上下文窗口管理
+- **生成**: 流式 LLM 调用，带资料来源引用
+- **代码**: [`routers/rag_router.py`](routers/rag_router.py)
 
----
-
-## 🧠 ADHD 学习特色
-
-本项目专为 ADHD 学习者设计：
-
-- **类比法**：用超市、快递、手电筒等生活场景解释技术概念
-- **视觉化**：流程图、表格、ASCII 图示比纯文字更有效
-- **循序渐进**：从基础到进阶，一步一个脚印
-- **实践导向**：学完立即动手实现
-- **数学基础**：为 AI 应用补充必要的数学概念（向量、余弦相似度）
-- **对话历史**：完整记录每次学习对话，方便回顾
-
----
-
-## 🚀 快速开始
-
-### 1. 安装依赖
-
-```bash
-# 使用 Poetry（推荐）
-poetry install
-
-# 或使用 pip
-pip install -r requirements.txt
-```
-
-### 2. 配置环境变量
-
-创建 `.env` 文件：
-
-```env
-MODELSCOPE_API_KEY=你的_modelscope_api_key
-```
-
-### 3. 运行项目
-
-```bash
-# 启动 FastAPI 服务
-poetry run python main.py
-
-# 或测试 RAG
-poetry run python rag_test.py
-```
+### 5. LangChain RAG (`/langchain-rag/*`)
+- **框架化**: 使用 LangChain LCEL 链式语法重构 RAG
+- **复用数据**: 与手搓版共用同一个 ChromaDB collection
+- **流式输出**: `chain.astream()` 一步搞定检索 → 拼 Prompt → LLM 生成
+- **代码**: [`routers/langchain_rag_router.py`](routers/langchain_rag_router.py)
 
 ---
 
@@ -216,15 +167,19 @@ poetry run python rag_test.py
 | [05_FastAPI_CRUD](md/05_FastAPI_CRUD.md) | Pydantic、增删改查 | ⭐⭐⭐ |
 | [06_FastAPI_ORM](md/06_FastAPI_ORM_SQLAlchemy.md) | 数据库、ORM、IoC/DI | ⭐⭐⭐⭐ |
 | [07_代码分层](md/07_代码分层与模块化架构.md) | APIRouter、分层架构 | ⭐⭐⭐⭐ |
-| [08_提示词工程](md/08_提示词工程与聊天记忆.md) | System Prompt、多轮对话 | ⭐⭐⭐ |
+| [08_提示词工程](md/08_提示词工程与聊天记忆.md) | System Prompt、多轮对话、SSE | ⭐⭐⭐ |
 | [09_RAG入门](md/09_RAG_向量数据库入门.md) | Embedding、余弦相似度、向量数据库概念 | ⭐⭐⭐⭐ |
 | [10_ChromaDB实战](md/10_RAG_ChromaDB向量数据库实战.md) | Collection、add/query、简化vs真实向量 | ⭐⭐⭐ |
 | [11_双存储架构](md/11_双存储架构SQLite_ChromaDB.md) | SQLite+ChromaDB、两条绳子连接 | ⭐⭐⭐⭐ |
+| [12_最小原型](md/12_FastAPI_Chroma_最小原型.md) | API 封装、持久化存储、依赖注入 | ⭐⭐⭐⭐ |
+| [13_RAG闭环](md/13_RAG_闭环_检索到回答.md) | 检索 → 拼 Prompt → 流式 LLM 调用 | ⭐⭐⭐⭐ |
+| [14_上下文窗口](md/14_上下文窗口管理.md) | Token 截断策略、超长 Prompt 处理、防幻觉 | ⭐⭐⭐⭐ |
+| [15_LangChain](md/15_LangChain核心概念.md) | LCEL 链式语法、六大核心概念 | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
 
-## 💡 核心概念掌握情况
+## 🧠 核心概念掌握情况
 
 ### 已掌握
 - ✅ Python 基础语法和数据结构
@@ -242,16 +197,21 @@ poetry run python rag_test.py
 - ✅ 余弦相似度计算与数学原理
 - ✅ ChromaDB 向量数据库（Collection、add、query）
 - ✅ 双存储架构（SQLite + ChromaDB，两条绳子连接）
+- ✅ 手搓 RAG 闭环（检索 → 拼 Prompt → LLM 生成）
+- ✅ 上下文窗口管理（Token 估算、三层防御策略）
+- ✅ LangChain LCEL 链式语法（`|` 管道符）
+- ✅ LangChain 核心组件（Document、Embedding、VectorStore、Retriever、LLM）
 
 ### 待深入学习
-- ⬜ FastAPI + Chroma 最小原型
-- ⬜ 手搓最小 RAG 闭环
-- ⬜ LangChain 集成
+- ⬜ LangChain Memory（对话记忆注入）
+- ⬜ LangChain Agents（工具调用）
+- ⬜ 异步编程深入（async/await 原理）
 - ⬜ 用户认证 (JWT/OAuth2)
 - ⬜ 数据库迁移 (Alembic)
-- ⬜ 测试 (pytest)
+- ⬜ 单元测试 (pytest)
 - ⬜ Docker 部署
 - ⬜ 前端框架 (React/Vue)
+- ⬜ roadmap 查缺补漏（详见 `.trae/memory/roadmap查缺补漏计划.md`）
 
 ---
 
@@ -260,8 +220,10 @@ poetry run python rag_test.py
 - [FastAPI 官方文档](https://fastapi.tiangolo.com/)
 - [SQLAlchemy 官方文档](https://docs.sqlalchemy.org/)
 - [Chroma 官方文档](https://docs.trychroma.com/)
+- [LangChain 官方文档](https://python.langchain.com/)
 - [ModelScope 模型库](https://www.modelscope.cn/)
 - [OpenAI Embedding 指南](https://platform.openai.com/docs/guides/embeddings)
+- [roadmap.sh AI Engineer](https://roadmap.sh/ai/roadmap-chat/ai-engineer)
 
 ---
 
@@ -269,12 +231,13 @@ poetry run python rag_test.py
 
 本项目使用 `.trae/memory/` 目录记录完整的学习历史：
 
-- **conversations.md**：对话索引，19 次对话记录按日期拆分至 `conversations/` 子目录
-- **project_overview.md**：项目概览与技术栈
-- **learning_notes.md**：学习笔记与重点
-- **learning_rag_week1.md**：RAG 第一周学习指南
+- **learning_plan.json**：学习计划主数据（38 个阶段）
+- **learning_history_index.json**：历史文件索引
+- **roadmap查缺补漏计划.md**：roadmap.sh AI Engineer 查缺补漏完整计划
+- **conversations.md**：对话索引（35 次对话记录）
+- **conversations/**：日期对话文件
 
 ---
 
-> **祝你学习愉快！记住：理解 > 记忆，实践 > 阅读。**  
+> **祝你学习愉快！记住：理解 > 记忆，实践 > 阅读。**
 > 对于 ADHD 学习者：番茄工作法（25分钟学习 + 5分钟休息）+ 立即动手验证 = 最佳学习效果 🚀

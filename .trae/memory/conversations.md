@@ -17,7 +17,7 @@
 | [2026-05-29.md](./conversations/2026-05-29.md) | 对话 22 ~ 23 | 模型问答、归档规则制定与文件重命名 |
 | [2026-05-31.md](./conversations/2026-05-31.md) | 对话 24 ~ 26 | RAG闭环代码讲解、BaseModel辨析、掌握度测试 |
 | [2026-06-02.md](./conversations/2026-06-02.md) | 对话 27 ~ 29 | StreamingResponse流式传输原理、Python类型系统辨析、RAG闭环测试、source参数解析 |
-| [2026-06-03.md](./conversations/2026-06-03.md) | 对话 30 ~ 35 | 上下文窗口管理学习与测试、无状态RAG特性、阶段推进与文档生成、LangChain集成第一课 |
+| [2026-06-03.md](./conversations/2026-06-03.md) | 对话 30 ~ 40 | 上下文窗口管理学习与测试、无状态RAG特性、阶段推进与文档生成、LangChain集成第一课、roadmap查缺补漏计划制定与顺序调整、README更新与LangChain入库流程解释 |
 
 ---
 
@@ -60,3 +60,8 @@
 | 33 | 2026-06-03 | 总结对话到历史记录 | [06-03](./conversations/2026-06-03.md) |
 | 34 | 2026-06-03 | LangChain 集成第一课 - 代码实战 | [06-03](./conversations/2026-06-03.md) |
 | 35 | 2026-06-03 | 生成 LangChain 学习文档 + 归档对话 | [06-03](./conversations/2026-06-03.md) |
+| 36 | 2026-06-03 | 查看 roadmap.sh AI Engineer 路线图 | [06-03](./conversations/2026-06-03.md) |
+| 37 | 2026-06-03 | roadmap 查缺补漏计划制定 | [06-03](./conversations/2026-06-03.md) |
+| 38 | 2026-06-03 | 调整学习计划阶段顺序 | [06-03](./conversations/2026-06-03.md) |
+| 39 | 2026-06-03 | 文件位置与命名调整 | [06-03](./conversations/2026-06-03.md) |
+| 40 | 2026-06-03 | 更新 README.md + LangChain 入库流程解释 | [06-03](./conversations/2026-06-03.md) |
