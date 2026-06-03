@@ -36,7 +36,8 @@ dependencies = [
     "uvicorn (==0.39.0)",
     "numpy (>=2.4.6,<3.0.0)",
     "chromadb (>=1.5.9,<2.0.0)",
-    "python-dotenv (>=1.2.2,<2.0.0)"
+    "python-dotenv (>=1.2.2,<2.0.0)",
+    "tiktoken (>=0.13.0,<0.14.0)"
 ]
 
 [tool.poetry]

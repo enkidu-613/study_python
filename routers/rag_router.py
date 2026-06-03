@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import List
 import json
+import tiktoken
 
 # 数据库
 from database import SessionLocal
@@ -43,6 +44,11 @@ collection = chroma_client.get_or_create_collection(
     name="documents",
     metadata={"hnsw:space": "cosine"}
 )
+
+# ========== 上下文窗口配置 ==========
+MAX_CONTEXT_TOKENS = 2000   # 资料片段上限
+MAX_INPUT_TOKENS = 6000     # 总输入上限（System Prompt + User Query）
+MAX_OUTPUT_TOKENS = 2000    # LLM 回答长度上限
 
 # ========== 依赖注入：数据库会话 ==========
 def get_db():
@@ -78,6 +84,10 @@ class ChatRequest(BaseModel):
     n_results: int = 3
 
 
+class EstimateTokensRequest(BaseModel):
+    text: str
+
+
 # ========== Embedding 工具 ==========
 def get_embedding(text: str) -> list[float]:
     """把文字转成 4096 维向量"""
@@ -99,6 +109,11 @@ def split_text(text: str, chunk_size: int = 80, overlap: int = 10) -> list[str]:
         start += (chunk_size - overlap)
     return chunks
 
+# ========== 估算 Token =========
+def estimate_tokens(text: str,model = "cl100k_base") -> int:
+    """估算文本中包含的 Token 数量"""
+    encoding = tiktoken.get_encoding(model)
+    return len(encoding.encode(text))
 
 # ========== 路由 ==========
 router = APIRouter(prefix="/rag", tags=["RAG 向量检索"])
@@ -225,7 +240,7 @@ def search(query: SearchIn, db: Session = Depends(get_db)):
     return _semantic_search(query.query, query.n_results, db)
 
 
-def build_system_prompt(results: List[SearchResult]) -> str:
+def build_system_prompt(results: List[SearchResult], max_context: int = MAX_CONTEXT_TOKENS) -> str:
     """
     把检索结果拼进 System Prompt
     """
@@ -234,9 +249,16 @@ def build_system_prompt(results: List[SearchResult]) -> str:
 
     # 把每个片段格式化成带编号的内容块
     context_blocks = []
+    #限制总的token数量
+    current_tokens = 0
     for i, r in enumerate(results, start=1):
         block = f"[{i}] 来源：《{r.title}》第{r.chunk_index}段（相关度：{r.similarity:.2f}）\n{r.chunk_content}"
+        block_tokens = estimate_tokens(block)
+        if current_tokens + block_tokens > max_context:
+            break
         context_blocks.append(block)
+        current_tokens += block_tokens
+
 
     context = "\n\n".join(context_blocks)
 
@@ -254,12 +276,17 @@ def build_system_prompt(results: List[SearchResult]) -> str:
     return prompt
 
 
-async def generate_rag_stream(query: str, results: List[SearchResult]):
+async def generate_rag_stream(query: str, results: List[SearchResult], max_input: int = MAX_INPUT_TOKENS):
     """
     异步生成器：调用 LLM 并流式返回
     """
     system_prompt = build_system_prompt(results)
 
+    total_input = estimate_tokens(system_prompt) + estimate_tokens(query)
+    if total_input > max_input:
+        error_data = {"type": "error", "content": "输入总 Token 数量超过最大限制，请减少检索结果数量或精简问题。"}
+        yield f"data: {json.dumps(error_data, ensure_ascii=False)}\n\n"
+        return
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": query}
@@ -269,6 +296,7 @@ async def generate_rag_stream(query: str, results: List[SearchResult]):
         model='deepseek-ai/DeepSeek-V3.2',
         messages=messages,
         stream=True,
+        max_tokens=MAX_OUTPUT_TOKENS,
         extra_body={"enable_thinking": True}
     )
 
@@ -309,3 +337,8 @@ async def rag_chat(req: ChatRequest, db: Session = Depends(get_db)):
         generate_rag_stream(req.query, results),
         media_type="text/event-stream"
     )
+
+# 估算 Token 数量的路由
+@router.post("/estimate-tokens", summary="估算文本中包含的 Token 数量")
+def estimate_tokens_endpoint(req: EstimateTokensRequest):
+    return {"token_count": estimate_tokens(req.text)}
