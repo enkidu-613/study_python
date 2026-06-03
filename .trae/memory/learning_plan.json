@@ -182,9 +182,9 @@
       "id": "langchain",
       "name": "LangChain 集成",
       "description": "LCEL 链式语法、框架化 RAG",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
+      "completed_at": "2026-06-04",
       "documents": ["md/15_LangChain核心概念.md"],
       "dependencies": ["rag-closed-loop"],
       "roadmap_tags": ["LangChain", "RAG"]
@@ -443,5 +443,5 @@
       "roadmap_tags": ["Hugging Face", "Open Source Models"]
     }
   ],
-  "current_stage_id": "langchain"
+  "current_stage_id": "async-deep"
 }

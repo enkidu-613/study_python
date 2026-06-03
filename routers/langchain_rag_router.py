@@ -20,7 +20,7 @@ LangChain RAG 路由：纯 LangChain 原生实现
 ✅ 语义检索      → vectorstore.similarity_search_with_score()
 ✅ RAG 链        → LCEL (retriever → prompt → llm)
 ✅ 流式输出      → chain.astream() + StreamingResponse
-⚠️ 上下文截断    → 手写 truncate_context + RunnableLambda（LangChain 无原生组件）
+⚠️ 上下文截断    → 手写 truncate_context（LangChain 无原生组件，且因 SQLite 回查阻断管道无法 RunnableLambda 包装）
 ⚠️ 推理链处理    → 手动 AIMessageChunk（不用 StrOutputParser）
 ❌ SQLite 存储    → 保留 SQLAlchemy（LangChain 无 ORM 集成）
 ❌ Token 估算     → 保留 tiktoken（LangChain 无独立组件）
@@ -28,20 +28,22 @@ LangChain RAG 路由：纯 LangChain 原生实现
 
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import StreamingResponse
+from numpy import number
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from typing import List, AsyncIterator
+from typing import AsyncIterator
 import json
 import os
 
 from dotenv import load_dotenv
 
 # ========== LangChain 核心组件 ==========
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings          # Embedding（不变）
+from langchain_deepseek import ChatDeepSeek            # 替代 ChatOpenAI，原生支持 DeepSeek 推理链
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.documents import Document as LCDocument
-from langchain_core.runnables import RunnablePassthrough
+
 from langchain_core.messages import AIMessageChunk
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -74,13 +76,14 @@ embedding_model = OpenAIEmbeddings(
     openai_api_key=MODELSCOPE_API_KEY,
 )
 
-# ---------- 2. LLM（LangChain 原生封装） ----------
-llm = ChatOpenAI(
+# ---------- 2. LLM（langchain-deepseek 原生支持推理链） ----------
+llm = ChatDeepSeek(
     model=LLM_MODEL,
-    openai_api_base=MODELSCOPE_BASE_URL,
-    openai_api_key=MODELSCOPE_API_KEY,
+    api_base=MODELSCOPE_BASE_URL,
+    api_key=MODELSCOPE_API_KEY,
     temperature=0.7,
     streaming=True,
+    model_kwargs={"extra_body": {"thinking": {"type": "enabled"}}},
 )
 
 # ---------- 3. VectorStore（LangChain 原生封装） ----------
@@ -101,8 +104,8 @@ retriever = vectorstore.as_retriever(
 # ---------- 5. TextSplitter（LangChain 原生） ----------
 # 替代手搓版的 split_text()
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=80,
-    chunk_overlap=10,
+    chunk_size=500,
+    chunk_overlap=50,
     separators=["\n\n", "\n", "。", "！", "？", "，", " ", ""],
 )
 
@@ -131,7 +134,7 @@ def truncate_context(formatted_context: str, max_tokens: int = MAX_CONTEXT_TOKEN
     按块（每块是一个资料片段）累积，超过上限即停止。
 
     LangChain 说明：LCEL 没有内置的 "截断到 N token" 组件，
-    这个逻辑需要通过 RunnableLambda 自定义包装。
+    且因 /chat 接口中 SQLite 回查阻断了管道，此函数以纯函数方式直接调用。
     """
     if not formatted_context:
         return "没有检索到相关文档。"
@@ -152,15 +155,15 @@ def truncate_context(formatted_context: str, max_tokens: int = MAX_CONTEXT_TOKEN
 
 # ========== Prompt 模板（LangChain 原生） ==========
 RAG_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", """你是一个基于知识库的问答助手。请严格根据下面提供的资料片段回答用户问题。
+    ("system", """你是一个基于知识库的问答助手。下面是从知识库中检索到的与用户问题相关的资料片段。
 
 【资料片段】
 {context}
 
 【回答要求】
-1. 只基于上面的资料回答，不要编造资料中没有的信息。
-2. 如果资料中完全没有提到用户问题的答案，必须回答："根据现有资料无法回答该问题。"
-3. 禁止猜测、禁止推理、禁止用模型自身知识补充。"""),
+1. 请提取以上资料中与用户问题相关的信息，整理归纳后回答用户。
+2. 不要编造资料中没有的信息，不要用你自己的知识补充。
+3. 只有当资料片段为空（显示为"没有检索到相关文档"）时，才回答"根据现有资料无法回答该问题。"。否则，资料中无论信息多少，都应基于它们给出回答。"""),
     ("human", "{question}"),
 ])
 
@@ -192,6 +195,13 @@ class SearchResult(BaseModel):
     similarity: float
     document_id: int
     chunk_index: int
+
+
+class ApiResponse(BaseModel):
+    """通用响应包装"""
+    code: int = 200
+    status: str = "success"
+    content: dict | list | str | bool | int | float | None = None
 
 
 class ChatRequest(BaseModel):
@@ -265,17 +275,21 @@ def add_document(doc: DocumentIn, db: Session = Depends(get_db)):
             detail=f"ChromaDB 存储失败（ID 可能重复，请勿重复提交相同文档）: {str(e)}"
         )
 
-    return {
-        "message": "文档存入成功",
-        "document_id": document.id,
-        "title": doc.title,
-        "chunks_count": len(chunk_texts),
-    }
+    return ApiResponse(
+        code=200,
+        status="success",
+        content={
+            "message": "文档存入成功",
+            "document_id": document.id,
+            "title": doc.title,
+            "chunks_count": len(chunk_texts),
+        }
+    )
 
 
 # ==================== 接口 2：语义检索 ====================
 
-@router.post("/search", response_model=List[SearchResult], summary="语义检索（LangChain 原生）")
+@router.post("/search", summary="语义检索（LangChain 原生）")
 def search(query: SearchIn, db: Session = Depends(get_db)):
     """
     与手搓版 POST /rag/search 功能一致：
@@ -330,7 +344,11 @@ def search(query: SearchIn, db: Session = Depends(get_db)):
             chunk_index=chunk_idx or 0,
         ))
 
-    return output
+    return ApiResponse(
+        code=200,
+        status="success",
+        content=output
+    )
 
 
 # ==================== 接口 3：RAG 流式问答 ====================
@@ -355,8 +373,8 @@ async def langchain_chat(req: ChatRequest, db: Session = Depends(get_db)):
     手搓版：手动构造 OpenAI client → 手动 yield SSE
     本文件：chain.astream() 自动流式，外层只包装 SSE 格式
     """
-    # 1. LangChain 原生语义检索
-    docs = retriever.invoke(req.query)
+    # 1. LangChain 原生语义检索（使用请求中的 n_results 动态控制检索数量）
+    docs = vectorstore.similarity_search(req.query, k=req.n_results)
 
     # 2. SQLite 回查增强 metadata（手写，LangChain 无此集成）
     for doc in docs:
@@ -444,21 +462,64 @@ def estimate_tokens_endpoint(req: EstimateTokensRequest):
     与手搓版 POST /rag/estimate-tokens 完全一致。
     LangChain 没有独立的 Token 估算组件，保留 tiktoken。
     """
-    return {"token_count": estimate_tokens(req.text)}
+    return ApiResponse(
+        code=200,
+        status="success",
+        content={"token_count": estimate_tokens(req.text)}
+    )
 
 
-# ==================== 接口 5：健康检查 ====================
+# ==================== 接口 5：删除文档 ====================
+
+@router.delete("/documents/{doc_id}", summary="删除文档（ChromaDB + SQLite 双删除）")
+def delete_document(doc_id: int, db: Session = Depends(get_db)):
+    """
+    根据文档 ID 删除文档，同时清理 ChromaDB 向量数据和 SQLite 记录。
+    """
+    document = db.query(Document).filter(Document.id == doc_id).first()
+    if not document:
+        raise HTTPException(status_code=404, detail=f"文档 ID={doc_id} 不存在")
+
+    # 1. 收集所有 chunk 的 embedding_id，从 ChromaDB 删除
+    embedding_ids = [chunk.embedding_id for chunk in document.chunks]
+    if embedding_ids:
+        try:
+            vectorstore.delete(ids=embedding_ids)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"ChromaDB 删除失败: {str(e)}")
+
+    # 2. 从 SQLite 删除（cascade 自动删除关联的 chunks）
+    title = document.title
+    db.delete(document)
+    db.commit()
+
+    return ApiResponse(
+        code=200,
+        status="success",
+        content={
+            "message": "文档删除成功",
+            "document_id": doc_id,
+            "title": title,
+            "deleted_chunks": len(embedding_ids),
+        }
+    )
+
+
+# ==================== 接口 6：健康检查 ====================
 
 @router.get("/health", summary="LangChain RAG 健康检查")
 def health_check():
     """检查 LangChain 各组件是否正常加载"""
     try:
         count = vectorstore._collection.count()
-        return {
-            "status": "ok",
-            "vectorstore_docs": count,
-            "llm_model": LLM_MODEL,
-            "embedding_model": EMBEDDING_MODEL,
-        }
+        return ApiResponse(
+            code=200,
+            status="ok",
+            content={
+                "vectorstore_docs": count,
+                "llm_model": LLM_MODEL,
+                "embedding_model": EMBEDDING_MODEL,
+            }
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

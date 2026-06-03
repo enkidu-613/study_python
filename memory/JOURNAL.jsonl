@@ -1,1 +1,0 @@
-{"ts":"2026-05-19T07:32:26.762Z","tags":["preference","package-manager","poetry","project-config"],"text":"用户项目 PyCharmMiscProject 使用 Poetry 作为首选包管理器\n- 项目同时存在 poetry.lock 和 requirements.txt\n- 用户明确偏好 Poetry（现代、依赖锁定）\n- 回退方案：pip（当 Poetry 报错或太慢时直接切换，不纠结）\n- 安装指令：poetry add <package>\n- 验证指令：python -c \"import package; print('✅ 安装成功')\""}

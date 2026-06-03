@@ -1,7 +1,37 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-03T17:00:00",
+  "updated_at": "2026-06-04T23:00:00",
   "entries": [
+    {
+      "id": "dialog-42",
+      "date": "2026-06-04",
+      "title": "RAG 检索修复 + LangChain 深度思考攻克 + 响应包装 + tech-search skill",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["RAG检索修复", "ChatDeepSeek", "推理链", "reasoning_content", "extra_body", "ApiResponse", "LCEL", "chunk_size", "tech-search-sources"],
+      "summary": "修复RAG三个Bug（n_results忽略、Prompt过严、chunk_size太小），攻克LangChain中DeepSeek推理链传递（ChatDeepSeek + extra_body），统一ApiResponse包装，创建tech-search-sources skill，新增DELETE接口"
+    },
+    {
+      "id": "milestone-langchain-complete",
+      "date": "2026-06-04",
+      "title": "LangChain 集成阶段完成，推进到异步编程深入",
+      "file_path": ".trae/memory/learning_plan.json",
+      "stage_id": "langchain",
+      "entry_type": "milestone",
+      "topics": ["LangChain", "RAG框架化", "LCEL", "阶段完成"],
+      "summary": "使用 LangChain 原生组件重写 RAG 路由，覆盖全部 5 个接口，保留 SQLite 双存储。标记 langchain 阶段完成，推进到 async-deep"
+    },
+    {
+      "id": "dialog-41",
+      "date": "2026-06-04",
+      "title": "LangChain RAG 路由完整重写与代码深度讲解",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["LangChain", "RAG", "RecursiveCharacterTextSplitter", "truncate_context", "RunnableLambda", "双存储对比", "chroma_ids", "管道vs中间件"],
+      "summary": "重写 langchain_rag_router.py 全部5个接口，详解 RecursiveCharacterTextSplitter 递归切片、truncate_context 上下文截断、手搓版与 LangChain 版双存储对比、数组下标对齐机制、LCEL 管道与中间件区别、SQL+向量真实场景"
+    },
     {
       "id": "milestone-roadmap-gap-analysis",
       "date": "2026-06-03",
