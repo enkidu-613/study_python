@@ -1,69 +1,36 @@
 """
-LangChain RAG 路由：用框架重构手搓 RAG
-======================================
+LangChain RAG 路由：纯 LangChain 原生实现
+==========================================
 
-本文件是"LangChain 集成"阶段的学习成果，与 rag_router.py（手搓版）并行存在，
-方便对比"手搓"和"框架"的差异。
+完整替代 rag_router.py（手搓版）的所有接口，尽可能使用 LangChain 原生功能。
+不可替代的部分（Token 估算、SQLite 存储）保留推荐实现。
 
-【第一课：LangChain 核心概念地图】
+【接口对照】
+| 手搓版接口                    | 本文件 LangChain 实现           | 原生度 |
+|------------------------------|-------------------------------|--------|
+| POST /rag/documents          | POST /langchain-rag/documents | 🟡 80% |
+| POST /rag/search             | POST /langchain-rag/search    | 🟢 95% |
+| POST /rag/chat               | POST /langchain-rag/chat      | 🟡 70% |
+| POST /rag/estimate-tokens    | POST /langchain-rag/estimate-tokens | 🔴 tiktoken |
 
-LangChain 不是替代你的代码，而是把你的代码打包成"乐高积木"。
-
-核心概念（6个）：
-
-1. Document（文档）
-   类比：图书馆的索引卡片
-   技术：{page_content: "文字内容", metadata: {来源, 页码}}
-
-2. Embedding Model（嵌入模型）
-   类比：翻译官，把中文翻译成"语义坐标"
-   技术：把 "苹果" → [0.1, -0.3, 0.8, ...]（4096维向量）
-
-3. VectorStore（向量数据库）
-   类比：按坐标找人的导航系统
-   技术：ChromaDB、Milvus、Pinecone
-
-4. Retriever（检索器）
-   类比：图书管理员
-   技术：你描述需求，他去 VectorStore 找最相关的 Document
-
-5. LLM（大语言模型）
-   类比：作家
-   技术：根据你给的资料写出回答
-
-6. Chain / LCEL（链 / 表达式语言）
-   类比：工厂流水线
-   技术：用 "|" 管道符把上面5个串起来，一步搞定
-
-【新旧语法对比】
-旧版（RetrievalQA）：
-    qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
-
-新版（LCEL）：
-    chain = (
-        {"context": retriever | format_docs, "question": RunnablePassthrough()}
-        | prompt
-        | llm
-        | StrOutputParser()
-    )
-    # 用 "|" 像拼水管一样把步骤串起来
-
-【与手搓版的核心差异】
-| 步骤       | 手搓版 (rag_router.py)       | LangChain 版 (本文件)          |
-|-----------|-----------------------------|-------------------------------|
-| 文本切片    | 自己写 split_text()          | 用 TextSplitter（可选）          |
-| Embedding | 自己调 client.embeddings     | 用 OpenAIEmbeddings 封装        |
-| 向量存储    | 直接调 chroma_client.add()   | 用 Chroma 类封装                |
-| 语义检索    | 自己调 collection.query()    | 用 retriever.invoke()           |
-| 拼 Prompt | 自己拼 f-string              | 用 ChatPromptTemplate           |
-| 调 LLM    | 自己调 client.chat.completions| 用 ChatOpenAI 封装              |
-| 流式输出    | 自己写 SSE 格式               | 用 astream() + EventSourceResponse |
+【各功能 LangChain 覆盖情况】
+✅ 文本切片      → RecursiveCharacterTextSplitter
+✅ Embedding     → OpenAIEmbeddings
+✅ 向量存储      → Chroma.from_documents() / add_documents()
+✅ 语义检索      → vectorstore.similarity_search_with_score()
+✅ RAG 链        → LCEL (retriever → prompt → llm)
+✅ 流式输出      → chain.astream() + StreamingResponse
+⚠️ 上下文截断    → 手写 truncate_context + RunnableLambda（LangChain 无原生组件）
+⚠️ 推理链处理    → 手动 AIMessageChunk（不用 StrOutputParser）
+❌ SQLite 存储    → 保留 SQLAlchemy（LangChain 无 ORM 集成）
+❌ Token 估算     → 保留 tiktoken（LangChain 无独立组件）
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-from typing import AsyncIterator
+from sqlalchemy.orm import Session
+from typing import List, AsyncIterator
 import json
 import os
 
@@ -73,42 +40,50 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
+from langchain_core.documents import Document as LCDocument
 from langchain_core.runnables import RunnablePassthrough
+from langchain_core.messages import AIMessageChunk
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-# 复用现有的 ChromaDB 客户端
+# 复用 ChromaDB 客户端（与手搓版共享同一个数据库目录）
 import chromadb
 
-# ========== 初始化 ==========
+# ========== 保留组件（LangChain 无原生替代） ==========
+import tiktoken                           # Token 估算
+
+from database import get_db               # SQLite 依赖注入
+from models import Document, DocumentChunk  # SQLAlchemy ORM
+
+# ========== 初始化配置 ==========
 load_dotenv()
 
-# ModelScope API 配置
 MODELSCOPE_BASE_URL = "https://api-inference.modelscope.cn/v1"
 MODELSCOPE_API_KEY = os.getenv("MODELSCOPE_API_KEY")
 LLM_MODEL = "deepseek-ai/DeepSeek-V3.2"
 EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-8B"
 
-# ---------- 1. Embedding 模型 ----------
-# 把文字变成向量的"翻译官"
+# 上下文窗口配置
+MAX_CONTEXT_TOKENS = 2000
+MAX_INPUT_TOKENS = 6000
+MAX_OUTPUT_TOKENS = 2000
+
+# ---------- 1. Embedding 模型（LangChain 原生封装） ----------
 embedding_model = OpenAIEmbeddings(
     model=EMBEDDING_MODEL,
     openai_api_base=MODELSCOPE_BASE_URL,
     openai_api_key=MODELSCOPE_API_KEY,
-    # Qwen Embedding 输出 4096 维向量，确保与现有 Chroma Collection 兼容
 )
 
-# ---------- 2. LLM（大语言模型） ----------
-# 负责根据资料写回答的"作家"
+# ---------- 2. LLM（LangChain 原生封装） ----------
 llm = ChatOpenAI(
     model=LLM_MODEL,
     openai_api_base=MODELSCOPE_BASE_URL,
     openai_api_key=MODELSCOPE_API_KEY,
     temperature=0.7,
-    streaming=True,  # 开启流式输出
+    streaming=True,
 )
 
-# ---------- 3. VectorStore（向量数据库） ----------
-# 连接到现有的 ChromaDB（与手搓版共用同一个数据库文件）
+# ---------- 3. VectorStore（LangChain 原生封装） ----------
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 
 vectorstore = Chroma(
@@ -117,30 +92,65 @@ vectorstore = Chroma(
     embedding_function=embedding_model,
 )
 
-# ---------- 4. Retriever（检索器） ----------
-# 从 VectorStore 搜相关文档的"图书管理员"
+# ---------- 4. Retriever（LangChain 原生封装） ----------
 retriever = vectorstore.as_retriever(
-    search_type="similarity",      # 相似度检索
-    search_kwargs={"k": 3},        # 返回前3个最相关的片段
+    search_type="similarity",
+    search_kwargs={"k": 3},
+)
+
+# ---------- 5. TextSplitter（LangChain 原生） ----------
+# 替代手搓版的 split_text()
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=80,
+    chunk_overlap=10,
+    separators=["\n\n", "\n", "。", "！", "？", "，", " ", ""],
 )
 
 
-# ========== 辅助函数 ==========
+# ========== 工具函数 ==========
+
+def estimate_tokens(text: str, model: str = "cl100k_base") -> int:
+    """Token 估算（LangChain 无原生替代，保留 tiktoken）"""
+    encoding = tiktoken.get_encoding(model)
+    return len(encoding.encode(text))
+
+
 def format_docs(docs) -> str:
-    """把检索到的 Document 列表拼成字符串，塞进 Prompt"""
-    # docs 是 List[Document]，每个 Document 有 page_content 和 metadata
+    """把检索结果格式化为 Prompt 上下文"""
     formatted = []
     for i, doc in enumerate(docs, start=1):
         source = doc.metadata.get("source", "未知来源")
         title = doc.metadata.get("title", "未命名")
-        formatted.append(f"[{i}] 来源：《{title}》\n{doc.page_content}")
+        formatted.append(f"[{i}] 来源：《{title}》（{source}）\n{doc.page_content}")
     return "\n\n".join(formatted)
 
 
-# ========== LCEL 链定义 ==========
-# 这是 LangChain 的精髓：用 "|" 管道符拼流水线
+def truncate_context(formatted_context: str, max_tokens: int = MAX_CONTEXT_TOKENS) -> str:
+    """
+    Token 感知的上下文截断。
+    按块（每块是一个资料片段）累积，超过上限即停止。
 
-# 1. 定义 Prompt 模板（替代手搓版的 f-string）
+    LangChain 说明：LCEL 没有内置的 "截断到 N token" 组件，
+    这个逻辑需要通过 RunnableLambda 自定义包装。
+    """
+    if not formatted_context:
+        return "没有检索到相关文档。"
+
+    blocks = formatted_context.split("\n\n")
+    result_blocks = []
+    current_tokens = 0
+
+    for block in blocks:
+        block_tokens = estimate_tokens(block)
+        if current_tokens + block_tokens > max_tokens:
+            break  # 超预算即停，results 已按相似度排序
+        result_blocks.append(block)
+        current_tokens += block_tokens
+
+    return "\n\n".join(result_blocks) if result_blocks else "没有检索到相关文档。"
+
+
+# ========== Prompt 模板（LangChain 原生） ==========
 RAG_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """你是一个基于知识库的问答助手。请严格根据下面提供的资料片段回答用户问题。
 
@@ -154,52 +164,270 @@ RAG_PROMPT = ChatPromptTemplate.from_messages([
     ("human", "{question}"),
 ])
 
-# 2. 组装 Chain（流水线）
-#    RunnablePassthrough() 让用户的 question 原样通过
-#    retriever | format_docs 把检索结果格式化后传给 context
-rag_chain = (
-    {
-        "context": retriever | format_docs,      # 检索 → 格式化
-        "question": RunnablePassthrough(),        # 用户问题直接通过
-    }
-    | RAG_PROMPT                                  # 拼成完整 Prompt
-    | llm                                         # 送给 LLM 生成回答
-    | StrOutputParser()                           # 把 AIMessage 转成纯字符串
-)
+# ========== LCEL 链：检索 → 格式化（不含 LLM，因为 chat 需要手动注入 db） ==========
+# 全局定义的纯检索链，供需要无状态查询的场景使用
+retrieval_chain = retriever | (lambda docs: format_docs(docs))
+
 
 # ========== FastAPI 路由 ==========
 router = APIRouter(prefix="/langchain-rag", tags=["LangChain RAG"])
 
 
+# ========== Pydantic 模型（与手搓版一致） ==========
+
+class DocumentIn(BaseModel):
+    title: str
+    content: str
+    source: str = ""
+
+
+class SearchIn(BaseModel):
+    query: str
+    n_results: int = 3
+
+
+class SearchResult(BaseModel):
+    title: str
+    chunk_content: str
+    similarity: float
+    document_id: int
+    chunk_index: int
+
+
 class ChatRequest(BaseModel):
     query: str
-    n_results: int = 3  # 兼容手搓版参数，但实际在 retriever 里配置
+    n_results: int = 3
 
 
-@router.post("/chat", summary="LangChain RAG 问答（流式）")
-async def langchain_chat(req: ChatRequest):
+class EstimateTokensRequest(BaseModel):
+    text: str
+
+
+# ==================== 接口 1：存入文档 ====================
+
+@router.post("/documents", summary="存入文档（LangChain 切片 + 双存储）")
+def add_document(doc: DocumentIn, db: Session = Depends(get_db)):
     """
-    用 LangChain LCEL 链处理 RAG 问答，返回 SSE 流式输出。
+    与手搓版 POST /rag/documents 功能一致：
 
-    与手搓版 /rag/chat 的区别：
-    - 手搓版：自己调 Embedding → Chroma → 拼 Prompt → OpenAI → SSE
-    - 本接口：chain.astream() 一步搞定上面所有步骤
+    【LangChain 原生部分】
+    - RecursiveCharacterTextSplitter 切片 → 替代手写 split_text()
+    - Chroma.add_documents() 一键 Embedding + 存向量 → 替代手写 get_embedding() + collection.add()
+
+    【保留手写部分】
+    - SQLAlchemy ORM 存 Document + DocumentChunk 到 SQLite
+      （LangChain 没有 SQLAlchemy 集成，保留手写实现）
     """
+    # 1. SQLite：完整文档（手写 SQLAlchemy）
+    document = Document(title=doc.title, content=doc.content, source=doc.source)
+    db.add(document)
+    db.commit()
+    db.refresh(document)
+
+    # 2. LangChain 原生：RecursiveCharacterTextSplitter 切片
+    chunk_texts = text_splitter.split_text(doc.content)
+
+    # 3. 并行构建数据
+    lc_docs = []       # LangChain Document 对象（给 ChromaDB）
+    chroma_ids = []    # ChromaDB 文档 ID
+
+    for i, chunk_text in enumerate(chunk_texts):
+        # 3a. SQLite：存切片元数据（手写）
+        chunk = DocumentChunk(
+            document_id=document.id,
+            chunk_index=i,
+            content=chunk_text,
+            embedding_id=f"doc{document.id}_chunk{i}"
+        )
+        db.add(chunk)
+
+        # 3b. LangChain Document：metadata 存够信息，减少后续 SQLite 回查
+        lc_docs.append(LCDocument(
+            page_content=chunk_text,
+            metadata={
+                "document_id": document.id,
+                "chunk_index": i,
+                "title": doc.title,
+                "source": doc.source,
+            }
+        ))
+        chroma_ids.append(f"doc{document.id}_chunk{i}")
+
+    # 4. 提交 SQLite
+    db.commit()
+
+    # 5. LangChain 原生：一键存入 ChromaDB（自动 Embedding + 存储）
+    try:
+        vectorstore.add_documents(lc_docs, ids=chroma_ids)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"ChromaDB 存储失败（ID 可能重复，请勿重复提交相同文档）: {str(e)}"
+        )
+
+    return {
+        "message": "文档存入成功",
+        "document_id": document.id,
+        "title": doc.title,
+        "chunks_count": len(chunk_texts),
+    }
+
+
+# ==================== 接口 2：语义检索 ====================
+
+@router.post("/search", response_model=List[SearchResult], summary="语义检索（LangChain 原生）")
+def search(query: SearchIn, db: Session = Depends(get_db)):
+    """
+    与手搓版 POST /rag/search 功能一致：
+
+    【LangChain 原生部分】
+    - vectorstore.similarity_search_with_score() → 替代手写 get_embedding() + collection.query()
+
+    【保留手写部分】
+    - SQLite 回查（验证切片存在 + 获取精确 title）
+      （LangChain 无 SQLAlchemy 集成）
+
+    【分数说明】
+    ChromaDB 使用 cosine 距离，返回值是 distance（0=相同, 2=完全相反）。
+    转换为相似度：similarity = 1 - distance
+    """
+    # 1. LangChain 原生：语义检索（一行替代手搓版的 get_embedding + query）
+    results_with_scores = vectorstore.similarity_search_with_score(
+        query.query,
+        k=query.n_results,
+    )
+
+    if not results_with_scores:
+        return []
+
+    # 2. 解析结果（SQLite 回查增强）
+    output = []
+    for doc, score in results_with_scores:
+        metadata = doc.metadata
+        doc_id = metadata.get("document_id")
+        chunk_idx = metadata.get("chunk_index")
+        similarity = round(1 - score, 4)  # cosine distance → similarity
+
+        # 回查 SQLite 验证并获取精确信息
+        if doc_id is not None and chunk_idx is not None:
+            db_doc = db.query(Document).filter(Document.id == doc_id).first()
+            db_chunk = db.query(DocumentChunk).filter(
+                DocumentChunk.document_id == doc_id,
+                DocumentChunk.chunk_index == chunk_idx,
+            ).first()
+
+            title = db_doc.title if db_doc else metadata.get("title", "未知")
+            chunk_content = db_chunk.content if db_chunk else doc.page_content
+        else:
+            title = metadata.get("title", "未知")
+            chunk_content = doc.page_content
+
+        output.append(SearchResult(
+            title=title,
+            chunk_content=chunk_content,
+            similarity=similarity,
+            document_id=doc_id or 0,
+            chunk_index=chunk_idx or 0,
+        ))
+
+    return output
+
+
+# ==================== 接口 3：RAG 流式问答 ====================
+
+@router.post("/chat", summary="RAG 流式问答（LangChain 检索 + 推理链保留）")
+async def langchain_chat(req: ChatRequest, db: Session = Depends(get_db)):
+    """
+    与手搓版 POST /rag/chat 功能一致：
+
+    【LangChain 原生部分】
+    - retriever.invoke() → 语义检索
+    - LCEL 链 (prompt | llm) → Prompt 拼装 + LLM 调用
+    - chain.astream() → 流式输出
+
+    【保留手写部分】
+    - SQLite 回查增强 metadata
+    - Token 感知的上下文截断（truncate_context）
+    - 推理链保留（AIMessageChunk.additional_kwargs.reasoning_content）
+      不用 StrOutputParser() 因为它会丢弃推理内容
+
+    【StreamingResponse 对比】
+    手搓版：手动构造 OpenAI client → 手动 yield SSE
+    本文件：chain.astream() 自动流式，外层只包装 SSE 格式
+    """
+    # 1. LangChain 原生语义检索
+    docs = retriever.invoke(req.query)
+
+    # 2. SQLite 回查增强 metadata（手写，LangChain 无此集成）
+    for doc in docs:
+        doc_id = doc.metadata.get("document_id")
+        if doc_id:
+            db_doc = db.query(Document).filter(Document.id == doc_id).first()
+            if db_doc:
+                doc.metadata["title"] = db_doc.title
+                doc.metadata["source"] = db_doc.source or "未知来源"
+
+    # 3. 格式化 + Token 截断
+    context = format_docs(docs)
+    context = truncate_context(context)
+
+    # 4. LCEL 链：不带 StrOutputParser，保留 AIMessageChunk 以支持推理链
+    chain = RAG_PROMPT | llm  # 注意：不用 StrOutputParser()
+
     async def generate() -> AsyncIterator[str]:
-        """异步生成器：调用 LCEL 链并包装为 SSE"""
         try:
-            # astream() 是 LangChain 的异步流式方法
-            # 它会自动：检索 → 拼 Prompt → 调 LLM → 逐字返回
-            async for chunk in rag_chain.astream(req.query):
-                data = {"type": "content", "content": chunk}
-                yield f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
+            total_input = estimate_tokens(context) + estimate_tokens(req.query)
+            if total_input > MAX_INPUT_TOKENS:
+                error_data = {
+                    "type": "error",
+                    "content": "输入总 Token 数量超过最大限制，请减少检索结果数量或精简问题。"
+                }
+                yield f"data: {json.dumps(error_data, ensure_ascii=False)}\n\n"
+                return
 
-            # 结束标记
+            done_thinking = False
+
+            # chain.astream() 返回 AIMessageChunk（因为没挂 StrOutputParser）
+            async for chunk in chain.astream(
+                {"context": context, "question": req.query},
+                config={"max_tokens": MAX_OUTPUT_TOKENS}
+            ):
+                if isinstance(chunk, AIMessageChunk):
+                    # 推理链（DeepSeek 的 thinking content）
+                    reasoning = chunk.additional_kwargs.get("reasoning_content", "")
+                    answer = chunk.content
+
+                    if reasoning:
+                        data = {"type": "thinking", "content": reasoning}
+                        yield f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+                    if answer:
+                        if not done_thinking:
+                            divider = {"type": "divider", "content": "\n\n === Final Answer ===\n"}
+                            yield f"data: {json.dumps(divider, ensure_ascii=False)}\n\n"
+                            done_thinking = True
+                        data = {"type": "answer", "content": answer}
+                        yield f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
+
+            # 来源信息
+            sources = []
+            for i, doc in enumerate(docs, start=1):
+                title = doc.metadata.get("title", "未命名")
+                source = doc.metadata.get("source", "未知来源")
+                sources.append(f"[{i}] 《{title}》（{source}）")
+
+            if sources:
+                source_data = {
+                    "type": "sources",
+                    "content": f"\n\n【参考来源】\n" + "\n".join(sources)
+                }
+                yield f"data: {json.dumps(source_data, ensure_ascii=False)}\n\n"
+
             done_data = {"type": "done"}
             yield f"data: {json.dumps(done_data, ensure_ascii=False)}\n\n"
 
         except Exception as e:
-            error_data = {"type": "error", "content": f"LangChain 链执行出错: {str(e)}"}
+            error_data = {"type": "error", "content": f"链执行出错: {str(e)}"}
             yield f"data: {json.dumps(error_data, ensure_ascii=False)}\n\n"
 
     return StreamingResponse(
@@ -208,11 +436,23 @@ async def langchain_chat(req: ChatRequest):
     )
 
 
+# ==================== 接口 4：Token 估算 ====================
+
+@router.post("/estimate-tokens", summary="估算 Token 数量（tiktoken，LangChain 无原生替代）")
+def estimate_tokens_endpoint(req: EstimateTokensRequest):
+    """
+    与手搓版 POST /rag/estimate-tokens 完全一致。
+    LangChain 没有独立的 Token 估算组件，保留 tiktoken。
+    """
+    return {"token_count": estimate_tokens(req.text)}
+
+
+# ==================== 接口 5：健康检查 ====================
+
 @router.get("/health", summary="LangChain RAG 健康检查")
 def health_check():
     """检查 LangChain 各组件是否正常加载"""
     try:
-        # 简单测试：统计 VectorStore 里的文档数量
         count = vectorstore._collection.count()
         return {
             "status": "ok",
