@@ -395,39 +395,40 @@ Phase 2: RAG 核心（已完成）
 ├── 上下文窗口管理                       ✅
 └── LangChain 集成                     🟡  <- 当前位置
 
-Phase 3: LangChain 深化（查缺补漏新增）
-├── LangChain 对话记忆
-├── LangChain Agent 工具调用
-└── Prompt Engineering 进阶 (CoT/ReAct)
-
-Phase 4: RAG 进阶（查缺补漏新增）
-├── RAG Chunking 策略
-├── RAG 评估与指标 (RAGAS)
-└── 多向量数据库对比
-
-Phase 5: AI Agents（查缺补漏新增）
-├── AI Agents 基础 (ReAct/手动实现)
-└── Multi-Agent 与复杂工作流
-
-Phase 6: 生产级（查缺补漏新增）
-├── AI 安全与伦理
-├── LLM 可观测性 (LangSmith/Langfuse)
-├── LLM 评估与回归测试 (DeepEval)
-└── MCP (Model Context Protocol)
-
-Phase 7: 扩展能力（查缺补漏新增）
-├── 多模态 AI
-├── Fine-tuning 基础
-├── LlamaIndex
-└── Hugging Face 生态
-
-Phase 8: 工程补全（原有计划）
+Phase 3: 原有后端路线（先前计划，优先走完）
 ├── 异步编程深入
 ├── 用户认证
 ├── 数据库迁移
 ├── 单元测试
 ├── 项目部署
+├── 前端框架基础
 └── 前后端对接
+
+Phase 4: LangChain 深化（查缺补漏）
+├── LangChain 对话记忆
+├── LangChain Agent 工具调用
+└── Prompt Engineering 进阶 (CoT/ReAct)
+
+Phase 5: RAG 进阶（查缺补漏）
+├── RAG Chunking 策略
+├── RAG 评估与指标 (RAGAS)
+└── 多向量数据库对比
+
+Phase 6: AI Agents（查缺补漏）
+├── AI Agents 基础 (ReAct/手动实现)
+└── Multi-Agent 与复杂工作流
+
+Phase 7: 生产级（查缺补漏）
+├── AI 安全与伦理
+├── LLM 可观测性 (LangSmith/Langfuse)
+├── LLM 评估与回归测试 (DeepEval)
+└── MCP (Model Context Protocol)
+
+Phase 8: 扩展能力（查缺补漏）
+├── 多模态 AI
+├── Fine-tuning 基础
+├── LlamaIndex
+└── Hugging Face 生态
 ```
 
 ---
@@ -459,6 +460,13 @@ Phase 8: 工程补全（原有计划）
 
 每完成一个阶段，在该阶段前打勾，并记录完成日期：
 
+- [ ] 异步编程深入 (预计: ___)
+- [ ] 用户认证 (预计: ___)
+- [ ] 数据库迁移 (预计: ___)
+- [ ] 单元测试 (预计: ___)
+- [ ] 项目部署 (预计: ___)
+- [ ] 前端框架基础 (预计: ___)
+- [ ] 前后端对接 (预计: ___)
 - [ ] LangChain 对话记忆 (预计: ___)
 - [ ] LangChain Agent 工具调用 (预计: ___)
 - [ ] Prompt Engineering 进阶 (预计: ___)
@@ -475,12 +483,6 @@ Phase 8: 工程补全（原有计划）
 - [ ] Fine-tuning 基础 (预计: ___)
 - [ ] LlamaIndex (预计: ___)
 - [ ] Hugging Face 生态 (预计: ___)
-- [ ] 异步编程深入 (预计: ___)
-- [ ] 用户认证 (预计: ___)
-- [ ] 数据库迁移 (预计: ___)
-- [ ] 单元测试 (预计: ___)
-- [ ] 项目部署 (预计: ___)
-- [ ] 前后端对接 (预计: ___)
 
 ### 5.4 效果评估标准
 

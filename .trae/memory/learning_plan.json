@@ -190,6 +190,83 @@
       "roadmap_tags": ["LangChain", "RAG"]
     },
     {
+      "id": "async-deep",
+      "name": "异步编程深入",
+      "description": "async/await 原理、asyncio",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
+    },
+    {
+      "id": "jwt-auth",
+      "name": "用户认证",
+      "description": "JWT/OAuth2、密码哈希",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
+    },
+    {
+      "id": "alembic",
+      "name": "数据库迁移",
+      "description": "Alembic 表结构升级",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
+    },
+    {
+      "id": "pytest",
+      "name": "单元测试",
+      "description": "pytest 测试用例编写",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
+    },
+    {
+      "id": "docker-deploy",
+      "name": "项目部署",
+      "description": "Docker 容器化部署",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["jwt-auth", "alembic"],
+      "roadmap_tags": ["Backend", "Deployment"]
+    },
+    {
+      "id": "frontend-basics",
+      "name": "前端框架基础",
+      "description": "React/Vue 基础",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [],
+      "roadmap_tags": ["Frontend"]
+    },
+    {
+      "id": "frontend-backend",
+      "name": "前后端对接",
+      "description": "Fetch/Axios API 调用",
+      "status": "pending",
+      "created_at": "2026-05-31",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["frontend-basics", "docker-deploy"],
+      "roadmap_tags": ["Frontend", "Backend", "Full-Stack"]
+    },
+    {
       "id": "langchain-memory",
       "name": "LangChain 对话记忆",
       "description": "Memory 类型、ConversationBufferMemory、历史消息注入",
@@ -364,83 +441,6 @@
       "documents": [],
       "dependencies": ["fine-tuning"],
       "roadmap_tags": ["Hugging Face", "Open Source Models"]
-    },
-    {
-      "id": "async-deep",
-      "name": "异步编程深入",
-      "description": "async/await 原理、asyncio",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
-    },
-    {
-      "id": "jwt-auth",
-      "name": "用户认证",
-      "description": "JWT/OAuth2、密码哈希",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
-    },
-    {
-      "id": "alembic",
-      "name": "数据库迁移",
-      "description": "Alembic 表结构升级",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
-    },
-    {
-      "id": "pytest",
-      "name": "单元测试",
-      "description": "pytest 测试用例编写",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
-    },
-    {
-      "id": "docker-deploy",
-      "name": "项目部署",
-      "description": "Docker 容器化部署",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": ["jwt-auth", "alembic"],
-      "roadmap_tags": ["Backend", "Deployment"]
-    },
-    {
-      "id": "frontend-basics",
-      "name": "前端框架基础",
-      "description": "React/Vue 基础",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [],
-      "roadmap_tags": ["Frontend"]
-    },
-    {
-      "id": "frontend-backend",
-      "name": "前后端对接",
-      "description": "Fetch/Axios API 调用",
-      "status": "pending",
-      "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": ["frontend-basics", "docker-deploy"],
-      "roadmap_tags": ["Frontend", "Backend", "Full-Stack"]
     }
   ],
   "current_stage_id": "langchain"
