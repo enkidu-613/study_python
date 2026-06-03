@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-02T16:00:00",
+  "updated_at": "2026-06-03T12:00:00",
   "entries": [
+    {
+      "id": "milestone-context-window-start",
+      "date": "2026-06-03",
+      "title": "进入下一阶段：上下文窗口管理",
+      "file_path": ".trae/memory/learning_plan.json",
+      "stage_id": "rag-context-window",
+      "entry_type": "milestone",
+      "topics": ["学习计划", "阶段推进", "上下文窗口管理"],
+      "summary": "完成 rag-test-run（跑通 RAG 闭环测试），推进到 rag-context-window（上下文窗口管理）阶段"
+    },
     {
       "id": "dialog-29",
       "date": "2026-06-02",

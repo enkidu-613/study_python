@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-05-31T12:00:00",
+  "updated_at": "2026-06-03T12:00:00",
   "stages": [
     {
       "id": "python-basics",
@@ -156,7 +156,7 @@
       "id": "rag-context-window",
       "name": "上下文窗口管理",
       "description": "Token 截断策略、超长 Prompt 处理",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
@@ -243,5 +243,5 @@
       "dependencies": ["frontend-basics", "docker-deploy"]
     }
   ],
-  "current_stage_id": "rag-test-run"
+  "current_stage_id": "rag-context-window"
 }
