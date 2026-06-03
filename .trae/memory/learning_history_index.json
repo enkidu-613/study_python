@@ -3,6 +3,16 @@
   "updated_at": "2026-06-02T16:00:00",
   "entries": [
     {
+      "id": "dialog-29",
+      "date": "2026-06-02",
+      "title": "DocumentIn source 参数用途解析",
+      "file_path": ".trae/memory/conversations/2026-06-02.md",
+      "stage_id": "rag-test-run",
+      "entry_type": "dialog",
+      "topics": ["source参数", "DocumentIn", "Pydantic模型", "数据库字段"],
+      "summary": "解析/rag/documents接口中source参数的作用：记录文档来源（URL/文件名/书籍），默认空字符串，存入SQLite但未参与RAG流程"
+    },
+    {
       "id": "milestone-test-run",
       "date": "2026-06-02",
       "title": "RAG 闭环测试跑通",

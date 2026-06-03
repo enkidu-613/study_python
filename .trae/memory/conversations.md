@@ -16,7 +16,7 @@
 | [2026-05-28.md](./conversations/2026-05-28.md) | 对话 18 ~ 21 | 双存储架构、余弦距离 Q&A、错题本机制、FastAPI 最小原型 |
 | [2026-05-29.md](./conversations/2026-05-29.md) | 对话 22 ~ 23 | 模型问答、归档规则制定与文件重命名 |
 | [2026-05-31.md](./conversations/2026-05-31.md) | 对话 24 ~ 26 | RAG闭环代码讲解、BaseModel辨析、掌握度测试 |
-| [2026-06-02.md](./conversations/2026-06-02.md) | 对话 27 | StreamingResponse流式传输原理、Python类型系统辨析 |
+| [2026-06-02.md](./conversations/2026-06-02.md) | 对话 27 ~ 29 | StreamingResponse流式传输原理、Python类型系统辨析、RAG闭环测试、source参数解析 |
 
 ---
 
@@ -51,3 +51,5 @@
 | 25 | 2026-05-31 | BaseModel 与 SQLAlchemy Base 辨析 | [05-31](./conversations/2026-05-31.md) |
 | 26 | 2026-05-31 | RAG 闭环章节掌握度测试 | [05-31](./conversations/2026-05-31.md) |
 | 27 | 2026-06-02 | StreamingResponse 流式传输原理深度解析 | [06-02](./conversations/2026-06-02.md) |
+| 28 | 2026-06-02 | RAG 闭环测试跑通 | [06-02](./conversations/2026-06-02.md) |
+| 29 | 2026-06-02 | DocumentIn source 参数用途解析 | [06-02](./conversations/2026-06-02.md) |
