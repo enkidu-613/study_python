@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-03T12:00:00",
+  "updated_at": "2026-06-03T17:00:00",
   "stages": [
     {
       "id": "python-basics",
@@ -10,7 +10,8 @@
       "created_at": "2024-01-01",
       "completed_at": "2024-01-15",
       "documents": ["md/01_Python基础.md"],
-      "dependencies": []
+      "dependencies": [],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "python-advanced",
@@ -20,7 +21,8 @@
       "created_at": "2024-01-16",
       "completed_at": "2024-01-30",
       "documents": ["md/02_Python进阶.md"],
-      "dependencies": ["python-basics"]
+      "dependencies": ["python-basics"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "python-expert",
@@ -30,7 +32,8 @@
       "created_at": "2024-02-01",
       "completed_at": "2024-02-15",
       "documents": ["md/03_Python高级特性.md"],
-      "dependencies": ["python-advanced"]
+      "dependencies": ["python-advanced"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "fastapi-basics",
@@ -40,7 +43,8 @@
       "created_at": "2024-02-16",
       "completed_at": "2024-03-01",
       "documents": ["md/04_FastAPI基础.md"],
-      "dependencies": ["python-expert"]
+      "dependencies": ["python-expert"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "fastapi-crud",
@@ -50,7 +54,8 @@
       "created_at": "2024-03-02",
       "completed_at": "2024-03-15",
       "documents": ["md/05_FastAPI_CRUD.md"],
-      "dependencies": ["fastapi-basics"]
+      "dependencies": ["fastapi-basics"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "fastapi-orm",
@@ -60,7 +65,8 @@
       "created_at": "2024-03-16",
       "completed_at": "2024-04-01",
       "documents": ["md/06_FastAPI_ORM_SQLAlchemy.md"],
-      "dependencies": ["fastapi-crud"]
+      "dependencies": ["fastapi-crud"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "code-layering",
@@ -70,7 +76,8 @@
       "created_at": "2024-04-02",
       "completed_at": "2024-04-15",
       "documents": ["md/07_代码分层与模块化架构.md"],
-      "dependencies": ["fastapi-orm"]
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "prompt-engineering",
@@ -80,7 +87,8 @@
       "created_at": "2024-04-16",
       "completed_at": "2024-05-01",
       "documents": ["md/08_提示词工程与聊天记忆.md"],
-      "dependencies": ["code-layering"]
+      "dependencies": ["code-layering"],
+      "roadmap_tags": ["Prompt Engineering", "LLM Basics"]
     },
     {
       "id": "rag-embedding",
@@ -90,7 +98,8 @@
       "created_at": "2026-05-14",
       "completed_at": "2026-05-19",
       "documents": ["md/09_RAG_向量数据库入门.md", "md/ai学习应用数学/01_向量与余弦相似度.md"],
-      "dependencies": ["prompt-engineering"]
+      "dependencies": ["prompt-engineering"],
+      "roadmap_tags": ["Embeddings", "Vector DBs"]
     },
     {
       "id": "rag-chromadb",
@@ -100,7 +109,8 @@
       "created_at": "2026-05-19",
       "completed_at": "2026-05-24",
       "documents": ["md/10_RAG_ChromaDB向量数据库实战.md"],
-      "dependencies": ["rag-embedding"]
+      "dependencies": ["rag-embedding"],
+      "roadmap_tags": ["Vector DBs", "Chroma"]
     },
     {
       "id": "rag-embedding-exp",
@@ -110,7 +120,8 @@
       "created_at": "2026-05-24",
       "completed_at": "2026-05-24",
       "documents": [],
-      "dependencies": ["rag-chromadb"]
+      "dependencies": ["rag-chromadb"],
+      "roadmap_tags": ["Embeddings"]
     },
     {
       "id": "rag-dual-storage",
@@ -120,7 +131,8 @@
       "created_at": "2026-05-24",
       "completed_at": "2026-05-28",
       "documents": ["md/11_双存储架构SQLite_ChromaDB.md"],
-      "dependencies": ["rag-chromadb"]
+      "dependencies": ["rag-chromadb"],
+      "roadmap_tags": ["Vector DBs", "Backend"]
     },
     {
       "id": "rag-fastapi-chroma",
@@ -130,7 +142,8 @@
       "created_at": "2026-05-28",
       "completed_at": "2026-05-28",
       "documents": [],
-      "dependencies": ["rag-dual-storage"]
+      "dependencies": ["rag-dual-storage"],
+      "roadmap_tags": ["Backend", "Vector DBs"]
     },
     {
       "id": "rag-closed-loop",
@@ -140,7 +153,8 @@
       "created_at": "2026-05-28",
       "completed_at": "2026-05-31",
       "documents": ["md/12_FastAPI_Chroma_最小原型.md", "md/13_RAG_闭环_检索到回答.md"],
-      "dependencies": ["rag-fastapi-chroma"]
+      "dependencies": ["rag-fastapi-chroma"],
+      "roadmap_tags": ["RAG"]
     },
     {
       "id": "rag-test-run",
@@ -150,7 +164,8 @@
       "created_at": "2026-05-31",
       "completed_at": "2026-06-02",
       "documents": [],
-      "dependencies": ["rag-closed-loop"]
+      "dependencies": ["rag-closed-loop"],
+      "roadmap_tags": ["RAG"]
     },
     {
       "id": "rag-context-window",
@@ -160,17 +175,195 @@
       "created_at": "2026-05-31",
       "completed_at": "2026-06-03",
       "documents": ["md/14_上下文窗口管理.md"],
-      "dependencies": ["rag-closed-loop"]
+      "dependencies": ["rag-closed-loop"],
+      "roadmap_tags": ["RAG", "Context Engineering"]
     },
     {
       "id": "langchain",
       "name": "LangChain 集成",
-      "description": "RetrievalQA 链、框架化 RAG",
+      "description": "LCEL 链式语法、框架化 RAG",
       "status": "in_progress",
       "created_at": "2026-05-31",
       "completed_at": null,
+      "documents": ["md/15_LangChain核心概念.md"],
+      "dependencies": ["rag-closed-loop"],
+      "roadmap_tags": ["LangChain", "RAG"]
+    },
+    {
+      "id": "langchain-memory",
+      "name": "LangChain 对话记忆",
+      "description": "Memory 类型、ConversationBufferMemory、历史消息注入",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
       "documents": [],
-      "dependencies": ["rag-closed-loop"]
+      "dependencies": ["langchain"],
+      "roadmap_tags": ["LangChain", "Prompt Engineering"]
+    },
+    {
+      "id": "langchain-agents",
+      "name": "LangChain Agent 工具调用",
+      "description": "Tool 定义、AgentExecutor、自定义工具",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["langchain-memory"],
+      "roadmap_tags": ["LangChain", "AI Agents"]
+    },
+    {
+      "id": "prompt-advanced",
+      "name": "Prompt Engineering 进阶",
+      "description": "CoT、ReAct、Zero-Shot、Few-Shot、Top-K/P 采样参数",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["langchain"],
+      "roadmap_tags": ["Prompt Engineering", "LLM Basics"]
+    },
+    {
+      "id": "rag-chunking",
+      "name": "RAG Chunking 策略",
+      "description": "分块策略、重叠窗口、语义分块、递归字符拆分",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["langchain"],
+      "roadmap_tags": ["RAG", "Chunking"]
+    },
+    {
+      "id": "rag-evaluation",
+      "name": "RAG 评估与指标",
+      "description": "RAGAS、Faithfulness、Answer Relevance、Context Precision",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["rag-chunking", "prompt-advanced"],
+      "roadmap_tags": ["RAG", "Evaluation"]
+    },
+    {
+      "id": "vector-db-advanced",
+      "name": "多向量数据库对比",
+      "description": "Pinecone、Weaviate、Qdrant、FAISS、MongoDB Atlas",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["rag-chunking"],
+      "roadmap_tags": ["Vector DBs", "Pinecone", "Weaviate", "Qdrant", "FAISS"]
+    },
+    {
+      "id": "ai-agents",
+      "name": "AI Agents 基础",
+      "description": "ReAct 模式、Function Calling、Tools、手动实现 Agent",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["prompt-advanced", "langchain-agents"],
+      "roadmap_tags": ["AI Agents", "ReAct", "Function Calling"]
+    },
+    {
+      "id": "ai-agents-advanced",
+      "name": "Multi-Agent 与复杂工作流",
+      "description": "多 Agent 协作、OpenAI Agent SDK、Claude Agent SDK",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["ai-agents"],
+      "roadmap_tags": ["AI Agents", "Multi-agents"]
+    },
+    {
+      "id": "ai-safety",
+      "name": "AI 安全与伦理",
+      "description": "Prompt Injection、Bias、Content Moderation、Safety Best Practices",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["ai-agents"],
+      "roadmap_tags": ["AI Safety and Ethics"]
+    },
+    {
+      "id": "llm-observability",
+      "name": "LLM 可观测性",
+      "description": "LangSmith、Langfuse、Helicone、Tracing & Logging、Cost 监控",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["rag-evaluation"],
+      "roadmap_tags": ["Observability", "LangSmith", "Langfuse"]
+    },
+    {
+      "id": "llm-evaluation",
+      "name": "LLM 评估与回归测试",
+      "description": "Deterministic Evals、Model-Based Evals、DeepEval、RAGAS、Regression Testing",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["rag-evaluation"],
+      "roadmap_tags": ["Evaluation", "DeepEval", "RAGAS"]
+    },
+    {
+      "id": "mcp",
+      "name": "Model Context Protocol (MCP)",
+      "description": "MCP Host/Server/Client 架构、构建 MCP Server、MCP Client 开发",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["ai-agents"],
+      "roadmap_tags": ["MCP"]
+    },
+    {
+      "id": "multimodal-ai",
+      "name": "多模态 AI",
+      "description": "Image Understanding、Vision API、Text-to-Speech、Speech-to-Text",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["ai-agents-advanced"],
+      "roadmap_tags": ["Multimodal AI", "Vision", "TTS", "STT"]
+    },
+    {
+      "id": "fine-tuning",
+      "name": "Fine-tuning 基础",
+      "description": "微调概念、RAG vs Fine-tuning、LoRA、QLoRA、训练流程",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["ai-agents"],
+      "roadmap_tags": ["Fine-tuning", "LoRA"]
+    },
+    {
+      "id": "llama-index",
+      "name": "LlamaIndex",
+      "description": "LlamaIndex 框架、索引构建、查询引擎、与 LangChain 对比",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["rag-evaluation"],
+      "roadmap_tags": ["LlamaIndex", "RAG"]
+    },
+    {
+      "id": "hugging-face",
+      "name": "Hugging Face 生态",
+      "description": "Hugging Face Hub、Transformers.js、Inference SDK、开源模型部署",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["fine-tuning"],
+      "roadmap_tags": ["Hugging Face", "Open Source Models"]
     },
     {
       "id": "async-deep",
@@ -180,7 +373,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fastapi-orm"]
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "jwt-auth",
@@ -190,7 +384,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fastapi-orm"]
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "alembic",
@@ -200,7 +395,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fastapi-orm"]
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "pytest",
@@ -210,7 +406,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fastapi-orm"]
+      "dependencies": ["fastapi-orm"],
+      "roadmap_tags": ["Backend"]
     },
     {
       "id": "docker-deploy",
@@ -220,7 +417,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["jwt-auth", "alembic"]
+      "dependencies": ["jwt-auth", "alembic"],
+      "roadmap_tags": ["Backend", "Deployment"]
     },
     {
       "id": "frontend-basics",
@@ -230,7 +428,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": []
+      "dependencies": [],
+      "roadmap_tags": ["Frontend"]
     },
     {
       "id": "frontend-backend",
@@ -240,7 +439,8 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["frontend-basics", "docker-deploy"]
+      "dependencies": ["frontend-basics", "docker-deploy"],
+      "roadmap_tags": ["Frontend", "Backend", "Full-Stack"]
     }
   ],
   "current_stage_id": "langchain"

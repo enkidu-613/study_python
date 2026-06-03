@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-03T12:00:00",
+  "updated_at": "2026-06-03T17:00:00",
   "entries": [
+    {
+      "id": "milestone-roadmap-gap-analysis",
+      "date": "2026-06-03",
+      "title": "roadmap.sh AI Engineer 查缺补漏计划制定",
+      "file_path": "md/16_roadmap查缺补漏计划.md",
+      "stage_id": "langchain",
+      "entry_type": "milestone",
+      "topics": ["roadmap", "查缺补漏", "学习计划", "AI Engineer"],
+      "summary": "基于 roadmap.sh AI Engineer 路线图，系统梳理已学和未学知识点，新增 16 个查缺补漏阶段到 learning_plan.json，生成完整对照表和跟踪机制"
+    },
     {
       "id": "milestone-langchain-start",
       "date": "2026-06-03",
