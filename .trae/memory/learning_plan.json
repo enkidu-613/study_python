@@ -156,17 +156,17 @@
       "id": "rag-context-window",
       "name": "上下文窗口管理",
       "description": "Token 截断策略、超长 Prompt 处理",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
+      "completed_at": "2026-06-03",
+      "documents": ["md/14_上下文窗口管理.md"],
       "dependencies": ["rag-closed-loop"]
     },
     {
       "id": "langchain",
       "name": "LangChain 集成",
       "description": "RetrievalQA 链、框架化 RAG",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
@@ -243,5 +243,5 @@
       "dependencies": ["frontend-basics", "docker-deploy"]
     }
   ],
-  "current_stage_id": "rag-context-window"
+  "current_stage_id": "langchain"
 }

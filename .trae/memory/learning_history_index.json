@@ -3,6 +3,16 @@
   "updated_at": "2026-06-03T12:00:00",
   "entries": [
     {
+      "id": "milestone-langchain-start",
+      "date": "2026-06-03",
+      "title": "进入下一阶段：LangChain 集成",
+      "file_path": ".trae/memory/learning_plan.json",
+      "stage_id": "langchain",
+      "entry_type": "milestone",
+      "topics": ["学习计划", "阶段推进", "LangChain", "RAG框架化"],
+      "summary": "完成 rag-context-window（上下文窗口管理），推进到 langchain（LangChain 集成）阶段"
+    },
+    {
       "id": "milestone-context-window-start",
       "date": "2026-06-03",
       "title": "进入下一阶段：上下文窗口管理",
