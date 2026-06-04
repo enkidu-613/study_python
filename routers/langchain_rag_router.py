@@ -38,7 +38,7 @@ import os
 from dotenv import load_dotenv
 
 # ========== LangChain 核心组件 ==========
-from langchain_openai import OpenAIEmbeddings          # Embedding（不变）
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings  # 本地 Embedding
 from langchain_deepseek import ChatDeepSeek            # 替代 ChatOpenAI，原生支持 DeepSeek 推理链
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
@@ -62,18 +62,18 @@ load_dotenv()
 MODELSCOPE_BASE_URL = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
 MODELSCOPE_API_KEY = os.getenv("MODELSCOPE_API_KEY")
 LLM_MODEL = os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2")
-EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-8B"
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL_NAME", "Qwen/Qwen3-Embedding-8B")
 
 # 上下文窗口配置
 MAX_CONTEXT_TOKENS = 2000
 MAX_INPUT_TOKENS = 6000
 MAX_OUTPUT_TOKENS = 2000
 
-# ---------- 1. Embedding 模型（LangChain 原生封装） ----------
-embedding_model = OpenAIEmbeddings(
-    model=EMBEDDING_MODEL,
-    openai_api_base=MODELSCOPE_BASE_URL,
-    openai_api_key=MODELSCOPE_API_KEY,
+# ---------- 1. Embedding 模型（本地 HuggingFace BGE） ----------
+embedding_model = HuggingFaceBgeEmbeddings(
+    model_name=EMBEDDING_MODEL,
+    model_kwargs={"device": "cpu"},
+    encode_kwargs={"normalize_embeddings": True},
 )
 
 # ---------- 2. LLM（langchain-deepseek 原生支持推理链） ----------

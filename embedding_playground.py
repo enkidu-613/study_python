@@ -1,22 +1,10 @@
 import numpy as np
-import os
-from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
-model_api_url = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
-client = OpenAI(
-    base_url=model_api_url,
-    api_key=os.getenv("MODELSCOPE_API_KEY")
-)
 
-def get_embedding(text: str) -> list[float]:
-    response = client.embeddings.create(
-        model="Qwen/Qwen3-Embedding-8B",
-        input=text,
-        encoding_format="float"
-    )
-    return response.data[0].embedding
+# ========== 本地 Embedding（不再依赖外部 API）==========
+from local_embedding import get_embedding
 
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))

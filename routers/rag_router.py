@@ -91,15 +91,8 @@ class EstimateTokensRequest(BaseModel):
     text: str
 
 
-# ========== Embedding 工具 ==========
-def get_embedding(text: str) -> list[float]:
-    """把文字转成 4096 维向量"""
-    response = client.embeddings.create(
-        model="Qwen/Qwen3-Embedding-8B",
-        input=text,
-        encoding_format="float"
-    )
-    return response.data[0].embedding
+# ========== Embedding 工具（本地模型）==========
+from local_embedding import get_embedding
 
 
 # ========== 文本切片 ==========

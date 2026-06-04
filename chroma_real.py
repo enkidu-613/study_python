@@ -1,16 +1,13 @@
 import chromadb
 import numpy as np
-from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
-# ========== 第0步：加载环境变量（和rag_test.py一样）==========
+# ========== 第0步：加载环境变量 ==========
 load_dotenv()
-model_api_url = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
-client = OpenAI(
-    base_url=model_api_url,
-    api_key=os.getenv("MODELSCOPE_API_KEY")
-)
+
+# ========== 本地 Embedding（不再依赖外部 API）==========
+from local_embedding import get_embedding
 
 # ========== 第1步：创建 ChromaDB 客户端 ==========
 # Client() = 内存模式，数据存在内存里，程序结束就没了
@@ -34,16 +31,7 @@ documents = [
 ]
 
 # ========== 第4步：把文本转成向量（关键！）==========
-# 这里调用 ModelScope API，和 rag_test.py 里的 get_embedding() 一样
-def get_embedding(text: str) -> list[float]:
-    """把一句话变成1024维的向量"""
-    response = client.embeddings.create(
-        model="Qwen/Qwen3-Embedding-8B",
-        input=text,
-        encoding_format="float"
-    )
-    return response.data[0].embedding
-
+# 使用本地 Embedding 模型
 # 逐条转换，得到3个向量
 embeddings = []
 for doc in documents:

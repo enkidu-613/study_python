@@ -1,40 +1,11 @@
 import numpy as np
-import os
-from openai import OpenAI
 from dotenv import load_dotenv
 
 # 加载 .env 环境变量
 load_dotenv()
 
-# ModelScope API 配置（使用 OpenAI 兼容接口）
-MODELSCOPE_API_KEY = os.getenv("MODELSCOPE_API_KEY")
-
-MODEL_API_URL = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
-
-client = OpenAI(
-    base_url=MODEL_API_URL,
-    api_key=MODELSCOPE_API_KEY
-)
-
-def get_embedding(text: str) -> list[float]:
-    """
-    将文本转换为向量（Embedding）- 使用 ModelScope API (Qwen3-Embedding-8B)
-    
-    数学原理：
-    ┌─────────────────────────────────────────────────────────────┐
-    │  Text → [Tokenization] → [Neural Network] → Vector(多维)   │
-    └─────────────────────────────────────────────────────────────┘
-    
-    本质：神经网络将语义编码为高维空间中的坐标点
-    - 语义相近的文本 → 空间中距离相近的点
-    - 语义不同的文本 → 空间中距离遥远的点
-    """
-    response = client.embeddings.create(
-        model="Qwen/Qwen3-Embedding-8B",
-        input=text,
-        encoding_format="float"
-    )
-    return response.data[0].embedding
+# ========== 本地 Embedding（不再依赖外部 API）==========
+from local_embedding import get_embedding
 
 # ========== 测试 ==========
 text1 = "如何提升代码质量"

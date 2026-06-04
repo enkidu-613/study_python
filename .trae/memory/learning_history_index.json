@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-04T23:00:00",
+  "updated_at": "2026-06-05T00:00:00",
   "entries": [
+    {
+      "id": "dialog-43",
+      "date": "2026-06-04",
+      "title": "配置集中化 + 本地 Embedding 部署 + lifespan 预加载 + ChromaDB 迁移",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": [".env配置", "本地Embedding", "HuggingFaceBgeEmbeddings", "sentence-transformers", "bge-small-zh-v1.5", "lifespan预加载", "ChromaDB维度迁移", "配置集中化", "百度千帆", "腾讯tokenhub", "local_embedding.py"],
+      "summary": "将硬编码的MODEL_API_URL和MODEL_NAME集中到.env，新增EMBEDDING_MODEL_NAME；用HuggingFaceBgeEmbeddings部署本地bge-small-zh-v1.5（95MB/512维）替代千帆tao-8k远程API；main.py加lifespan启动时预加载模型防首次卡死；清空ChromaDB 4096维旧数据重建512维；更新README.md标记langchain阶段完成"
+    },
     {
       "id": "dialog-42",
       "date": "2026-06-04",

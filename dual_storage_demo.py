@@ -7,7 +7,6 @@
 """
 
 import chromadb
-from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
@@ -18,11 +17,9 @@ from models import Document, DocumentChunk
 
 # ========== 第0步：加载环境变量 ==========
 load_dotenv()
-model_api_url = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
-client = OpenAI(
-    base_url=model_api_url,
-    api_key=os.getenv("MODELSCOPE_API_KEY")
-)
+
+# ========== 本地 Embedding（不再依赖外部 API）==========
+from local_embedding import get_embedding
 
 # ========== 第1步：创建 ChromaDB 客户端 ==========
 client_db = chromadb.Client()
@@ -33,15 +30,7 @@ collection = client_db.create_collection(
     metadata={"hnsw:space": "cosine"}
 )
 
-# ========== 第2步：Embedding 工具函数 ==========
-def get_embedding(text: str) -> list[float]:
-    """把文字转成向量（语义身份证）"""
-    response = client.embeddings.create(
-        model="Qwen/Qwen3-Embedding-8B",
-        input=text,
-        encoding_format="float"
-    )
-    return response.data[0].embedding
+# ========== 第2步：Embedding 工具函数（本地模型，由 local_embedding 提供）==========
 
 
 # ========== 第3步：文档切片函数 ==========
