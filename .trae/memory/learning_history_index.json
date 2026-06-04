@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-05T00:00:00",
+  "updated_at": "2026-06-05T01:00:00",
   "entries": [
+    {
+      "id": "dialog-44",
+      "date": "2026-06-04",
+      "title": "代码抽象重构 + MPS 硬件加速 + route handover",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["代码重构", "五层架构", "MPS加速", "Metal GPU", "HuggingFaceBgeEmbeddings", "sentence-transformers", "设备检测", "CPU回退"],
+      "summary": "将langchain_rag_router.py按5层架构（工具→数据→业务→表现→路由）抽象17个独立函数；为local_embedding.py和langchain_rag_router.py同时添加MPS（Metal GPU）检测+冒烟测试+CPU回退三层兜底机制，验证mps:0运行成功"
+    },
     {
       "id": "dialog-43",
       "date": "2026-06-04",
