@@ -1,0 +1,376 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-06-05T01:00:00",
+  "entries": [
+    {
+      "id": "dialog-44",
+      "date": "2026-06-04",
+      "title": "代码抽象重构 + MPS 硬件加速 + route handover",
+      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["代码重构", "五层架构", "MPS加速", "Metal GPU", "HuggingFaceBgeEmbeddings", "sentence-transformers", "设备检测", "CPU回退"],
+      "summary": "将langchain_rag_router.py按5层架构（工具→数据→业务→表现→路由）抽象17个独立函数；为local_embedding.py和langchain_rag_router.py同时添加MPS（Metal GPU）检测+冒烟测试+CPU回退三层兜底机制，验证mps:0运行成功"
+    },
+    {
+      "id": "dialog-43",
+      "date": "2026-06-04",
+      "title": "配置集中化 + 本地 Embedding 部署 + lifespan 预加载 + ChromaDB 迁移",
+      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": [".env配置", "本地Embedding", "HuggingFaceBgeEmbeddings", "sentence-transformers", "bge-small-zh-v1.5", "lifespan预加载", "ChromaDB维度迁移", "配置集中化", "百度千帆", "腾讯tokenhub", "local_embedding.py"],
+      "summary": "将硬编码的MODEL_API_URL和MODEL_NAME集中到.env，新增EMBEDDING_MODEL_NAME；用HuggingFaceBgeEmbeddings部署本地bge-small-zh-v1.5（95MB/512维）替代千帆tao-8k远程API；main.py加lifespan启动时预加载模型防首次卡死；清空ChromaDB 4096维旧数据重建512维；更新README.md标记langchain阶段完成"
+    },
+    {
+      "id": "dialog-42",
+      "date": "2026-06-04",
+      "title": "RAG 检索修复 + LangChain 深度思考攻克 + 响应包装 + tech-search skill",
+      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["RAG检索修复", "ChatDeepSeek", "推理链", "reasoning_content", "extra_body", "ApiResponse", "LCEL", "chunk_size", "tech-search-sources"],
+      "summary": "修复RAG三个Bug（n_results忽略、Prompt过严、chunk_size太小），攻克LangChain中DeepSeek推理链传递（ChatDeepSeek + extra_body），统一ApiResponse包装，创建tech-search-sources skill，新增DELETE接口"
+    },
+    {
+      "id": "milestone-langchain-complete",
+      "date": "2026-06-04",
+      "title": "LangChain 集成阶段完成，推进到异步编程深入",
+      "file_path": ".reasonix/memory/learning_plan.json",
+      "stage_id": "langchain",
+      "entry_type": "milestone",
+      "topics": ["LangChain", "RAG框架化", "LCEL", "阶段完成"],
+      "summary": "使用 LangChain 原生组件重写 RAG 路由，覆盖全部 5 个接口，保留 SQLite 双存储。标记 langchain 阶段完成，推进到 async-deep"
+    },
+    {
+      "id": "dialog-41",
+      "date": "2026-06-04",
+      "title": "LangChain RAG 路由完整重写与代码深度讲解",
+      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["LangChain", "RAG", "RecursiveCharacterTextSplitter", "truncate_context", "RunnableLambda", "双存储对比", "chroma_ids", "管道vs中间件"],
+      "summary": "重写 langchain_rag_router.py 全部5个接口，详解 RecursiveCharacterTextSplitter 递归切片、truncate_context 上下文截断、手搓版与 LangChain 版双存储对比、数组下标对齐机制、LCEL 管道与中间件区别、SQL+向量真实场景"
+    },
+    {
+      "id": "milestone-roadmap-gap-analysis",
+      "date": "2026-06-03",
+      "title": "roadmap.sh AI Engineer 查缺补漏计划制定",
+      "file_path": ".reasonix/memory/roadmap查缺补漏计划.md",
+      "stage_id": "langchain",
+      "entry_type": "milestone",
+      "topics": ["roadmap", "查缺补漏", "学习计划", "AI Engineer"],
+      "summary": "基于 roadmap.sh AI Engineer 路线图，系统梳理已学和未学知识点，新增 16 个查缺补漏阶段到 learning_plan.json，生成完整对照表和跟踪机制"
+    },
+    {
+      "id": "milestone-langchain-start",
+      "date": "2026-06-03",
+      "title": "进入下一阶段：LangChain 集成",
+      "file_path": ".reasonix/memory/learning_plan.json",
+      "stage_id": "langchain",
+      "entry_type": "milestone",
+      "topics": ["学习计划", "阶段推进", "LangChain", "RAG框架化"],
+      "summary": "完成 rag-context-window（上下文窗口管理），推进到 langchain（LangChain 集成）阶段"
+    },
+    {
+      "id": "milestone-context-window-start",
+      "date": "2026-06-03",
+      "title": "进入下一阶段：上下文窗口管理",
+      "file_path": ".reasonix/memory/learning_plan.json",
+      "stage_id": "rag-context-window",
+      "entry_type": "milestone",
+      "topics": ["学习计划", "阶段推进", "上下文窗口管理"],
+      "summary": "完成 rag-test-run（跑通 RAG 闭环测试），推进到 rag-context-window（上下文窗口管理）阶段"
+    },
+    {
+      "id": "dialog-29",
+      "date": "2026-06-02",
+      "title": "DocumentIn source 参数用途解析",
+      "file_path": ".reasonix/memory/conversations/2026-06-02.md",
+      "stage_id": "rag-test-run",
+      "entry_type": "dialog",
+      "topics": ["source参数", "DocumentIn", "Pydantic模型", "数据库字段"],
+      "summary": "解析/rag/documents接口中source参数的作用：记录文档来源（URL/文件名/书籍），默认空字符串，存入SQLite但未参与RAG流程"
+    },
+    {
+      "id": "milestone-test-run",
+      "date": "2026-06-02",
+      "title": "RAG 闭环测试跑通",
+      "file_path": ".reasonix/memory/conversations/2026-06-02.md",
+      "stage_id": "rag-test-run",
+      "entry_type": "milestone",
+      "topics": ["RAG测试", "Bug修复", "流式返回验证"],
+      "summary": "启动服务，通过curl测试/rag/documents存入、/rag/search检索、/rag/chat流式问答。修复了_semantic_search空结果IndexError Bug。LLM回答成功引用资料来源。"
+    },
+    {
+      "id": "dialog-27",
+      "date": "2026-06-02",
+      "title": "StreamingResponse 流式传输原理深度解析",
+      "file_path": ".reasonix/memory/conversations/2026-06-02.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["StreamingResponse", "__call__", "ContentStream", "Union", "类型别名", "生成器对象"],
+      "summary": "深入理解 StreamingResponse 流式传输原理、Python 类型系统（类/类型/类型提示辨析）、ContentStream 类型别名、Union 联合类型"
+    },
+    {
+      "id": "dialog-26",
+      "date": "2026-05-31",
+      "title": "RAG 闭环章节掌握度测试",
+      "file_path": ".reasonix/memory/conversations/2026-05-31.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["掌握度测试", "错题本", "RAG闭环"],
+      "summary": "5题掌握度测试，得分3.5/5，记录2道错题"
+    },
+    {
+      "id": "dialog-25",
+      "date": "2026-05-31",
+      "title": "BaseModel 与 SQLAlchemy Base 辨析",
+      "file_path": ".reasonix/memory/conversations/2026-05-31.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["BaseModel", "SQLAlchemy", "Pydantic", "ORM"],
+      "summary": "深入辨析 Pydantic BaseModel 和 SQLAlchemy Base 的区别和用途"
+    },
+    {
+      "id": "dialog-24",
+      "date": "2026-05-31",
+      "title": "RAG 闭环核心代码深度讲解",
+      "file_path": ".reasonix/memory/conversations/2026-05-31.md",
+      "stage_id": "rag-closed-loop",
+      "entry_type": "dialog",
+      "topics": ["_semantic_search", "build_system_prompt", "流式返回", "RAG链路"],
+      "summary": "逐个讲解RAG闭环7个关键点的代码，确认用户理解完整数据流"
+    },
+    {
+      "id": "dialog-23",
+      "date": "2026-05-29",
+      "title": "对话历史归档规则制定与文件重命名",
+      "file_path": ".reasonix/memory/conversations/2026-05-29.md",
+      "stage_id": "rag-dual-storage",
+      "entry_type": "dialog",
+      "topics": ["归档规则", "文件管理"],
+      "summary": "制定对话历史归档命名规则，重命名历史文件"
+    },
+    {
+      "id": "dialog-22",
+      "date": "2026-05-29",
+      "title": "DocumentIn / DocumentChunk 模型问答",
+      "file_path": ".reasonix/memory/conversations/2026-05-29.md",
+      "stage_id": "rag-dual-storage",
+      "entry_type": "dialog",
+      "topics": ["Pydantic模型", "SQLAlchemy模型", "双存储"],
+      "summary": "深入理解 DocumentIn 和 DocumentChunk 的数据模型设计"
+    },
+    {
+      "id": "dialog-21",
+      "date": "2026-05-28",
+      "title": "FastAPI + Chroma 最小原型",
+      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "stage_id": "rag-fastapi-chroma",
+      "entry_type": "dialog",
+      "topics": ["FastAPI", "ChromaDB", "API封装"],
+      "summary": "将双存储逻辑封装为 RESTful API，实现最小原型"
+    },
+    {
+      "id": "dialog-20",
+      "date": "2026-05-28",
+      "title": "双存储架构掌握度测试与错题本建立",
+      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "stage_id": "rag-dual-storage",
+      "entry_type": "dialog",
+      "topics": ["掌握度测试", "错题本", "双存储"],
+      "summary": "通过问答测试双存储架构理解程度，建立错题本机制"
+    },
+    {
+      "id": "dialog-19",
+      "date": "2026-05-28",
+      "title": "余弦距离与语义检索细节 Q&A",
+      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "stage_id": "rag-dual-storage",
+      "entry_type": "dialog",
+      "topics": ["余弦距离", "语义检索", "ChromaDB"],
+      "summary": "深入问答余弦距离计算细节和语义检索原理"
+    },
+    {
+      "id": "dialog-18",
+      "date": "2026-05-28",
+      "title": "双存储架构学习",
+      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "stage_id": "rag-dual-storage",
+      "entry_type": "dialog",
+      "topics": ["双存储", "SQLite", "ChromaDB", "ChunkVector"],
+      "summary": "学习 SQLite + ChromaDB 协作的双存储架构设计"
+    },
+    {
+      "id": "dialog-17",
+      "date": "2026-05-24",
+      "title": "Embedding Playground 实验教学",
+      "file_path": ".reasonix/memory/conversations/2026-05-24.md",
+      "stage_id": "rag-embedding-exp",
+      "entry_type": "dialog",
+      "topics": ["Embedding", "语义相近", "多义词", "跨语言"],
+      "summary": "通过实验验证 Embedding 模型的语义理解能力"
+    },
+    {
+      "id": "dialog-16",
+      "date": "2026-05-24",
+      "title": "ChromaDB 实战教学",
+      "file_path": ".reasonix/memory/conversations/2026-05-24.md",
+      "stage_id": "rag-chromadb",
+      "entry_type": "dialog",
+      "topics": ["ChromaDB", "Collection", "语义检索", "向量数据库"],
+      "summary": "学习 ChromaDB 实战，包括创建 Collection、存入向量、语义检索"
+    },
+    {
+      "id": "dialog-15",
+      "date": "2026-05-21",
+      "title": "余弦相似度数学原理深度对话",
+      "file_path": ".reasonix/memory/conversations/2026-05-21.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["余弦相似度", "数学原理", "归一化"],
+      "summary": "深入理解余弦相似度的数学原理和归一化思想"
+    },
+    {
+      "id": "dialog-14",
+      "date": "2026-05-21",
+      "title": "向量与余弦相似度数学基础",
+      "file_path": ".reasonix/memory/conversations/2026-05-21.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["向量", "余弦相似度", "数学基础"],
+      "summary": "学习向量和余弦相似度的数学基础"
+    },
+    {
+      "id": "dialog-13",
+      "date": "2026-05-21",
+      "title": "余弦相似度公式深度理解",
+      "file_path": ".reasonix/memory/conversations/2026-05-21.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["余弦相似度", "公式推导", "交换律", "结合律"],
+      "summary": "从零推导余弦相似度公式，理解数学定律"
+    },
+    {
+      "id": "dialog-12",
+      "date": "2026-05-19",
+      "title": "ModelScope API 配置与 Embedding 实践",
+      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["ModelScope", "API配置", "Embedding"],
+      "summary": "配置 ModelScope API，实践 Embedding 调用"
+    },
+    {
+      "id": "dialog-11",
+      "date": "2026-05-19",
+      "title": "余弦相似度深度讲解",
+      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["余弦相似度", "向量运算"],
+      "summary": "深度讲解余弦相似度的概念和计算"
+    },
+    {
+      "id": "dialog-10",
+      "date": "2026-05-19",
+      "title": "RAG 入门第一步与包管理器偏好",
+      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["RAG", "包管理器", "Poetry"],
+      "summary": "确定包管理器偏好，踏出 RAG 学习第一步"
+    },
+    {
+      "id": "dialog-9",
+      "date": "2026-05-19",
+      "title": "全栈 AI 技能树整合",
+      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["技能树", "全栈AI", "学习路线"],
+      "summary": "整合全栈 AI 技能树，明确学习方向"
+    },
+    {
+      "id": "dialog-8",
+      "date": "2026-05-14",
+      "title": "RAG 向量数据库学习规划",
+      "file_path": ".reasonix/memory/conversations/2026-05-14.md",
+      "stage_id": "rag-embedding",
+      "entry_type": "dialog",
+      "topics": ["RAG", "向量数据库", "学习规划"],
+      "summary": "制定 RAG 向量数据库学习规划，设计 ADHD 友好学习流程"
+    },
+    {
+      "id": "dialog-7",
+      "date": "2024",
+      "title": "创建记忆结构",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "code-layering",
+      "entry_type": "dialog",
+      "topics": ["记忆结构", "项目组织"],
+      "summary": "创建 .reasonix/memory 记忆结构，建立项目记忆体系"
+    },
+    {
+      "id": "dialog-6",
+      "date": "2024",
+      "title": "APIRouter 补充说明",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "code-layering",
+      "entry_type": "dialog",
+      "topics": ["APIRouter", "模块化"],
+      "summary": "补充 APIRouter 使用细节和最佳实践"
+    },
+    {
+      "id": "dialog-5",
+      "date": "2024",
+      "title": "代码分层文档",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "code-layering",
+      "entry_type": "dialog",
+      "topics": ["代码分层", "架构设计"],
+      "summary": "编写代码分层学习文档，理解分层架构思想"
+    },
+    {
+      "id": "dialog-4",
+      "date": "2024",
+      "title": "创建学习文档",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "fastapi-basics",
+      "entry_type": "dialog",
+      "topics": ["学习文档", "Markdown", "ADHD友好"],
+      "summary": "为项目代码创建详细的学习文档，采用 ADHD 友好格式"
+    },
+    {
+      "id": "dialog-3",
+      "date": "2024",
+      "title": "IoC/DI 深入讲解",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "fastapi-orm",
+      "entry_type": "dialog",
+      "topics": ["IoC", "DI", "依赖注入", "控制反转"],
+      "summary": "深入讲解 IoC 和 DI 概念，用类比帮助理解"
+    },
+    {
+      "id": "dialog-2",
+      "date": "2024",
+      "title": "详细注释版本",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "fastapi-orm",
+      "entry_type": "dialog",
+      "topics": ["注释", "代码可读性"],
+      "summary": "为学习代码添加详细注释，保留生动比喻"
+    },
+    {
+      "id": "dialog-1",
+      "date": "2024",
+      "title": "注释改进",
+      "file_path": ".reasonix/memory/conversations/2024.md",
+      "stage_id": "fastapi-orm",
+      "entry_type": "dialog",
+      "topics": ["注释", "代码质量"],
+      "summary": "分析代码注释优缺点，提供改进建议"
+    }
+  ]
+}
