@@ -1,0 +1,3524 @@
+[VEFC]香草纪元：食旅纪行 (VanillaEra: FaresChron) - MC百科|最大的Minecraft中文MOD百科
+https://www.mcmod.cn/modpack/1095.html
+
+<!DOCTYPE HTML>[VEFC]香草纪元：食旅纪行 (VanillaEra: FaresChron) - MC百科|最大的Minecraft中文MOD百科
+
+主站
+
+常用地址
+
+最新收录今日收录模组：0 个
+
+有新动态
+
+审核状态今日审核量：1 个
+
+历史编辑今日编辑量：2 次
+
+版本检索
+
+Forge 模组
+
+Fabric 模组
+
+1.20.1 模组
+
+1.19.4 模组
+
+1.18.2 模组
+
+1.16.5 模组
+
+1.12.2 模组
+
+1.7.10 模组
+
+元素检索
+
+科技模组
+
+魔法模组
+
+实用模组
+
+冒险模组
+
+农业模组
+
+装饰模组
+
+辅助模组
+
+魔改模组
+
+整合包
+
+常用地址
+
+最新收录今日收录整合包：0 个
+
+有新动态
+
+版本检索
+
+Forge 整合包
+
+Fabric 整合包
+
+1.20.1 整合包
+
+1.19.4 整合包
+
+1.18.2 整合包
+
+1.16.5 整合包
+
+1.12.2 整合包
+
+1.7.10 整合包
+
+元素检索
+
+科技整合包
+
+魔法整合包
+
+任务整合包
+
+剧情整合包
+
+硬核整合包
+
+休闲整合包
+
+大型整合包
+
+轻量整合包
+
+社群
+
+找服玩
+
+实用工具
+
+实用工具
+
+命令方块指令生成器快速生成自定义命令方块指令
+
+神秘时代研究助手快速查找神秘时代研究笔记连线
+
+进度/成就生成器Minecraft 进度/成就生成器工具
+
+我的世界黄历中国黄历 MineCraft 版
+
+神秘代码将一串内容压缩成一把钥匙
+
+遇事不决在退进两难的情况下抛硬币或投骰子
+
+特性
+
+词典
+
+站点导航
+
+主站
+
+整合包
+
+社群
+
+找服玩
+
+实用工具
+
+特性
+
+词典
+
+登录
+
+>
+
+整合包
+
+>
+
+[VEFC]香草纪元：食旅纪行 (VanillaEra: FaresChron)
+
+红票60 (100%)黑票0 (0%)
+
+更新日志
+
+暂无日志..
+
+最近参与编辑
+
+youyihj
+
+QQ酱1411801
+
+CM_uhzoaL
+
+StarsLo
+
+FN57
+
+JQKA326
+
+Jaanai
+
+耀星
+
+KLG丶Z_CN喵~
+
+幻昙华
+
+[ 查看历史改动对比 ]
+
+最近浏览
+
+QQ酱1426739
+
+QQ酱1426736
+
+墨濯词砚
+
+QQ酱1416321
+
+QQ酱1426634
+
+waq47
+
+QQ酱1426605
+
+mcXapetra
+
+QQ酱1425763
+
+miusika
+
+QQ酱1426554
+
+JIACHENG2005
+
+QQ酱1311405
+
+QQ酱1397293
+
+QQ酱1426415
+
+QQ酱1415823
+
+dspqle
+
+[VEFC]
+香草纪元：食旅纪行
+
+VanillaEra: FaresChron
+
+冒险
+
+任务
+
+休闲
+
+大型
+
+国创
+
+整合包类型: 魔改整合
+
+运作方式: Forge
+
+打包方式: 手动精简打包
+
+收录时间: 1年前
+
+最后编辑: 7天前
+
+最后推荐: 1天前
+
+编辑次数: 13次
+
+整合包标签: 
+冒险
+
+乐事
+
+休闲
+
+养老
+
+多人
+
+相关链接:
+
+BBSMC
+
+B站
+
+支持的MC版本: 
+Forge: 
+
+1.20.1
+
+5.0
+
+名扬天下
+
+昨日指数: 1693
+
+昨日平均指数: 119.199
+
+51.95万
+
+总浏览
+
+编辑整合
+
+新建日志
+
+新建教程
+
+指数走势
+
+广告
+
+整合包介绍
+
+包含模组 (793)
+
+整合包教程 (4)
+
+📖 概述
+
+【目前整合包最新版本：2.6.1】
+
+你是否在寻找集原版风格、收集挑战、养老种田和周游世界等元素为一体的整合包呢？那么香草纪元绝对可以满足你的需求，带给你前所未有的游戏体验。
+
+在这里你可以在田垄之间定居养老，或是在花海之中仰望星空；可以抽刀迎战强大怪物，或是骑乘传说生物游览异界；可以手搓飞行器游山玩水，或是为冒险归来的小伙伴准备乐事大餐！一起打造属于你的世界吧！
+
+🍔 内容
+
+精选60多个农夫乐事附属模组，大量定制料理、BOSS料理等四千余种食物供你选择；
+
+Terramity、暮色森林、灾变等 BOSS 供你挑战；
+
+Alex 的生物、More Critters、秋原等为你的世界增添更多生机；
+
+使用 KubeJS 对多模组配方重复、不兼容问题进行修复，以提供统合且清爽的游玩体验；
+
+具有阶段性、指引性和目标性的新手教程任务；
+
+对内存和帧率的极致优化；
+
+可出售农作物的经济系统，换取的钱可在商店购买种子，材料，锻造模板，甚至是建筑；
+
+让人耳目一新的 UI 与材质；
+
+能成为好帮手、陪伴日常的车万女仆；
+
+以及更多内容等你在游戏中探索。
+
+💻 提示
+
+内存建议分配 8-10GB 以获得最佳体验；
+
+将旧版本存档迁移至 2.6+ 版本时需要清空物品栏和饰品栏（七咒之戒除外），避免造成不必要的损失！
+
+📸 画廊
+
+花店
+庄园
+
+野餐
+
+v2.5.1
+
+Man of Many Planes
+
+0.2.0+1.20.1
+
+Rustic Engineer
+
+1.0.0
+
+沉浸式飞机 (Immersive Aircraft)
+
+1.1.8+1.20.1
+
+[RS]精致存储 (Refined Storage)
+
+1.12.4
+
+精致存储附属 (Refined Storage Addons)
+
+0.10.0
+
+新生魔艺 (Ars Nouveau)
+
+4.12.7
+
+神秘遗物扩展 (Enigmatic Addons)
+
+1.2.5
+
+Simply Houses
+
+1.1.4-1.20.1
+
+Mutated Items / Items to Mobs
+
+3.0.0
+
+蜜蜂领域/黄蜂领域 (The Bumblezone)
+
+7.5.13+1.20.1-forge
+
+[TC]泰拉饰品 (Terra Curio)
+
+0.1.13
+
+抓水母 (Jellyfishing)
+
+2.0.0
+
+[PD]帕斯特之梦 (PasterDream)
+
+0.3.5.7
+
+不羁野性 (Untamed Wilds)
+
+4.0.4
+
+[WDA]地牢浮现之时 (When Dungeons Arise)
+
+2.1.58-1.20.x
+
+P.E.K.K.A. Craft
+
+0.3-1.20.1
+
+Galosphere
+
+1.20.1-1.4.1
+
+Royal Variations
+
+2.0.2
+
+逝去的下界 (Bygone Nether)
+
+1.3.2
+
+Armamentarium
+
+1.3.1
+
+自然之灵 (Nature's Spirit)
+
+2.2.4-1.20.1
+
+Friends&Foes - Flowery Mooblooms
+
+2.0.2
+
+[DC]Alex的洞穴维度 (Dimension of Caves)
+
+1.0.0
+
+灾变：武器技参数配置/冒火的剑 (Cataclysm: Weapon Skill Config/ Incinerator's Try Hard)
+
+1.20.1-1.1.1
+
+[EMobs]EEEAB的生物 (EEEAB's Mobs)
+
+1.20.1-0.97
+
+动物和野兽 (Creatures and Beasts)
+
+1.6.0
+
+Cataclysms
+
+3.16
+
+[TUG]深暗之园 (The Undergarden)
+
+0.8.14
+
+Mischief Illagers
+
+1.2
+
+CTOV - Savage and Ravage Compat
+
+2.0
+
+末地启明 (Enlightend/Enlightened End/Nourished End)
+
+5.0.14
+
+Lios Spiral Tower Villages
+
+0.0.2
+
+[BOMD]祸乱鬼魅 (Bosses of Mass Destruction)
+
+1.1.2
+
+迎战 (Meet Your Fight)
+
+1.20.1-1.5.2
+
+同伴与对手 (Friends & Foes)
+
+3.0.7
+
+末影人革新 (Enderman Overhaul)
+
+1.0.4
+
+[JNE]Jaden's Nether Expansion
+
+2.3.5
+
+Terramity
+
+0.9.8
+
+不同寻常的末地 (Unusual End)
+
+2.3.0
+
+Blighted Beasts
+
+1.0.0
+
+Species
+
+3.5
+
+地牢浮现之时 - 海洋扩展 (When Dungeons Arise - Seven Seas)
+
+1.0.2
+
+海灵物语 (Aquamirae)
+
+6.API15
+
+旷野之息高塔 : 再重制 (Towers of the Wild Modded)
+
+1.0.5
+
+[BWG]我们走过的生物群系 (Oh The Biomes We've Gone)
+
+1.5.11
+
+苦力怕改革 / 苦力怕革新 (Creeper Overhaul)
+
+3.0.2
+
+[MKB]Makit Better
+
+1.20.1-1.0.1
+
+[AM]Alex 的生物 (Alex's Mobs)
+
+1.22.9
+
+Lethality - A Terramity Addon
+
+0.3-1.20.1
+
+Happy Ghast Backport [And Dried Ghast/Ghastling]
+
+1.0.0
+
+暮色森林非官方版 (The Twilight Forest Unofficial)
+
+4.3.2508
+
+Farmers Structures
+
+1.0.0
+
+幽邃黑暗 (Deeper And Darker)
+
+1.3.3
+
+简易刀剑 (Simply Swords)
+
+1.56.0-1.20.1
+
+炽海生机 (Nether Depths Upgrade)
+
+3.1.5-1.20
+
+残暴与掠夺 (Savage & Ravage)
+
+6.0.1
+
+末地拓展 (The Endergetic Expansion)
+
+5.0.1
+
+碧海新生 (Upgrade Aquatic)
+
+6.0.3
+
+更多异兽 (More Critters)
+
+1.2.6
+
+Alex's Caves rad fork
+
+2.0.2
+
+腐烂生物 (Rotten Creatures)
+
+1.1.0
+
+Ribbits
+
+1.20.1-Forge-3.0.4
+
+[LM]传奇怪物 (Legendary Monsters)
+
+1.20.1
+
+Trek
+
+1-B0.5.1
+
+Nether's Exoticism
+
+1.2.9
+
+幽匿乐事 (Silent's Delight)
+
+1.20.1-1.0.0
+
+BOMD乐事 (Bosses Delight)
+
+1.0.1
+
+海之乐事 (Oceanic Delight)
+
+1.0.3
+
+胡萝卜厨房 (Kitchen Karrot)
+
+1.20.1-0.6.4b
+
+新生乐事 (Ars Nouveau's Flavors & Delight / Ars Delight)
+
+1.1.6
+
+Muffin's Thai's Delight
+
+1.0.0
+
+丰饶食记 (Bountiful Fares)
+
+1.2.1-1.20.1
+
+午餐肉乐事 (Luncheon Meat 'S Delight)
+
+1.20.1-1.0.5
+
+B&C Fan-Made 1.20 Port
+
+1.20.1-3.2.1
+
+农夫暇事（Fabric 版） (Farmer's Respite (Fabric))
+
+1.20.1-2.1
+
+果园乐事 (Fruits Delight)
+
+1.0.16
+
+妖怪们的归家 (Youkai's Homecoming)
+
+2.6.1
+
+Cave Delight
+
+1.0.2
+
+Jaden's Nether Expansion Delight
+
+1.20.1-1.0.4-forge
+
+暮色风味乐事 (Twilight's Flavors & Delight)
+
+2.0.13
+
+夸克乐事 (Quark Delight)
+
+1.0.0
+
+抓水母乐事 (Jellyfishing Delight)
+
+1.0.6
+
+凤梨乐事 (Pineapple Delight)
+
+0.0NONE
+
+Midas Hunger
+
+2.2.1+1.20-forge
+
+千古乐事 (Immortalers Delight)
+
+1.20.1-forge-1.1.3
+
+矿工乐事 (Miner's Delight / Miner's Delight +)
+
+1.20.1-1.2.3
+
+My Nether's Delight Refabricated
+
+1.20.1-1.7.5
+
+森罗物语：厨房——重织 (Kaleidoscope Cookery Refabricated)
+
+1.1.0-forge+mc1.20.1
+
+Drink Beer Unofficial: Clockwerk Edition
+
+1.0.5
+
+巴西乐事 (Brazilian Delight)
+
+1.1.0
+
+水产乐事 (Aquaculture Delight)
+
+1.1.1
+
+Galospheric Delight
+
+5.42
+
+腌渍乐事 (Vintage Delight)
+
+0.1.6
+
+Overweight Farming
+
+1.20.1-2.1.0-forge
+
+黏液乐事 (Slime Delight)
+
+1.1.0
+
+Kebab
+
+1.0
+
+烹饪锅 (Crock Pot)
+
+1.1.1
+
+Mineral Delight
+
+1.0.0
+
+水产业2/水产品2 (Aquaculture 2)
+
+2.5.3
+
+Extra Meat
+
+1.0.0
+
+深暗之园乐事 (Undergarden Delight)
+
+1.1.2
+
+农夫乐事：重织 (Farmer's Delight Refabricated)
+
+1.20.1-1.2.8
+
+云端之乐 (Delight o' Flight)
+
+1.20.1-1.2.3
+
+乡村乐事 (Rustic Delight)
+
+1.4.1
+
+饺子乐事：重启 (Dumplings Delight Reload)
+
+1.3
+
+Large Meals
+
+1.20.1-1.3.0
+
+地牢乐事 (Dungeons Delight)
+
+1.2.10
+
+末地乐事 (End's Delight)
+
+2.5
+
+不羁乐事 (Untamed Delight)
+
+1.20.1-1.0.0
+
+Veggies Delight
+
+1.9.1
+
+随意乐事 (Casualness Delight)
+
+1.20.1-0.4n
+
+Chef's Delight
+
+1.0.3-forge-1.20.1
+
+多元乐事（Fabric 版） (Cultural Delights [Fabric])
+
+0.16.4
+
+种子乐事 (Seed Delight)
+
+1.20.1-0.1
+
+末影乐事 (Ender's Delight)
+
+1.1.3
+
+[TATD]樱途旅事 (Trail&Tales Delight)
+
+1.4
+
+葡园酒香 (Let's do Wine / Vinery)
+
+1.4.37.1
+
+煨茶酝露 (HerbalBrews)
+
+1.0.10
+
+沉浸农艺 ([Let's Do] Farm & Charm)
+
+1.0.4
+
+馥郁烘焙 (Let's Do: Bakery)
+
+2.0.3
+
+盛节精酿 (Let's Do Brewery)
+
+2.0.3
+
+青青草甸 ([Let's do] Meadow / Cheese!)
+
+1.3.25
+
+下界葡园 (Let's Do: NetherVinery)
+
+1.2.16
+
+烛火晚宴 ([Let's Do] Candlelight)
+
+2.0.2
+
+玉食俱馩 ([Let's Do Addon] Corn Expansion)
+
+1.0.1
+
+节日乐事 (Festive Delight)
+
+1.3.0
+
+[LTC2]辣条工艺 2 (Latiao Craft 2)
+
+1.2.2
+
+Abnormals Delight
+
+5.0.1
+
+那不勒斯风味 (Neapolitan)
+
+5.1.0
+
+末域奇馔 (Exquisito)
+
+2.5.3
+
+Onion Onion
+
+2.0.4
+
+Incubation
+
+4.0.4
+
+Buzzier Bees
+
+6.0.1
+
+原版烹饪书 (Vanilla Cookbook)
+
+2.2.4
+
+多趣乐事 (More Delight)
+
+25.07.28-1.20-forge
+
+季节风味 (Seasonals)
+
+1.20.1-5.0.2
+
+斋月乐事 (Ramadan Delight)
+
+1.0
+
+神秘佳肴 (Enigmatic Delicacy)
+
+1.0.1
+
+生灵乐事 (Nature's Delight)
+
+1.12-1.20.1
+
+L_Ender 's Cataclysm Delight
+
+1.20.1-1.0.10
+
+Collector's Reap
+
+1.5.1
+
+独特风味 (Peculiars)
+
+1.20.1-5.0.0
+
+Delightful
+
+3.7.1
+
+[cosmo]四海一家 (Cosmopolitan)
+
+1.1.0
+
+烧烤乐事 (Barbeque's Delight)
+
+1.0.5
+
+Alex乐事 (Alex's Delights)
+
+1.5
+
+生活调味料：胡萝卜版 (Spice of Life: Carrot Edition)
+
+1.15.1
+
+蟹农乐事 (Crabber's Delight)
+
+1.1.7d
+
+Habitat / Bloom and Gloom
+
+1.3.1
+
+预制建筑 (Prefab)
+
+1.10.0.1
+
+Macaw的楼梯与露台 (Macaw's Stairs)
+
+1.0.0
+
+精巧手艺 (Handcrafted)
+
+3.0.6
+
+Chimes
+
+2.0.1
+
+狸猫装饰 (Tanuki Decor)
+
+20.1.1.0
+
+更多生物变种 (More Mob Variants)
+
+1.3.0.1
+
+[EP]Euphoria Patches / Euphoria Patcher
+
+1.5.1-r5.4-forge
+
+美化！重织 (Beautify: Refabricated)
+
+2.0.2
+
+Macaw 的门 (Macaw's Doors)
+
+1.1.1
+
+Macaw的桥梁 (Macaw's Bridges)
+
+3.0.0
+
+Lucky's Cozy Home: Refurnished
+
+3.0.4
+
+CTOV - Chef's delight Compat
+
+2.0
+
+Any Lanterns!
+
+1.2
+
+装饰方块 (Decorative Blocks)
+
+4.1.3
+
+Smooth Gui
+
+0.1.3
+
+CTOV - Friends & Foes Compat
+
+2.0
+
+Macaw 的窗户 (Macaw's Windows)
+
+2.3.0
+
+森罗物语：玩偶 (Kaleidoscope Doll)
+
+1.2.3-forge+mc1.20.1
+
+[CTOV]ChoiceTheorem's Overhauled Village
+
+3.4.14
+
+Abridged
+
+2.0.0
+
+丰富的生态 (Ecologics)
+
+2.2.2
+
+Continuity
+
+3.0.01.20.1.forge
+
+可视性 (Visuality)
+
+2.0.2
+
+CTOV - 美化！兼容 (CTOV - Beautify Compat)
+
+2.0
+
+Macaw的栅栏与墙 (Macaw's Fences and Walls)
+
+1.1.2
+
+沙滩派对 (Let's Do Beachparty)
+
+1.1.5
+
+Amendments
+
+1.20-1.2.18
+
+Cluttered
+
+3.0.2-1.20.1
+
+CTOV - Incubation Compat
+
+2.0
+
+秋原 (Autumnity)
+
+5.0.2
+
+[RU]未至之地 (Regions Unexplored)
+
+0.5.6
+
+Display Delight
+
+1.4.0
+
+悠然一派 (Atmospheric)
+
+6.1.0
+
+锦致装饰 (Supplementaries)
+
+1.20-3.1.36
+
+Whimsy Deco
+
+1.1
+
+群青：重明 (Ultramarine Rekindled)
+
+0.5.1
+
+拾光定影 (Exposure)
+
+1.7.7
+
+Trotting Wagons
+
+1.0.4
+
+Construction Wand (Fabric)
+
+1.20.1-2.11
+
+[EI]附魔灌注台 (Enchanting Infuser)
+
+8.0.3
+
+AstikorCarts
+
+1.1.8
+
+Lootr
+
+0.7.35.90
+
+龙战利品 (DragonLoot)
+
+1.1.4
+
+[SBP]精妙背包 (Sophisticated Backpacks)
+
+3.23.5.1200
+
+RS 无限范围增幅卡 (RSInfinityBooster)
+
+1.20.1-1.0+41
+
+[SMC]星喵工艺 (Star Meow Craft)
+
+1.0.4
+
+[TLM]车万女仆 (Touhou Little Maid)
+
+1.4.5-forge+mc1.20.1
+
+奇异饰品 (Artifacts)
+
+9.5.13
+
+探险者指南针 修改 (Explorer's Compass Edited)
+
+1.20.1-1.3.3-forge
+
+塔罗牌 (Tarot Cards)
+
+1.20-1.7.0
+
+怪奇宝典 (Eccentric Tome)
+
+1.20.1-1.10.3
+
+[AA]额外扩展 (Additional Additions)
+
+6.0.1
+
+Joe's Selling Bin
+
+1.0.9
+
+更多熔炉 (Iron Furnaces)
+
+4.1.6
+
+自然罗盘/生物群系指南针 (Nature's Compass)
+
+1.20.1-1.11.2-forge
+
+Lightmans Currency
+
+1.20.1-2.2.5.1c
+
+[HG]Hopper Gadgetry
+
+20.1.2
+
+网络音乐机 (Net Music)
+
+1.2.0-forge+mc1.20.1
+
+试验假人 (MmmMmmMmmMmm / Target Dummy)
+
+1.20-2.0.6
+
+猫猫汉堡 (Cat Burger)
+
+1.0.3_fix
+
+Farmer's Plus
+
+1.0.3
+
+[CM]复合材料 (Composite Material)
+
+1.2.8
+
+简单帽子 (Simple Hats)
+
+1.20.1-0.3.2
+
+[ES]扩展存储 (Expanded Storage)
+
+10.2.2
+
+神秘遗物经典版 (Enigmatic Legacy Legacy)
+
+2.30.1
+
+Adorable Hamster Pets
+
+3.2.0-1.20.1+forge
+
+Mermod / Mermaid Tail Mod
+
+3.0.1
+
+Fisherman's Trap
+
+2.1.4
+
+北极星市场方块 (PolarisTrading)
+
+1.0-SNAPSHOT
+
+Dracolotl
+
+0.1-1.20.1
+
+传送石碑/指路石 (Waystones)
+
+14.1.7
+
+精致厨房 (Refined Cooking)
+
+4.0.0
+
+傻瓜烹饪/懒人厨房 (Cooking for Blockheads)
+
+16.0.12
+
+卓越火炬 (Magnum Torch)
+
+8.0.2
+
+夸克 (Quark)
+
+4.0-461
+
+Etcetera
+
+1.20.1-1.1.3
+
+[ML]生物套索 (Mob Lassos)
+
+8.0.1
+
+[OPAC]Open Parties and Claims
+
+0.24.0
+
+动态准星 (Dynamic Crosshair)
+
+9.10
+
+现代化修复 (ModernFix)
+
+5.20.2+mc1.20.1
+
+Embeddium
+
+0.7.1
+
+RightClickHarvest
+
+3.2.3+1.20.1-forge
+
+[MISRAPM]MC百科资料搜索：再重生Pro mini (MCMOD Item Search Reborn Again Pro mini)
+
+0.0.7
+
+FastBoot
+
+1.2
+
+属性修复 (AttributeFix)
+
+21.0.4
+
+Paxi
+
+1.20-Forge-4.0
+
+Absolutely Stuffed! Uncapped Hunger/Saturation
+
+1.1
+
+Bloody Bits Fix
+
+1.20.1
+
+[JEBr]Just Enough Breeding
+
+2.1.1
+
+Fast Paintings
+
+1.20-1.2.7
+
+ImmediatelyFast
+
+1.3.4+1.20.4
+
+熔炉性能优化 (FastFurnace)
+
+8.0.1
+
+[CAR]时装盔甲重置版 (Cosmetic Armor Reworked)
+
+1.20.1-v1a
+
+Oculus
+
+1.8.0
+
+[0P2R/OP2R]资源包惰性重载/抑验怠载 (0Pack2Reload/OPack2Reload)
+
+1.0.1
+
+Acedium
+
+0.2.7-beta
+
+Nvidium
+
+0.2.7-beta
+
+[BIF]无限附魔修复 (Bow Infinity Fix)
+
+2.6.0
+
+Blueprint Texture Issue Fix
+
+1.0.0
+
+搬运 (Carry On)
+
+2.1.2.7
+
+我的菜单Fabric版 (MineMenuFabric)
+
+7.2.2
+
+[AS]自然音效 (AmbientSounds)
+
+6.1.9
+
+Constant Music
+
+1.0.5
+
+无限与经验修补 (Infinity With Mending)
+
+1.0.2
+
+AI改进 (AI Improvements)
+
+0.5.2
+
+FastEvent
+
+1.1.1
+
+PatPat
+
+1.2.21.20.1
+
+[TR]交易刷新 (Trade Refresh)
+
+2.4.5
+
+Icterine
+
+1.3.0
+
+[Watut]What Are They Up To
+
+1.20.1-1.1.3
+
+旅人标题 (Traveler's Titles)
+
+1.20-Forge-4.0.2
+
+[JECh]通用拼音搜索 (Just Enough Characters)
+
+4.5.11
+
+FreeCam by kapiteon
+
+1.2.1+1.20
+
+[FC]铁氧体磁芯 (FerriteCore)
+
+6.0.1
+
+No Farmland Trample
+
+1.20.1-1.0.1
+
+[JZ]Just Zoom
+
+2.0.0
+
+[OB]Overflowing Bars
+
+8.0.1
+
+[SMSN]救救我的答辩网络 (Save My Shaky Network)
+
+1.2.3+mc1.20.1
+
+准星摇晃 (Crosshair Bobbing)
+
+1.10
+
+[ISBF]物品分裂修复 (Item Split Bug Fix)
+
+1.20.1-1.2
+
+Farmer's Delight Compat
+
+1.1.0
+
+[JER]Just Enough Resources
+
+1.4.0.247
+
+[LMFT]Load My F***ing Tags
+
+1.0.4+1.20.1
+
+ServerCore
+
+1.5.2+1.20.1
+
+Searchables
+
+1.0.3
+
+Mobtimizations - Entity Performance Fixes
+
+1.20.1-1.0.0
+
+鞘翅插槽 / 鞘翅槽位 (Curious Elytra / Elytra Trinket / Elytra Slot)
+
+6.4.4+1.20.1
+
+吃不停 (AlwaysEat)
+
+5.2
+
+[CSL]万用皮肤补丁 (CustomSkinLoader)
+
+14.21.1
+
+[HEI]HEI物品管理器 (Had Enough Items)
+
+15.20.0.106
+
+[AS]苹果皮 (AppleSkin)
+
+2.5.1+mc1.20.1
+
+Better Days
+
+1.20.1-3.1.1.1-FORGE
+
+[OW2C]别创建新世界！ (OWorld2Create)
+
+0.0NONE
+
+更好的模组列表 (Better ModList)
+
+0.1.11
+
+方块探测 (Block Sniffer)
+
+2
+
+鼠标手势 (Mouse Tweaks)
+
+2.25.1
+
+Immersive Combat Feathers
+
+1.8.6+1.20.1
+
+[XMM]Xaero的小地图 (Xaero's Minimap)
+
+25.0.0
+
+多态合成 (Polymorph)
+
+0.49.8+1.20.1
+
+实体渲染机制优化 (Entity Culling)
+
+1.7.2
+
+铷 · 扩展 (Embeddium (Rubidium) Extra)
+
+0.5.4.4+mc1.20.1-build.131
+
+[MUI]现代化 UI (Modern UI)
+
+3.11.1.6
+
+[XWM]Xaero的世界地图 (Xaero's World Map)
+
+1.39.2
+
+ModernControlling
+
+12.0.2
+
+Redirected
+
+1.0.0
+
+韵律回响 (Reactive Music)
+
+1.1.01.20.1
+
+Cataclysmic Combat
+
+1.4
+
+连锁破坏 (FTB Ultimine)
+
+2001.1.5
+
+[NERB]Not Enough Recipe Book
+
+0.4.1
+
+SDM Shop
+
+1.20.1-6.11-pre
+
+[AMCF]Alex生物衣壳体修复 (Alex's Mobs Capsid Fix)
+
+1.0.0
+
+垃圾槽 (TrashSlot)
+
+15.1.2
+
+异步粒子 (AsyncParticles)
+
+2.3.8
+
+[FTBQ]FTB 任务 (FTB Quests)
+
+2001.4.10
+
+[FS]配方性能优化 (FastSuite)
+
+5.1.0
+
+配置界面 (Configured)
+
+2.2.3
+
+物品边框 (Item Borders)
+
+1.2.2
+
+烟花苦力怕 (Creeper Confetti)
+
+4.3
+
+More Critters简体中文翻译包 (More Critters Zh_cn Translation)
+
+0.0.7
+
+[TACT]Tiny Alex's Caves Tweaks
+
+1.2.3
+
+附魔描述 (Enchantment Descriptions)
+
+17.1.19
+
+玉 🔍 (Jade 🔍)
+
+11.12.3+forge
+
+Async Locator
+
+1.3.0
+
+Refined Polymorphism
+
+0.1.1-1.20.1
+
+Packet Fixer
+
+1.4.3
+
+Bad Mobs
+
+19.0.4
+
+[FM]FancyMenu
+
+3.3.2
+
+KubeJS Ars Nouveau
+
+1.2.2
+
+In Control!
+
+1.20-9.3.2
+
+KubeJS Delight
+
+1.1.2
+
+LootJS: KubeJS Addon
+
+1.20.1-2.12.0
+
+[KJS]KubeJS
+
+2001.6.5-build.16
+
+FTB XMod Compat
+
+2.1.2
+
+YUNG's API
+
+1.20-Forge-4.0.6
+
+Cloth Config API
+
+11.1.136
+
+[GS]游戏阶段 (Game Stages)
+
+15.0.2
+
+L2 Library
+
+2.5.1
+
+Deltabox Lib
+
+1.1.3
+
+Library Ferret
+
+4.0.0
+
+Caelus API
+
+3.2.0+1.20.1
+
+EpheroLib
+
+0.1.2
+
+MidnightLib
+
+1.4.1
+
+TerraBlender
+
+3.0.1.7
+
+CorgiLib
+
+4.0.3.3
+
+[FC]Forge Config API Port
+
+8.0.0
+
+精妙核心 (Sophisticated Core)
+
+1.2.14.875
+
+Prism
+
+1.0.5
+
+Placebo
+
+8.6.3
+
+Bookshelf API Library
+
+20.2.13
+
+Melody
+
+1.0.2
+
+Fzzy Config
+
+0.7.2+1.20.1+forge
+
+[FFAPI]Forgified Fabric API
+
+0.92.2+1.11.9+1.20.1
+
+Konkrete
+
+1.8.0
+
+Lionfish API
+
+2.4-Fix
+
+CERBON's API
+
+1.1.0
+
+信雅互联 (Sinytra Connector)
+
+1.0.0-beta.46+1.20.1
+
+Cupboard
+
+1.20.1-2.7
+
+Obscure API
+
+15
+
+TxniLib
+
+1.0.21
+
+CreativeCore
+
+2.12.30
+
+PlayerAnimator
+
+1.0.2-rc1+1.20
+
+SDM Economy
+
+1.20.1-1.7.2
+
+SDM UI Lib
+
+1.20.1-1.8.3
+
+Bagus Lib
+
+1.20.1-5.3.0
+
+Balm
+
+7.3.17
+
+Athena / Stitch
+
+3.1.1
+
+SuperMartijn642's Core Lib
+
+1.1.18
+
+Resourceful Config
+
+2.1.2
+
+Curios API
+
+5.14.1+1.20.1
+
+Lithostitched
+
+1.4.11
+
+GlitchCore
+
+0.0.1.1
+
+[Forge]Minecraft Forge
+
+47.3.33
+
+Oh The Trees You'll Grow
+
+1.3.9
+
+SpectreLib
+
+0.13.17+1.20.1
+
+[KFF]Kotlin for Forge
+
+4.11.0
+
+Zeta
+
+1.0-29
+
+[PL]Puzzles Lib
+
+8.1.32
+
+GeckoLib
+
+4.7
+
+Citadel
+
+2.6.1
+
+MixinExtras
+
+0.4.1
+
+Collective
+
+7.87
+
+Resourceful Lib
+
+2.1.29
+
+Architectury API
+
+9.2.14
+
+Let's Do API
+
+7.0.1
+
+FTB Library / FTB GUI Library
+
+2001.2.8
+
+FTB 团队 (FTB Teams)
+
+2001.3.1
+
+Connector Extras
+
+1.11.2+1.20.1
+
+PolyLib
+
+2000.0.3-build.143
+
+犀牛 (Rhino)
+
+2001.2.3-build.10
+
+OctoLib
+
+0.4.2
+
+Elysium API
+
+1.1.3
+
+物品过滤器 (Item Filters​)
+
+2001.1.0-build.59
+
+Blueprint / Abnormals Core
+
+7.1.3
+
+SebastrnLib
+
+4.0.0
+
+帕秋莉手册 (Patchouli)
+
+1.20.1-84-FORGE
+
+Moonlight Lib / Selene
+
+1.20-2.14.13
+
+MixinSquared
+
+0.3.3
+
+Platform
+
+1.2.7.1
+
+冰山 (Iceberg)
+
+1.1.25
+
+CoroUtil
+
+1.20.1-1.3.7
+
+[YACL]YetAnotherConfigLib
+
+3.6.2+1.20.1-forge
+
+ExpandAbility
+
+9.0.4
+
+v2.6.1
+
+Man of Many Planes
+
+0.2.0+1.20.1
+
+Rustic Engineer
+
+1.0.0
+
+沉浸式飞机 (Immersive Aircraft)
+
+1.1.8+1.20.1
+
+[RS]精致存储 (Refined Storage)
+
+1.12.4
+
+精致存储附属 (Refined Storage Addons)
+
+0.10.0
+
+新生魔艺 (Ars Nouveau)
+
+4.12.7
+
+神秘遗物 (Enigmatic Legacy)
+
+2.30.1
+
+神秘遗物扩展 (Enigmatic Addons)
+
+1.2.5
+
+[TC]泰拉饰品 (Terra Curio)
+
+0.2.0
+
+Simply Houses
+
+1.1.4-1.20.1
+
+Mutated Items / Items to Mobs
+
+3.0.0
+
+蜜蜂领域/黄蜂领域 (The Bumblezone)
+
+7.9.8+1.20.1-forge
+
+抓水母 (Jellyfishing)
+
+2.0.0
+
+[PD]帕斯特之梦 (PasterDream)
+
+0.3.5.7
+
+不羁野性 (Untamed Wilds)
+
+4.0.4
+
+[WDA]地牢浮现之时 (When Dungeons Arise)
+
+2.1.58-1.20.x
+
+Cyberspace
+
+2.2.0
+
+P.E.K.K.A. Craft
+
+0.4-1.20.1
+
+Enderdragon Loot
+
+1.1.4
+
+Galosphere
+
+1.20.1-1.4.1
+
+Royal Variations
+
+2.0.2
+
+逝去的下界 (Bygone Nether)
+
+1.3.2
+
+Armamentarium
+
+1.3.1
+
+自然之灵 (Nature's Spirit)
+
+2.2.4-1.20.1
+
+Friends&Foes - Flowery Mooblooms
+
+2.0.2
+
+灾变：武器技参数配置/冒火的剑 (Cataclysm: Weapon Skill Config/ Incinerator's Try Hard)
+
+1.20.1-1.1.1
+
+[EMobs]EEEAB的生物 (EEEAB's Mobs)
+
+1.20.1-0.97
+
+动物和野兽 (Creatures and Beasts)
+
+1.6.1
+
+灾变 (L_Ender 's Cataclysm)
+
+3.16
+
+[TUG]深暗之园 (The Undergarden)
+
+0.8.14
+
+Mischief Illagers
+
+1.2
+
+CTOV - Savage and Ravage Compat
+
+2.0
+
+末地启明 (Enlightend/Enlightened End/Nourished End)
+
+5.0.14
+
+Lios Spiral Tower Villages
+
+0.0.2
+
+[BOMD]祸乱鬼魅 (Bosses of Mass Destruction)
+
+1.1.2
+
+迎战 (Meet Your Fight)
+
+1.20.1-1.5.3
+
+同伴与对手 (Friends & Foes)
+
+3.0.7
+
+末影人革新 (Enderman Overhaul)
+
+1.0.4
+
+[JNE]Jaden's Nether Expansion
+
+2.3.5
+
+Legionary
+
+1.0.1
+
+Terramity
+
+0.9.8
+
+不同寻常的末地 (Unusual End)
+
+2.3.0
+
+Blighted Beasts
+
+1.0.0
+
+Species
+
+3.5
+
+地牢浮现之时 - 海洋扩展 (When Dungeons Arise - Seven Seas)
+
+1.0.2
+
+海灵物语 (Aquamirae)
+
+6.API15
+
+旷野之息高塔 : 再重制 (Towers of the Wild Modded)
+
+1.0.5
+
+[BWG]我们走过的生物群系 (Oh The Biomes We've Gone)
+
+1.5.11
+
+苦力怕改革 / 苦力怕革新 (Creeper Overhaul)
+
+3.0.2
+
+[MKB]Makit Better
+
+1.20.1-1.0.1
+
+Alex 的生物：交互 (Alexs Mobs Interaction)
+
+1.22.9
+
+Lethality - A Terramity Addon
+
+0.3-1.20.1
+
+Happy Ghast Backport [And Dried Ghast/Ghastling]
+
+1.0.0
+
+暮色森林非官方版 (The Twilight Forest Unofficial)
+
+4.3.2508
+
+Farmers Structures
+
+1.0.4
+
+幽邃黑暗 (Deeper And Darker)
+
+1.3.3
+
+简易刀剑 (Simply Swords)
+
+1.56.0-1.20.1
+
+炽海生机 (Nether Depths Upgrade)
+
+3.1.5-1.20
+
+残暴与掠夺 (Savage & Ravage)
+
+6.0.1
+
+末地拓展 (The Endergetic Expansion)
+
+5.0.1
+
+碧海新生 (Upgrade Aquatic)
+
+6.0.3
+
+更多异兽 (More Critters)
+
+1.3.0
+
+Alex 的洞穴 (Alex's Caves)
+
+2.0.2
+
+Friends&Foes - Beekeeper Hut
+
+2.0.1
+
+腐烂生物 (Rotten Creatures)
+
+1.1.0
+
+Ribbits
+
+1.20.1-Forge-3.0.5
+
+[LM]传奇怪物 (Legendary Monsters)
+
+1.20.1
+
+Trek
+
+1-B0.5.1
+
+Nether's Exoticism
+
+1.2.9
+
+幽匿乐事 (Silent's Delight)
+
+1.20.1-1.0.0
+
+BOMD乐事 (Bosses Delight)
+
+1.0.2
+
+海之乐事 (Oceanic Delight)
+
+1.0.3
+
+胡萝卜厨房 (Kitchen Karrot)
+
+1.20.1-0.6.4b
+
+新生乐事 (Ars Nouveau's Flavors & Delight / Ars Delight)
+
+1.1.6
+
+Muffin's Thai's Delight
+
+1.0.0
+
+丰饶食记 (Bountiful Fares)
+
+1.2.1-1.20.1
+
+午餐肉乐事 (Luncheon Meat 'S Delight)
+
+1.20.1-1.0.5
+
+B&C Fan-Made 1.20 Port
+
+1.20.1-3.2.1
+
+农夫暇事 (Farmer's Respite)
+
+1.20.1-2.1
+
+果园乐事 (Fruits Delight)
+
+1.0.16
+
+妖怪们的归家 (Youkai's Homecoming)
+
+2.6.2
+
+Cave Delight
+
+1.0.2
+
+Jaden's Nether Expansion Delight
+
+1.20.1-1.0.4-forge
+
+Caves Delight
+
+1.0.0
+
+暮色乐事 (Twilight Delight)
+
+2.0.13
+
+夸克乐事 (Quark Delight)
+
+1.0.0
+
+抓水母乐事 (Jellyfishing Delight)
+
+1.0.6
+
+凤梨乐事 (Pineapple Delight)
+
+0.0NONE
+
+Midas Hunger
+
+2.2.1+1.20-forge
+
+森罗物语：下界 (Kaleidoscope Nether)
+
+1.0.5-1.20.1
+
+千古乐事 (Immortalers Delight)
+
+1.20.1-forge-1.1.6
+
+矿工乐事 (Miner's Delight / Miner's Delight +)
+
+1.20.1-1.2.3
+
+My Nether's Delight Refabricated
+
+1.20.1-1.7.5
+
+森罗物语：厨房——重织 (Kaleidoscope Cookery Refabricated)
+
+1.2.0-forge+mc1.20.1
+
+Drink Beer Unofficial: Clockwerk Edition
+
+1.0.5
+
+巴西乐事 (Brazilian Delight)
+
+1.1.0
+
+水产乐事 (Aquaculture Delight)
+
+1.1.1
+
+Galospheric Delight
+
+5.42
+
+腌渍乐事 (Vintage Delight)
+
+0.1.6
+
+Overweight Farming
+
+1.20.1-2.1.0-forge
+
+黏液乐事 (Slime Delight)
+
+1.1.0
+
+Kebab
+
+1.0
+
+A Cute Little Crock Pot
+
+1.1.1
+
+Mineral Delight
+
+1.0.0
+
+[UD]香芋乐事 (Ube's Delight)
+
+0.4.6
+
+水产业2/水产品2 (Aquaculture 2)
+
+2.5.7
+
+Extra Meat
+
+1.0.0
+
+深暗之园乐事 (Undergarden Delight)
+
+1.1.2
+
+农夫乐事：重织 (Farmer's Delight Refabricated)
+
+1.20.1-1.2.8
+
+云端之乐 (Delight o' Flight)
+
+1.20.1-1.2.3
+
+乡村乐事 (Rustic Delight)
+
+1.5.0
+
+饺子乐事 (Dumplings Delight)
+
+1.3
+
+Large Meals
+
+1.20.1-1.3.0
+
+地牢乐事 (Dungeons Delight)
+
+1.2.10
+
+末地乐事 (End's Delight)
+
+2.5
+
+不羁乐事 (Untamed Delight)
+
+1.20.1-1.0.0
+
+Veggies Delight
+
+1.9.2
+
+随意乐事 (Casualness Delight)
+
+1.20.1-0.4n
+
+Chef's Delight
+
+1.0.4-forge-1.20.1
+
+多元乐事（Fabric 版） (Cultural Delights [Fabric])
+
+0.16.4
+
+种子乐事 (Seed Delight)
+
+1.20.1-0.1
+
+末影乐事 (Ender's Delight)
+
+1.1.3
+
+[TATD]樱途旅事 (Trail&Tales Delight)
+
+1.4
+
+葡园酒香 (Let's do Wine / Vinery)
+
+1.4.39
+
+煨茶酝露 (HerbalBrews)
+
+1.0.10
+
+沉浸农艺 ([Let's Do] Farm & Charm)
+
+1.0.4
+
+馥郁烘焙 (Let's Do: Bakery)
+
+2.0.3
+
+盛节精酿 (Let's Do Brewery)
+
+2.0.3
+
+青青草甸 ([Let's do] Meadow / Cheese!)
+
+1.3.25
+
+下界葡园 (Let's Do: NetherVinery)
+
+1.2.16
+
+烛火晚宴 ([Let's Do] Candlelight)
+
+2.0.2
+
+玉食俱馩 ([Let's Do Addon] Corn Expansion)
+
+1.0.1
+
+节日乐事 (Festive Delight)
+
+1.3.0
+
+[LTC2]辣条工艺 2 (Latiao Craft 2)
+
+1.2.2
+
+Abnormals Delight
+
+5.0.1
+
+那不勒斯风味 (Neapolitan)
+
+5.1.0
+
+末域奇馔 (Exquisito)
+
+2.5.3
+
+Onion Onion
+
+2.0.4
+
+Incubation
+
+4.0.4
+
+Buzzier Bees
+
+6.0.1
+
+原版烹饪书 (Vanilla Cookbook)
+
+2.2.4
+
+多趣乐事 (More Delight)
+
+25.07.28-1.20-forge
+
+季节风味 (Seasonals)
+
+1.20.1-5.0.2
+
+斋月乐事 (Ramadan Delight)
+
+1.0
+
+神秘佳肴 (Enigmatic Delicacy)
+
+1.0.1
+
+生灵乐事 (Nature's Delight)
+
+1.12-1.20.1
+
+L_Ender 's Cataclysm Delight
+
+1.20.1-1.0.10
+
+Collector's Reap
+
+1.5.5
+
+独特风味 (Peculiars)
+
+1.20.1-5.0.0
+
+Delightful
+
+3.7.1
+
+[cosmo]四海一家 (Cosmopolitan)
+
+1.1.0
+
+烧烤乐事 (Barbeque's Delight)
+
+1.0.5
+
+Alex乐事 (Alex's Delights)
+
+1.5
+
+生活调味料：胡萝卜版 (Spice of Life: Carrot Edition)
+
+1.15.1
+
+蟹农乐事 (Crabber's Delight)
+
+1.1.7d
+
+Habitat / Bloom and Gloom
+
+1.3.1
+
+预制建筑 (Prefab)
+
+1.20.1-1.1.0
+
+Macaw的楼梯与露台 (Macaw's Stairs)
+
+1.0.0
+
+精巧手艺 (Handcrafted)
+
+3.0.6
+
+Chimes
+
+2.0.1
+
+狸猫装饰 (Tanuki Decor)
+
+20.1.1.0
+
+更多生物变种 (More Mob Variants)
+
+1.3.0.1
+
+[EP]Euphoria Patches / Euphoria Patcher
+
+1.5.1-r5.4-forge
+
+美化！ (Beautify!)
+
+2.0.2
+
+Macaw 的门 (Macaw's Doors)
+
+1.1.1
+
+Macaw的桥梁 (Macaw's Bridges)
+
+3.0.0
+
+Lucky's Cozy Home: Refurnished
+
+3.0.4
+
+CTOV - Chef's delight Compat
+
+2.0
+
+Any Lanterns!
+
+1.2
+
+装饰方块 (Decorative Blocks)
+
+4.1.3
+
+Smooth Gui
+
+0.1.3
+
+CTOV - Friends & Foes Compat
+
+2.0
+
+Macaw 的窗户 (Macaw's Windows)
+
+2.3.0
+
+森罗物语：玩偶 (Kaleidoscope Doll)
+
+1.3.0-forge+mc1.20.1
+
+[CTOV]ChoiceTheorem's Overhauled Village
+
+3.4.14
+
+Abridged
+
+2.0.0
+
+丰富的生态 (Ecologics)
+
+2.2.2
+
+Continuity
+
+3.0.01.20.1.forge
+
+CTOV - 美化！兼容 (CTOV - Beautify Compat)
+
+2.0
+
+Macaw的栅栏与墙 (Macaw's Fences and Walls)
+
+1.1.2
+
+沙滩派对 (Let's Do Beachparty)
+
+1.1.5
+
+Amendments
+
+1.20-1.2.18
+
+Cluttered
+
+3.0.3-1.20.1
+
+CTOV - Incubation Compat
+
+2.0
+
+秋原 (Autumnity)
+
+5.0.2
+
+[RU]未至之地 (Regions Unexplored)
+
+0.5.6
+
+Display Delight
+
+1.4.0
+
+悠然一派 (Atmospheric)
+
+6.1.0
+
+锦致装饰 (Supplementaries)
+
+1.20-3.1.36
+
+Whimsy Deco
+
+1.1
+
+群青 (Ultramarine)
+
+0.5.1
+
+拾光定影 (Exposure)
+
+1.7.7
+
+Trotting Wagons
+
+1.0.4
+
+[CWK]建筑手杖-耕云钓月版 (Construction Wand - KOTS)
+
+1.20.1-2.11
+
+[EI]附魔灌注台 (Enchanting Infuser)
+
+8.0.3
+
+AstikorCarts
+
+1.1.8
+
+Lootr
+
+0.7.35.90
+
+[CFLT]无作弊Locate传送 (Cheating Free Locate Teleporting)
+
+1.0.0
+
+[SBP]精妙背包 (Sophisticated Backpacks)
+
+3.23.5.1200
+
+RS 无限范围增幅卡 (RSInfinityBooster)
+
+1.20.1-1.0+41
+
+[SMC]星喵工艺 (Star Meow Craft)
+
+1.0.8
+
+[TLM]车万女仆 (Touhou Little Maid)
+
+1.5.0-forge+mc1.20.1
+
+奇异饰品 (Artifacts)
+
+9.5.13
+
+探险者指南针 修改 (Explorer's Compass Edited)
+
+1.20.1-1.3.3-forge
+
+塔罗牌 (Tarot Cards)
+
+1.20-1.7.0
+
+怪奇宝典 (Eccentric Tome)
+
+1.20.1-1.10.3
+
+[AA]额外扩展 (Additional Additions)
+
+6.0.1
+
+更多熔炉 (Iron Furnaces)
+
+4.1.6
+
+[DAC]Alex的洞穴：维度 (Dimensions-of-Alex's-Caves)
+
+1.0.2
+
+自然罗盘/生物群系指南针 (Nature's Compass)
+
+1.20.1-1.11.2-forge
+
+LC Tech
+
+1.20.1-2.2.5.1c
+
+天顶剑 (zenith)
+
+1.1.1
+
+网络音乐机 (Net Music)
+
+1.2.1-forge+mc1.20.1
+
+试验假人 (MmmMmmMmmMmm / Target Dummy)
+
+1.20-2.0.6
+
+猫猫汉堡 (Cat Burger)
+
+1.0.4_fix
+
+Farmer's Plus
+
+1.0.3
+
+[CM]复合材料 (Composite Material)
+
+1.2.8
+
+简单帽子 (Simple Hats)
+
+1.20.1-0.3.2
+
+扩展存储 - 耕云钓月版 (Expanded Storage - KOTS)
+
+10.2.2
+
+Adorable Hamster Pets
+
+3.4.3-1.20.1+forge
+
+Mermod / Mermaid Tail Mod
+
+3.0.1
+
+Fisherman's Trap
+
+2.1.4
+
+北极星市场方块 (PolarisTrading)
+
+1.10
+
+Dracolotl
+
+0.1-1.20.1
+
+传送石碑/指路石 (Waystones)
+
+14.1.7
+
+精致厨房 (Refined Cooking)
+
+4.0.0
+
+傻瓜烹饪/懒人厨房 (Cooking for Blockheads)
+
+16.0.12
+
+卓越火炬 (Magnum Torch)
+
+8.0.2
+
+夸克 (Quark)
+
+4.0-461
+
+Etcetera
+
+1.20.1-1.1.3
+
+[ML]生物套索 (Mob Lassos)
+
+8.0.1
+
+[OPAC]Open Parties and Claims
+
+0.24.0
+
+动态准星 (Dynamic Crosshair)
+
+9.10
+
+现代化修复 (ModernFix)
+
+5.20.2+mc1.20.1
+
+Embeddium
+
+0.7.1
+
+RightClickHarvest
+
+3.2.3+1.20.1-forge
+
+[MISRAPM]MC百科资料搜索：再重生Pro mini (MCMOD Item Search Reborn Again Pro mini)
+
+0.0.7
+
+FastBoot
+
+1.2
+
+属性修复 (AttributeFix)
+
+21.0.4
+
+Paxi
+
+1.20-Forge-4.0
+
+Absolutely Stuffed! Uncapped Hunger/Saturation
+
+1.1
+
+Bloody Bits Fix
+
+1.20.1
+
+[JEBr]Just Enough Breeding
+
+2.1.1
+
+Fast Paintings
+
+1.20-1.2.7
+
+ImmediatelyFast
+
+1.3.4+1.20.4
+
+熔炉性能优化-- (FastFurnace--)
+
+8.0.1
+
+[CAR]时装盔甲重置版 (Cosmetic Armor Reworked)
+
+1.20.1-v1a
+
+Oculus
+
+1.8.0
+
+[0P2R/OP2R]资源包惰性重载/抑验怠载 (0Pack2Reload/OPack2Reload)
+
+1.0.1
+
+Acedium
+
+0.2.7-beta
+
+Nvidium
+
+0.2.7-beta
+
+[BIF]无限附魔修复 (Bow Infinity Fix)
+
+2.6.0
+
+Blueprint Texture Issue Fix
+
+1.0.0
+
+搬运 (Carry On)
+
+2.1.2.7
+
+模组菜单 (Mod Menu)
+
+7.2.2
+
+[AS]自然音效 (AmbientSounds)
+
+6.1.9
+
+Constant Music
+
+1.0.5
+
+无限与经验修补 (Infinity With Mending)
+
+1.0.2
+
+AI改进 (AI Improvements)
+
+0.5.2
+
+FastEvent
+
+1.1.1
+
+PatPat
+
+1.2.21.20.1
+
+[TR]交易刷新 (Trade Refresh)
+
+2.4.5
+
+Chloride (Embeddium++/Sodium++)
+
+1.5.0
+
+Icterine
+
+1.3.0
+
+[Watut]What Are They Up To
+
+1.20.1-1.1.3
+
+旅人标题 (Traveler's Titles)
+
+1.20-Forge-4.0.2
+
+[JECh]通用拼音搜索 (Just Enough Characters)
+
+4.5.11
+
+FreeCam by kapiteon
+
+1.2.1+1.20
+
+自定义游戏加载界面 (Drippy Loading Screen)
+
+3.3.2
+
+[FC]铁氧体磁芯 (FerriteCore)
+
+6.0.1
+
+No Farmland Trample
+
+1.20.1-1.0.1
+
+[JZ]Just Zoom
+
+2.0.0
+
+[OB]Overflowing Bars
+
+8.0.1
+
+[SMSN]救救我的答辩网络 (Save My Shaky Network)
+
+1.2.3+mc1.20.1
+
+准星摇晃 (Crosshair Bobbing)
+
+1.10
+
+[ISBF]物品分裂修复 (Item Split Bug Fix)
+
+1.20.1-1.2
+
+Farmer's Delight Compat
+
+1.1.0
+
+[LMFT]Load My F***ing Tags
+
+1.0.4+1.20.1
+
+Fancy Toasts | Better Advancements
+
+1.4.5.1
+
+ServerCore
+
+1.5.2+1.20.1
+
+Searchables
+
+1.0.3
+
+Mobtimizations - Entity Performance Fixes
+
+1.20.1-1.0.0
+
+鞘翅插槽 / 鞘翅槽位 (Curious Elytra / Elytra Trinket / Elytra Slot)
+
+6.4.4+1.20.1
+
+吃不停 (AlwaysEat)
+
+5.2
+
+[CSL]万用皮肤补丁 (CustomSkinLoader)
+
+14.21.1
+
+[JEI]JEI物品管理器 (Just Enough Items)
+
+15.20.0.106
+
+[AS]苹果皮 (AppleSkin)
+
+2.5.1+mc1.20.1
+
+Better Days
+
+1.20.1-3.1.1.1-FORGE
+
+[OW2C]别创建新世界！ (OWorld2Create)
+
+0.0NONE
+
+更好的模组列表 (Better ModList)
+
+0.1.11
+
+简单备份 (Simple Backups)
+
+1.20.1-3.1.19
+
+方块探测 (Block Sniffer)
+
+2
+
+鼠标手势 (Mouse Tweaks)
+
+2.25.1
+
+Immersive Combat Feathers
+
+1.8.6+1.20.1
+
+[XMM]Xaero的小地图 (Xaero's Minimap)
+
+25.0.0
+
+多态合成 (Polymorph)
+
+0.49.8+1.20.1
+
+实体渲染机制优化 (Entity Culling)
+
+1.7.2
+
+Visuality
+
+2.0.2
+
+铷 · 扩展 (Embeddium (Rubidium) Extra)
+
+0.5.4.4+mc1.20.1-build.131
+
+[MUI]现代化 UI (Modern UI)
+
+3.11.1.6
+
+[XWM]Xaero的世界地图 (Xaero's World Map)
+
+1.39.2
+
+ModernControlling
+
+12.0.2
+
+Redirected
+
+1.0.0
+
+群系间谍 (BiomeSpy)
+
+1.3.3
+
+韵律回响 (Reactive Music)
+
+1.1.01.20.1
+
+Cataclysmic Combat
+
+1.4
+
+连锁破坏 (FTB Ultimine)
+
+2001.1.5
+
+[ALI]高级战利品信息显示 (Advanced Loot Info)
+
+1.6.4
+
+[NERB]Not Enough Recipe Book
+
+0.4.1
+
+SDM Shop
+
+1.20.1-6.11-pre
+
+[AMCF]Alex生物衣壳体修复 (Alex's Mobs Capsid Fix)
+
+1.0.0
+
+垃圾槽 (TrashSlot)
+
+15.1.2
+
+异步粒子 (AsyncParticles)
+
+2.3.8
+
+[FTBQ]FTB 任务 (FTB Quests)
+
+2001.4.10
+
+[FS]配方性能优化 (FastSuite)
+
+5.1.0
+
+配置界面 (Configured)
+
+2.2.3
+
+物品边框 (Item Borders)
+
+1.2.2
+
+烟花苦力怕 (Creeper Confetti)
+
+4.3
+
+More Critters简体中文翻译包 (More Critters Zh_cn Translation)
+
+0.1.0
+
+[TACT]Tiny Alex's Caves Tweaks
+
+1.2.3
+
+附魔描述 (Enchantment Descriptions)
+
+17.1.19
+
+玉 🔍 (Jade 🔍)
+
+11.12.3+forge
+
+Refined Polymorphism
+
+0.1.1-1.20.1
+
+Packet Fixer
+
+1.4.3
+
+初始套件 (Starter Kit)
+
+7.4
+
+Bad Mobs
+
+19.0.4
+
+KubeJS Ars Nouveau
+
+1.2.2
+
+MoreJS
+
+0.10.1
+
+In Control!
+
+1.20-9.3.2
+
+KubeJS Delight
+
+1.1.2
+
+LootJS: KubeJS Addon
+
+1.20.1-2.12.0
+
+[KJS]KubeJS
+
+2001.6.5-build.16
+
+FTB XMod Compat
+
+2.1.2
+
+YUNG's API
+
+1.20-Forge-4.0.6
+
+Cloth Config API
+
+11.1.136
+
+[GS]游戏阶段 (Game Stages)
+
+15.0.2
+
+L2 Library
+
+2.5.1
+
+Deltabox Lib
+
+1.1.3
+
+Library Ferret
+
+4.0.0
+
+Caelus API
+
+3.2.0+1.20.1
+
+EpheroLib
+
+0.1.2
+
+MidnightLib
+
+1.4.1
+
+TerraBlender
+
+3.0.1.7
+
+CorgiLib
+
+4.0.3.3
+
+[FC]Forge Config API Port
+
+8.0.0
+
+MixinExtras
+
+0.2.0-beta.9
+
+精妙核心 (Sophisticated Core)
+
+1.2.14.875
+
+Prism
+
+1.0.5
+
+Placebo
+
+8.6.3
+
+Bookshelf
+
+20.2.13
+
+Melody
+
+1.0.2
+
+Fzzy Config
+
+0.7.4+1.20.1+forge
+
+[FFAPI]Forgified Fabric API
+
+0.92.2+1.11.9+1.20.1
+
+Konkrete
+
+1.8.0
+
+Lionfish API
+
+2.4-Fix
+
+CERBON's API
+
+1.1.0
+
+信雅互联 (Sinytra Connector)
+
+1.0.0-beta.46+1.20.1
+
+Cupboard
+
+1.20.1-2.7
+
+Obscure API
+
+15
+
+TxniLib
+
+1.0.21
+
+CreativeCore
+
+2.12.30
+
+PlayerAnimator
+
+1.0.2-rc1+1.20
+
+SDM Economy
+
+1.20.1-1.7.2
+
+SDM UI Lib
+
+1.20.1-1.8.3
+
+Bagus Lib
+
+1.20.1-5.3.0
+
+Balm
+
+7.3.17
+
+Athena / Stitch
+
+3.1.1
+
+SuperMartijn642's Core Lib
+
+1.1.18
+
+Resourceful Config
+
+2.1.2
+
+Curios API
+
+5.14.1+1.20.1
+
+Lithostitched
+
+1.4.11
+
+GlitchCore
+
+0.0.1.1
+
+[Forge]Minecraft Forge
+
+47.3.33
+
+Oh The Trees You'll Grow
+
+1.3.9
+
+SpectreLib
+
+0.13.17+1.20.1
+
+[KFF]Kotlin for Forge
+
+4.11.0
+
+Zeta
+
+1.0-29
+
+[PL]Puzzles Lib
+
+8.1.32
+
+GeckoLib
+
+4.7
+
+Citadel
+
+2.6.1
+
+Collective
+
+8.3
+
+Resourceful Lib
+
+2.1.29
+
+Architectury API
+
+9.2.14
+
+Let's Do API
+
+7.0.1
+
+FTB Library / FTB GUI Library
+
+2001.2.8
+
+FTB 团队 (FTB Teams)
+
+2001.3.1
+
+Connector Extras
+
+1.11.2+1.20.1
+
+PolyLib
+
+2000.0.3-build.143
+
+犀牛 (Rhino)
+
+2001.2.3-build.10
+
+OctoLib
+
+0.4.2
+
+Elysium API
+
+1.1.3
+
+物品过滤器 (Item Filters​)
+
+2001.1.0-build.59
+
+Blueprint / Abnormals Core
+
+7.1.3
+
+SebastrnLib
+
+4.0.0
+
+帕秋莉手册 (Patchouli)
+
+1.20.1-84.1-FORGE
+
+Moonlight Lib / Selene
+
+1.20-2.14.13
+
+MixinSquared
+
+0.3.3
+
+Platform
+
+1.2.7.1
+
+冰山 (Iceberg)
+
+1.1.25
+
+CoroUtil
+
+1.20.1-1.3.7
+
+[YACL]YetAnotherConfigLib
+
+3.6.2+1.20.1-forge
+
+ExpandAbility
+
+9.0.4
+
+香草纪元的小寄巧
+
+5.12万次浏览8月前
+
+【整合优化】香草纪元 : 食旅纪行 [问题帮助/配置模组/添加模组]
+
+188次浏览3天前
+
+香草纪元jei，rs物品回收价格显示（kubejs）
+
+2.02万次浏览10月前
+
+小女仆拉大石磨

@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-05T12:00:00",
+  "updated_at": "2026-06-06T12:00:00",
   "entries": [
+    {
+      "id": "dialog-47",
+      "date": "2026-06-06",
+      "title": "错题复习与掌握度升级 + Reasonix 技能开发",
+      "file_path": ".reasonix/memory/conversations/2026-06-05.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["错题复习", "掌握度升级", "单例模式", "global关键字", "embed_query", "embed_documents", "B+树索引", "上下文窗口截断", "Reasonix技能", "chapter-review-quizzer", "MCP配置"],
+      "summary": "复习历史错题本7道错题全部通过（双存储B+树索引、documents参数必要性、embed_query/embed_documents区分、单例模式术语、global只读场景、调用链边界、上下文窗口截断策略）；新建Reasonix章节复习检测器技能chapter-review-quizzer；同步Trae与Reasonix学习计划；将MCP配置加入gitignore"
+    },
     {
       "id": "dialog-46",
       "date": "2026-06-05",

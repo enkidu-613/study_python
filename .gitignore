@@ -48,6 +48,10 @@ env/
 logs/
 
 # Obsidian
+
+# MCP Servers config (local tool chain)
+.reasonix/mcp/
+.trae/mcp/
 .obsidian/
 
 # OS
