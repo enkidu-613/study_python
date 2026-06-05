@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-03T17:00:00",
+  "updated_at": "2026-06-05T12:00:00",
   "stages": [
     {
       "id": "python-basics",
@@ -193,7 +193,7 @@
       "id": "async-deep",
       "name": "异步编程深入",
       "description": "async/await 原理、asyncio",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
