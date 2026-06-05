@@ -1,7 +1,27 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-05T01:00:00",
+  "updated_at": "2026-06-05T12:00:00",
   "entries": [
+    {
+      "id": "dialog-46",
+      "date": "2026-06-05",
+      "title": "LangChain 底层原理深度追问 + 抽象类与单例模式补漏",
+      "file_path": ".trae/memory/conversations/2026-06-05.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["global关键字", "单例模式", "LocalLangChainEmbeddings", "适配器模式", "embedding_function", "抽象基类", "ABC", "跨文件调用链", "SentenceTransformer", "惰性加载"],
+      "summary": "深度追问LangChain RAG底层数据流：global关键字作用域、LocalLangChainEmbeddings作为适配器的必要性、embedding_function参数机制、Embeddings抽象基类接口契约、get_langchain_embeddings单例工厂设计、从langchain_rag_router到SentenceTransformer的完整8层调用链、model.encode底层推理、Python抽象类辨别方法"
+    },
+    {
+      "id": "dialog-45",
+      "date": "2026-06-05",
+      "title": "LangChain 教学文档更新 + 代码逐行深度解析",
+      "file_path": ".trae/memory/conversations/2026-06-05.md",
+      "stage_id": "langchain",
+      "entry_type": "dialog",
+      "topics": ["LangChain", "LCEL", "LCDocument", "RunnablePassthrough", "StrOutputParser", "invoke", "astream", "ChatPromptTemplate", "推理链", "教学文档"],
+      "summary": "检查15_LangChain核心概念.md不完善之处并按ADHD友好格式更新；逐行解析langchain_rag_router.py中LCDocument的5个体现位置、import as别名机制、检索器不加入链式调用的4个原因、chain.astream()的LCEL内部执行流程、RunnablePassthrough和StrOutputParser的作用及代码中未使用的原因、invoke/astream/ainvoke/stream四方法区别"
+    },
     {
       "id": "dialog-44",
       "date": "2026-06-04",

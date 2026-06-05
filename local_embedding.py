@@ -238,6 +238,31 @@ def model_info() -> dict:
     }
 
 
+# ---------- LangChain 兼容封装 ----------
+from langchain_core.embeddings import Embeddings
+
+
+class LocalLangChainEmbeddings(Embeddings):
+    """把 local_embedding 的 SentenceTransformer 包装成 LangChain Embeddings 接口"""
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        return get_embeddings(texts)
+
+    def embed_query(self, text: str) -> list[float]:
+        return get_embedding(text)
+
+
+_local_lc_embeddings = None
+
+
+def get_langchain_embeddings() -> "LocalLangChainEmbeddings":
+    """惰性获取 LangChain 兼容的 Embedding 实例（底层复用 local_embedding 单例）"""
+    global _local_lc_embeddings
+    if _local_lc_embeddings is None:
+        _local_lc_embeddings = LocalLangChainEmbeddings()
+    return _local_lc_embeddings
+
+
 # ---------- 自检 ----------
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

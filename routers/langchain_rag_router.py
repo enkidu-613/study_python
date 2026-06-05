@@ -32,7 +32,7 @@ import os
 from dotenv import load_dotenv
 
 # ========== LangChain 核心组件 ==========
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings  # 本地 Embedding
+from local_embedding import get_langchain_embeddings  # 本地 Embedding（LangChain 兼容封装）
 from langchain_deepseek import ChatDeepSeek            # 替代 ChatOpenAI，原生支持 DeepSeek 推理链
 from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate
@@ -63,65 +63,6 @@ MAX_CONTEXT_TOKENS = 2000
 MAX_INPUT_TOKENS = 6000
 MAX_OUTPUT_TOKENS = 2000
 
-# ---------- 1. Embedding 模型（本地 HuggingFace BGE、MPS 加速） ----------
-
-def _create_embedding_model():
-    """
-    创建并配置 Embedding 模型，自动选择最优设备。
-
-    设备选择策略：
-    1. 检测 MPS（Apple Silicon GPU）是否可用且兼容
-    2. 如果可用 → 用 MPS 加速
-    3. 如果不可用 / 加载失败 → 回退到 CPU
-    """
-
-    def _detect_mps() -> str:
-        """检测 MPS 是否可用，返回 'mps' 或 'cpu'"""
-        try:
-            import torch
-            if torch.backends.mps.is_available():
-                # 冒烟测试：用极小张量确认 MPS 确实能跑
-                try:
-                    _ = torch.tensor([1.0], device="mps")
-                    print("[Embedding] MPS 可用 ✅，使用 Metal GPU 加速")
-                    return "mps"
-                except Exception:
-                    print("[Embedding] MPS 冒烟测试失败，回退 CPU ⚠️")
-                    return "cpu"
-            else:
-                print("[Embedding] MPS 不可用，使用 CPU 🖥️")
-                return "cpu"
-        except ImportError:
-            print("[Embedding] PyTorch 未安装，使用 CPU 🖥️")
-            return "cpu"
-
-    device = _detect_mps()
-
-    try:
-        model = HuggingFaceBgeEmbeddings(
-            model_name=EMBEDDING_MODEL,
-            model_kwargs={"device": device},
-            encode_kwargs={"normalize_embeddings": True},
-        )
-        print(f"[Embedding] 模型加载完成，设备: {device}")
-        return model
-    except Exception as e:
-        if device == "mps":
-            print(f"[Embedding] MPS 初始化失败: {e}")
-            print("[Embedding] 回退到 CPU")
-            model = HuggingFaceBgeEmbeddings(
-                model_name=EMBEDDING_MODEL,
-                model_kwargs={"device": "cpu"},
-                encode_kwargs={"normalize_embeddings": True},
-            )
-            print("[Embedding] 模型加载完成，设备: cpu")
-            return model
-        else:
-            raise  # CPU 也失败了，直接抛异常
-
-
-embedding_model = _create_embedding_model()
-
 # ---------- 2. LLM（langchain-deepseek 原生支持推理链） ----------
 llm = ChatDeepSeek(
     model=LLM_MODEL,
@@ -135,11 +76,20 @@ llm = ChatDeepSeek(
 # ---------- 3. VectorStore（LangChain 原生封装） ----------
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 
-vectorstore = Chroma(
-    client=chroma_client,
-    collection_name="documents",
-    embedding_function=embedding_model,
-)
+# 惰性加载：避免模块导入时重复加载模型
+_vectorstore = None
+
+
+def get_vectorstore():
+    """惰性获取 VectorStore（首次调用时初始化）"""
+    global _vectorstore
+    if _vectorstore is None:
+        _vectorstore = Chroma(
+            client=chroma_client,
+            collection_name="documents",
+            embedding_function=get_langchain_embeddings(),
+        )
+    return _vectorstore
 
 # ---------- 4. TextSplitter（LangChain 原生） ----------
 # 替代手搓版的 split_text()
@@ -304,7 +254,7 @@ def _save_to_chromadb(lc_docs: list[LCDocument], chroma_ids: list[str]):
     把切片存入 ChromaDB（自动完成 Embedding + 向量存储）。
     """
     try:
-        vectorstore.add_documents(lc_docs, ids=chroma_ids)
+        get_vectorstore().add_documents(lc_docs, ids=chroma_ids)
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -317,7 +267,7 @@ def _search_vectorstore(query: str, k: int) -> list[tuple[LCDocument, float]]:
     语义检索：从 ChromaDB 中找到与 query 最相似的 k 条切片。
     返回 [(Document, distance), ...]，distance 越小越相似（0=完全相同）。
     """
-    return vectorstore.similarity_search_with_score(query, k=k)
+    return get_vectorstore().similarity_search_with_score(query, k=k)
 
 
 def _delete_from_chromadb(document: Document):
@@ -327,7 +277,7 @@ def _delete_from_chromadb(document: Document):
     embedding_ids = [chunk.embedding_id for chunk in document.chunks]
     if embedding_ids:
         try:
-            vectorstore.delete(ids=embedding_ids)
+            get_vectorstore().delete(ids=embedding_ids)
         except Exception as e:
             raise HTTPException(
                 status_code=500,
@@ -431,15 +381,15 @@ def _retrieve_context(
     返回 (原始文档列表, 格式化后的上下文字符串)。
     """
     # 1. 语义检索
-    docs = vectorstore.similarity_search(query, k=k)
+    docs = get_vectorstore().similarity_search(query, k=k)
 
     # 2. SQLite 增强 metadata
     for doc in docs:
         _enrich_metadata_from_sqlite(doc, db)
 
     # 3. 格式化 + Token 截断
-    context = format_docs(docs)
-    context = truncate_context(context)
+    context = format_docs(docs) #格式化
+    context = truncate_context(context)#截断超出的上下文 
 
     return docs, context
 
@@ -738,7 +688,7 @@ def delete_document(doc_id: int, db: Session = Depends(get_db)):
 def health_check():
     """检查 LangChain 各组件是否正常加载"""
     try:
-        count = vectorstore._collection.count()
+        count = get_vectorstore()._collection.count()
         return ApiResponse(
             code=200,
             status="ok",

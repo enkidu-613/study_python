@@ -425,8 +425,7 @@ Phase 5: RAG 进阶（查缺补漏）
 
 Phase 6: AI Agents（查缺补漏）
 ├── AI Agents 基础 (ReAct/手动实现)
-├── Multi-Agent 与复杂工作流
-└── Dify 平台实战
+└── Multi-Agent 与复杂工作流
 
 Phase 7: 生产级（查缺补漏）
 ├── AI 安全与伦理
@@ -463,7 +462,7 @@ Phase 8: 扩展能力（查缺补漏）
 | 阶段完成状态 | 每阶段结束时 | 更新 `learning_plan.json` 中 `status` 字段 |
 | 错题记录 | 每次测试后 | 追加到 `md/错题本.md` |
 | 学习文档 | 每阶段产出 | 保存到 `md/XX_阶段名.md` |
-| 对话归档 | 每天结束时 | 追加到 `.reasonix/memory/conversations/日期.md` |
+| 对话归档 | 每天结束时 | 追加到 `.trae/memory/conversations/日期.md` |
 | roadmap 覆盖度检查 | 每完成 5 个阶段 | 对照本文档 2.x 表格打勾确认 |
 
 ### 5.3 快速检查清单
@@ -485,7 +484,6 @@ Phase 8: 扩展能力（查缺补漏）
 - [ ] 多向量数据库对比 (预计: ___)
 - [ ] AI Agents 基础 (预计: ___)
 - [ ] Multi-Agent 工作流 (预计: ___)
-- [ ] Dify 平台实战 (预计: ___)
 - [ ] AI 安全与伦理 (预计: ___)
 - [ ] LLM 可观测性 (预计: ___)
 - [ ] LLM 评估与回归测试 (预计: ___)
@@ -529,8 +527,8 @@ Phase 8: 扩展能力（查缺补漏）
 | `md/15_LangChain核心概念.md` | LangChain 集成 |
 | `md/16_roadmap查缺补漏计划.md` | 本文件（总纲） |
 | `md/错题本.md` | 全阶段错题记录 |
-| `.reasonix/memory/learning_plan.json` | 阶段状态与依赖 |
-| `.reasonix/memory/learning_history_index.json` | 历史文件索引 |
+| `.trae/memory/learning_plan.json` | 阶段状态与依赖 |
+| `.trae/memory/learning_history_index.json` | 历史文件索引 |
 
 ---
 

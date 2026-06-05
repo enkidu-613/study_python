@@ -406,7 +406,7 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents", "dify"],
+      "dependencies": ["ai-agents"],
       "roadmap_tags": ["MCP"]
     },
     {

@@ -8,8 +8,9 @@ from routers import ai_router, todos_routers, chat_memory_router, rag_router, la
 async def lifespan(app: FastAPI):
     # ====== 启动时预加载 ======
     print("[启动] 预加载本地 Embedding 模型...")
+    # 预加载 local_embedding 中的模型（langchain_rag_router 底层共用同一实例）
     from local_embedding import get_embedding_model
-    get_embedding_model()  # 首次加载模型，约 10-20 秒
+    get_embedding_model()
     print("[启动] Embedding 模型加载完成")
     yield
     # ====== 关闭时清理 ======
