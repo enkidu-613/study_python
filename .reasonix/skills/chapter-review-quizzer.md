@@ -91,3 +91,15 @@ md/                                  # 学习文档 00_* ~ 15_*
 | Trae 代码模式 | `.trae/memory/code_patterns.md` |
 
 **原则**：操作哪套框架的文件，就使用哪套框架的路径前缀。禁止在修改 Trae 文件时使用 `.reasonix/` 路径，反之亦然。
+
+## 学习计划同步逐条对比规范
+
+当同步 `.trae/memory/learning_plan.json` 与 `.reasonix/memory/learning_plan.json` 时，**禁止使用全局字符串替换**。必须：
+
+1. **逐 stage 对比**：打开两边文件，按 `id` 字段逐个 stage 核对
+2. **关键字段全覆盖**：除了 `status` 和 `current_stage_id`，必须检查 `documents`、`dependencies`、`completed_at` 等字段
+3. **以最新版本为准**：以 `updated_at` 较新的文件为基准，将差异逐条应用到另一份文件
+4. **验证**：同步后，用 `grep -n "documents"` 对比两边的行号和内容，确保完全一致
+
+**反例**：全局替换 `"documents": []` → `"documents": ["xxx.md"]` 会误改其他 stage 的 documents 字段。
+**正例**：定位到目标 stage 的完整 JSON 块，精确替换该块内的 documents 字段。
