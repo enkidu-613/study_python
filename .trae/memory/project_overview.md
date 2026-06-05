@@ -73,17 +73,34 @@ study_python/
 - [x] Embedding 模型实验 (语义相近、多义词、跨语言)
 - [x] 双存储架构 (SQLite + ChromaDB 协作、ChunkVector)
 - [x] FastAPI + Chroma 最小原型 (API 封装)
-- [x] 手搓最小 RAG 闭环 (代码骨架完成)
-- [ ] 跑通 RAG 闭环测试 (启动服务 + curl 验证)
-- [ ] 上下文窗口管理 (Token 截断策略)
-- [ ] LangChain 集成
-- [ ] 异步编程深入 (async/await 原理)
-- [ ] 用户认证 (JWT/OAuth2)
-- [ ] 数据库迁移 (Alembic)
-- [ ] 单元测试 (pytest)
-- [ ] 项目部署 (Docker)
-- [ ] 前端框架基础 (React/Vue)
-- [ ] 前后端对接
+- [x] 手搓最小 RAG 闭环 (检索 → 拼 Prompt → 流式 LLM 调用)
+- [x] 跑通 RAG 闭环测试 (启动服务 + curl 验证流式返回)
+- [x] 上下文窗口管理 (Token 截断策略、超长 Prompt 处理)
+- [x] LangChain 集成 (LCEL 链式语法、框架化 RAG)
+- [ ] 异步编程深入 (async/await 原理、asyncio)
+- [ ] 用户认证 (JWT/OAuth2、密码哈希)
+- [ ] 数据库迁移 (Alembic 表结构升级)
+- [ ] 单元测试 (pytest 测试用例编写)
+- [ ] 项目部署 (Docker 容器化部署)
+- [ ] 前端框架基础 (React/Vue 基础)
+- [ ] 前后端对接 (Fetch/Axios API 调用)
+- [ ] LangChain 对话记忆 (ConversationBufferMemory)
+- [ ] LangChain Agent 工具调用 (Tool 定义、AgentExecutor)
+- [ ] Prompt Engineering 进阶 (CoT、ReAct、Zero-Shot、Few-Shot)
+- [ ] RAG Chunking 策略 (分块策略、重叠窗口、语义分块)
+- [ ] RAG 评估与指标 (RAGAS、Faithfulness)
+- [ ] 多向量数据库对比 (Pinecone、Weaviate、Qdrant、FAISS)
+- [ ] AI Agents 基础 (ReAct 模式、Function Calling)
+- [ ] Multi-Agent 与复杂工作流 (多 Agent 协作)
+- [ ] Dify 平台实战 (可视化 RAG 管道、Agent 工作流)
+- [ ] AI 安全与伦理 (Prompt Injection、Bias、Content Moderation)
+- [ ] LLM 可观测性 (LangSmith、Langfuse、Tracing)
+- [ ] LLM 评估与回归测试 (DeepEval、Regression Testing)
+- [ ] MCP (Model Context Protocol)
+- [ ] 多模态 AI (Image Understanding、TTS、STT)
+- [ ] Fine-tuning 基础 (LoRA、QLoRA)
+- [ ] LlamaIndex
+- [ ] Hugging Face 生态
 
 ## 核心概念掌握情况
 
@@ -96,22 +113,31 @@ study_python/
 - Pydantic 数据模型
 - SQLAlchemy ORM 操作
 - 依赖注入 (DI) 和控制反转 (IoC)
-- yield 在资源管理中的应用
+- `yield` 在资源管理中的应用
 - APIRouter 模块化组织
 - System Prompt 与多轮对话记忆
 - SSE 流式响应
-- Embedding 向量化 (ModelScope API)
+- Embedding 向量化 (本地 HuggingFaceBgeEmbeddings)
 - 余弦相似度计算与数学原理
 - ChromaDB 基本操作 (Collection、add、query)
 - 双存储架构 (SQLite Document/DocumentChunk + ChromaDB 向量)
+- RAG 完整闭环 (切片→Embedding→存储→检索→拼Prompt→调LLM)
+- 上下文窗口管理 (Token 截断策略)
+- LangChain 集成 (LCEL 链式语法、Retriever、PromptTemplate)
+- 本地 Embedding 部署与 MPS 硬件加速
+- 配置集中化 (.env 环境变量管理)
+- 深度思考/推理链 (reasoning_content)
 
 ### 待深入学习
-- FastAPI + Chroma 最小原型
-- 手搓最小 RAG 闭环
-- LangChain 框架集成
-- 异步编程 (async/await)
-- 用户认证 (JWT/OAuth2)
+- 异步编程 (async/await 原理、asyncio)
+- 用户认证 (JWT/OAuth2、密码哈希)
 - 数据库迁移 (Alembic)
-- 测试 (pytest)
+- 单元测试 (pytest)
 - Docker 部署
-- 前端框架对接 (React/Vue)
+- LangChain Memory (对话记忆注入)
+- LangChain Agents (工具调用)
+- Prompt Engineering 进阶 (CoT、ReAct)
+- RAG Chunking 策略
+- RAG 评估与指标 (RAGAS)
+- AI Agents 基础
+- Dify 平台实战

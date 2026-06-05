@@ -267,6 +267,15 @@ LangChain 集成 (LCEL 链式语法)      🟡  <- 当前位置
 - **产出物**: Multi-Agent 系统代码
 - **roadmap 对应**: Multi-agents, OpenAI AgentKit, Claude Agent SDK
 
+#### 阶段 4.3: Dify 平台实战
+- **学习目标**: 使用 Dify 可视化搭建 RAG + Agent 工作流，理解低代码 AI 平台的设计理念
+- **预计时长**: 2 ~ 3 天
+- **学习资源**:
+  - Dify 官方文档 (docs.dify.ai)
+  - 实操: 在 Dify 中搭建知识库 RAG 问答 → 升级为 Agent 工作流 → 发布 API 集成到现有 FastAPI 项目
+- **产出物**: Dify 工作流 + FastAPI 调用代码 + 对比手搓版的差异文档
+- **roadmap 对应**: Dify, RAG, AI Agents, Low-Code
+
 ---
 
 ### Phase 5: 生产级能力
@@ -501,11 +510,11 @@ Phase 8: 扩展能力（查缺补漏）
 |-------|--------|---------|
 | Phase 3: LangChain 深化 | 3 | 3 ~ 5 天 |
 | Phase 4: RAG 进阶 | 3 | 5 ~ 6 天 |
-| Phase 5: AI Agents | 2 | 4 ~ 6 天 |
+| Phase 5: AI Agents | 3 | 6 ~ 9 天 |
 | Phase 6: 生产级 | 4 | 7 ~ 10 天 |
 | Phase 7: 扩展能力 | 4 | 8 ~ 11 天 |
 | Phase 8: 工程补全 | 6 | 12 ~ 15 天 |
-| **合计** | **22** | **39 ~ 53 天** |
+| **合计** | **23** | **41 ~ 56 天** |
 
 > 按每天有效学习 2 ~ 3 小时估算，约 1.5 ~ 2 个月完成全部查缺补漏。
 

@@ -141,13 +141,7 @@ vectorstore = Chroma(
     embedding_function=embedding_model,
 )
 
-# ---------- 4. Retriever（LangChain 原生封装） ----------
-retriever = vectorstore.as_retriever(
-    search_type="similarity",
-    search_kwargs={"k": 3},
-)
-
-# ---------- 5. TextSplitter（LangChain 原生） ----------
+# ---------- 4. TextSplitter（LangChain 原生） ----------
 # 替代手搓版的 split_text()
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,

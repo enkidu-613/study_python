@@ -1,94 +1,259 @@
 """
-本地 Embedding 模型封装
-=======================
-使用 sentence-transformers 本地运行，支持 MPS（Metal）硬件加速。
-模型通过环境变量 EMBEDDING_MODEL_NAME 配置。
+本地 Embedding 模型统一封装（优化版）
+
+============================
+
+支持的硬件后端（自动检测，按优先级）:
+1. CUDA      (NVIDIA GPU)        — torch.cuda
+2. MPS       (Apple Silicon)       — torch.backends.mps
+3. DirectML  (Windows AMD/Intel)  — torch-directml
+4. CPU       (兜底)
+
+特性:
+- 线程安全单例加载（防止并发请求重复加载模型）
+- 设备自动探测 + 实际张量测试
+- 按设备能力自动选模型规模 / batch size
+- 加载失败按 tier 降级（OOM 时大模型→小模型）
+- 加载后 dummy inference 验证，避免"能加载但推理报错"
+- 全部可通过环境变量覆盖
 """
 
-from sentence_transformers import SentenceTransformer
 import os
+import platform
+import logging
+import threading
+from typing import Optional
 
-# 全局缓存，避免重复加载模型
-_model = None
-_device = None  # 缓存当前使用的设备
+import torch
+from sentence_transformers import SentenceTransformer
+
+logger = logging.getLogger(__name__)
+
+# 全局缓存
+_model: Optional[SentenceTransformer] = None
+_device_info: Optional[dict] = None
+_load_lock = threading.Lock()  # 防止并发重复加载
+
+# 设备能力档位 → 模型 / batch size 调度表
+# 注：量化需额外依赖（optimum/bitsandbytes），这里预留配置但不自动启用
+TIER_DISPATCH = {
+    "cuda_high":  {"model": "BAAI/bge-large-zh-v1.5", "batch_size": 64},
+    "cuda_low":   {"model": "BAAI/bge-base-zh-v1.5",  "batch_size": 16},
+    "mps":        {"model": "BAAI/bge-base-zh-v1.5",  "batch_size": 32},
+    "directml":   {"model": "BAAI/bge-base-zh-v1.5",  "batch_size": 16},
+    "cpu":        {"model": "BAAI/bge-small-zh-v1.5", "batch_size": 8},
+}
 
 
-def _get_optimal_device() -> str:
-    """
-    检测并返回最优设备（MPS > CPU）。
-
-    - MPS（Metal Performance Shaders）：Apple Silicon（M 系列芯片）的 GPU 加速
-    - CPU：通用兜底方案
-
-    首次调用会缓存结果，避免重复检测。
-    """
-    global _device
-    if _device is not None:
-        return _device
-
+def _try_tensor(device_str: str) -> bool:
+    """实际跑一个张量，验证设备真的能用"""
     try:
-        import torch
-        if torch.backends.mps.is_available():
-            # 额外检查 MPS 是否兼容（某些 PyTorch 版本 MPS 可用但有 bug）
-            try:
-                # 用一个极小张量测试 MPS 是否真的能跑
-                _ = torch.tensor([1.0, 2.0], device="mps")
-                _device = "mps"
-                print("[本地 Embedding] 设备检测: MPS ✅（Metal GPU 加速已启用）")
-            except Exception:
-                _device = "cpu"
-                print("[本地 Embedding] 设备检测: MPS 可用但测试失败，回退到 CPU ⚠️")
-        else:
-            _device = "cpu"
-            print("[本地 Embedding] 设备检测: MPS 不可用，使用 CPU 🖥️")
-    except ImportError:
-        _device = "cpu"
-        print("[本地 Embedding] 设备检测: PyTorch 未安装，使用 CPU 🖥️")
-
-    return _device
+        t = torch.tensor([1.0, 2.0], device=device_str)
+        _ = t * 2
+        if device_str == "cuda":
+            torch.cuda.synchronize()
+        return True
+    except Exception as e:
+        logger.debug(f"device {device_str} tensor test failed: {e}")
+        return False
 
 
-def get_embedding_model():
+def _detect_device() -> dict:
     """
-    获取（或创建）本地 Embedding 模型（单例）。
+    探测最优设备，返回 {tier, device_str, name}
+    支持 FORCE_DEVICE 环境变量强制指定
+    """
+    global _device_info
+    if _device_info is not None:
+        return _device_info
 
-    自动选择最优设备：
-    - Apple Silicon: MPS GPU 加速
-    - 其他 / 兼容性问题: CPU 兜底
+    # 环境变量强制覆盖
+    force = os.getenv("FORCE_DEVICE")
+    if force:
+        tier_map = {
+            "cuda": "cuda_high",
+            "mps": "mps",
+            "directml": "directml",
+            "cpu": "cpu",
+        }
+        tier = tier_map.get(force, "cpu")
+        _device_info = {
+            "tier": tier,
+            "device_str": force,
+            "name": f"FORCE: {force}",
+        }
+        logger.info(f"[device] 强制指定: {force}")
+        return _device_info
+
+    info = {"tier": "cpu", "device_str": "cpu", "name": "CPU"}
+
+    # 1. CUDA
+    if torch.cuda.is_available() and _try_tensor("cuda"):
+        try:
+            gpu_name = torch.cuda.get_device_name(0)
+            vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024 ** 3)
+            tier = "cuda_high" if vram_gb >= 6 else "cuda_low"
+            info = {
+                "tier": tier,
+                "device_str": "cuda",
+                "name": f"CUDA: {gpu_name} ({vram_gb:.1f}GB)",
+            }
+        except Exception as e:
+            logger.warning(f"CUDA info query failed: {e}")
+            info = {"tier": "cuda_low", "device_str": "cuda", "name": "CUDA GPU"}
+
+    # 2. MPS（Apple Silicon）
+    elif torch.backends.mps.is_available() and _try_tensor("mps"):
+        os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+        chip = platform.machine() or "Apple Silicon"
+        info = {
+            "tier": "mps",
+            "device_str": "mps",
+            "name": f"MPS: {chip}",
+        }
+
+    # 3. DirectML（Windows 非 NVIDIA GPU）
+    elif os.name == "nt":
+        try:
+            import torch_directml  # type: ignore
+            dml = torch_directml.device()
+            if _try_tensor(dml):
+                info = {
+                    "tier": "directml",
+                    "device_str": str(dml),
+                    "name": f"DirectML: {dml}",
+                }
+        except ImportError:
+            pass
+        except Exception as e:
+            logger.warning(f"DirectML init failed: {e}")
+
+    # 4. CPU 兜底
+    if info["tier"] == "cpu":
+        logger.info(f"[device] fallback to CPU ({platform.processor() or 'unknown'})")
+    else:
+        logger.info(f"[device] detected: {info['name']} (tier={info['tier']})")
+
+    _device_info = info
+    return info
+
+
+def _get_model_name(tier: str) -> str:
+    """环境变量优先，否则按档位选"""
+    return os.getenv("EMBEDDING_MODEL_NAME") or TIER_DISPATCH[tier]["model"]
+
+
+def _get_batch_size(tier: str) -> int:
+    """环境变量优先，否则按档位选"""
+    env = os.getenv("EMBEDDING_BATCH_SIZE")
+    return int(env) if env else TIER_DISPATCH[tier]["batch_size"]
+
+
+def _load_model(model_name: str, device: str) -> SentenceTransformer:
+    """加载模型，带验证"""
+    model = SentenceTransformer(model_name, device=device)
+    actual = str(model.device)
+
+    # 声称用 GPU 但实际没上去，回退 CPU
+    if device != "cpu" and device not in actual:
+        logger.warning(f"loaded on {actual} (expected {device}), fallback to CPU")
+        model = SentenceTransformer(model_name, device="cpu")
+        actual = "cpu"
+
+    # dummy inference 验证：避免"能加载但推理报错"
+    try:
+        _ = model.encode("test", convert_to_numpy=True)
+        logger.info(f"[model] loaded OK, running on: {actual}")
+    except Exception as e:
+        if actual != "cpu":
+            logger.warning(f"dummy inference failed on {actual}: {e}, fallback to CPU")
+            model = SentenceTransformer(model_name, device="cpu")
+            _ = model.encode("test", convert_to_numpy=True)
+            logger.info("[model] loaded OK on CPU")
+        else:
+            raise RuntimeError(f"模型在 CPU 上也无法推理: {e}")
+
+    return model
+
+
+def get_embedding_model() -> SentenceTransformer:
+    """
+    获取（或创建）本地 Embedding 模型（线程安全单例）
     """
     global _model
-    if _model is None:
-        model_name = os.getenv("EMBEDDING_MODEL_NAME", "BAAI/bge-small-zh-v1.5")
-        device = _get_optimal_device()
+    if _model is not None:
+        return _model
 
-        print(f"[本地 Embedding] 加载模型: {model_name}")
+    with _load_lock:  # 防止并发重复加载
+        if _model is not None:  # 双重检查
+            return _model
 
-        # 尝试用 MPS 加载，失败则回退到 CPU
+        info = _detect_device()
+        model_name = _get_model_name(info["tier"])
+        device = info["device_str"]
+
+        logger.info(f"[model] loading {model_name} on {info['name']}")
+
         try:
-            _model = SentenceTransformer(model_name, device=device)
-            # 验证设备正确
-            actual_device = str(_model.device)
-            if device == "mps" and "mps" not in actual_device:
-                print(f"[本地 Embedding] MPS 加载失败（实际设备: {actual_device}），回退到 CPU")
-                _model = SentenceTransformer(model_name, device="cpu")
+            _model = _load_model(model_name, device)
+        except (RuntimeError, torch.OutOfMemoryError) as e:
+            # OOM 时按 CPU tier 降级（大模型→小模型）
+            logger.error(f"load on {device} failed: {e}")
+            if info["tier"] != "cpu":
+                fallback_model = TIER_DISPATCH["cpu"]["model"]
+                logger.warning(f"fallback to CPU model: {fallback_model}")
+                _model = _load_model(fallback_model, "cpu")
             else:
-                print(f"[本地 Embedding] 模型已加载，运行在: {actual_device}")
+                raise
         except Exception as e:
-            print(f"[本地 Embedding] 使用 {device} 加载失败: {e}")
-            print("[本地 Embedding] 回退到 CPU")
-            _model = SentenceTransformer(model_name, device="cpu")
-            print(f"[本地 Embedding] 模型已加载，运行在: cpu")
+            # 其他错误直接回退 CPU 同模型
+            logger.error(f"load on {device} failed: {e}")
+            logger.warning("fallback to CPU")
+            _model = _load_model(model_name, "cpu")
 
-    return _model
+        return _model
 
 
 def get_embedding(text: str) -> list[float]:
-    """将文本转为向量（自动使用最优设备加速）"""
+    """单条文本 → 向量"""
     model = get_embedding_model()
-    return model.encode(text).tolist()
+    return model.encode(text, convert_to_numpy=True).tolist()
 
 
 def get_embeddings(texts: list[str]) -> list[list[float]]:
-    """批量将文本转为向量"""
+    """批量文本 → 向量列表（自动按设备能力选 batch_size）"""
     model = get_embedding_model()
-    return model.encode(texts).tolist()
+    bs = _get_batch_size(_device_info["tier"])
+    return model.encode(texts, batch_size=bs, convert_to_numpy=True).tolist()
+
+
+def model_info() -> dict:
+    """当前模型状态（挂到 /health 用）"""
+    info = _detect_device()
+    return {
+        "device": info,
+        "model_name": _get_model_name(info["tier"]) if _model is None else str(_model),
+        "loaded": _model is not None,
+        "batch_size": _get_batch_size(info["tier"]),
+    }
+
+
+# ---------- 自检 ----------
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    print("=" * 60)
+    print("设备自检")
+    print("=" * 60)
+    print(_detect_device())
+    print()
+    print("=" * 60)
+    print("加载并跑一次推理")
+    print("=" * 60)
+    vecs = get_embeddings(["你好,世界", "本地 Embedding 测试"])
+    print(f"output dim: {len(vecs[0])}")
+    print(f"first 5 dims: {vecs[0][:5]}")
+    print()
+    print("=" * 60)
+    print("model_info")
+    print("=" * 60)
+    print(model_info()) 
