@@ -3,6 +3,16 @@
   "updated_at": "2026-06-06T12:00:00",
   "entries": [
     {
+      "id": "dialog-48",
+      "date": "2026-05-29",
+      "title": "Python async 与 JavaScript async 深度对比",
+      "file_path": ".reasonix/memory/conversations/2026-05-29.md",
+      "stage_id": "async-deep",
+      "entry_type": "dialog",
+      "topics": ["async", "await", "Event Loop", "Promise", "Task", "Future", "asyncio", "JavaScript"],
+      "summary": "深入对比 Python 和 JavaScript 的 async/await 机制：Event Loop 显式 vs 隐式管理、顶层 await 差异、Promise ≈ Task / new Promise ≈ Future 的对应关系、asyncio.get_event_loop() 三种获取方式"
+    },
+    {
       "id": "dialog-47",
       "date": "2026-06-06",
       "title": "错题复习与掌握度升级 + Reasonix 技能开发",
