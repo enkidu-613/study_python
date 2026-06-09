@@ -178,6 +178,7 @@ study_python/
 | [13_RAG闭环](md/13_RAG_闭环_检索到回答.md) | 检索 → 拼 Prompt → 流式 LLM 调用 | ⭐⭐⭐⭐ |
 | [14_上下文窗口](md/14_上下文窗口管理.md) | Token 截断策略、超长 Prompt 处理、防幻觉 | ⭐⭐⭐⭐ |
 | [15_LangChain](md/15_LangChain核心概念.md) | LCEL 链式语法、六大核心概念 | ⭐⭐⭐⭐ |
+| [16_异步编程深入](md/16_异步编程深入.md) | async/await 原理、三种协程对象、并发模式、Semaphore 限流 | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
@@ -208,11 +209,11 @@ study_python/
 - ✅ 统一 API 响应格式（`ApiResponse` 类，code/status/content）
 - ✅ POJO/DTO 概念及在接口设计中的应用
 - ✅ 对话历史索引管理（JSON 格式索引）
+- ✅ 异步编程深入（async/await、Coroutine/Task/Future 三种对象、并发模式 gather/create_task/as_completed、Semaphore 限流、Event Loop 调度原理）
 
 ### 待深入学习
 - ⬜ LangChain Memory（对话记忆注入）
 - ⬜ LangChain Agents（工具调用）
-- ⬜ 异步编程深入（async/await 原理）
 - ⬜ 用户认证 (JWT/OAuth2)
 - ⬜ 数据库迁移 (Alembic)
 - ⬜ 单元测试 (pytest)
