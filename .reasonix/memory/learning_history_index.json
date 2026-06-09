@@ -16,7 +16,7 @@
       "id": "dialog-47",
       "date": "2026-06-06",
       "title": "错题复习与掌握度升级 + Reasonix 技能开发",
-      "file_path": ".reasonix/memory/conversations/2026-06-05.md",
+      "file_path": ".reasonix/memory/conversations/2026-06-06.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": ["错题复习", "掌握度升级", "单例模式", "global关键字", "embed_query", "embed_documents", "B+树索引", "上下文窗口截断", "Reasonix技能", "chapter-review-quizzer", "MCP配置"],
