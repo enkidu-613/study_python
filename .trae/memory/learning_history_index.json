@@ -1,7 +1,17 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-06T12:00:00",
+  "updated_at": "2026-06-10T02:04:00",
   "entries": [
+    {
+      "id": "dialog-49",
+      "date": "2026-06-10",
+      "title": "Python asyncio 三种协程对象与并发模式深入",
+      "file_path": ".trae/memory/conversations/2026-06-10.md",
+      "stage_id": "async-deep",
+      "entry_type": "dialog",
+      "topics": ["asyncio", "Coroutine", "Task", "Future", "并发模式", "Semaphore", "解包", "Unpacking", "Promise", "JavaScript"],
+      "summary": "深入讲解 Python asyncio 三种协程对象（Coroutine/Task/Future）的区别与用途；Future 回调机制与状态控制；三种并发模式（gather/create_task/as_completed）及 Semaphore 限流原理；Python 解包对比 JS 解构赋值"
+    },
     {
       "id": "dialog-48",
       "date": "2026-06-08",
