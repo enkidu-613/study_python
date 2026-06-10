@@ -10,7 +10,7 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-**当前阶段**：LangChain 集成（已完成 ✅）→ RAG 深化 & 工程化
+**当前阶段**：JWT 用户认证（进行中 🔥）
 
 ---
 
@@ -35,6 +35,8 @@ study_python/
 │   ├── 13_RAG_闭环_检索到回答.md
 │   ├── 14_上下文窗口管理.md
 │   ├── 15_LangChain核心概念.md
+│   ├── 16_异步编程深入.md
+│   ├── 17_JWT用户认证.md
 │   ├── ai学习应用数学/
 │   │   └── 01_向量与余弦相似度.md
 │   └── 错题本.md
@@ -89,21 +91,23 @@ study_python/
 | 13 | 手搓最小 RAG 闭环 | `routers/rag_router.py` | ✅ |
 | 14 | 上下文窗口管理（Token 截断、防幻觉） | `routers/rag_router.py` | ✅ |
 | 15 | **LangChain 集成（LCEL 链式语法、DeepSeek 推理链）** | `routers/langchain_rag_router.py` | ✅ |
+| 16 | **异步编程深入（async/await 原理、三种协程对象、Semaphore）** | - | ✅ |
+| 17 | **学习计划审计与 AI 应用路线精简** | - | ✅ |
 
 ### 🔥 进行中
 
 | 步骤 | 主题 | 对应代码 | 状态 |
 |------|------|----------|------|
-| 16 | **RAG 深化 & 工程化（记忆注入、Agents、测试）** | - | 🔥 当前 |
+| 18 | **JWT 用户认证（密码哈希、Token签发、Depends守卫、角色授权）** | - | 🔥 当前 |
 
 ### 📋 待学习
 
 | 阶段 | 内容 | 说明 |
 |------|------|------|
-| **LangChain 深化** | Memory、Agents、Prompt 进阶 | LangChain 框架深入 |
-| **后端深耕** | 异步编程、用户认证 (JWT)、数据库迁移 (Alembic)、单元测试 (pytest)、Docker 部署 | 工程能力补全 |
+| **WebSocket 实时通信** | WebSocket 协议、AI 流式对话双向通信、与 SSE 对比 | AI 应用实时交互 |
+| **后端精深** | 数据库迁移 (Alembic)、单元测试 (pytest)、Docker 部署 | 工程能力补全 |
 | **前端** | React/Vue 基础、前后端对接 | 全栈能力 |
-| **roadmap 查缺补漏** | RAG 进阶、AI Agents、MCP、多模态、Fine-tuning 等 | 详见 `.trae/memory/roadmap查缺补漏计划.md` |
+| **AI 进阶** | LangChain Agents、RAG 进阶评估、Prompt Engineering 进阶 | 详见 roadmap 查缺补漏 |
 
 ---
 
@@ -117,7 +121,7 @@ study_python/
 | **ORM** | SQLAlchemy | 数据库对象关系映射 |
 | **AI 框架** | LangChain (LCEL) | RAG 链式编排 |
 | **AI API** | ModelScope (OpenAI 兼容) | 国内 AI 模型接入 |
-| **向量模型** | Qwen/Qwen3-Embedding-8B | 文本向量化（4096维） |
+| **向量模型** | bge-small-zh-v1.5 (本地) | 文本向量化（512维，本地部署 MPS 加速） |
 | **LLM 模型** | DeepSeek-V3.2 | 大语言模型问答 |
 | **包管理** | Poetry | 依赖管理与虚拟环境 |
 | **部署** | Uvicorn | ASGI 服务器 |
@@ -179,6 +183,7 @@ study_python/
 | [14_上下文窗口](md/14_上下文窗口管理.md) | Token 截断策略、超长 Prompt 处理、防幻觉 | ⭐⭐⭐⭐ |
 | [15_LangChain](md/15_LangChain核心概念.md) | LCEL 链式语法、六大核心概念 | ⭐⭐⭐⭐ |
 | [16_异步编程深入](md/16_异步编程深入.md) | async/await 原理、三种协程对象、并发模式、Semaphore 限流 | ⭐⭐⭐⭐ |
+| [17_JWT用户认证](md/17_JWT用户认证.md) | JWT 令牌、密码哈希、Depends 守卫、角色授权、长短 Token | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
@@ -210,11 +215,12 @@ study_python/
 - ✅ POJO/DTO 概念及在接口设计中的应用
 - ✅ 对话历史索引管理（JSON 格式索引）
 - ✅ 异步编程深入（async/await、Coroutine/Task/Future 三种对象、并发模式 gather/create_task/as_completed、Semaphore 限流、Event Loop 调度原理）
+- ✅ isinstance 与 instanceof 对比、Future 唤醒回调机制
 
 ### 待深入学习
-- ⬜ LangChain Memory（对话记忆注入）
-- ⬜ LangChain Agents（工具调用）
-- ⬜ 用户认证 (JWT/OAuth2)
+- ⬜ JWT 用户认证实战（密码哈希、Token 签发、Depends 守卫、角色授权、登出黑名单）
+- ⬜ WebSocket 实时通信（AI 流式对话双向通信）
+- ⬜ LangChain Memory & Agents（对话记忆、工具调用）
 - ⬜ 数据库迁移 (Alembic)
 - ⬜ 单元测试 (pytest)
 - ⬜ Docker 部署
@@ -239,7 +245,7 @@ study_python/
 
 本项目使用 `.trae/memory/` 目录记录完整的学习历史：
 
-- **learning_plan.json**：学习计划主数据（38 个阶段）
+- **learning_plan.json**：学习计划主数据（42 个阶段）
 - **learning_history_index.json**：历史文件索引（含对话记录索引，JSON 格式）
 - **roadmap查缺补漏计划.md**：roadmap.sh AI Engineer 查缺补漏完整计划
 - **conversations/**：日期对话文件
