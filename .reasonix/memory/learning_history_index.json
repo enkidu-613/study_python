@@ -1,7 +1,27 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-10T02:04:00",
+  "updated_at": "2026-06-11T12:00:00",
   "entries": [
+    {
+      "id": "dialog-51",
+      "date": "2026-06-11",
+      "title": "学习计划审计与 AI 应用路线精简",
+      "file_path": ".reasonix/memory/conversations/2026-06-11.md",
+      "stage_id": "jwt-auth",
+      "entry_type": "dialog",
+      "topics": ["学习计划审计", "AI应用路线", "后端课程对照", "ADHD教学", "JWT文档", "WebSocket", "Swagger", "中间件"],
+      "summary": "对照后端课程文件(01-07)审计学习计划，发现3处缺失（Swagger/中间件/WebSocket）；以AI应用为核心精简路线，将Swagger和中间件轻量并入jwt-auth，新增websocket-realtime阶段；撰写ADHD+完整性融合版JWT教学文档；归档历史并同步双框架"
+    },
+    {
+      "id": "dialog-50",
+      "date": "2026-06-10",
+      "title": "async 错题复习检测与 isinstance/Future 深入",
+      "file_path": ".reasonix/memory/conversations/2026-06-10.md",
+      "stage_id": "async-deep",
+      "entry_type": "dialog",
+      "topics": ["asyncio", "错题复习", "isinstance", "Future", "唤醒机制", "instanceof", "Event Loop"],
+      "summary": "async 章节多轮错题复活测验，深入讲解 isinstance 与 JS instanceof 区别、Future 唤醒机制底层原理，判定 async 基础通过，准备推进到 JWT"
+    },
     {
       "id": "dialog-49",
       "date": "2026-06-10",

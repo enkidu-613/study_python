@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-05T12:00:00",
+  "updated_at": "2026-06-11T12:00:00",
   "stages": [
     {
       "id": "python-basics",
@@ -193,23 +193,34 @@
       "id": "async-deep",
       "name": "异步编程深入",
       "description": "async/await 原理、asyncio",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
+      "completed_at": "2026-06-10",
       "documents": ["md/16_异步编程深入.md"],
       "dependencies": ["fastapi-orm"],
       "roadmap_tags": ["Backend"]
     },
     {
       "id": "jwt-auth",
-      "name": "用户认证",
-      "description": "JWT/OAuth2、密码哈希",
+      "name": "用户认证与API文档",
+      "description": "JWT/OAuth2、密码哈希、Swagger/OpenAPI文档、FastAPI中间件(CORS/异常处理)",
       "status": "pending",
       "created_at": "2026-05-31",
       "completed_at": null,
-      "documents": [],
+      "documents": ["md/17_JWT用户认证.md"],
       "dependencies": ["fastapi-orm"],
       "roadmap_tags": ["Backend"]
+    },
+    {
+      "id": "websocket-realtime",
+      "name": "WebSocket实时通信",
+      "description": "WebSocket协议、AI流式对话的双向实时通信、与SSE对比",
+      "status": "pending",
+      "created_at": "2026-06-11",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": ["jwt-auth"],
+      "roadmap_tags": ["Backend", "LLM Basics"]
     },
     {
       "id": "alembic",
@@ -241,7 +252,7 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["jwt-auth", "alembic"],
+      "dependencies": ["jwt-auth", "websocket-realtime", "alembic"],
       "roadmap_tags": ["Backend", "Deployment"]
     },
     {
@@ -454,5 +465,5 @@
       "roadmap_tags": ["Hugging Face", "Open Source Models"]
     }
   ],
-  "current_stage_id": "async-deep"
+  "current_stage_id": "jwt-auth"
 }
