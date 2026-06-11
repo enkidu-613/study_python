@@ -1,7 +1,29 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-12T04:49:05",
+  "updated_at": "2026-06-12T07:01:51",
   "entries": [
+    {
+      "id": "dialog-56",
+      "date": "2026-06-12",
+      "title": "WebSocket 教学启动 + ADHD 教学原则升级 + 教程编写",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "SSE",
+        "ADHD教学原则",
+        "类比不牺牲精度",
+        "四条理解标准",
+        "JWT补考",
+        "教程审计",
+        "协议升级",
+        "全双工",
+        "流式对话",
+        "asyncio.create_task"
+      ],
+      "summary": "推进到websocket-realtime阶段；升级ADHD教学原则（类比不牺牲精度+四条理解标准）；审计全部18章教程仅1处违规；JWT补考89%消灭4/5薄弱点；创建18_WebSocket实时通信.md完整教程（7关含AI打断实战）"
+    },
     {
       "id": "dialog-55",
       "date": "2026-06-12",

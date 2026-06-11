@@ -26,10 +26,10 @@ DESCRIPTION = """
 
 TAGS_METADATA = [
     {"name": "认证", "description": "用户注册、登录、登出、身份查询。"},
-    {"name": "AI 对话", "description": "流式 LLM 对话接口（SSE）。"},
-    {"name": "Todo", "description": "Todo 增删改查示例。"},
-    {"name": "聊天记忆", "description": "多轮对话上下文记忆。"},
-    {"name": "手搓 RAG", "description": "手写 RAG 闭环：存入 → 检索 → 生成。"},
+    {"name": "AI", "description": "流式 LLM 对话接口（SSE）。"},
+    {"name": "Todos", "description": "Todo 增删改查示例。"},
+    {"name": "Chat Memory", "description": "多轮对话上下文记忆。"},
+    {"name": "RAG 向量检索", "description": "手写 RAG 闭环：存入 → 检索 → 生成。"},
     {"name": "LangChain RAG", "description": "LCEL 链式语法框架化 RAG。"},
 ]
 

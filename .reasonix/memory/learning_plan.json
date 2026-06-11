@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-12T02:07:27",
+  "updated_at": "2026-06-12T06:50:21",
   "stages": [
     {
       "id": "python-basics",
@@ -9,9 +9,13 @@
       "status": "completed",
       "created_at": "2024-01-01",
       "completed_at": "2024-01-15",
-      "documents": ["md/01_Python基础.md"],
+      "documents": [
+        "md/01_Python基础.md"
+      ],
       "dependencies": [],
-      "roadmap_tags": ["Backend"]
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "python-advanced",
@@ -20,9 +24,15 @@
       "status": "completed",
       "created_at": "2024-01-16",
       "completed_at": "2024-01-30",
-      "documents": ["md/02_Python进阶.md"],
-      "dependencies": ["python-basics"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/02_Python进阶.md"
+      ],
+      "dependencies": [
+        "python-basics"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "python-expert",
@@ -31,9 +41,15 @@
       "status": "completed",
       "created_at": "2024-02-01",
       "completed_at": "2024-02-15",
-      "documents": ["md/03_Python高级特性.md"],
-      "dependencies": ["python-advanced"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/03_Python高级特性.md"
+      ],
+      "dependencies": [
+        "python-advanced"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "fastapi-basics",
@@ -42,9 +58,15 @@
       "status": "completed",
       "created_at": "2024-02-16",
       "completed_at": "2024-03-01",
-      "documents": ["md/04_FastAPI基础.md"],
-      "dependencies": ["python-expert"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/04_FastAPI基础.md"
+      ],
+      "dependencies": [
+        "python-expert"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "fastapi-crud",
@@ -53,9 +75,15 @@
       "status": "completed",
       "created_at": "2024-03-02",
       "completed_at": "2024-03-15",
-      "documents": ["md/05_FastAPI_CRUD.md"],
-      "dependencies": ["fastapi-basics"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/05_FastAPI_CRUD.md"
+      ],
+      "dependencies": [
+        "fastapi-basics"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "fastapi-orm",
@@ -64,9 +92,15 @@
       "status": "completed",
       "created_at": "2024-03-16",
       "completed_at": "2024-04-01",
-      "documents": ["md/06_FastAPI_ORM_SQLAlchemy.md"],
-      "dependencies": ["fastapi-crud"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/06_FastAPI_ORM_SQLAlchemy.md"
+      ],
+      "dependencies": [
+        "fastapi-crud"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "code-layering",
@@ -75,9 +109,15 @@
       "status": "completed",
       "created_at": "2024-04-02",
       "completed_at": "2024-04-15",
-      "documents": ["md/07_代码分层与模块化架构.md"],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/07_代码分层与模块化架构.md"
+      ],
+      "dependencies": [
+        "fastapi-orm"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "prompt-engineering",
@@ -86,9 +126,16 @@
       "status": "completed",
       "created_at": "2024-04-16",
       "completed_at": "2024-05-01",
-      "documents": ["md/08_提示词工程与聊天记忆.md"],
-      "dependencies": ["code-layering"],
-      "roadmap_tags": ["Prompt Engineering", "LLM Basics"]
+      "documents": [
+        "md/08_提示词工程与聊天记忆.md"
+      ],
+      "dependencies": [
+        "code-layering"
+      ],
+      "roadmap_tags": [
+        "Prompt Engineering",
+        "LLM Basics"
+      ]
     },
     {
       "id": "rag-embedding",
@@ -97,9 +144,17 @@
       "status": "completed",
       "created_at": "2026-05-14",
       "completed_at": "2026-05-19",
-      "documents": ["md/09_RAG_向量数据库入门.md", "md/ai学习应用数学/01_向量与余弦相似度.md"],
-      "dependencies": ["prompt-engineering"],
-      "roadmap_tags": ["Embeddings", "Vector DBs"]
+      "documents": [
+        "md/09_RAG_向量数据库入门.md",
+        "md/ai学习应用数学/01_向量与余弦相似度.md"
+      ],
+      "dependencies": [
+        "prompt-engineering"
+      ],
+      "roadmap_tags": [
+        "Embeddings",
+        "Vector DBs"
+      ]
     },
     {
       "id": "rag-chromadb",
@@ -108,9 +163,16 @@
       "status": "completed",
       "created_at": "2026-05-19",
       "completed_at": "2026-05-24",
-      "documents": ["md/10_RAG_ChromaDB向量数据库实战.md"],
-      "dependencies": ["rag-embedding"],
-      "roadmap_tags": ["Vector DBs", "Chroma"]
+      "documents": [
+        "md/10_RAG_ChromaDB向量数据库实战.md"
+      ],
+      "dependencies": [
+        "rag-embedding"
+      ],
+      "roadmap_tags": [
+        "Vector DBs",
+        "Chroma"
+      ]
     },
     {
       "id": "rag-embedding-exp",
@@ -120,8 +182,12 @@
       "created_at": "2026-05-24",
       "completed_at": "2026-05-24",
       "documents": [],
-      "dependencies": ["rag-chromadb"],
-      "roadmap_tags": ["Embeddings"]
+      "dependencies": [
+        "rag-chromadb"
+      ],
+      "roadmap_tags": [
+        "Embeddings"
+      ]
     },
     {
       "id": "rag-dual-storage",
@@ -130,9 +196,16 @@
       "status": "completed",
       "created_at": "2026-05-24",
       "completed_at": "2026-05-28",
-      "documents": ["md/11_双存储架构SQLite_ChromaDB.md"],
-      "dependencies": ["rag-chromadb"],
-      "roadmap_tags": ["Vector DBs", "Backend"]
+      "documents": [
+        "md/11_双存储架构SQLite_ChromaDB.md"
+      ],
+      "dependencies": [
+        "rag-chromadb"
+      ],
+      "roadmap_tags": [
+        "Vector DBs",
+        "Backend"
+      ]
     },
     {
       "id": "rag-fastapi-chroma",
@@ -142,8 +215,13 @@
       "created_at": "2026-05-28",
       "completed_at": "2026-05-28",
       "documents": [],
-      "dependencies": ["rag-dual-storage"],
-      "roadmap_tags": ["Backend", "Vector DBs"]
+      "dependencies": [
+        "rag-dual-storage"
+      ],
+      "roadmap_tags": [
+        "Backend",
+        "Vector DBs"
+      ]
     },
     {
       "id": "rag-closed-loop",
@@ -152,9 +230,16 @@
       "status": "completed",
       "created_at": "2026-05-28",
       "completed_at": "2026-05-31",
-      "documents": ["md/12_FastAPI_Chroma_最小原型.md", "md/13_RAG_闭环_检索到回答.md"],
-      "dependencies": ["rag-fastapi-chroma"],
-      "roadmap_tags": ["RAG"]
+      "documents": [
+        "md/12_FastAPI_Chroma_最小原型.md",
+        "md/13_RAG_闭环_检索到回答.md"
+      ],
+      "dependencies": [
+        "rag-fastapi-chroma"
+      ],
+      "roadmap_tags": [
+        "RAG"
+      ]
     },
     {
       "id": "rag-test-run",
@@ -164,8 +249,12 @@
       "created_at": "2026-05-31",
       "completed_at": "2026-06-02",
       "documents": [],
-      "dependencies": ["rag-closed-loop"],
-      "roadmap_tags": ["RAG"]
+      "dependencies": [
+        "rag-closed-loop"
+      ],
+      "roadmap_tags": [
+        "RAG"
+      ]
     },
     {
       "id": "rag-context-window",
@@ -174,9 +263,16 @@
       "status": "completed",
       "created_at": "2026-05-31",
       "completed_at": "2026-06-03",
-      "documents": ["md/14_上下文窗口管理.md"],
-      "dependencies": ["rag-closed-loop"],
-      "roadmap_tags": ["RAG", "Context Engineering"]
+      "documents": [
+        "md/14_上下文窗口管理.md"
+      ],
+      "dependencies": [
+        "rag-closed-loop"
+      ],
+      "roadmap_tags": [
+        "RAG",
+        "Context Engineering"
+      ]
     },
     {
       "id": "langchain",
@@ -185,9 +281,16 @@
       "status": "completed",
       "created_at": "2026-05-31",
       "completed_at": "2026-06-04",
-      "documents": ["md/15_LangChain核心概念.md"],
-      "dependencies": ["rag-closed-loop"],
-      "roadmap_tags": ["LangChain", "RAG"]
+      "documents": [
+        "md/15_LangChain核心概念.md"
+      ],
+      "dependencies": [
+        "rag-closed-loop"
+      ],
+      "roadmap_tags": [
+        "LangChain",
+        "RAG"
+      ]
     },
     {
       "id": "async-deep",
@@ -196,31 +299,50 @@
       "status": "completed",
       "created_at": "2026-05-31",
       "completed_at": "2026-06-10",
-      "documents": ["md/16_异步编程深入.md"],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
+      "documents": [
+        "md/16_异步编程深入.md"
+      ],
+      "dependencies": [
+        "fastapi-orm"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "jwt-auth",
       "name": "用户认证与API文档",
       "description": "JWT/OAuth2、密码哈希、Swagger/OpenAPI文档、FastAPI中间件(CORS/异常处理)",
-      "status": "pending",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": ["md/17_JWT用户认证.md"],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
+      "completed_at": "2026-06-12",
+      "documents": [
+        "md/17_JWT用户认证.md"
+      ],
+      "dependencies": [
+        "fastapi-orm"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "websocket-realtime",
       "name": "WebSocket实时通信",
       "description": "WebSocket协议、AI流式对话的双向实时通信、与SSE对比",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-06-11",
       "completed_at": null,
-      "documents": [],
-      "dependencies": ["jwt-auth"],
-      "roadmap_tags": ["Backend", "LLM Basics"]
+      "documents": [
+        "md/18_WebSocket实时通信.md"
+      ],
+      "dependencies": [
+        "jwt-auth"
+      ],
+      "roadmap_tags": [
+        "Backend",
+        "LLM Basics"
+      ]
     },
     {
       "id": "alembic",
@@ -230,8 +352,12 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
+      "dependencies": [
+        "fastapi-orm"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "pytest",
@@ -241,8 +367,12 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fastapi-orm"],
-      "roadmap_tags": ["Backend"]
+      "dependencies": [
+        "fastapi-orm"
+      ],
+      "roadmap_tags": [
+        "Backend"
+      ]
     },
     {
       "id": "docker-deploy",
@@ -252,8 +382,15 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["jwt-auth", "websocket-realtime", "alembic"],
-      "roadmap_tags": ["Backend", "Deployment"]
+      "dependencies": [
+        "jwt-auth",
+        "websocket-realtime",
+        "alembic"
+      ],
+      "roadmap_tags": [
+        "Backend",
+        "Deployment"
+      ]
     },
     {
       "id": "frontend-basics",
@@ -264,7 +401,9 @@
       "completed_at": null,
       "documents": [],
       "dependencies": [],
-      "roadmap_tags": ["Frontend"]
+      "roadmap_tags": [
+        "Frontend"
+      ]
     },
     {
       "id": "frontend-backend",
@@ -274,8 +413,15 @@
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["frontend-basics", "docker-deploy"],
-      "roadmap_tags": ["Frontend", "Backend", "Full-Stack"]
+      "dependencies": [
+        "frontend-basics",
+        "docker-deploy"
+      ],
+      "roadmap_tags": [
+        "Frontend",
+        "Backend",
+        "Full-Stack"
+      ]
     },
     {
       "id": "langchain-memory",
@@ -285,8 +431,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["langchain"],
-      "roadmap_tags": ["LangChain", "Prompt Engineering"]
+      "dependencies": [
+        "langchain"
+      ],
+      "roadmap_tags": [
+        "LangChain",
+        "Prompt Engineering"
+      ]
     },
     {
       "id": "langchain-agents",
@@ -296,8 +447,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["langchain-memory"],
-      "roadmap_tags": ["LangChain", "AI Agents"]
+      "dependencies": [
+        "langchain-memory"
+      ],
+      "roadmap_tags": [
+        "LangChain",
+        "AI Agents"
+      ]
     },
     {
       "id": "prompt-advanced",
@@ -307,8 +463,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["langchain"],
-      "roadmap_tags": ["Prompt Engineering", "LLM Basics"]
+      "dependencies": [
+        "langchain"
+      ],
+      "roadmap_tags": [
+        "Prompt Engineering",
+        "LLM Basics"
+      ]
     },
     {
       "id": "rag-chunking",
@@ -318,8 +479,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["langchain"],
-      "roadmap_tags": ["RAG", "Chunking"]
+      "dependencies": [
+        "langchain"
+      ],
+      "roadmap_tags": [
+        "RAG",
+        "Chunking"
+      ]
     },
     {
       "id": "rag-evaluation",
@@ -329,8 +495,14 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["rag-chunking", "prompt-advanced"],
-      "roadmap_tags": ["RAG", "Evaluation"]
+      "dependencies": [
+        "rag-chunking",
+        "prompt-advanced"
+      ],
+      "roadmap_tags": [
+        "RAG",
+        "Evaluation"
+      ]
     },
     {
       "id": "vector-db-advanced",
@@ -340,8 +512,16 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["rag-chunking"],
-      "roadmap_tags": ["Vector DBs", "Pinecone", "Weaviate", "Qdrant", "FAISS"]
+      "dependencies": [
+        "rag-chunking"
+      ],
+      "roadmap_tags": [
+        "Vector DBs",
+        "Pinecone",
+        "Weaviate",
+        "Qdrant",
+        "FAISS"
+      ]
     },
     {
       "id": "ai-agents",
@@ -351,8 +531,15 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["prompt-advanced", "langchain-agents"],
-      "roadmap_tags": ["AI Agents", "ReAct", "Function Calling"]
+      "dependencies": [
+        "prompt-advanced",
+        "langchain-agents"
+      ],
+      "roadmap_tags": [
+        "AI Agents",
+        "ReAct",
+        "Function Calling"
+      ]
     },
     {
       "id": "ai-agents-advanced",
@@ -362,8 +549,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents"],
-      "roadmap_tags": ["AI Agents", "Multi-agents"]
+      "dependencies": [
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "AI Agents",
+        "Multi-agents"
+      ]
     },
     {
       "id": "dify",
@@ -373,8 +565,16 @@
       "created_at": "2026-06-05",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents-advanced"],
-      "roadmap_tags": ["Dify", "RAG", "AI Agents", "Low-Code", "Platform"]
+      "dependencies": [
+        "ai-agents-advanced"
+      ],
+      "roadmap_tags": [
+        "Dify",
+        "RAG",
+        "AI Agents",
+        "Low-Code",
+        "Platform"
+      ]
     },
     {
       "id": "ai-safety",
@@ -384,8 +584,12 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents"],
-      "roadmap_tags": ["AI Safety and Ethics"]
+      "dependencies": [
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "AI Safety and Ethics"
+      ]
     },
     {
       "id": "llm-observability",
@@ -395,8 +599,14 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["rag-evaluation"],
-      "roadmap_tags": ["Observability", "LangSmith", "Langfuse"]
+      "dependencies": [
+        "rag-evaluation"
+      ],
+      "roadmap_tags": [
+        "Observability",
+        "LangSmith",
+        "Langfuse"
+      ]
     },
     {
       "id": "llm-evaluation",
@@ -406,8 +616,14 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["rag-evaluation"],
-      "roadmap_tags": ["Evaluation", "DeepEval", "RAGAS"]
+      "dependencies": [
+        "rag-evaluation"
+      ],
+      "roadmap_tags": [
+        "Evaluation",
+        "DeepEval",
+        "RAGAS"
+      ]
     },
     {
       "id": "mcp",
@@ -417,8 +633,12 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents"],
-      "roadmap_tags": ["MCP"]
+      "dependencies": [
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "MCP"
+      ]
     },
     {
       "id": "multimodal-ai",
@@ -428,8 +648,15 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents-advanced"],
-      "roadmap_tags": ["Multimodal AI", "Vision", "TTS", "STT"]
+      "dependencies": [
+        "ai-agents-advanced"
+      ],
+      "roadmap_tags": [
+        "Multimodal AI",
+        "Vision",
+        "TTS",
+        "STT"
+      ]
     },
     {
       "id": "fine-tuning",
@@ -439,8 +666,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["ai-agents"],
-      "roadmap_tags": ["Fine-tuning", "LoRA"]
+      "dependencies": [
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "Fine-tuning",
+        "LoRA"
+      ]
     },
     {
       "id": "llama-index",
@@ -450,8 +682,13 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["rag-evaluation"],
-      "roadmap_tags": ["LlamaIndex", "RAG"]
+      "dependencies": [
+        "rag-evaluation"
+      ],
+      "roadmap_tags": [
+        "LlamaIndex",
+        "RAG"
+      ]
     },
     {
       "id": "hugging-face",
@@ -461,9 +698,14 @@
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
-      "dependencies": ["fine-tuning"],
-      "roadmap_tags": ["Hugging Face", "Open Source Models"]
+      "dependencies": [
+        "fine-tuning"
+      ],
+      "roadmap_tags": [
+        "Hugging Face",
+        "Open Source Models"
+      ]
     }
   ],
-  "current_stage_id": "jwt-auth"
+  "current_stage_id": "websocket-realtime"
 }
