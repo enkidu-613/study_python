@@ -2,14 +2,37 @@ from sqlalchemy import Column, Integer, String, Boolean, Text, DateTime, Foreign
 from sqlalchemy.orm import declarative_base, relationship
 from database import engine
 from datetime import datetime
+from sqlalchemy.sql import func
 
 Base = declarative_base()
+
 
 class DBTodo(Base):
     __tablename__ = "todos"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     is_done = Column(Boolean, default=False)
+
+
+class User(Base):
+    """👤 用户（认证系统）"""
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False, index=True)
+    password = Column(String(200), nullable=False)  # bcrypt 哈希值
+    role = Column(String(20), default="USER")
+    created_at = Column(DateTime, default=datetime.now)
+
+
+class RevokedToken(Base):
+    """🚫 Token 黑名单（挂失的 Token）"""
+    __tablename__ = "revoked_tokens"
+
+    id = Column(Integer, primary_key=True)
+    token_hash = Column(String(64), unique=True, index=True)  # SHA256 哈希值，不存完整 Token
+    revoked_at = Column(DateTime, server_default=func.now())
+    expires_at = Column(DateTime)  # Token 自然过期时间，方便定时清理
 
 
 class Document(Base):

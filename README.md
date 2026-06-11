@@ -48,6 +48,15 @@ study_python/
 │   ├── rag_router.py               # 手搓 RAG /rag/*
 │   └── langchain_rag_router.py     # LangChain RAG /langchain-rag/*
 │
+├── 📁 .reasonix/skills/            # AI 辅助技能（6个定制技能）
+│   ├── python-adhd-tutor.md
+│   ├── programming-language-mastery.md
+│   ├── chapter-review-quizzer.md
+│   ├── learning-plan-manager.md
+│   ├── learning_plan_manager.py
+│   ├── history-archiver.md
+│   └── tech-search-sources.md
+│
 ├── 📁 .trae/memory/                # 项目记忆与对话历史
 │   ├── learning_plan.json          # 学习计划主数据
 │   ├── learning_history_index.json # 学习历史索引（含对话记录索引）
@@ -183,7 +192,7 @@ study_python/
 | [14_上下文窗口](md/14_上下文窗口管理.md) | Token 截断策略、超长 Prompt 处理、防幻觉 | ⭐⭐⭐⭐ |
 | [15_LangChain](md/15_LangChain核心概念.md) | LCEL 链式语法、六大核心概念 | ⭐⭐⭐⭐ |
 | [16_异步编程深入](md/16_异步编程深入.md) | async/await 原理、三种协程对象、并发模式、Semaphore 限流 | ⭐⭐⭐⭐ |
-| [17_JWT用户认证](md/17_JWT用户认证.md) | JWT 令牌、密码哈希、Depends 守卫、角色授权、长短 Token | ⭐⭐⭐⭐ |
+| [17_JWT用户认证](md/17_JWT用户认证.md) | JWT 令牌、bcrypt 密码哈希、Depends 验票、角色守卫、黑名单、Swagger/CORS/异常处理 | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
@@ -249,6 +258,23 @@ study_python/
 - **learning_history_index.json**：历史文件索引（含对话记录索引，JSON 格式）
 - **roadmap查缺补漏计划.md**：roadmap.sh AI Engineer 查缺补漏完整计划
 - **conversations/**：日期对话文件
+
+---
+
+## 🤖 AI 辅助技能（Reasonix Skills）
+
+本项目配备了 6 个定制 AI 技能，通过 `.reasonix/skills/` 目录加载，在对话中随时可用：
+
+| 技能 | 触发场景 | 功能 |
+|------|----------|------|
+| **python-adhd-tutor** | 询问 Python 基础、编程概念或代码机制 | 以 ADHD 友好且专业的方式讲解 Python |
+| **programming-language-mastery** | 学习新语言、对比语言特性、通用编程概念 | 跨语言的计算思维心法（表达式/函数/类/异步/泛型等） |
+| **chapter-review-quizzer** | 要求检测、复习错题、检查章节掌握程度 | 生成试卷 MD → 用户在答题区 ```` ``` ```` 填写 → AI 批改并记录错题 |
+| **learning-plan-manager** | 更新进度、追踪阶段、添加计划、查询状态 | 管理学习计划进度和历史文件索引 |
+| **history-archiver** | 归档对话历史 | 按实际日期归档到正确的 `YYYY-MM-DD.md` 文件 |
+| **tech-search-sources** | 搜索技术问题 | 优先从 GitHub、Stack Overflow、掘金、V2EX 等来源获取 |
+
+> 💡 在对话中直接说出需求即可触发对应技能，例如：「帮我检测一下第 15 章的掌握程度」
 
 ---
 

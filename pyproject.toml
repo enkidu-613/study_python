@@ -39,7 +39,9 @@ dependencies = [
     "python-dotenv (>=1.2.2,<2.0.0)",
     "tiktoken (>=0.13.0,<0.14.0)",
     "langchain-deepseek (>=1.0.1,<2.0.0)",
-    "sentence-transformers (>=5.5.1,<6.0.0)"
+    "sentence-transformers (>=5.5.1,<6.0.0)",
+    "bcrypt (>=5.0.0,<6.0.0)",
+    "pyjwt (>=2.13.0,<3.0.0)"
 ]
 
 [tool.poetry]
