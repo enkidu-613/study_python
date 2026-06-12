@@ -1,0 +1,8 @@
+interface:
+  display_name: "Comfortable Fast Learning Coach"
+  short_description: "舒心快速的技术学习流程教练"
+  default_prompt: "Use $comfortable-fast-learning-coach to help me learn this technical topic comfortably, quickly, and precisely."
+
+policy:
+  allow_implicit_invocation: true
+

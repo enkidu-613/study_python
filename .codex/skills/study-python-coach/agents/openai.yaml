@@ -1,0 +1,7 @@
+interface:
+  display_name: "Study Python Coach"
+  short_description: "Project learning coach for Python, FastAPI, RAG, and AI"
+  default_prompt: "Use $study-python-coach to check my current learning progress and suggest the next study step."
+
+policy:
+  allow_implicit_invocation: true

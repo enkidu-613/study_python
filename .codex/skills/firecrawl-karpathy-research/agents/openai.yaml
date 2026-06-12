@@ -1,0 +1,8 @@
+interface:
+  display_name: "Firecrawl Karpathy Research"
+  short_description: "Firecrawl research with source-grounded AI coding habits"
+  default_prompt: "Use $firecrawl-karpathy-research to research this site with Firecrawl and turn the findings into a source-grounded implementation plan."
+
+policy:
+  allow_implicit_invocation: true
+

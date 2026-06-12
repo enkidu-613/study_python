@@ -1,0 +1,8 @@
+interface:
+  display_name: "UI/UX Pro Max 3"
+  short_description: "Deep UI/UX guidance for web and mobile apps"
+  default_prompt: "Use $ui-ux-pro-max-3 to design, review, or improve this web or mobile interface."
+
+policy:
+  allow_implicit_invocation: true
+
