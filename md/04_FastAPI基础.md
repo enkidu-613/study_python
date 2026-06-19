@@ -17,6 +17,41 @@
 
 ---
 
+## 🎯 一句话理解
+
+FastAPI 就是把 Python 函数变成 HTTP 接口：浏览器或前端发请求，FastAPI 调用对应函数，再把 Python 数据变成 JSON 返回。
+
+## 🔧 准确术语速查
+
+| 术语 | 准确含义 | 本章怎么识别 |
+|------|----------|--------------|
+| API | Application Programming Interface，程序之间的调用接口 | 一个 URL 对应一个函数 |
+| Route | 路由，请求路径和处理函数的绑定关系 | `@app.get("/items")` |
+| Path parameter | 路径参数，URL 路径中的变量 | `/users/{user_id}` |
+| Query parameter | 查询参数，`?key=value` 中的变量 | `/search?keyword=python` |
+| JSON | Web API 常用数据格式 | `{"message": "Hello"}` |
+| Uvicorn | ASGI 服务器，负责运行 FastAPI 应用 | `uvicorn main:app --reload` |
+
+## 📋 本章最小模板
+
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/items/{item_id}")
+def get_item(item_id: int, keyword: str | None = None):
+    return {"item_id": item_id, "keyword": keyword}
+```
+
+运行：
+
+```bash
+uvicorn main:app --reload
+```
+
+---
+
 ## 一、JSON 数据处理
 
 ### 1.1 什么是 JSON？
@@ -457,3 +492,19 @@ def search(keyword: Optional[str] = None): ...
 2. **路径参数练习**：实现一个 `/users/{user_id}` 接口，返回用户信息（用字典模拟数据库）
 3. **查询参数练习**：实现一个商品搜索接口，支持按名称、价格范围、分类过滤
 4. **综合练习**：设计一个简单的图书管理 API，包含增删改查功能
+
+## ⚠️ 常见坑
+
+| 坑 | 现象 | 正确做法 |
+|----|------|----------|
+| 路径参数和查询参数混淆 | 不知道该写进 URL 还是 `?` 后面 | 标识资源用路径参数，过滤/搜索用查询参数 |
+| 忘记类型标注 | Swagger 校验弱，参数都是字符串感 | 给参数写 `int`、`str`、`bool` 等类型 |
+| 启动命令写错 | `Error loading ASGI app` | `uvicorn 文件名:app --reload`，文件名不带 `.py` |
+| JSON 和 Python 字典混淆 | `true/null` 写进 Python 报错 | Python 用 `True/None`，JSON 用 `true/null` |
+
+## ✅ 四条理解标准
+
+- [ ] 思想是什么：把 Python 函数映射成 HTTP 请求处理器。
+- [ ] 干什么：接收请求参数，执行逻辑，返回 JSON。
+- [ ] 为什么这么干：前端、浏览器、其他服务都能通过 HTTP 调用你的 Python 代码。
+- [ ] 怎么干：能写出 `FastAPI()`、`@app.get()`、路径参数、查询参数和启动命令。

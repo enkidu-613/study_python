@@ -10,6 +10,18 @@
 
 ---
 
+## 🔧 准确术语速查
+
+| 术语 | 准确含义 | 本章对应 |
+|------|----------|----------|
+| ChromaDB | 本地向量数据库 | `chromadb.Client()` |
+| Collection | 一组向量和文档的集合 | 类似一张向量表 |
+| `ids` | 每条数据的唯一编号 | 用于定位和删除 |
+| `documents` | 原始文本 | 人类可读，便于返回展示 |
+| `embeddings` | 语义向量 | 唯一参与相似度计算 |
+| `metadatas` | 额外标签 | 用于过滤或回查关系库 |
+| Cosine distance | 余弦距离 | 常用 `1 - distance` 转相似度 |
+
 ## 一、向量数据库是什么
 
 ### 1.1 与关系型数据库对比
@@ -466,6 +478,22 @@ bar = "█" * int(sim * 20)
 | 语义检索 | `collection.query()` | ChromaDB 协助 |
 
 ---
+
+## ✅ 四条理解标准
+
+- [ ] 思想是什么：ChromaDB 用向量距离帮你找“语义最接近”的文本。
+- [ ] 干什么：把文档、向量、id、metadata 放进集合，再按查询向量找近邻。
+- [ ] 为什么这么干：普通关键字匹配只看字面，向量检索能处理同义、改写和跨语言。
+- [ ] 怎么干：能写出 `get_or_create_collection()`、`collection.add()`、`collection.query()`，并解释 `ids/documents/metadatas/embeddings` 的职责。
+
+## ⚠️ 常见坑
+
+| 坑 | 现象 | 正确做法 |
+|----|------|----------|
+| 简化向量当真实能力 | demo 结果过于理想 | demo 只帮助理解，真实效果看 Embedding 模型 |
+| `ids`、`documents`、`metadatas` 下标错位 | 查到的文本和标签对不上 | 三个列表必须同长度、同顺序 |
+| 忘记 `include=["metadatas"]` | 查询后拿不到回查信息 | 需要回查 SQLite 时显式 include metadata |
+| 混淆 query_texts 和 query_embeddings | 查询接口参数传错 | 有文字用 `query_texts`，已有向量用 `query_embeddings` |
 
 ## 十、下一步学习
 

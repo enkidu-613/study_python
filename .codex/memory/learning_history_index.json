@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-06-19T01:19:47",
+  "entries": [
+    {
+      "id": "dialog-70",
+      "date": "2026-06-19",
+      "title": "Alembic 考试通关、阶段完成与 pytest 新章启动",
+      "stage_id": "pytest",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "migration",
+        "backup",
+        "stamp head",
+        "alembic_version",
+        "pytest",
+        "TestClient",
+        "课程状态",
+        "历史归档"
+      ],
+      "summary": "Alembic 初考 13.7/20、补考 7.2/10 后，通过两个补救问题确认 migration/backup、空库 upgrade 前提、完整搬家工具边界；判定 Alembic 阶段通过；将 learning_plan 中 alembic 标记 completed，pytest 标记 in_progress；创建第20节教学文档 md/20_pytest单元测试.md。",
+      "file_path": ".codex/memory/conversations/2026-06-19.md"
+    },
+    {
+      "id": "dialog-67",
+      "date": "2026-06-16",
+      "title": "Alembic、ORM、Prisma、Django/FastAPI 边界澄清",
+      "stage_id": "alembic",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "ORM",
+        "Prisma",
+        "Django",
+        "FastAPI",
+        "SQLAlchemy",
+        "SQLModel",
+        "Base.metadata",
+        "Python生态"
+      ],
+      "summary": "澄清 Alembic 不是 ORM，而是对应 Prisma Migrate；SQLAlchemy ORM 对应 Prisma Client；Django ORM + migrations 更像 Prisma 的一体化体验，FastAPI 项目主流组合是 SQLAlchemy + Alembic；对比 Django 和 FastAPI 的框架定位及生产使用场景；解释 Base.metadata 是 ORM 表结构总目录，不是数据、连接或查询器。",
+      "file_path": ".codex/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-66",
+      "date": "2026-06-16",
+      "title": "WebSocket 完成标记与 Alembic 第19节教学文档",
+      "stage_id": "alembic",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "数据库迁移",
+        "learning_plan",
+        "study_state",
+        "create_all",
+        "Base.metadata",
+        "upgrade",
+        "downgrade",
+        "autogenerate"
+      ],
+      "summary": "WebSocket 阶段考试通过后，将 websocket-realtime 标记为 completed；同步 .trae 与 .reasonix 学习计划；更新 .codex study_state；将 Alembic 标记为 in_progress；创建第19节教学文档 md/19_Alembic数据库迁移.md，围绕数据库结构的 Git、Revision、Upgrade、Downgrade、Autogenerate、target_metadata 和项目实战展开。",
+      "file_path": ".codex/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-65",
+      "date": "2026-06-16",
+      "title": "WebSocket 阶段考试通关与学习 skill 规则升级",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "试卷",
+        "补考",
+        "Sec-WebSocket-Key",
+        "Query",
+        "create_task",
+        "dict[str,list[WebSocket]]",
+        "skill规则",
+        "comfortable-fast-learning-coach"
+      ],
+      "summary": "按学习 skill 创建并批改 WebSocket 初考、补考和二次补考；成绩从 14.25/20 到 7/8，再到 4.5/5，达到通过标准；复盘 HTTP Upgrade、Query(...) 必填、Sec-WebSocket-Key/Accept、Python != 与 JS !==、聊天室分房结构；将考试必须写入 md/试卷/ 的严格规则同步进 .codex/.trae/.reasonix 的 comfortable-fast-learning-coach skill。",
+      "file_path": ".codex/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-64",
+      "date": "2026-06-16",
+      "title": "Krisp 降噪工具安装与 macOS 语音隔离选择",
+      "stage_id": "tooling-system",
+      "entry_type": "dialog",
+      "topics": [
+        "macOS",
+        "Homebrew",
+        "Krisp",
+        "降噪",
+        "语音隔离",
+        "GUI",
+        "中文界面"
+      ],
+      "summary": "用户想在 Mac 上安装类似 EasyEffects 的 GUI 降噪工具；选择 Krisp，并通过 Homebrew 获取安装包后使用 macOS installer 完成安装，验证 /Applications/Krisp.app 存在并打开；发现 Krisp 不支持中文界面后，修正建议为中文用户优先使用 macOS 自带语音隔离，Krisp 作为第三方备选。",
+      "file_path": ".codex/memory/conversations/2026-06-16.md"
+    }
+  ]
+}

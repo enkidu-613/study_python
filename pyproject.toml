@@ -41,7 +41,8 @@ dependencies = [
     "langchain-deepseek (>=1.0.1,<2.0.0)",
     "sentence-transformers (>=5.5.1,<6.0.0)",
     "bcrypt (>=5.0.0,<6.0.0)",
-    "pyjwt (>=2.13.0,<3.0.0)"
+    "pyjwt (>=2.13.0,<3.0.0)",
+    "alembic (>=1.18.4,<2.0.0)"
 ]
 
 [tool.poetry]
@@ -55,3 +56,8 @@ priority = "primary"
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)"
+]

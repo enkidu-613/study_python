@@ -428,6 +428,33 @@ curl -X POST "http://127.0.0.1:8000/rag/search" \
 
 ---
 
+## 🔧 准确术语速查
+
+| 术语 | 准确含义 | 本章对应 |
+|------|----------|----------|
+| API 化 | 把脚本能力包装成 HTTP 接口 | `/rag/documents`、`/rag/search` |
+| PersistentClient | ChromaDB 持久化客户端 | 数据写入 `./chroma_db` |
+| Router | FastAPI 路由模块 | `routers/rag_router.py` |
+| Dependency injection | 依赖注入 | `Depends(get_db)` |
+| Prototype | 最小原型，先验证主流程 | 只保留存入和检索两个核心接口 |
+| Swagger UI | FastAPI 自动交互文档 | `http://127.0.0.1:8000/docs` |
+
+## ⚠️ 常见坑
+
+| 坑 | 现象 | 正确做法 |
+|----|------|----------|
+| 原型阶段做太多功能 | 主流程还没跑通就复杂化 | 先保留存入和检索两个接口 |
+| Chroma 用内存模式 | 重启后数据消失 | 用 `PersistentClient(path="./chroma_db")` |
+| router 写了但没注册 | Swagger 没有 RAG 接口 | `main.py` 里 `app.include_router(rag_router.router)` |
+| curl JSON 引号错误 | 请求直接 422 或 shell 报错 | 用单引号包住 JSON，字段用双引号 |
+
+## ✅ 四条理解标准
+
+- [ ] 思想是什么：先把向量检索脚本变成能被外部调用的 API。
+- [ ] 干什么：提供文档存入和语义检索两个最小接口。
+- [ ] 为什么这么干：API 化后前端、测试脚本、其他服务才能复用 RAG 能力。
+- [ ] 怎么干：能启动服务，用 curl 调 `/rag/documents` 和 `/rag/search`，并知道数据会持久化到哪里。
+
 ## 下一步
 
 **手搓最小 RAG 闭环**：

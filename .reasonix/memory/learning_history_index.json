@@ -1,29 +1,269 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-13T05:15:11",
+  "updated_at": "2026-06-19T01:19:47",
   "entries": [
     {
-      "id": "dialog-57",
-      "date": "2026-06-13",
-      "title": "Firecrawl 与 UI/UX Pro Max 3 技能创建安装同步",
-      "stage_id": "tooling-skills",
+      "id": "dialog-70",
+      "date": "2026-06-19",
+      "title": "Alembic 考试通关、阶段完成与 pytest 新章启动",
+      "stage_id": "pytest",
       "entry_type": "dialog",
       "topics": [
-        "Codex技能",
-        "Trae技能",
-        "Reasonix技能",
-        "Firecrawl",
-        "Karpathy guidelines",
-        "skill-creator",
-        "ui-ux-pro-max-3",
-        "UI/UX",
-        "SkillHub",
-        "npx skills",
-        "quick_validate",
-        "技能同步"
+        "Alembic",
+        "migration",
+        "backup",
+        "stamp head",
+        "alembic_version",
+        "pytest",
+        "TestClient",
+        "课程状态",
+        "历史归档"
       ],
-      "summary": "创建 firecrawl-karpathy-research 技能并同步到 .codex/.trae/.reasonix；安装上游 ui-ux-pro-max 后重命名为 ui-ux-pro-max-3，完整保留 data 与 scripts 资源并同步三套环境；补充 Codex openai.yaml；验证 Codex/Trae skill frontmatter 与三处搜索脚本均可运行；记录 skillhub 不存在、改用 npx skills 安装，以及上游安全评估 Gen High Risk。",
+      "summary": "Alembic 初考 13.7/20、补考 7.2/10 后，通过两个补救问题确认 migration/backup、空库 upgrade 前提、完整搬家工具边界；判定 Alembic 阶段通过；将 learning_plan 中 alembic 标记 completed，pytest 标记 in_progress；创建第20节教学文档 md/20_pytest单元测试.md。",
+      "file_path": ".reasonix/memory/conversations/2026-06-19.md"
+    },
+    {
+      "id": "dialog-69",
+      "date": "2026-06-18",
+      "title": "Alembic 删库重来完整流程与迁移命令速查",
+      "stage_id": "alembic",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "SQLite",
+        "数据库迁移",
+        "server_default",
+        "ALTER COLUMN",
+        "删库重来",
+        "upgrade",
+        "downgrade"
+      ],
+      "summary": "Alembic 实操第二部分：拼写错误 revsion；已有数据时新增 NOT NULL 字段导致 Cannot add a NOT NULL column with default value NULL；ORM 的 default 不等于数据库的 server_default；SQLite 不支持 ALTER COLUMN TYPE；完整演示开发环境删库重来五步流程，生成干净初始迁移 f21e75ca74bd_init.py；总结 upgrade/downgrade/current/history 常用命令。",
+      "file_path": ".reasonix/memory/conversations/2026-06-18.md"
+    },
+    {
+      "id": "dialog-68",
+      "date": "2026-06-17",
+      "title": "Alembic 实操踩坑与 Prisma 设计哲学对比",
+      "stage_id": "alembic",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "Poetry",
+        "SQLite",
+        "数据库迁移",
+        "autogenerate",
+        "target_metadata",
+        "Prisma",
+        "stamp head"
+      ],
+      "summary": "Alembic 实操全流程踩坑：poetry add 与 poetry install 的区别；Poetry 2.0+ 移除 shell 命令；alembic init 需用 poetry run；env.py 中 target_metadata = None 覆盖 Base.metadata 的陷阱；--autogenerate 因数据库已有表而生成空脚本的原理；Prisma 全量快照思维与 Alembic 差异对比思维的设计哲学差异；开发环境删库重来 vs 生产环境 stamp head 的两种方案。",
+      "file_path": ".reasonix/memory/conversations/2026-06-17.md"
+    },
+    {
+      "id": "dialog-67",
+      "date": "2026-06-16",
+      "title": "Alembic、ORM、Prisma、Django/FastAPI 边界澄清",
+      "stage_id": "alembic",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "ORM",
+        "Prisma",
+        "Django",
+        "FastAPI",
+        "SQLAlchemy",
+        "SQLModel",
+        "Base.metadata",
+        "Python生态"
+      ],
+      "summary": "澄清 Alembic 不是 ORM，而是对应 Prisma Migrate；SQLAlchemy ORM 对应 Prisma Client；Django ORM + migrations 更像 Prisma 的一体化体验，FastAPI 项目主流组合是 SQLAlchemy + Alembic；对比 Django 和 FastAPI 的框架定位及生产使用场景；解释 Base.metadata 是 ORM 表结构总目录，不是数据、连接或查询器。",
+      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-66",
+      "date": "2026-06-16",
+      "title": "WebSocket 完成标记与 Alembic 第19节教学文档",
+      "stage_id": "alembic",
+      "entry_type": "dialog",
+      "topics": [
+        "Alembic",
+        "数据库迁移",
+        "learning_plan",
+        "study_state",
+        "create_all",
+        "Base.metadata",
+        "upgrade",
+        "downgrade",
+        "autogenerate"
+      ],
+      "summary": "WebSocket 阶段考试通过后，将 websocket-realtime 标记为 completed；同步 .trae 与 .reasonix 学习计划；更新 .codex study_state；将 Alembic 标记为 in_progress；创建第19节教学文档 md/19_Alembic数据库迁移.md，围绕数据库结构的 Git、Revision、Upgrade、Downgrade、Autogenerate、target_metadata 和项目实战展开。",
+      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-65",
+      "date": "2026-06-16",
+      "title": "WebSocket 阶段考试通关与学习 skill 规则升级",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "试卷",
+        "补考",
+        "Sec-WebSocket-Key",
+        "Query",
+        "create_task",
+        "dict[str,list[WebSocket]]",
+        "skill规则",
+        "comfortable-fast-learning-coach"
+      ],
+      "summary": "按学习 skill 创建并批改 WebSocket 初考、补考和二次补考；成绩从 14.25/20 到 7/8，再到 4.5/5，达到通过标准；复盘 HTTP Upgrade、Query(...) 必填、Sec-WebSocket-Key/Accept、Python != 与 JS !==、聊天室分房结构；将考试必须写入 md/试卷/ 的严格规则同步进 .codex/.trae/.reasonix 的 comfortable-fast-learning-coach skill。",
+      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-64",
+      "date": "2026-06-16",
+      "title": "Krisp 降噪工具安装与 macOS 语音隔离选择",
+      "stage_id": "tooling-system",
+      "entry_type": "dialog",
+      "topics": [
+        "macOS",
+        "Homebrew",
+        "Krisp",
+        "降噪",
+        "语音隔离",
+        "GUI",
+        "中文界面"
+      ],
+      "summary": "用户想在 Mac 上安装类似 EasyEffects 的 GUI 降噪工具；选择 Krisp，并通过 Homebrew 获取安装包后使用 macOS installer 完成安装，验证 /Applications/Krisp.app 存在并打开；发现 Krisp 不支持中文界面后，修正建议为中文用户优先使用 macOS 自带语音隔离，Krisp 作为第三方备选。",
+      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+    },
+    {
+      "id": "dialog-63",
+      "date": "2026-06-13",
+      "title": "WebSocket 生产部署深度问答与 AI 打断机制",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "Redis",
+        "Postgres",
+        "Kafka",
+        "WebSocket",
+        "ConnectionManager",
+        "asyncio",
+        "Task",
+        "cancel",
+        "CancelledError",
+        "broadcast",
+        "内存泄漏",
+        "多 worker 部署"
+      ],
+      "summary": "Redis/Postgres/Kafka 三组件概念对比；ConnectionManager 内存列表无法跨 worker 广播的原因；广播时不清理断开连接导致的崩溃与内存泄漏；AI 打断机制中 create_task/cancel/done/CancelledError/raise 的完整 asyncio 取消协议链；stream_ai_reply 为何没有 stop 参数。",
       "file_path": ".reasonix/memory/conversations/2026-06-13.md"
+    },
+    {
+      "id": "dialog-62",
+      "date": "2026-06-14",
+      "title": "WebSocket Query 参数、认证关闭码与 Hoppscotch 调试",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "FastAPI",
+        "Query",
+        "Depends",
+        "Hoppscotch",
+        "认证",
+        "close code",
+        "HTTPException",
+        "websocket.close",
+        "URL查询参数",
+        "TestClient"
+      ],
+      "summary": "解释 Query(...) 表示从 URL 查询字符串读取必填参数；区分 HTTP/JWT 认证与 WebSocket 握手阶段认证；检查 ws_router.py 认证路由，修复 WebSocket 中错误使用 HTTPException 的问题，改为 websocket.close(code=4001, reason='token 错误')；排查 Hoppscotch 未显示 token 错误的原因，包括 token 参数拼写成 toekn 导致必填参数缺失，以及 close reason 不一定作为普通消息展示；TestClient 验证正确 token、错误 token、拼写错误三种情况。",
+      "file_path": ".reasonix/memory/conversations/2026-06-14.md"
+    },
+    {
+      "id": "dialog-61",
+      "date": "2026-06-12",
+      "title": "历史记录清理 + open-websearch 技能安装",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "open-websearch",
+        "DeepSeek",
+        "SPA",
+        "历史记录",
+        "对话清理",
+        "while True",
+        "await"
+      ],
+      "summary": "安装open-websearch技能；DeepSeek SPA页面无法文本抓取；粘贴并归档281行对话全文；清理历史中非编程话题仅保留5类；WebSocket while True+await异步原理",
+      "file_path": ".reasonix/memory/conversations/2026-06-12.md"
+    },
+    {
+      "id": "dialog-60",
+      "date": "2026-06-12",
+      "title": "WebSocket while True 异步原理 + DeepSeek 多话题对话归档",
+      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "while True",
+        "await",
+        "asyncio",
+        "事件循环",
+        "协程挂起",
+        "async for",
+        "DeepSeek",
+        "MCP"
+      ],
+      "summary": "理解WebSocket中while True+await不是永动机（await让协程挂起释放CPU）；归档DeepSeek分享对话中80+话题索引（开发工具/编程/AI/JWT/职业/健康/历史/法律等）"
+    },
+    {
+      "id": "dialog-59",
+      "date": "2026-06-12",
+      "title": "WebSocket 测试工具、ws vs wss 协议、MCP 探索",
+      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "Swagger",
+        "OpenAPI",
+        "Postman",
+        "Hoppscotch",
+        "wscat",
+        "wss://",
+        "ws://",
+        "TLS",
+        "MCP",
+        "Model Context Protocol"
+      ],
+      "summary": "理解Swagger不支持WebSocket的原因（OpenAPI HTTP模型限制）；对比Postman/Hoppscotch/wscat四种测试工具；解决Hoppscotch 404（REST模式误用）；掌握ws://与wss://区别；分享DeepSeek MCP对话"
+    },
+    {
+      "id": "dialog-58",
+      "date": "2026-06-14",
+      "title": "WebSocket /docs 不显示原因与 iter_text 接收循环",
+      "stage_id": "websocket-realtime",
+      "entry_type": "dialog",
+      "topics": [
+        "WebSocket",
+        "FastAPI",
+        "Swagger",
+        "OpenAPI",
+        "/docs",
+        "APIWebSocketRoute",
+        "iter_text",
+        "receive_text",
+        "异步迭代",
+        "路由注册",
+        "WebSocket测试"
+      ],
+      "summary": "排查 WebSocket 不出现在 /docs 的原因：/ws/message 已注册为 APIWebSocketRoute，但 OpenAPI 不默认收录 WebSocket 协议路由，因此 Swagger 不展示；新增 /ws/message-docs 作为 HTTP 说明接口进入文档；修正 ws_router 注册说明与 tag 描述；将不标准的 async for message in websocket 改为 websocket.iter_text()，并解释其与 while True + receive_text() 的区别；TestClient 验证 WebSocket 收发通过。",
+      "file_path": ".reasonix/memory/conversations/2026-06-14.md"
     },
     {
       "id": "dialog-56",

@@ -19,8 +19,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False, index=True)
+    username = Column(String(100), unique=True, nullable=False, index=True)
+    email = Column(String(50), unique=True, nullable=False, index=True,default="")
     password = Column(String(200), nullable=False)  # bcrypt 哈希值
+    introduction = Column(Text, default="") 
     role = Column(String(20), default="USER")
     created_at = Column(DateTime, default=datetime.now)
 
@@ -61,4 +63,4 @@ class DocumentChunk(Base):
     document = relationship("Document", back_populates="chunks")
 
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)

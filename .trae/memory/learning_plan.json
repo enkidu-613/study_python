@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-12T06:50:21",
+  "updated_at": "2026-06-19T01:19:47",
   "stages": [
     {
       "id": "python-basics",
@@ -330,9 +330,9 @@
       "id": "websocket-realtime",
       "name": "WebSocket实时通信",
       "description": "WebSocket协议、AI流式对话的双向实时通信、与SSE对比",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-06-11",
-      "completed_at": null,
+      "completed_at": "2026-06-16",
       "documents": [
         "md/18_WebSocket实时通信.md"
       ],
@@ -348,10 +348,12 @@
       "id": "alembic",
       "name": "数据库迁移",
       "description": "Alembic 表结构升级",
-      "status": "pending",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
-      "documents": [],
+      "completed_at": "2026-06-19",
+      "documents": [
+        "md/19_Alembic数据库迁移.md"
+      ],
       "dependencies": [
         "fastapi-orm"
       ],
@@ -363,10 +365,12 @@
       "id": "pytest",
       "name": "单元测试",
       "description": "pytest 测试用例编写",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-05-31",
       "completed_at": null,
-      "documents": [],
+      "documents": [
+        "md/20_pytest单元测试.md"
+      ],
       "dependencies": [
         "fastapi-orm"
       ],

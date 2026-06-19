@@ -73,6 +73,20 @@ When starting or continuing a chapter:
    - 70-89%: patch weak points.
    - Below 70%: relearn the chapter.
 
+## Exam And Quiz Persistence
+
+Strict rule: when the user asks for questions, a quiz, exam, retest, checkpoint test, or "出题/试卷/补考", do not only send the questions in chat.
+
+1. Write or update a Markdown exam file under `md/试卷/`.
+2. Use existing naming patterns:
+   - First exam: `md/试卷/试卷_<章节名>.md`
+   - Retest: `md/试卷/试卷_<章节名>_补考.md`
+3. Include answer areas for every question.
+4. Do not include answers in a fresh exam unless the user explicitly asks for an answer key.
+5. After grading, append the grading result, score table, weak points, and minimal review plan to the same exam file.
+6. In the final response, link the exam file and summarize only the next action.
+7. If the user asks for "再来一次" after a failed or partial exam, create/update a retest document instead of sending only inline questions.
+
 ## Confusion Handling
 
 When the user says "不明白", "为什么", "底层是什么", or asks the same concept again:
@@ -140,4 +154,3 @@ When asked to archive or sync history:
 3. Add matching entries to both `learning_history_index.json` files.
 4. Keep ids, dates, titles, topics, and summaries consistent.
 5. Use `.trae` as source of truth unless the user says otherwise.
-

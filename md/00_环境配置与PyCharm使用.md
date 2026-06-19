@@ -16,6 +16,36 @@
 
 ---
 
+## 🎯 一句话理解
+
+开发环境就是你的“工作台”：PyCharm 负责编辑、运行、调试代码，虚拟环境负责把每个项目的依赖隔离开。
+
+## 🔧 准确术语速查
+
+| 术语 | 准确含义 | 本章要会到什么程度 |
+|------|----------|------------------|
+| IDE | Integrated Development Environment，集成开发环境 | 知道 PyCharm 是写代码、运行、调试的工具 |
+| Python script | 可以被 Python 解释器执行的 `.py` 文件 | 能看懂脚本入口和函数结构 |
+| Debugger | 调试器，用断点暂停程序并观察变量 | 能设置断点、单步执行、看变量 |
+| Virtual environment | 项目级 Python 依赖隔离目录 | 能创建、激活、安装依赖 |
+| Entry point | 程序直接运行时开始执行的位置 | 能解释 `if __name__ == "__main__"` |
+
+## 📋 本章最小模板
+
+新项目不会配置时，先抄这个流程：
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install fastapi uvicorn
+pip freeze > requirements.txt
+python script.py
+```
+
+Python 脚本不会写时，先抄文末的“Python 脚本模板”。
+
+---
+
 ## 一、PyCharm 简介
 
 ### 1.1 什么是 PyCharm？
@@ -411,3 +441,19 @@ pip install -r requirements.txt
 2. **调试练习**：故意写一个有 bug 的程序，用断点找出问题
 3. **虚拟环境练习**：创建一个新项目，配置虚拟环境，安装几个包
 4. **代码重构**：使用 PyCharm 的重构功能重命名变量、提取方法
+
+## ⚠️ 常见坑
+
+| 坑 | 现象 | 正确做法 |
+|----|------|----------|
+| 没激活虚拟环境就装包 | 包装到全局 Python，项目里仍然找不到 | 先看终端前缀有没有 `(.venv)` |
+| PyCharm 解释器选错 | 终端能跑，PyCharm 运行报 `ModuleNotFoundError` | Settings 中把解释器切到项目 `.venv` |
+| 不理解 `__main__` | 导入文件时测试代码也执行 | 测试代码放进 `if __name__ == "__main__"` |
+| 只会运行不会调试 | 报错后只能猜 | 设置断点，看变量值和执行顺序 |
+
+## ✅ 四条理解标准
+
+- [ ] 思想是什么：开发环境是代码运行、调试、依赖隔离的工作台。
+- [ ] 干什么：让每个项目能稳定运行，且依赖互不污染。
+- [ ] 为什么这么干：不用虚拟环境会导致不同项目依赖版本互相冲突。
+- [ ] 怎么干：能创建 `.venv`、激活环境、安装依赖、运行 `script.py`，并在 PyCharm 里选对解释器。

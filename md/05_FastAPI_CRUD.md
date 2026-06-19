@@ -18,6 +18,38 @@
 
 ---
 
+## 🎯 一句话理解
+
+CRUD 是后端最基础的资源管理闭环：用 POST 创建、GET 查询、PUT/PATCH 更新、DELETE 删除。
+
+## 🔧 准确术语速查
+
+| 术语 | 准确含义 | 对应代码 |
+|------|----------|----------|
+| Resource | 资源，API 管理的对象 | Todo、User、Document |
+| CRUD | Create/Read/Update/Delete | 增查改删 |
+| Request body | 请求体，客户端提交的 JSON 数据 | `item: TodoItem` |
+| Pydantic model | 数据校验模型 | `class TodoItem(BaseModel)` |
+| HTTP status code | HTTP 状态码，表达请求结果 | `201` 创建成功，`404` 不存在 |
+| `HTTPException` | FastAPI 主动返回错误响应的异常 | `raise HTTPException(404)` |
+
+## 📋 本章最小模板
+
+```python
+@app.post("/items")
+def create_item(item: Item):
+    db.append(item)
+    return item
+
+@app.get("/items/{item_id}")
+def get_item(item_id: int):
+    if item_id >= len(db):
+        raise HTTPException(status_code=404, detail="Not found")
+    return db[item_id]
+```
+
+---
+
 ## 一、什么是 CRUD？
 
 CRUD 是数据库操作的四个基本功能：
@@ -547,3 +579,19 @@ def delete_item(item_id: int):
 3. **搜索功能**：添加按标题搜索、按完成状态筛选的接口
 4. **数据持久化**：将 fake_db 替换为 SQLite 数据库
 5. **添加验证**：使用 Pydantic Field 添加更多验证规则（如标题长度限制）
+
+## ⚠️ 常见坑
+
+| 坑 | 现象 | 正确做法 |
+|----|------|----------|
+| 只写 CRD 忘了 Update | 学完后不会改数据 | 至少补一个 `PUT /items/{id}` 模板 |
+| 用列表下标当真实 id | 删除后 id 和位置错乱 | 真实项目用数据库主键 |
+| 错误时直接 `return {"error": ...}` | 状态码还是 200 | 用 `HTTPException` 返回 404/400 |
+| Pydantic 模型和数据库模型混淆 | 不知道谁负责校验、谁负责存储 | Pydantic 管请求/响应，数据库模型管持久化 |
+
+## ✅ 四条理解标准
+
+- [ ] 思想是什么：把一个资源的生命周期拆成增、查、改、删四类接口。
+- [ ] 干什么：让客户端能通过 HTTP 管理数据。
+- [ ] 为什么这么干：REST 风格让接口含义稳定，前后端协作更清楚。
+- [ ] 怎么干：能写出 `POST`、`GET`、`PUT/PATCH`、`DELETE` 的最小路由模板。
