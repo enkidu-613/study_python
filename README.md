@@ -10,7 +10,7 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-**当前阶段**：JWT 用户认证（进行中 🔥）
+**当前阶段**：pytest 单元测试（进行中 🔥）
 
 ---
 
@@ -37,16 +37,28 @@ study_python/
 │   ├── 15_LangChain核心概念.md
 │   ├── 16_异步编程深入.md
 │   ├── 17_JWT用户认证.md
+│   ├── 18_WebSocket实时通信.md
+│   ├── 19_Alembic数据库迁移.md
+│   ├── 20_pytest单元测试.md
 │   ├── ai学习应用数学/
 │   │   └── 01_向量与余弦相似度.md
 │   └── 错题本.md
 │
 ├── 📁 routers/                     # FastAPI 路由模块（分层架构）
 │   ├── ai_router.py                # AI 流式对话 /ai/*
+│   ├── auth.py                     # JWT 认证 /auth/*
 │   ├── chat_memory.py              # 聊天记忆 /chat-memory/*
 │   ├── todos_routers.py            # Todo CRUD /todos/*
 │   ├── rag_router.py               # 手搓 RAG /rag/*
-│   └── langchain_rag_router.py     # LangChain RAG /langchain-rag/*
+│   ├── langchain_rag_router.py     # LangChain RAG /langchain-rag/*
+│   └── ws_router.py                # WebSocket 实时通信 /ws/*
+│
+├── 📁 test/                        # pytest 单元测试
+│   └── test_router.py              # 路由测试示例
+│
+├── 📁 alembic/                     # Alembic 数据库迁移
+│   ├── versions/                   # 迁移脚本
+│   └── env.py                      # Alembic 环境配置
 │
 ├── 📁 .reasonix/skills/            # AI 辅助技能（6个定制技能）
 │   ├── python-adhd-tutor.md
@@ -102,19 +114,21 @@ study_python/
 | 15 | **LangChain 集成（LCEL 链式语法、DeepSeek 推理链）** | `routers/langchain_rag_router.py` | ✅ |
 | 16 | **异步编程深入（async/await 原理、三种协程对象、Semaphore）** | - | ✅ |
 | 17 | **学习计划审计与 AI 应用路线精简** | - | ✅ |
+| 18 | **JWT 用户认证（密码哈希、Token 签发、Depends 守卫、角色授权）** | `routers/auth.py` | ✅ |
+| 19 | **WebSocket 实时通信（协议升级、房间广播、AI 流式打断）** | `routers/ws_router.py` | ✅ |
+| 20 | **Alembic 数据库迁移（revision、upgrade、downgrade、autogenerate）** | `alembic/` | ✅ |
 
 ### 🔥 进行中
 
 | 步骤 | 主题 | 对应代码 | 状态 |
 |------|------|----------|------|
-| 18 | **JWT 用户认证（密码哈希、Token签发、Depends守卫、角色授权）** | - | 🔥 当前 |
+| 21 | **pytest 单元测试（FastAPI TestClient、依赖覆盖、断言）** | `test/` | 🔥 当前 |
 
 ### 📋 待学习
 
 | 阶段 | 内容 | 说明 |
 |------|------|------|
-| **WebSocket 实时通信** | WebSocket 协议、AI 流式对话双向通信、与 SSE 对比 | AI 应用实时交互 |
-| **后端精深** | 数据库迁移 (Alembic)、单元测试 (pytest)、Docker 部署 | 工程能力补全 |
+| **后端精深** | Docker 部署、CI/CD、日志与监控 | 工程能力补全 |
 | **前端** | React/Vue 基础、前后端对接 | 全栈能力 |
 | **AI 进阶** | LangChain Agents、RAG 进阶评估、Prompt Engineering 进阶 | 详见 roadmap 查缺补漏 |
 
@@ -193,6 +207,9 @@ study_python/
 | [15_LangChain](md/15_LangChain核心概念.md) | LCEL 链式语法、六大核心概念 | ⭐⭐⭐⭐ |
 | [16_异步编程深入](md/16_异步编程深入.md) | async/await 原理、三种协程对象、并发模式、Semaphore 限流 | ⭐⭐⭐⭐ |
 | [17_JWT用户认证](md/17_JWT用户认证.md) | JWT 令牌、bcrypt 密码哈希、Depends 验票、角色守卫、黑名单、Swagger/CORS/异常处理 | ⭐⭐⭐⭐ |
+| [18_WebSocket实时通信](md/18_WebSocket实时通信.md) | WebSocket 协议升级、Query token 认证、房间广播、AI 流式打断 | ⭐⭐⭐⭐ |
+| [19_Alembic数据库迁移](md/19_Alembic数据库迁移.md) | 迁移心智模型、revision、upgrade/downgrade、autogenerate、target_metadata | ⭐⭐⭐⭐ |
+| [20_pytest单元测试](md/20_pytest单元测试.md) | FastAPI TestClient、依赖覆盖、断言、fixture、测试数据库 | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
@@ -225,14 +242,15 @@ study_python/
 - ✅ 对话历史索引管理（JSON 格式索引）
 - ✅ 异步编程深入（async/await、Coroutine/Task/Future 三种对象、并发模式 gather/create_task/as_completed、Semaphore 限流、Event Loop 调度原理）
 - ✅ isinstance 与 instanceof 对比、Future 唤醒回调机制
+- ✅ JWT 用户认证实战（bcrypt 密码哈希、Token 签发/验证、Depends 守卫、角色守卫、登出黑名单、Swagger/CORS/全局异常处理）
+- ✅ WebSocket 实时通信（HTTP Upgrade、Query token 认证、ConnectionManager、房间广播、SSE 对比、可中断 AI 流式生成）
+- ✅ Alembic 数据库迁移（revision、upgrade/downgrade、autogenerate、target_metadata = Base.metadata、server_default、SQLite ALTER TABLE 限制）
 
 ### 待深入学习
-- ⬜ JWT 用户认证实战（密码哈希、Token 签发、Depends 守卫、角色授权、登出黑名单）
-- ⬜ WebSocket 实时通信（AI 流式对话双向通信）
+- ⬜ pytest 单元测试（FastAPI TestClient、依赖覆盖、fixture、测试数据库）
 - ⬜ LangChain Memory & Agents（对话记忆、工具调用）
-- ⬜ 数据库迁移 (Alembic)
-- ⬜ 单元测试 (pytest)
 - ⬜ Docker 部署
+- ⬜ CI/CD、日志与监控
 - ⬜ 前端框架 (React/Vue)
 - ⬜ roadmap 查缺补漏（详见 `.trae/memory/roadmap查缺补漏计划.md`）
 

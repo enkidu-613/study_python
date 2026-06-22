@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from database import get_db
 from models import DBTodo
 
 # 实例化一个路由器，前缀统一为 /todos
@@ -13,12 +13,16 @@ class TodoItem(BaseModel):
     is_done: bool = False
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# 旧版学习写法：路由自己创建数据库依赖。
+# 这种写法可以运行，但测试时必须覆盖这个局部函数，容易和公共依赖混淆。
+# from database import SessionLocal
+#
+# def get_db():
+#     db = SessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         db.close()
 
 
 # --- 增 ---

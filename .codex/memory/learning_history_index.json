@@ -1,7 +1,56 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-19T01:19:47",
+  "updated_at": "2026-06-23T04:56:14+08:00",
   "entries": [
+    {
+      "id": "dialog-72",
+      "date": "2026-06-23",
+      "title": "pytest 生命周期、测试库隔离与流式接口测试",
+      "stage_id": "pytest",
+      "entry_type": "dialog",
+      "topics": [
+        "pytest",
+        "fixture",
+        "TestClient",
+        "with",
+        "lifespan",
+        "dependency_overrides",
+        "Depends",
+        "测试数据库",
+        "APIRouter",
+        "import_module",
+        "WebSocket测试",
+        "SSE测试",
+        "monkeypatch",
+        "学习节奏"
+      ],
+      "summary": "深入理解 fixture、with、TestClient、lifespan、Depends 与中间件的职责边界；修复 Todo 局部 get_db 导致测试写入正式数据库的问题并验证隔离；澄清 module/APIRouter、as/is；第八关新增经验证的 SSE mock 最小测试。用户反馈本章偏慢，后续只完成 WebSocket 固定收发和一个 SSE mock 闭环后结束本章。",
+      "file_path": ".codex/memory/conversations/2026-06-23.md"
+    },
+    {
+      "id": "dialog-71",
+      "date": "2026-06-23",
+      "title": "pytest 单元测试实战踩坑与 pyproject.toml 深度理解",
+      "stage_id": "pytest",
+      "entry_type": "dialog",
+      "topics": [
+        "pytest",
+        "pyproject.toml",
+        "pythonpath",
+        "os.getenv",
+        "SQLite",
+        "check_same_thread",
+        "conftest.py",
+        "fixture",
+        "APIRouter",
+        "Depends",
+        "TestClient",
+        "模块路径",
+        "__init__.py"
+      ],
+      "summary": "pytest 单元测试实战：ModuleNotFoundError 模块路径问题解决（pyproject.toml pythonpath 配置 vs 不推荐 test/__init__.py 的原因）；pyproject.toml 各部分作用详解；os.getenv 与环境变量；SQLite check_same_thread=False 多线程必需；conftest.py 缺少 get_db 导入修复；fixture 参数注入规则；APIRouter 不具备 get_db 属性的设计边界；auth 路由注册→登录→验证测试全部通过。",
+      "file_path": ".codex/memory/conversations/2026-06-23.md"
+    },
     {
       "id": "dialog-70",
       "date": "2026-06-19",
