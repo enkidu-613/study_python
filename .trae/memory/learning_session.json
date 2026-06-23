@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-06-24T04:52:35+08:00",
+  "stage_id": "prompt-advanced",
+  "phase": "paused",
+  "pending_action": "继续执行第 21 章 Prompt Engineering 进阶实现计划",
+  "context": "第 21 章设计与实现计划已确认；教程、可运行路由和隔离测试尚待实现。",
+  "energy": null,
+  "time_budget_minutes": null
+}
