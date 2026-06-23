@@ -4,7 +4,7 @@
 
 - **项目名称**: PyCharmMiscProject (study_python)
 - **项目类型**: Python + FastAPI ADHD友好学习项目
-- **创建时间**: 2024年
+- **创建时间**: 2026年3月
 - **主要用途**: 从 Python 基础到 AI 全栈开发的完整学习路径，包含 FastAPI 后端、RAG、LangChain、JWT、WebSocket 等
 
 ## 技术栈
