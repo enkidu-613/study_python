@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-24T01:22:53+08:00",
+  "updated_at": "2026-06-24T02:42:20+08:00",
   "stages": [
     {
       "id": "python-basics",
@@ -382,10 +382,12 @@
       "id": "prompt-advanced",
       "name": "Prompt Engineering 进阶",
       "description": "结构化输出、输出约束、Few-Shot、采样参数与 Prompt Injection 边界",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-06-03",
       "completed_at": null,
-      "documents": [],
+      "documents": [
+        "md/21_Prompt_Engineering进阶.md"
+      ],
       "dependencies": [
         "prompt-engineering",
         "langchain"

@@ -6,8 +6,8 @@ Last updated from `.trae` on 2026-06-24 after the AI Engineer roadmap review.
 
 - Current stage id: `prompt-advanced`
 - Current topic: advanced prompt engineering, structured output, output constraints, sampling parameters, and prompt-injection boundaries
-- Current document: not written yet; the next tutorial will follow `md/20_pytest单元测试.md`
-- Status: pending
+- Current document: `md/21_Prompt_Engineering进阶.md` (newly created)
+- Status: in_progress
 - Previous stage: `pytest`, completed on 2026-06-24
 
 ## Completed Core Path
@@ -93,7 +93,7 @@ WebSocket:
 - Learning plan: `.trae/memory/learning_plan.json`
 - History index: `.trae/memory/learning_history_index.json`
 - Mistake book: `md/错题本.md`
-- Current chapter: `md/20_pytest单元测试.md`
+- Current chapter: `md/21_Prompt_Engineering进阶.md`
 - Alembic chapter: `md/19_Alembic数据库迁移.md`
 - Alembic exams: `md/试卷/试卷_Alembic数据库迁移.md`, `md/试卷/试卷_Alembic数据库迁移_补考.md`
 - WebSocket chapter: `md/18_WebSocket实时通信.md`
@@ -101,6 +101,5 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Keep pytest patterns available for future regression tests instead of expanding this chapter further.
-2. Write and study the next chapter for `prompt-advanced`.
-3. Do not start Docker until the AI core, evaluation, and observability stages are complete.
+1. Complete the `prompt-advanced` chapter study, independent rewrite exercise, and checkpoint verification.
+2. Do not start Docker until the AI core, evaluation, and observability stages are complete.
