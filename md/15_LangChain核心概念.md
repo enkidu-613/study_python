@@ -25,7 +25,7 @@
 
 ### 你现在的痛苦（手搓版）
 
-打开 [`rag_router.py`](file:///Users/enkidu/PyCharmMiscProject/routers/rag_router.py)，你会发现一个 RAG 问答需要**手动拼接 6 个步骤**：
+打开 [`app/routers/rag.py`](file:///Users/enkidu/PyCharmMiscProject/app/routers/rag.py)，你会发现一个 RAG 问答需要**手动拼接 6 个步骤**：
 
 ```python
 # 步骤 1：调 Embedding 模型把问题变成向量
@@ -696,7 +696,7 @@ CHROMA_DB_PATH = os.getenv("CHROMA_DB_PATH", "./chroma_db")
 
 ## 八、手搓版 vs LangChain 版：完整对照表
 
-| 环节 | 手搓版 (`rag_router.py`) | LangChain 版 (`langchain_rag_router.py`) |
+| 环节 | 手搓版 (`app/routers/rag.py`) | LangChain 版 (`app/routers/langchain_rag.py`) |
 |------|--------------------------|------------------------------------------|
 | **初始化 Embedding** | `client.embeddings.create(...)` | `HuggingFaceBgeEmbeddings(...)` |
 | **连接 Chroma** | `chroma_client.get_or_create_collection(...)` | `Chroma(client=..., collection_name=...)` |

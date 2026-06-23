@@ -18,73 +18,59 @@
 
 ```
 PyCharmMiscProject/
-├── 📁 md/                          # 学习文档（ADHD友好格式）
+│
+├── 🚀 app/                          # 【核心代码区】每天写的代码都在这里
+│   ├── main.py                      # FastAPI 入口（启动+路由注册+CORS/中间件）
+│   ├── database.py                  # 数据库配置（SQLite/SQLAlchemy）
+│   ├── models.py                    # ORM 模型（DBTodo/User/RevokedToken/Document/DocumentChunk）
+│   ├── embedding.py                 # 本地Embedding模型（bge-small-zh-v1.5，原local_embedding.py）
+│   │
+│   └── routers/                     # API路由（文件名统一，无冗余后缀）
+│       ├── ai.py                    # AI 流式对话 /ai/*
+│       ├── auth.py                  # JWT 认证 /auth/*
+│       ├── todos.py                 # Todo CRUD /todos/*
+│       ├── chat_memory.py           # 聊天记忆 /chat-memory/*
+│       ├── rag.py                   # 手搓 RAG /rag/*
+│       ├── langchain_rag.py         # LangChain RAG /langchain-rag/*
+│       ├── websocket.py             # WebSocket 实时通信 /ws/*
+│       └── prompt.py                # Prompt Engineering 高级 /prompt-advanced/*
+│
+├── 📦 archive/                      # 【归档区】历史学习代码（留作回顾，不干扰主线）
+│   └── month1-python-basics/        # 第1个月Python基础练习（按编号00-06顺序学习）
+│
+├── 🧪 playground/                   # 【实验区】Demo/试错代码（随便改，不影响主项目）
+│   ├── ai_bot.py                    # AI 聊天机器人（ModelScope API）
+│   ├── embedding_playground.py      # Embedding模型实验
+│   ├── rag_demo.py / rag_test.py    # RAG 入门与测试
+│   ├── chroma_demo.py / chroma_real.py  # ChromaDB 演示
+│   └── dual_storage_demo.py         # 双存储架构完整演示
+│
+├── ✅ tests/                        # 【测试区】pytest 单元测试（标准Python tests/命名）
+│   ├── conftest.py                  # pytest 共享 fixture
+│   ├── test_auth.py                 # JWT 认证测试
+│   ├── test_fun.py                  # 函数式测试
+│   ├── test_prompt.py               # Prompt 高级测试
+│   ├── test_rag.py                  # RAG 测试
+│   ├── test_sse.py                  # SSE 流式测试
+│   ├── test_todos.py                # Todo CRUD 测试
+│   └── test_websocket.py            # WebSocket 测试
+│
+├── 📖 md/                           # 【学习文档区】ADHD友好格式的学习笔记
 │   ├── 00_环境配置与PyCharm使用.md
-│   ├── 01_Python基础.md ~ 20_pytest单元测试.md
+│   ├── 01_Python基础.md ~ 21_Prompt_Engineering进阶.md
+│   ├── README.md                    # 本文档索引
 │   ├── ai学习应用数学/
-│   │   └── 01_向量与余弦相似度.md
-│   ├── 试卷/                       # 章节测试卷（含补考卷）
-│   ├── 答题/                       # 答题记录与错题
+│   ├── 试卷/                        # 章节测试卷（含补考卷）
+│   ├── 答题/                        # 答题记录与错题
 │   └── 错题本.md
 │
-├── 📁 routers/                     # FastAPI 路由模块（分层架构）
-│   ├── ai_router.py                # AI 流式对话 /ai/*
-│   ├── auth_router.py              # JWT 认证 /auth/*
-│   ├── chat_memory.py              # 聊天记忆 /chat-memory/*
-│   ├── langchain_rag_router.py     # LangChain RAG /langchain-rag/*
-│   ├── prompt_advanced_router.py   # Prompt Engineering 高级 /prompt-advanced/*
-│   ├── rag_router.py               # 手搓 RAG /rag/*
-│   ├── todos_routers.py            # Todo CRUD /todos/*
-│   └── ws_router.py                # WebSocket 实时通信 /ws/*
+├── 🗄️ alembic/                      # Alembic 数据库迁移
+├── 💾 chroma_db/                    # ChromaDB 持久化数据
 │
-├── 📁 test/                        # pytest 单元测试
-│   ├── conftest.py                 # pytest 共享 fixture
-│   ├── test_auth.py                # JWT 认证测试
-│   ├── test_fun.py                 # 函数式测试
-│   ├── test_rag.py                 # RAG 测试
-│   ├── test_router.py              # 路由测试示例
-│   ├── test_sse.py                 # SSE 流式测试
-│   └── test_ws.py                  # WebSocket 测试
-│
-├── 📁 alembic/                     # Alembic 数据库迁移
-│   ├── versions/                   # 迁移脚本
-│   └── env.py                      # Alembic 环境配置
-│
-├── 📁 chroma_db/                   # ChromaDB 持久化数据
-│
-├── 📁 python第一月上半学习阶段/     # 早期Python练习代码
-│
-├── 📁 .trae/skills/                # AI 辅助技能（9个定制技能）
-│   ├── chapter-review-quizzer/
-│   ├── comfortable-fast-learning-coach/
-│   ├── firecrawl-karpathy-research/
-│   ├── history-archiver/
-│   ├── learning-plan-manager/
-│   ├── programming-language-mastery/
-│   ├── python-adhd-tutor/
-│   ├── tech-search-sources/
-│   └── ui-ux-pro-max-3/
-│
-├── 📁 .trae/memory/                # 项目记忆与对话历史
-│   ├── learning_plan.json          # 学习计划主数据
-│   ├── learning_history_index.json # 学习历史索引
-│   ├── roadmap查缺补漏计划.md       # roadmap.sh AI Engineer 查缺补漏
-│   └── conversations/              # 日期对话文件
-│
-├── main.py                         # FastAPI 应用入口
-├── database.py                     # 数据库配置（SQLite）
-├── models.py                       # ORM 模型（DBTodo/User/RevokedToken/Document/DocumentChunk）
-├── ai_bot.py                       # AI 聊天机器人（ModelScope API）
-├── local_embedding.py              # 本地Embedding模型加载（bge-small-zh-v1.5）
-├── embedding_playground.py         # Embedding模型实验
-├── rag_demo.py                     # RAG 入门：Embedding 与相似度
-├── rag_test.py                     # RAG 测试：ModelScope Embedding API
-├── chroma_demo.py                  # ChromaDB 简化版演示
-├── chroma_real.py                  # ChromaDB 真实 Embedding 检索
-├── dual_storage_demo.py            # 双存储架构完整演示
-├── pyproject.toml                  # Poetry 依赖管理
-├── alembic.ini                     # Alembic配置
-└── requirements.txt                # pip 依赖（备选）
+├── main.py                          # 项目启动入口（python main.py 直接启动）
+├── pyproject.toml                   # Poetry 依赖管理
+├── alembic.ini                      # Alembic配置
+└── requirements.txt                 # pip 依赖（备选）
 ```
 
 ---
@@ -102,28 +88,28 @@ PyCharmMiscProject/
 | 4 | FastAPI 基础（JSON、路径参数、查询参数） | `python_接触fastapi之前的补充.py` | ✅ |
 | 5 | FastAPI CRUD（Pydantic、增删改查） | `py_CRUD.py` | ✅ |
 | 6 | FastAPI ORM + SQLAlchemy（数据库、IoC/DI） | `py_ORM.py` | ✅ |
-| 7 | 代码分层与模块化架构（APIRouter） | `main.py` + `routers/` | ✅ |
-| 8 | 提示词工程与聊天记忆（System Prompt、多轮对话） | `routers/chat_memory.py` | ✅ |
-| 9 | RAG 向量数据库入门（Embedding、余弦相似度） | `rag_test.py`, `rag_demo.py` | ✅ |
-| 10 | ChromaDB 向量数据库实战 | `chroma_demo.py`, `chroma_real.py` | ✅ |
-| 11 | 双存储架构 SQLite + ChromaDB | `dual_storage_demo.py`, `models.py` | ✅ |
-| 12 | FastAPI + Chroma 最小原型 | `routers/rag_router.py` | ✅ |
-| 13 | 手搓最小 RAG 闭环 | `routers/rag_router.py` | ✅ |
-| 14 | 上下文窗口管理（Token 截断、防幻觉） | `routers/rag_router.py` | ✅ |
-| 15 | **LangChain 集成（LCEL 链式语法、DeepSeek 推理链）** | `routers/langchain_rag_router.py` | ✅ |
+| 7 | 代码分层与模块化架构（APIRouter） | `app/main.py` + `app/routers/` | ✅ |
+| 8 | 提示词工程与聊天记忆（System Prompt、多轮对话） | `app/routers/chat_memory.py` | ✅ |
+| 9 | RAG 向量数据库入门（Embedding、余弦相似度） | `playground/rag_test.py`, `playground/rag_demo.py` | ✅ |
+| 10 | ChromaDB 向量数据库实战 | `playground/chroma_demo.py`, `playground/chroma_real.py` | ✅ |
+| 11 | 双存储架构 SQLite + ChromaDB | `playground/dual_storage_demo.py`, `app/models.py` | ✅ |
+| 12 | FastAPI + Chroma 最小原型 | `app/routers/rag.py` | ✅ |
+| 13 | 手搓最小 RAG 闭环 | `app/routers/rag.py` | ✅ |
+| 14 | 上下文窗口管理（Token 截断、防幻觉） | `app/routers/rag.py` | ✅ |
+| 15 | **LangChain 集成（LCEL 链式语法、DeepSeek 推理链）** | `app/routers/langchain_rag.py` | ✅ |
 | 16 | **异步编程深入（async/await 原理、三种协程对象、Semaphore）** | - | ✅ |
 | 17 | **学习计划审计与 AI 应用路线精简** | - | ✅ |
-| 18 | **JWT 用户认证（密码哈希、Token 签发、Depends 守卫、角色授权）** | `routers/auth_router.py` | ✅ |
-| 19 | **WebSocket 实时通信（协议升级、房间广播、AI 流式打断）** | `routers/ws_router.py` | ✅ |
+| 18 | **JWT 用户认证（密码哈希、Token 签发、Depends 守卫、角色授权）** | `app/routers/auth.py` | ✅ |
+| 19 | **WebSocket 实时通信（协议升级、房间广播、AI 流式打断）** | `app/routers/websocket.py` | ✅ |
 | 20 | **Alembic 数据库迁移（revision、upgrade、downgrade、autogenerate）** | `alembic/` | ✅ |
 
 ### ✅ 已完成（续）
 
 | 步骤 | 主题 | 对应代码 | 掌握程度 |
 |------|------|----------|----------|
-| 21 | **pytest 单元测试（FastAPI TestClient、依赖覆盖、断言）** | `test/` | ✅ |
-| 22 | **pytest 进阶（conftest fixture、SSE 流式测试、WebSocket 测试）** | `test/test_sse.py`, `test/test_ws.py` | ✅ |
-| 23 | **Prompt Engineering 进阶（Few-shot、结构化输出、角色隔离）** | `routers/prompt_advanced_router.py` | 🔥 进行中 |
+| 21 | **pytest 单元测试（FastAPI TestClient、依赖覆盖、断言）** | `tests/` | ✅ |
+| 22 | **pytest 进阶（conftest fixture、SSE 流式测试、WebSocket 测试）** | `tests/test_sse.py`, `tests/test_websocket.py` | ✅ |
+| 23 | **Prompt Engineering 进阶（Few-shot、结构化输出、角色隔离）** | `app/routers/prompt.py` | 🔥 进行中 |
 
 ### 🔥 下一步
 
@@ -178,7 +164,7 @@ PyCharmMiscProject/
 - **存储**: 双存储架构（SQLite 存全文 + ChromaDB 存向量）
 - **检索**: 语义检索 + 上下文窗口管理
 - **生成**: 流式 LLM 调用，带资料来源引用
-- **代码**: [`routers/rag_router.py`](routers/rag_router.py)
+- **代码**: [`app/routers/rag.py`](app/routers/rag.py)
 
 ### 5. LangChain RAG (`/langchain-rag/*`)
 - **框架化**: 使用 LangChain LCEL 链式语法重构 RAG
@@ -187,14 +173,14 @@ PyCharmMiscProject/
 - **推理链**: 集成 ChatDeepSeek，支持深度思考（reasoning_content）流式输出
 - **统一响应**: 标准 API 响应格式（`{"code": 200, "status": "success", "content": ...}`）
 - **文档管理**: 支持文档删除（同步清理 ChromaDB + SQLite）
-- **代码**: [`routers/langchain_rag_router.py`](routers/langchain_rag_router.py)
+- **代码**: [`app/routers/langchain_rag.py`](app/routers/langchain_rag.py)
 
 ### 6. Prompt Engineering 高级 (`/prompt-advanced/*`)
 - **任务提取器**: 从自然语言文本中结构化提取任务（标题、优先级、标签）
 - **Few-shot 提示**: 通过示例输入输出引导模型行为
 - **结构化输出**: Pydantic 模型约束 LLM 输出格式（`TaskExtractionResult`）
 - **角色隔离**: System Prompt 明确限定模型为"信息提取器"，拒绝执行指令
-- **代码**: [`routers/prompt_advanced_router.py`](routers/prompt_advanced_router.py)
+- **代码**: [`app/routers/prompt.py`](app/routers/prompt.py)
 
 ---
 

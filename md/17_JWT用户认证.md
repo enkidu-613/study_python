@@ -9,7 +9,7 @@
 
 | # | 铁律 | 本章怎么做 |
 |---|------|-----------|
-| 1 | **绝不从头写代码** | 打开 `routers/auth_router.py`，复制 `get_current_user` → 粘贴到你的路由里 |
+| 1 | **绝不从头写代码** | 打开 `app/routers/auth.py`，复制 `get_current_user` → 粘贴到你的路由里 |
 | 2 | **报错看最后一行** | 401 就是票不对，403 就是权限不够，500 找堆栈最后一行 |
 | 3 | **不懂就跳过** | 长短 Token 暂时只理解概念，先跑通单 Token + 黑名单 |
 | 4 | **拥抱 JSON** | `{"access_token": "...", "token_type": "bearer"}` 就是登录返回的字典 |
@@ -27,10 +27,10 @@ JWT 是一张**服务器盖章的数字身份卡**。服务器不用记你是谁
 | 学到什么 | 对应文件 | 关键代码行 |
 |----------|---------|-----------|
 | User 表 & RevokedToken 表 | `models.py:17-35` | `class User(Base)`, `class RevokedToken(Base)` |
-| JWT 签发 / 验证 / 黑名单 | `routers/auth_router.py:54-69` | `create_token()`, `_hash_token()` |
-| 自动验票机 | `routers/auth_router.py:73-97` | `def get_current_user(...)` |
-| 角色守卫 | `routers/auth_router.py:101-112` | `def require_role(*allowed_roles)` |
-| 注册 / 登录 / 登出 | `routers/auth_router.py:116-179` | `/auth/register`, `/auth/login`, `/auth/logout` |
+| JWT 签发 / 验证 / 黑名单 | `app/routers/auth.py:54-69` | `create_token()`, `_hash_token()` |
+| 自动验票机 | `app/routers/auth.py:73-97` | `def get_current_user(...)` |
+| 角色守卫 | `app/routers/auth.py:101-112` | `def require_role(*allowed_roles)` |
+| 注册 / 登录 / 登出 | `app/routers/auth.py:116-179` | `/auth/register`, `/auth/login`, `/auth/logout` |
 | 路由注册 & Swagger | `main.py:84` | `app.include_router(auth_router.router)` |
 | CORS & 异常处理 | `main.py:60-76` | `CORSMiddleware`, `global_exception_handler` |
 
@@ -178,7 +178,7 @@ JWT = `Header（票头）.Payload（票面信息）.Signature（防伪钢印）`
 
 **🚨 关键警醒**：票面信息（Payload）只是 Base64 编码——不是加密！任何人在 jwt.io 粘贴就能解码。**绝不要在 Payload 里放密码/手机号！**
 
-### 💻 代码示例——你的项目里 [routers/auth_router.py:54-64](routers/auth_router.py)
+### 💻 代码示例——你的项目里 [app/routers/auth.py:54-64](app/routers/auth.py)
 
 ```python
 import jwt
@@ -255,7 +255,7 @@ except jwt.InvalidTokenError:
 - **配置** = 每分店的后厨密码、地址（每家不同）
 - 能把后厨密码印在菜谱上发给所有人吗？**不能。**
 
-### 💻 代码示例——你的项目 [routers/auth_router.py:24-29](routers/auth_router.py)
+### 💻 代码示例——你的项目 [app/routers/auth.py:24-29](app/routers/auth.py)
 
 ```python
 import os
@@ -306,7 +306,7 @@ if not JWT_SECRET:
 3. 闸机把会员信息贴在身上（返回 `{"id":1, "username":"john", "role":"USER"}`）
 4. 教练（业务代码）直接看你身上的标签就知道你是谁
 
-### 💻 你的项目里 [routers/auth_router.py:73-97](routers/auth_router.py)
+### 💻 你的项目里 [app/routers/auth.py:73-97](app/routers/auth.py)
 
 ```python
 from fastapi import Depends, HTTPException
@@ -388,7 +388,7 @@ def xxx(user = Depends(get_current_user)):
 ### 一句话
 认证通过后还要查"你能进哪间房"。这是**第二道闸机**。
 
-### 💻 你的项目里 [routers/auth_router.py:101-112](routers/auth_router.py)
+### 💻 你的项目里 [app/routers/auth.py:101-112](app/routers/auth.py)
 
 ```python
 def require_role(*allowed_roles: str):
@@ -450,7 +450,7 @@ Depends(require_role("ADMIN", "EDITOR"))
 - **登录**：报手机号 → 查档案 → 对暗号 → 发卡
 - **登出**：把卡挂失（Token 哈希加入黑名单）
 
-### 💻 完整代码——你的项目 [routers/auth_router.py](routers/auth_router.py)
+### 💻 完整代码——你的项目 [app/routers/auth.py](app/routers/auth.py)
 
 ```python
 from sqlalchemy.orm import Session
@@ -951,7 +951,7 @@ if not JWT_SECRET:
 
 | 文件 | 内容 |
 |------|------|
-| [routers/auth_router.py](../routers/auth_router.py) | 全部认证逻辑：5个接口 + 验票机 + 角色守卫 |
+| [app/routers/auth.py](../app/routers/auth.py) | 全部认证逻辑：5个接口 + 验票机 + 角色守卫 |
 | [models.py](../models.py) | User 表（:17-25）+ RevokedToken 表（:28-35） |
 | [main.py](../main.py) | Swagger 配置（:49-57）+ CORS（:60-66）+ 异常兜底（:68-76）+ 路由注册（:84） |
 | [.env](../.env) | JWT_SECRET 环境变量 |

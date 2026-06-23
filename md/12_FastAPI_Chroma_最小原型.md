@@ -112,7 +112,7 @@ POST /rag/search
 
 ```
 routers/
-├── rag_router.py          ← 新增：RAG 路由（双存储 API）
+├── app/routers/rag.py          ← 新增：RAG 路由（双存储 API）
 └── ...
 
 main.py                     ← 修改：注册 rag_router
@@ -126,7 +126,7 @@ chroma_db/                  ← 新增：ChromaDB 持久化数据目录
 from routers import rag_router
 app.include_router(rag_router.router, prefix="/rag")
 
-# rag_router.py 负责"RAG 业务"
+# app/routers/rag.py 负责"RAG 业务"
 router = APIRouter(prefix="/rag", tags=["RAG 向量检索"])
 
 @router.post("/documents")
@@ -138,7 +138,7 @@ def search(query: SearchIn, db: Session = Depends(get_db)):
     # 语义检索...
 ```
 
-**分层的好处**：`main.py` 干净，`rag_router.py` 专注 RAG，以后加新功能互不干扰。
+**分层的好处**：`main.py` 干净，`app/routers/rag.py` 专注 RAG，以后加新功能互不干扰。
 
 ---
 
@@ -196,7 +196,7 @@ def add_document(doc: DocumentIn, db: Session = Depends(get_db)):
 
 ## 6. 完整代码
 
-### routers/rag_router.py
+### app/routers/rag.py
 
 ```python
 from fastapi import APIRouter, Depends
@@ -422,7 +422,7 @@ curl -X POST "http://127.0.0.1:8000/rag/search" \
 |--------|-----------|
 | API 化 | 把脚本变成接口，让任何人都能调用 |
 | 持久化 ChromaDB | `PersistentClient` 存磁盘，重启不丢数据 |
-| router 分层 | `main.py` 注册，`rag_router.py` 写业务 |
+| router 分层 | `main.py` 注册，`app/routers/rag.py` 写业务 |
 | 依赖注入 | `Depends(get_db)` 自动管理数据库连接 |
 | 最小原型 | 先跑通两个核心接口，再扩展功能 |
 
@@ -434,7 +434,7 @@ curl -X POST "http://127.0.0.1:8000/rag/search" \
 |------|----------|----------|
 | API 化 | 把脚本能力包装成 HTTP 接口 | `/rag/documents`、`/rag/search` |
 | PersistentClient | ChromaDB 持久化客户端 | 数据写入 `./chroma_db` |
-| Router | FastAPI 路由模块 | `routers/rag_router.py` |
+| Router | FastAPI 路由模块 | `app/routers/rag.py` |
 | Dependency injection | 依赖注入 | `Depends(get_db)` |
 | Prototype | 最小原型，先验证主流程 | 只保留存入和检索两个核心接口 |
 | Swagger UI | FastAPI 自动交互文档 | `http://127.0.0.1:8000/docs` |

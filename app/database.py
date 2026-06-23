@@ -13,7 +13,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db():
-    """FastAPI 依赖：每次请求创建一个数据库会话，用完自动关闭"""
     db = SessionLocal()
     try:
         yield db

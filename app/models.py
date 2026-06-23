@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Text, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
-from database import engine
+from app.database import engine
 from datetime import datetime
 from sqlalchemy.sql import func
 
@@ -21,7 +21,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(100), unique=True, nullable=False, index=True)
     email = Column(String(50), unique=True, nullable=False, index=True,default="")
-    password = Column(String(200), nullable=False)  # bcrypt 哈希值
+    password = Column(String(200), nullable=False)
     introduction = Column(Text, default="") 
     role = Column(String(20), default="USER")
     created_at = Column(DateTime, default=datetime.now)
@@ -32,9 +32,9 @@ class RevokedToken(Base):
     __tablename__ = "revoked_tokens"
 
     id = Column(Integer, primary_key=True)
-    token_hash = Column(String(64), unique=True, index=True)  # SHA256 哈希值，不存完整 Token
+    token_hash = Column(String(64), unique=True, index=True)
     revoked_at = Column(DateTime, server_default=func.now())
-    expires_at = Column(DateTime)  # Token 自然过期时间，方便定时清理
+    expires_at = Column(DateTime)
 
 
 class Document(Base):
@@ -61,6 +61,3 @@ class DocumentChunk(Base):
     embedding_id = Column(String(100), unique=True)
 
     document = relationship("Document", back_populates="chunks")
-
-
-# Base.metadata.create_all(bind=engine)

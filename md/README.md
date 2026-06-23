@@ -168,15 +168,15 @@
 ---
 
 ### [07_代码分层与模块化架构.md](./07_代码分层与模块化架构.md)
-**对应代码**: `main.py` + `database.py` + `models.py` + `routers/`
+**对应代码**: `app/main.py` + `app/database.py` + `app/models.py` + `app/routers/`
 
 - **为什么要分层**: 单体文件的问题、分层的好处
 - **分层架构详解**: 表现层、业务层、模型层、数据层
 - **各层代码解析**:
-  - `database.py`: 数据库连接、会话工厂
-  - `models.py`: ORM 模型、建表
-  - `routers/`: APIRouter、业务逻辑
-  - `main.py`: 应用组装、路由注册
+  - `app/database.py`: 数据库连接、会话工厂
+  - `app/models.py`: ORM 模型、建表
+  - `app/routers/`: APIRouter、业务逻辑（按功能拆分为多个文件）
+  - `app/main.py`: 应用组装、路由注册、CORS/中间件配置
 - **APIRouter 深度解析**:
   - 什么是子路由器
   - `prefix` 和 `tags` 参数
@@ -192,7 +192,7 @@
 ---
 
 ### [08_提示词工程与聊天记忆.md](./08_提示词工程与聊天记忆.md)
-**对应代码**: `routers/chat_memory.py`
+**对应代码**: `app/routers/chat_memory.py`
 
 - **为什么需要记忆**: 无状态 vs 有状态对话
 - **核心数据结构**: `chat_history` 列表、`role` 字段含义
@@ -223,7 +223,7 @@
 ---
 
 ### [10_RAG_ChromaDB向量数据库实战.md](./10_RAG_ChromaDB向量数据库实战.md)
-**对应代码**: `chroma_demo.py`、`chroma_real.py`、`embedding_playground.py`
+**对应代码**: `playground/chroma_demo.py`、`playground/chroma_real.py`、`playground/embedding_playground.py`、`app/embedding.py`
 
 - **ChromaDB 核心概念**:
   - Client（客户端）与 Collection（集合）
@@ -243,7 +243,7 @@
 ---
 
 ### [11_双存储架构SQLite_ChromaDB.md](./11_双存储架构SQLite_ChromaDB.md)
-**对应代码**: `dual_storage_demo.py`、`models.py`
+**对应代码**: `playground/dual_storage_demo.py`、`app/models.py`
 
 - **为什么需要双存储**: ChromaDB 碎片太小 + SQLite 不能语义搜索 → 互补
 - **图书馆类比**: ChromaDB = 索引卡片柜，SQLite = 藏书仓库
@@ -261,7 +261,7 @@
 ---
 
 ### [12_FastAPI_Chroma_最小原型.md](./12_FastAPI_Chroma_最小原型.md)
-**对应代码**: `routers/rag_router.py`（早期版本）
+**对应代码**: `app/routers/rag.py`（早期版本）
 
 - **从演示到 API**: demo脚本 vs 生产API的区别
 - **依赖注入重构**:
@@ -284,7 +284,7 @@
 ---
 
 ### [13_RAG_闭环_检索到回答.md](./13_RAG_闭环_检索到回答.md)
-**对应代码**: `routers/rag_router.py`
+**对应代码**: `app/routers/rag.py`
 
 - **RAG 完整闭环流程**:
   1. 用户提问
@@ -308,7 +308,7 @@
 ---
 
 ### [14_上下文窗口管理.md](./14_上下文窗口管理.md)
-**对应代码**: `routers/rag_router.py`
+**对应代码**: `app/routers/rag.py`
 
 - **为什么需要窗口管理**: Token 超限 = 报错/截断/幻觉
 - **Token 估算方法**: tiktoken 库使用
@@ -329,7 +329,7 @@
 ---
 
 ### [15_LangChain核心概念.md](./15_LangChain核心概念.md)
-**对应代码**: `routers/langchain_rag_router.py`
+**对应代码**: `app/routers/langchain_rag.py`
 
 - **为什么用 LangChain**: 手搓 RAG 的痛点 vs 框架化优势
 - **六大核心概念**:
@@ -383,7 +383,7 @@
 ---
 
 ### [17_JWT用户认证.md](./17_JWT用户认证.md)
-**对应代码**: `routers/auth_router.py`、`models.py` (User/RevokedToken)
+**对应代码**: `app/routers/auth.py`、`app/models.py` (User/RevokedToken)
 
 - **认证 vs 授权**: 你是谁 vs 你能做什么
 - **密码哈希 bcrypt**:
@@ -417,7 +417,7 @@
 ---
 
 ### [18_WebSocket实时通信.md](./18_WebSocket实时通信.md)
-**对应代码**: `routers/ws_router.py`
+**对应代码**: `app/routers/websocket.py`
 
 - **HTTP vs WebSocket**:
   - HTTP: 单向、请求-响应、无状态
@@ -478,7 +478,7 @@
 ---
 
 ### [20_pytest单元测试.md](./20_pytest单元测试.md)
-**对应代码**: `test/` 目录、`conftest.py`
+**对应代码**: `tests/` 目录、`tests/conftest.py`
 
 - **为什么需要测试**: 改代码不心慌、重构有保障、bug早发现
 - **Arrange/Act/Assert 三段式**:
@@ -576,27 +576,34 @@
 
 | 学习文档 | 对应代码文件 | 难度 |
 |----------|-------------|------|
-| 00_环境配置与PyCharm使用.md | `script.py` | ⭐ |
-| 01_Python基础.md | `python第一月上半学习阶段/py学习.py` | ⭐ |
-| 02_Python进阶.md | `python第一月上半学习阶段/py学习_进阶.py` | ⭐⭐ |
-| 03_Python高级特性.md | `python第一月上半学习阶段/py学习_进阶2.py` | ⭐⭐⭐ |
-| 04_FastAPI基础.md | `python第一月上半学习阶段/python_接触fastapi之前的补充.py` | ⭐⭐ |
-| 05_FastAPI_CRUD.md | `python第一月上半学习阶段/py_CRUD.py` | ⭐⭐⭐ |
-| 06_FastAPI_ORM_SQLAlchemy.md | `python第一月上半学习阶段/py_ORM.py` | ⭐⭐⭐⭐ |
-| 07_代码分层与模块化架构.md | `main.py` + `models.py` + `database.py` + `routers/` | ⭐⭐⭐⭐ |
-| 08_提示词工程与聊天记忆.md | `routers/chat_memory.py` | ⭐⭐⭐ |
-| 09_RAG向量数据库入门.md | `rag_demo.py` + `rag_test.py` | ⭐⭐⭐⭐ |
-| 10_RAG_ChromaDB向量数据库实战.md | `chroma_demo.py` + `chroma_real.py` + `embedding_playground.py` + `local_embedding.py` | ⭐⭐⭐ |
-| 11_双存储架构SQLite_ChromaDB.md | `dual_storage_demo.py` + `models.py` | ⭐⭐⭐⭐ |
-| 12_FastAPI_Chroma最小原型.md | `routers/rag_router.py` | ⭐⭐⭐⭐ |
-| 13_RAG闭环_检索到回答.md | `routers/rag_router.py` | ⭐⭐⭐⭐ |
-| 14_上下文窗口管理.md | `routers/rag_router.py` | ⭐⭐⭐⭐ |
-| 15_LangChain核心概念.md | `routers/langchain_rag_router.py` | ⭐⭐⭐⭐ |
-| 16_异步编程深入.md | `md/答题/async.md` + routers中的异步路由 | ⭐⭐⭐⭐ |
-| 17_JWT用户认证.md | `routers/auth_router.py` + `models.py` (User/RevokedToken) | ⭐⭐⭐⭐ |
-| 18_WebSocket实时通信.md | `routers/ws_router.py` | ⭐⭐⭐⭐ |
+| 00_环境配置与PyCharm使用.md | `playground/script.py` | ⭐ |
+| 01_Python基础.md | `archive/month1-python-basics/00_python_basics.py` | ⭐ |
+| 02_Python进阶.md | `archive/month1-python-basics/01_python_advanced.py` | ⭐⭐ |
+| 03_Python高级特性.md | `archive/month1-python-basics/02_python_advanced2.py` | ⭐⭐⭐ |
+| 04_FastAPI基础.md | `archive/month1-python-basics/05_before_fastapi.py` | ⭐⭐ |
+| 05_FastAPI_CRUD.md | `archive/month1-python-basics/03_crud.py` | ⭐⭐⭐ |
+| 06_FastAPI_ORM_SQLAlchemy.md | `archive/month1-python-basics/04_orm.py` | ⭐⭐⭐⭐ |
+| 07_代码分层与模块化架构.md | `app/main.py` + `app/models.py` + `app/database.py` + `app/routers/` | ⭐⭐⭐⭐ |
+| 08_提示词工程与聊天记忆.md | `app/routers/chat_memory.py` | ⭐⭐⭐ |
+| 09_RAG向量数据库入门.md | `playground/rag_demo.py` + `playground/rag_test.py` | ⭐⭐⭐⭐ |
+| 10_RAG_ChromaDB向量数据库实战.md | `playground/chroma_demo.py` + `playground/chroma_real.py` + `playground/embedding_playground.py` + `app/embedding.py` | ⭐⭐⭐ |
+| 11_双存储架构SQLite_ChromaDB.md | `playground/dual_storage_demo.py` + `app/models.py` | ⭐⭐⭐⭐ |
+| 12_FastAPI_Chroma最小原型.md | `app/routers/rag.py` | ⭐⭐⭐⭐ |
+| 13_RAG闭环_检索到回答.md | `app/routers/rag.py` | ⭐⭐⭐⭐ |
+| 14_上下文窗口管理.md | `app/routers/rag.py` | ⭐⭐⭐⭐ |
+| 15_LangChain核心概念.md | `app/routers/langchain_rag.py` | ⭐⭐⭐⭐ |
+| 16_异步编程深入.md | `md/答题/async.md` + `app/routers/` 中的异步路由 | ⭐⭐⭐⭐ |
+| 17_JWT用户认证.md | `app/routers/auth.py` + `app/models.py` (User/RevokedToken) | ⭐⭐⭐⭐ |
+| 18_WebSocket实时通信.md | `app/routers/websocket.py` | ⭐⭐⭐⭐ |
 | 19_Alembic数据库迁移.md | `alembic/` + `alembic.ini` | ⭐⭐⭐⭐ |
-| 20_pytest单元测试.md | `test/` + `conftest.py` | ⭐⭐⭐⭐ |
+| 20_pytest单元测试.md | `tests/` + `tests/conftest.py` | ⭐⭐⭐⭐ |
+| 21_Prompt_Engineering进阶.md | `app/routers/prompt.py` | ⭐⭐⭐⭐ |
+
+> **📂 目录说明**：
+> - `app/` - 核心代码区（日常开发在这里）
+> - `archive/month1-python-basics/` - 第1个月Python基础练习归档
+> - `playground/` - 实验/demo/试错区（随便改，不影响主线）
+> - `tests/` - 单元测试
 
 ---
 

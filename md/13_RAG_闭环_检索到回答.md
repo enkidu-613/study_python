@@ -31,7 +31,7 @@
 
 ### 场景：你去问律师问题
 
-**没有 RAG 闭环的律师**（`ai_router.py`）：
+**没有 RAG 闭环的律师**（`app/routers/ai.py`）：
 - 你问："我这份合同有问题吗？"
 - 律师答："根据一般法律常识..."（可能跟你的合同毫无关系）
 
@@ -46,7 +46,7 @@
 
 ## 💻 代码总览：新增了什么？
 
-打开 `routers/rag_router.py`，本章新增了 **4 个零件**：
+打开 `app/routers/rag.py`，本章新增了 **4 个零件**：
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -73,7 +73,7 @@
 原来 `search` 路由自己有一套"查字典流程"。现在 `rag_chat` 也要查字典，**与其抄一遍流程，不如把流程做成一台"公用查字典机"**。
 
 ### 代码位置
-`routers/rag_router.py` 第 169~208 行
+`app/routers/rag.py` 第 169~208 行
 
 ### 代码示例
 
@@ -148,7 +148,7 @@ def _semantic_search(query_text: str, n_results: int, db: Session) -> List[Searc
 你请了一个代笔秘书。秘书不会凭空写报告，**你必须把参考资料按编号整理好，放在他桌上，他才能照着写**。
 
 ### 代码位置
-`routers/rag_router.py` 第 215~244 行
+`app/routers/rag.py` 第 215~244 行
 
 ### 代码示例
 
@@ -240,7 +240,7 @@ Prompt 模板结构：
 - `StreamingResponse` = 直播，生成一个字就推一个字（用户实时看到 AI 在"打字"）
 
 ### 代码位置
-`routers/rag_router.py` 第 247~281 行
+`app/routers/rag.py` 第 247~281 行
 
 ### 代码示例
 
@@ -294,9 +294,9 @@ messages = [
 ]
 ```
 
-**和 `ai_router.py` 的区别：**
+**和 `app/routers/ai.py` 的区别：**
 
-| | `ai_router.py` | `rag_router.py` |
+| | `app/routers/ai.py` | `app/routers/rag.py` |
 |:---|:---|:---|
 | messages | `[{"role": "user", "content": message}]` | 多了 `system` 角色，带检索资料 |
 | 效果 | AI 凭记忆回答 | AI 基于你的资料回答 |
@@ -374,7 +374,7 @@ return StreamingResponse(
 - 你不需要知道后面发生了什么
 
 ### 代码位置
-`routers/rag_router.py` 第 284~298 行
+`app/routers/rag.py` 第 284~298 行
 
 ### 代码示例
 
@@ -523,7 +523,7 @@ curl -X POST http://127.0.0.1:8000/rag/chat \
 - [ ] 你能用自己的话解释：为什么要把 `_semantic_search` 抽成内部函数？
 - [ ] 你能写出 `build_system_prompt` 返回的 Prompt 大概长什么样吗？
 - [ ] 你知道 `done_thinking` 为什么要放在 `for` 循环外面吗？
-- [ ] 你能说出 `ai_router.py` 的 `messages` 和 `rag_router.py` 的 `messages` 有什么区别？
+- [ ] 你能说出 `app/routers/ai.py` 的 `messages` 和 `app/routers/rag.py` 的 `messages` 有什么区别？
 - [ ] 你能用 curl 调通 `POST /rag/chat` 并看到流式返回吗？
 
 ---

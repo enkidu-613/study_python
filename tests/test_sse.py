@@ -1,6 +1,6 @@
 from importlib import import_module
 
-ai_router_module = import_module("routers.ai_router")
+ai_router_module = import_module("app.routers.ai")
 
 
 def test_ai_router_format(client, monkeypatch):
@@ -13,5 +13,4 @@ def test_ai_router_format(client, monkeypatch):
         body = response.read().decode('utf-8')
         assert response.status_code == 200
         assert response.headers["content-type"].startswith("text/event-stream")
-        # 检查响应体是否包含预期的 JSON 数据
         assert body == 'data:{"type":"answer","content":"这是一个模拟回答"}\n\n'

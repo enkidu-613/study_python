@@ -14,7 +14,6 @@ async_client = AsyncOpenAI(
     api_key=os.getenv("MODELSCOPE_API_KEY"),
 )
 
-# WebSocket 是电话本身，WebSocketDisconnect 是对方挂断电话时抛出的异常。
 router = APIRouter(prefix="/ws", tags=["WebSocket"])
 
 
@@ -74,10 +73,6 @@ async def websocket_message_docs():
 async def websocket_message(websocket: WebSocket):
     await websocket.accept()
     try:
-        #更先进的写法是使用async for message in websocket.iter_text():
-        # 但是这里为了演示和学习，我们使用while True
-        # 为什么说这里的while True 不会造成死循环，
-        # 因为await websocket.receive_text() 是阻塞式的，只有当有消息到达时才会返回。
         while True:
             message = await websocket.receive_text()
             if message == "exit":
@@ -88,12 +83,12 @@ async def websocket_message(websocket: WebSocket):
     except WebSocketDisconnect:
         print("WebSocket disconnected")
 
-#模拟token 认证链接，token 为123456
+
 @router.websocket("/message-auth")
 async def websocket_message_auth(websocket: WebSocket, token: str = Query(...)):
     await websocket.accept()
 
-    if token != "123456": #如果测试收不到错误消息的话就先accept再close
+    if token != "123456":
         await websocket.send_json({
             "type": "error",
             "message": "token 错误",
@@ -183,7 +178,6 @@ async def websocket_ai_interrupt(websocket: WebSocket):
         await websocket.close(code=1011)
 
 
-# 广播室类
 class ConnectionManager:
     def __init__(self):
         self.active_connections = list[WebSocket]()
@@ -197,6 +191,7 @@ class ConnectionManager:
         for connection in self.active_connections:
             await connection.send_text(message)
 manager = ConnectionManager()
+
 @router.websocket("/room/{room_id}")
 async def websocket_room(websocket: WebSocket, room_id: str):
     await manager.connect(websocket)
@@ -213,4 +208,3 @@ async def websocket_room(websocket: WebSocket, room_id: str):
     except WebSocketDisconnect:
         await manager.disconnect(websocket)
         await manager.broadcast(f"有人离开了 {room_id}")
-    

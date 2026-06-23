@@ -1,6 +1,6 @@
 from importlib import import_module
 
-prompt_router_module = import_module("routers.prompt_advanced_router")
+prompt_router_module = import_module("app.routers.prompt")
 
 
 def test_extract_task_returns_structured_result(client, monkeypatch):

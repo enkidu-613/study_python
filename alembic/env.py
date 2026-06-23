@@ -5,8 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from database import DATABASE_URL
-from models import Base
+from app.database import DATABASE_URL
+from app.models import Base
 
 target_metadata = Base.metadata
 

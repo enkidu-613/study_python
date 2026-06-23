@@ -26,11 +26,11 @@
 
 | 学到什么 | 对应文件 | 关键代码行 |
 |----------|---------|-----------|
-| 结构化输出 Schema | `routers/prompt_advanced_router.py` | `TaskExtractionRequest`、`TaskExtractionResult` |
-| Prompt 模板 + Few-Shot | `routers/prompt_advanced_router.py` | `ChatPromptTemplate.from_messages(...)` |
-| LLM 链 + `with_structured_output()` | `routers/prompt_advanced_router.py` | `build_task_extractor()` |
-| 错误边界（502 兜底） | `routers/prompt_advanced_router.py` | `try/except` → `HTTPException(502)` |
-| 独立实战接口 | `routers/prompt_advanced_router.py`（你来写） | `/classify-feedback` |
+| 结构化输出 Schema | `app/routers/prompt.py` | `TaskExtractionRequest`、`TaskExtractionResult` |
+| Prompt 模板 + Few-Shot | `app/routers/prompt.py` | `ChatPromptTemplate.from_messages(...)` |
+| LLM 链 + `with_structured_output()` | `app/routers/prompt.py` | `build_task_extractor()` |
+| 错误边界（502 兜底） | `app/routers/prompt.py` | `try/except` → `HTTPException(502)` |
+| 独立实战接口 | `app/routers/prompt.py`（你来写） | `/classify-feedback` |
 | 路由注册 & Swagger | `main.py` | `app.include_router(prompt_advanced_router.router)` |
 
 ---
@@ -127,7 +127,7 @@ result = MySchema.model_validate(raw_json)   # 确定层：校验输出
 - **护士（Pydantic）**：检查每项——身高写"很高"？打回！血型写"X"？打回！
 - **`Field(description=...)`**：表格上的小字提示，比如"身高：脱鞋测量（单位 cm）"
 
-### 💻 代码示例——你的项目 `routers/prompt_advanced_router.py`
+### 💻 代码示例——你的项目 `app/routers/prompt.py`
 
 ```python
 import os
@@ -906,7 +906,7 @@ Prompt Engineering 进阶
 
 | 文件 | 内容 |
 |------|------|
-| `routers/prompt_advanced_router.py` | 结构化输出路由：Schema、Prompt、链、端点 |
+| `app/routers/prompt.py` | 结构化输出路由：Schema、Prompt、链、端点 |
 | `main.py` | 路由注册 `app.include_router(prompt_advanced_router.router)` |
 | `.env` | `MODELSCOPE_API_KEY`、`MODEL_NAME`、`MODEL_API_URL` |
 | `md/08_提示词工程与聊天记忆.md` | System Prompt 基础、角色设计、Chat History |
