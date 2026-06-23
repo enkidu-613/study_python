@@ -6,3 +6,4 @@ from . import rag_router
 from . import langchain_rag_router
 from . import auth_router
 from . import ws_router
+from . import prompt_advanced_router

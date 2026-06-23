@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 from contextlib import asynccontextmanager
-from routers import ai_router, todos_routers, chat_memory_router, rag_router, langchain_rag_router, auth_router, ws_router
+from routers import ai_router, todos_routers, chat_memory_router, rag_router, langchain_rag_router, auth_router, ws_router, prompt_advanced_router
 
 # ====== 应用描述（显示在 Swagger 文档顶部）======
 DESCRIPTION = """
@@ -32,6 +32,10 @@ TAGS_METADATA = [
     {"name": "RAG 向量检索", "description": "手写 RAG 闭环：存入 → 检索 → 生成。"},
     {"name": "LangChain RAG", "description": "LCEL 链式语法框架化 RAG。"},
     {"name": "WebSocket", "description": "实时双向通信接口；Swagger 不直接展示 WebSocket 路由。"},
+    {
+        "name": "Prompt Engineering",
+        "description": "结构化输出、Few-Shot 与输出约束示例。",
+    },
 ]
 
 
@@ -84,6 +88,7 @@ app.include_router(rag_router.router)            # 手搓 RAG /rag/*
 app.include_router(langchain_rag_router.router)  # LangChain RAG /langchain-rag/*
 app.include_router(auth_router.router)
 app.include_router(ws_router.router)             # WebSocket 实时通信 /ws/*
+app.include_router(prompt_advanced_router.router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
