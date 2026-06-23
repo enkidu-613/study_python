@@ -2,7 +2,7 @@
 
 > **适合 ADHD 学习者的 Python 与 FastAPI 完整学习资料**
 > 从 Python 基础 → FastAPI 后端 → AI 接入 → RAG 向量数据库 → LangChain 框架，一步一个脚印
-> 📅 创建时间：2024年 | 🐍 Python 3.11+ | ⚡ FastAPI | 🧠 AI 集成 | 🔗 LangChain
+> 📅 创建时间：2026年3月 | 🐍 Python 3.11+ | ⚡ FastAPI | 🧠 AI 集成 | 🔗 LangChain
 
 ---
 
