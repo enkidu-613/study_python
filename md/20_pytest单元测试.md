@@ -597,6 +597,22 @@ def test_websocket_echo(client):
 | `404 Not Found` | 路由路径写错 | 对照 `main.py` 和 router prefix |
 | `401 Unauthorized` | 没带 token 或 token 格式错 | `Authorization: Bearer <token>` |
 | 测试很慢 | 调了真实模型或外部 API | 对外部调用做 mock |
+| pytest 显示通过，但其实没测到 | 请求和断言缩进到了未调用的假函数中，或只写了 `value == expected` | 确认测试函数真的执行请求，并使用 `assert value == expected` |
+
+特别注意：pytest 的 `PASSED` 只表示测试函数没有抛出异常，不保证断言一定执行。空测试也会通过：
+
+```python
+def test_empty():
+    pass
+```
+
+检查规则：
+
+```text
+请求和断言位于 test_* 函数中
+→ 普通比较前有 assert
+→ 故意改错预期值时，测试应当失败
+```
 
 ---
 

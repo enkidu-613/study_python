@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-19T01:19:47",
+  "updated_at": "2026-06-24T01:22:53+08:00",
   "stages": [
     {
       "id": "python-basics",
@@ -365,9 +365,9 @@
       "id": "pytest",
       "name": "单元测试",
       "description": "pytest 测试用例编写",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-05-31",
-      "completed_at": null,
+      "completed_at": "2026-06-24",
       "documents": [
         "md/20_pytest单元测试.md"
       ],
@@ -379,17 +379,253 @@
       ]
     },
     {
+      "id": "prompt-advanced",
+      "name": "Prompt Engineering 进阶",
+      "description": "结构化输出、输出约束、Few-Shot、采样参数与 Prompt Injection 边界",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "prompt-engineering",
+        "langchain"
+      ],
+      "roadmap_tags": [
+        "Prompt Engineering",
+        "LLM Basics"
+      ]
+    },
+    {
+      "id": "ai-safety",
+      "name": "AI 安全与伦理",
+      "description": "Prompt Injection、Bias、Content Moderation、Safety Best Practices",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "prompt-advanced"
+      ],
+      "roadmap_tags": [
+        "AI Safety and Ethics"
+      ]
+    },
+    {
+      "id": "rag-chunking",
+      "name": "RAG Chunking 策略",
+      "description": "分块策略、重叠窗口、语义分块、递归字符拆分",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "prompt-advanced",
+        "langchain"
+      ],
+      "roadmap_tags": [
+        "RAG",
+        "Chunking"
+      ]
+    },
+    {
+      "id": "rag-evaluation",
+      "name": "RAG 评估与指标",
+      "description": "RAGAS、Faithfulness、Answer Relevance、Context Precision",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "rag-chunking"
+      ],
+      "roadmap_tags": [
+        "RAG",
+        "Evaluation"
+      ]
+    },
+    {
+      "id": "ai-agents",
+      "name": "AI Agents 基础",
+      "description": "先用直接 SDK/手动方式理解 ReAct、Function Calling、Tools 与 Agent 循环",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "prompt-advanced",
+        "rag-evaluation"
+      ],
+      "roadmap_tags": [
+        "AI Agents",
+        "ReAct",
+        "Function Calling"
+      ]
+    },
+    {
+      "id": "langchain-memory",
+      "name": "LangChain 对话记忆",
+      "description": "短期消息历史、长期记忆、状态持久化与上下文注入",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "LangChain",
+        "Prompt Engineering"
+      ]
+    },
+    {
+      "id": "langchain-agents",
+      "name": "LangChain Agent 工具调用",
+      "description": "现代 create_agent、Tool 定义、自定义工具与运行时控制",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "langchain-memory",
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "LangChain",
+        "AI Agents"
+      ]
+    },
+    {
+      "id": "langgraph",
+      "name": "LangGraph 状态工作流",
+      "description": "StateGraph、节点与边、Checkpoint、人工介入和可恢复 Agent 工作流",
+      "status": "pending",
+      "created_at": "2026-06-24",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "langchain-agents"
+      ],
+      "roadmap_tags": [
+        "LangGraph",
+        "AI Agents",
+        "Stateful Workflows"
+      ]
+    },
+    {
+      "id": "dify",
+      "name": "Dify 平台实战",
+      "description": "用可视化工作流复现已掌握的 RAG 与 Agent，并学习模型管理、Prompt IDE 和应用 API",
+      "status": "pending",
+      "created_at": "2026-06-05",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "langgraph"
+      ],
+      "roadmap_tags": [
+        "Dify",
+        "RAG",
+        "AI Agents",
+        "Low-Code",
+        "Platform"
+      ]
+    },
+    {
+      "id": "ai-agents-advanced",
+      "name": "Multi-Agent 与复杂工作流",
+      "description": "多 Agent 协作、子 Agent、人工介入与复杂工作流边界",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "langgraph"
+      ],
+      "roadmap_tags": [
+        "AI Agents",
+        "Multi-agents"
+      ]
+    },
+    {
+      "id": "hugging-face",
+      "name": "Hugging Face 生态",
+      "description": "Hugging Face Hub、Transformers、Inference SDK、开源模型选择与本地推理",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "dify"
+      ],
+      "roadmap_tags": [
+        "Hugging Face",
+        "Open Source Models"
+      ]
+    },
+    {
+      "id": "multimodal-ai",
+      "name": "多模态 AI",
+      "description": "Image Understanding、Vision API、Text-to-Speech、Speech-to-Text",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "hugging-face",
+        "ai-agents-advanced"
+      ],
+      "roadmap_tags": [
+        "Multimodal AI",
+        "Vision",
+        "TTS",
+        "STT"
+      ]
+    },
+    {
+      "id": "llm-evaluation",
+      "name": "LLM 评估与回归测试",
+      "description": "Deterministic Evals、Model-Based Evals、DeepEval、RAGAS、Regression Testing",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "rag-evaluation",
+        "langgraph"
+      ],
+      "roadmap_tags": [
+        "Evaluation",
+        "DeepEval",
+        "RAGAS"
+      ]
+    },
+    {
+      "id": "llm-observability",
+      "name": "LLM 可观测性",
+      "description": "LangSmith、Langfuse、Helicone、Tracing & Logging、Cost 监控",
+      "status": "pending",
+      "created_at": "2026-06-03",
+      "completed_at": null,
+      "documents": [],
+      "dependencies": [
+        "llm-evaluation"
+      ],
+      "roadmap_tags": [
+        "Observability",
+        "LangSmith",
+        "Langfuse"
+      ]
+    },
+    {
       "id": "docker-deploy",
       "name": "项目部署",
-      "description": "Docker 容器化部署",
+      "description": "AI 主线完成后的 Docker 容器化与生产部署",
       "status": "pending",
       "created_at": "2026-05-31",
       "completed_at": null,
       "documents": [],
       "dependencies": [
-        "jwt-auth",
-        "websocket-realtime",
-        "alembic"
+        "llm-observability"
       ],
       "roadmap_tags": [
         "Backend",
@@ -428,90 +664,9 @@
       ]
     },
     {
-      "id": "langchain-memory",
-      "name": "LangChain 对话记忆",
-      "description": "Memory 类型、ConversationBufferMemory、历史消息注入",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "langchain"
-      ],
-      "roadmap_tags": [
-        "LangChain",
-        "Prompt Engineering"
-      ]
-    },
-    {
-      "id": "langchain-agents",
-      "name": "LangChain Agent 工具调用",
-      "description": "Tool 定义、AgentExecutor、自定义工具",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "langchain-memory"
-      ],
-      "roadmap_tags": [
-        "LangChain",
-        "AI Agents"
-      ]
-    },
-    {
-      "id": "prompt-advanced",
-      "name": "Prompt Engineering 进阶",
-      "description": "CoT、ReAct、Zero-Shot、Few-Shot、Top-K/P 采样参数",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "langchain"
-      ],
-      "roadmap_tags": [
-        "Prompt Engineering",
-        "LLM Basics"
-      ]
-    },
-    {
-      "id": "rag-chunking",
-      "name": "RAG Chunking 策略",
-      "description": "分块策略、重叠窗口、语义分块、递归字符拆分",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "langchain"
-      ],
-      "roadmap_tags": [
-        "RAG",
-        "Chunking"
-      ]
-    },
-    {
-      "id": "rag-evaluation",
-      "name": "RAG 评估与指标",
-      "description": "RAGAS、Faithfulness、Answer Relevance、Context Precision",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "rag-chunking",
-        "prompt-advanced"
-      ],
-      "roadmap_tags": [
-        "RAG",
-        "Evaluation"
-      ]
-    },
-    {
       "id": "vector-db-advanced",
       "name": "多向量数据库对比",
-      "description": "Pinecone、Weaviate、Qdrant、FAISS、MongoDB Atlas",
+      "description": "选修：Pinecone、Weaviate、Qdrant、FAISS、MongoDB Atlas 横向比较",
       "status": "pending",
       "created_at": "2026-06-03",
       "completed_at": null,
@@ -528,160 +683,42 @@
       ]
     },
     {
-      "id": "ai-agents",
-      "name": "AI Agents 基础",
-      "description": "ReAct 模式、Function Calling、Tools、手动实现 Agent",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "prompt-advanced",
-        "langchain-agents"
-      ],
-      "roadmap_tags": [
-        "AI Agents",
-        "ReAct",
-        "Function Calling"
-      ]
-    },
-    {
-      "id": "ai-agents-advanced",
-      "name": "Multi-Agent 与复杂工作流",
-      "description": "多 Agent 协作、OpenAI Agent SDK、Claude Agent SDK",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "ai-agents"
-      ],
-      "roadmap_tags": [
-        "AI Agents",
-        "Multi-agents"
-      ]
-    },
-    {
-      "id": "dify",
-      "name": "Dify 平台实战",
-      "description": "Dify 可视化 LLM 应用平台 — RAG 管道、Agent 工作流、模型管理、Prompt IDE、MCP 插件",
-      "status": "pending",
-      "created_at": "2026-06-05",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "ai-agents-advanced"
-      ],
-      "roadmap_tags": [
-        "Dify",
-        "RAG",
-        "AI Agents",
-        "Low-Code",
-        "Platform"
-      ]
-    },
-    {
-      "id": "ai-safety",
-      "name": "AI 安全与伦理",
-      "description": "Prompt Injection、Bias、Content Moderation、Safety Best Practices",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "ai-agents"
-      ],
-      "roadmap_tags": [
-        "AI Safety and Ethics"
-      ]
-    },
-    {
-      "id": "llm-observability",
-      "name": "LLM 可观测性",
-      "description": "LangSmith、Langfuse、Helicone、Tracing & Logging、Cost 监控",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "rag-evaluation"
-      ],
-      "roadmap_tags": [
-        "Observability",
-        "LangSmith",
-        "Langfuse"
-      ]
-    },
-    {
-      "id": "llm-evaluation",
-      "name": "LLM 评估与回归测试",
-      "description": "Deterministic Evals、Model-Based Evals、DeepEval、RAGAS、Regression Testing",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "rag-evaluation"
-      ],
-      "roadmap_tags": [
-        "Evaluation",
-        "DeepEval",
-        "RAGAS"
-      ]
-    },
-    {
       "id": "mcp",
       "name": "Model Context Protocol (MCP)",
-      "description": "MCP Host/Server/Client 架构、构建 MCP Server、MCP Client 开发",
+      "description": "选修：MCP Host/Server/Client 架构、构建 MCP Server、MCP Client 开发",
       "status": "pending",
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
       "dependencies": [
-        "ai-agents"
+        "langgraph"
       ],
       "roadmap_tags": [
         "MCP"
       ]
     },
     {
-      "id": "multimodal-ai",
-      "name": "多模态 AI",
-      "description": "Image Understanding、Vision API、Text-to-Speech、Speech-to-Text",
+      "id": "n8n",
+      "name": "n8n 自动化工作流",
+      "description": "选修：用 Webhook、定时任务和第三方集成把 AI 服务接入真实业务流程",
       "status": "pending",
-      "created_at": "2026-06-03",
+      "created_at": "2026-06-24",
       "completed_at": null,
       "documents": [],
       "dependencies": [
-        "ai-agents-advanced"
+        "dify",
+        "docker-deploy"
       ],
       "roadmap_tags": [
-        "Multimodal AI",
-        "Vision",
-        "TTS",
-        "STT"
-      ]
-    },
-    {
-      "id": "fine-tuning",
-      "name": "Fine-tuning 基础",
-      "description": "微调概念、RAG vs Fine-tuning、LoRA、QLoRA、训练流程",
-      "status": "pending",
-      "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
-      "dependencies": [
-        "ai-agents"
-      ],
-      "roadmap_tags": [
-        "Fine-tuning",
-        "LoRA"
+        "n8n",
+        "Workflow Automation",
+        "Low-Code"
       ]
     },
     {
       "id": "llama-index",
       "name": "LlamaIndex",
-      "description": "LlamaIndex 框架、索引构建、查询引擎、与 LangChain 对比",
+      "description": "选修：LlamaIndex 索引构建、查询引擎及其与 LangChain 的边界",
       "status": "pending",
       "created_at": "2026-06-03",
       "completed_at": null,
@@ -695,21 +732,21 @@
       ]
     },
     {
-      "id": "hugging-face",
-      "name": "Hugging Face 生态",
-      "description": "Hugging Face Hub、Transformers.js、Inference SDK、开源模型部署",
+      "id": "fine-tuning",
+      "name": "Fine-tuning 基础",
+      "description": "选修：微调概念、RAG vs Fine-tuning、LoRA、QLoRA、训练流程",
       "status": "pending",
       "created_at": "2026-06-03",
       "completed_at": null,
       "documents": [],
       "dependencies": [
-        "fine-tuning"
+        "hugging-face"
       ],
       "roadmap_tags": [
-        "Hugging Face",
-        "Open Source Models"
+        "Fine-tuning",
+        "LoRA"
       ]
     }
   ],
-  "current_stage_id": "websocket-realtime"
+  "current_stage_id": "prompt-advanced"
 }

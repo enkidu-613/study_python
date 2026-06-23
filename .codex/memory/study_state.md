@@ -1,14 +1,14 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-06-19.
+Last updated from `.trae` on 2026-06-24 after the AI Engineer roadmap review.
 
 ## Current Stage
 
-- Current stage id: `pytest`
-- Current topic: pytest unit testing for FastAPI project
-- Current document: `md/20_pytest单元测试.md`
-- Status: in progress
-- Previous stage: `alembic` completed on 2026-06-19
+- Current stage id: `prompt-advanced`
+- Current topic: advanced prompt engineering, structured output, output constraints, sampling parameters, and prompt-injection boundaries
+- Current document: not written yet; the next tutorial will follow `md/20_pytest单元测试.md`
+- Status: pending
+- Previous stage: `pytest`, completed on 2026-06-24
 
 ## Completed Core Path
 
@@ -24,15 +24,32 @@ The learner has completed:
 - JWT authentication: bcrypt, token signing/verification, Depends guards, role guards, logout blacklist, Swagger/CORS/global exception handling.
 - WebSocket realtime communication: protocol upgrade, FastAPI WebSocket routes, Query token auth, room broadcast, SSE comparison, and interruptible AI stream control.
 - Alembic database migrations: Poetry command usage, `target_metadata = Base.metadata`, migration vs backup, `alembic_version`, `stamp head`, empty migration causes, clean initial migration, upgrade/downgrade flow.
+- pytest unit testing: Arrange/Act/Assert, TestClient, isolated test database, fixtures, dependency overrides, auth flow, WebSocket testing, SSE mock testing, and false-positive empty-test diagnosis.
 
 ## Latest History Summary
 
-Latest `.trae/memory/learning_history_index.json` entries say:
+Latest verified learning result:
 
-- Alembic practical work reached clean initial migration and command flow on 2026-06-18.
-- Alembic exam on 2026-06-19 started at 13.7/20, then补考 7.2/10, then passed after two focused recovery questions.
-- Remaining Alembic details are low risk: exact command spelling can be checked when needed; the concept boundary is now usable.
-- Next stage is pytest unit testing, starting with `md/20_pytest单元测试.md`.
+- pytest project tests reached `8 passed` with one unrelated existing `extra_body` warning.
+- Initial pytest exam: 12.3/20.
+- First retest: 7/10.
+- Second retest: 5/5, confirming dependency override object identity and async-generator empty-test execution flow.
+- pytest stage completed on 2026-06-24; `docker-deploy` remains pending and is deliberately deferred until after AI evaluation and observability.
+- The remaining curriculum was reordered around the roadmap.sh AI Engineer core rather than immediate deployment.
+- LangChain/LangGraph is the primary code-learning path, Dify follows as a visual implementation comparison, and n8n is a later workflow-automation elective.
+
+## Replanned Core Path
+
+1. `prompt-advanced` and `ai-safety`.
+2. `rag-chunking` and `rag-evaluation`.
+3. `ai-agents` using direct SDK/manual mechanics.
+4. `langchain-memory`, `langchain-agents`, and `langgraph`.
+5. `dify`, then advanced/multi-agent workflows.
+6. `hugging-face` and `multimodal-ai`.
+7. `llm-evaluation` and `llm-observability`.
+8. `docker-deploy`, `frontend-basics`, and `frontend-backend`.
+
+Later electives: vector database comparison, MCP, n8n, LlamaIndex, and fine-tuning.
 
 ## Known Weak Points
 
@@ -84,8 +101,6 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Install pytest as a Poetry dev dependency if needed.
-2. Create a smoke test for `/docs`.
-3. Learn Arrange / Act / Assert with a small pure function.
-4. Use FastAPI `TestClient` for Todo routes.
-5. Add a test database fixture and dependency override before testing DB-writing routes.
+1. Keep pytest patterns available for future regression tests instead of expanding this chapter further.
+2. Write and study the next chapter for `prompt-advanced`.
+3. Do not start Docker until the AI core, evaluation, and observability stages are complete.

@@ -10,43 +10,26 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-**当前阶段**：pytest 单元测试（进行中 🔥）
+**当前阶段**：pytest 单元测试（已完成 ✅），下一阶段：高级提示词工程（prompt-advanced）
 
 ---
 
 ## 🗂️ 项目结构
 
 ```
-study_python/
+PyCharmMiscProject/
 ├── 📁 md/                          # 学习文档（ADHD友好格式）
 │   ├── 00_环境配置与PyCharm使用.md
-│   ├── 01_Python基础.md
-│   ├── 02_Python进阶.md
-│   ├── 03_Python高级特性.md
-│   ├── 04_FastAPI基础.md
-│   ├── 05_FastAPI_CRUD.md
-│   ├── 06_FastAPI_ORM_SQLAlchemy.md
-│   ├── 07_代码分层与模块化架构.md
-│   ├── 08_提示词工程与聊天记忆.md
-│   ├── 09_RAG_向量数据库入门.md
-│   ├── 10_RAG_ChromaDB向量数据库实战.md
-│   ├── 11_双存储架构SQLite_ChromaDB.md
-│   ├── 12_FastAPI_Chroma_最小原型.md
-│   ├── 13_RAG_闭环_检索到回答.md
-│   ├── 14_上下文窗口管理.md
-│   ├── 15_LangChain核心概念.md
-│   ├── 16_异步编程深入.md
-│   ├── 17_JWT用户认证.md
-│   ├── 18_WebSocket实时通信.md
-│   ├── 19_Alembic数据库迁移.md
-│   ├── 20_pytest单元测试.md
+│   ├── 01_Python基础.md ~ 20_pytest单元测试.md
 │   ├── ai学习应用数学/
 │   │   └── 01_向量与余弦相似度.md
+│   ├── 试卷/                       # 章节测试卷（含补考卷）
+│   ├── 答题/                       # 答题记录与错题
 │   └── 错题本.md
 │
 ├── 📁 routers/                     # FastAPI 路由模块（分层架构）
 │   ├── ai_router.py                # AI 流式对话 /ai/*
-│   ├── auth.py                     # JWT 认证 /auth/*
+│   ├── auth_router.py              # JWT 认证 /auth/*
 │   ├── chat_memory.py              # 聊天记忆 /chat-memory/*
 │   ├── todos_routers.py            # Todo CRUD /todos/*
 │   ├── rag_router.py               # 手搓 RAG /rag/*
@@ -54,37 +37,52 @@ study_python/
 │   └── ws_router.py                # WebSocket 实时通信 /ws/*
 │
 ├── 📁 test/                        # pytest 单元测试
-│   └── test_router.py              # 路由测试示例
+│   ├── conftest.py                 # pytest 共享 fixture
+│   ├── test_auth.py                # JWT 认证测试
+│   ├── test_fun.py                 # 函数式测试
+│   ├── test_rag.py                 # RAG 测试
+│   ├── test_router.py              # 路由测试示例
+│   ├── test_sse.py                 # SSE 流式测试
+│   └── test_ws.py                  # WebSocket 测试
 │
 ├── 📁 alembic/                     # Alembic 数据库迁移
 │   ├── versions/                   # 迁移脚本
 │   └── env.py                      # Alembic 环境配置
 │
-├── 📁 .reasonix/skills/            # AI 辅助技能（6个定制技能）
-│   ├── python-adhd-tutor.md
-│   ├── programming-language-mastery.md
-│   ├── chapter-review-quizzer.md
-│   ├── learning-plan-manager.md
-│   ├── learning_plan_manager.py
-│   ├── history-archiver.md
-│   └── tech-search-sources.md
+├── 📁 chroma_db/                   # ChromaDB 持久化数据
+│
+├── 📁 python第一月上半学习阶段/     # 早期Python练习代码
+│
+├── 📁 .trae/skills/                # AI 辅助技能（9个定制技能）
+│   ├── chapter-review-quizzer/
+│   ├── comfortable-fast-learning-coach/
+│   ├── firecrawl-karpathy-research/
+│   ├── history-archiver/
+│   ├── learning-plan-manager/
+│   ├── programming-language-mastery/
+│   ├── python-adhd-tutor/
+│   ├── tech-search-sources/
+│   └── ui-ux-pro-max-3/
 │
 ├── 📁 .trae/memory/                # 项目记忆与对话历史
 │   ├── learning_plan.json          # 学习计划主数据
-│   ├── learning_history_index.json # 学习历史索引（含对话记录索引）
+│   ├── learning_history_index.json # 学习历史索引
 │   ├── roadmap查缺补漏计划.md       # roadmap.sh AI Engineer 查缺补漏
 │   └── conversations/              # 日期对话文件
 │
 ├── main.py                         # FastAPI 应用入口
 ├── database.py                     # 数据库配置（SQLite）
-├── models.py                       # ORM 模型（含 Document、DocumentChunk）
+├── models.py                       # ORM 模型（DBTodo/User/RevokedToken/Document/DocumentChunk）
 ├── ai_bot.py                       # AI 聊天机器人（ModelScope API）
+├── local_embedding.py              # 本地Embedding模型加载（bge-small-zh-v1.5）
+├── embedding_playground.py         # Embedding模型实验
 ├── rag_demo.py                     # RAG 入门：Embedding 与相似度
 ├── rag_test.py                     # RAG 测试：ModelScope Embedding API
 ├── chroma_demo.py                  # ChromaDB 简化版演示
 ├── chroma_real.py                  # ChromaDB 真实 Embedding 检索
 ├── dual_storage_demo.py            # 双存储架构完整演示
 ├── pyproject.toml                  # Poetry 依赖管理
+├── alembic.ini                     # Alembic配置
 └── requirements.txt                # pip 依赖（备选）
 ```
 
@@ -114,23 +112,29 @@ study_python/
 | 15 | **LangChain 集成（LCEL 链式语法、DeepSeek 推理链）** | `routers/langchain_rag_router.py` | ✅ |
 | 16 | **异步编程深入（async/await 原理、三种协程对象、Semaphore）** | - | ✅ |
 | 17 | **学习计划审计与 AI 应用路线精简** | - | ✅ |
-| 18 | **JWT 用户认证（密码哈希、Token 签发、Depends 守卫、角色授权）** | `routers/auth.py` | ✅ |
+| 18 | **JWT 用户认证（密码哈希、Token 签发、Depends 守卫、角色授权）** | `routers/auth_router.py` | ✅ |
 | 19 | **WebSocket 实时通信（协议升级、房间广播、AI 流式打断）** | `routers/ws_router.py` | ✅ |
 | 20 | **Alembic 数据库迁移（revision、upgrade、downgrade、autogenerate）** | `alembic/` | ✅ |
 
-### 🔥 进行中
+### ✅ 已完成（续）
 
-| 步骤 | 主题 | 对应代码 | 状态 |
-|------|------|----------|------|
-| 21 | **pytest 单元测试（FastAPI TestClient、依赖覆盖、断言）** | `test/` | 🔥 当前 |
+| 步骤 | 主题 | 对应代码 | 掌握程度 |
+|------|------|----------|----------|
+| 21 | **pytest 单元测试（FastAPI TestClient、依赖覆盖、断言）** | `test/` | ✅ |
+| 22 | **pytest 进阶（conftest fixture、SSE 流式测试、WebSocket 测试）** | `test/test_sse.py`, `test/test_ws.py` | ✅ |
 
-### 📋 待学习
+### 🔥 下一步
 
 | 阶段 | 内容 | 说明 |
 |------|------|------|
-| **后端精深** | Docker 部署、CI/CD、日志与监控 | 工程能力补全 |
-| **前端** | React/Vue 基础、前后端对接 | 全栈能力 |
-| **AI 进阶** | LangChain Agents、RAG 进阶评估、Prompt Engineering 进阶 | 详见 roadmap 查缺补漏 |
+| **AI 核心深入** | 高级提示词工程（结构化输出、采样参数、Prompt Injection防御） | prompt-advanced |
+| **AI 核心深入** | RAG Chunking策略、混合检索、重排序、RAGAS评估 | rag-chunking/evaluation |
+| **AI 核心深入** | AI Agents基础（ReAct模式、Function Calling，手动实现优先） | ai-agents |
+| **AI 核心深入** | LangChain Memory/Agents、LangGraph | langchain-* |
+| **AI 核心深入** | LLM评估与可观测性（LangSmith/Langfuse） | llm-eval |
+| **全栈补全（暂缓）** | Docker部署、CI/CD、日志监控 | 工程能力补全 |
+| **全栈补全（暂缓）** | React/Vue基础、前后端对接 | 全栈能力 |
+| **详见** | roadmap.sh AI Engineer 查缺补漏计划 | `.trae/memory/roadmap查缺补漏计划.md` |
 
 ---
 
@@ -144,7 +148,7 @@ study_python/
 | **ORM** | SQLAlchemy | 数据库对象关系映射 |
 | **AI 框架** | LangChain (LCEL) | RAG 链式编排 |
 | **AI API** | ModelScope (OpenAI 兼容) | 国内 AI 模型接入 |
-| **向量模型** | bge-small-zh-v1.5 (本地) | 文本向量化（512维，本地部署 MPS 加速） |
+| **向量模型** | bge-small-zh-v1.5 (本地) | 文本向量化（512维，本地部署 MPS 加速，sentence-transformers） |
 | **LLM 模型** | DeepSeek-V3.2 | 大语言模型问答 |
 | **包管理** | Poetry | 依赖管理与虚拟环境 |
 | **部署** | Uvicorn | ASGI 服务器 |
@@ -244,11 +248,17 @@ study_python/
 - ✅ isinstance 与 instanceof 对比、Future 唤醒回调机制
 - ✅ JWT 用户认证实战（bcrypt 密码哈希、Token 签发/验证、Depends 守卫、角色守卫、登出黑名单、Swagger/CORS/全局异常处理）
 - ✅ WebSocket 实时通信（HTTP Upgrade、Query token 认证、ConnectionManager、房间广播、SSE 对比、可中断 AI 流式生成）
-- ✅ Alembic 数据库迁移（revision、upgrade/downgrade、autogenerate、target_metadata = Base.metadata、server_default、SQLite ALTER TABLE 限制）
+- ✅ Alembic 数据库迁移（revision、upgrade、downgrade、autogenerate、target_metadata = Base.metadata、server_default、SQLite ALTER TABLE 限制）
+- ✅ pytest 单元测试（FastAPI TestClient、依赖覆盖、fixture、conftest、测试数据库、SSE流式测试、WebSocket测试、Arrange/Act/Assert三段式、假阳性空测试诊断）
+- ✅ 章节测试与补考系统（试卷/、答题/、错题本）
 
 ### 待深入学习
-- ⬜ pytest 单元测试（FastAPI TestClient、依赖覆盖、fixture、测试数据库）
-- ⬜ LangChain Memory & Agents（对话记忆、工具调用）
+- ✅ pytest 单元测试（FastAPI TestClient、依赖覆盖、fixture、测试数据库、SSE测试、WebSocket测试）
+- ⬜ 高级提示词工程（结构化输出、采样参数、Prompt Injection边界）
+- ⬜ RAG Chunking策略、混合检索、重排序、RAGAS评估
+- ⬜ AI Agents基础（ReAct模式、Function Calling，手动实现优先）
+- ⬜ LangChain Memory & Agents、LangGraph
+- ⬜ LLM评估与可观测性（LangSmith、Langfuse）
 - ⬜ Docker 部署
 - ⬜ CI/CD、日志与监控
 - ⬜ 前端框架 (React/Vue)
@@ -279,20 +289,23 @@ study_python/
 
 ---
 
-## 🤖 AI 辅助技能（Reasonix Skills）
+## 🤖 AI 辅助技能
 
-本项目配备了 6 个定制 AI 技能，通过 `.reasonix/skills/` 目录加载，在对话中随时可用：
+本项目配备了 9 个定制 AI 技能，在对话中随时可用：
 
 | 技能 | 触发场景 | 功能 |
 |------|----------|------|
 | **python-adhd-tutor** | 询问 Python 基础、编程概念或代码机制 | 以 ADHD 友好且专业的方式讲解 Python |
-| **programming-language-mastery** | 学习新语言、对比语言特性、通用编程概念 | 跨语言的计算思维心法（表达式/函数/类/异步/泛型等） |
-| **chapter-review-quizzer** | 要求检测、复习错题、检查章节掌握程度 | 生成试卷 MD → 用户在答题区 ```` ``` ```` 填写 → AI 批改并记录错题 |
+| **comfortable-fast-learning-coach** | ADHD学习指导、薄弱点诊断、学习规划 | 舒心快速学习流程教练 |
+| **programming-language-mastery** | 学习新语言、对比语言特性、通用编程概念 | 跨语言的计算思维心法 |
+| **chapter-review-quizzer** | 要求检测、复习错题、检查章节掌握程度 | 生成试卷 → 用户答题 → AI批改并记录错题 |
 | **learning-plan-manager** | 更新进度、追踪阶段、添加计划、查询状态 | 管理学习计划进度和历史文件索引 |
 | **history-archiver** | 归档对话历史 | 按实际日期归档到正确的 `YYYY-MM-DD.md` 文件 |
+| **firecrawl-karpathy-research** | 网页研究、技术调研 | Firecrawl网页研究 + Karpathy风格AI工程准则 |
 | **tech-search-sources** | 搜索技术问题 | 优先从 GitHub、Stack Overflow、掘金、V2EX 等来源获取 |
+| **ui-ux-pro-max-3** | UI/UX设计、前端界面 | 设计智能、组件库、样式方案 |
 
-> 💡 在对话中直接说出需求即可触发对应技能，例如：「帮我检测一下第 15 章的掌握程度」
+> 💡 在对话中直接说出需求即可触发对应技能，例如：「帮我检测一下第 20 章的掌握程度」
 
 ---
 

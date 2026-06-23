@@ -1,7 +1,7 @@
 [project]
-name = "study"
+name = "study-python"
 version = "0.1.0"
-description = ""
+description = "ADHD-friendly Python to AI full-stack learning project (FastAPI + RAG + LangChain + JWT + WebSocket + pytest)"
 authors = [
     {name = "enkidu",email = "enkidu7493@foxmail.com"}
 ]
