@@ -31,9 +31,10 @@ PyCharmMiscProject/
 │   ├── ai_router.py                # AI 流式对话 /ai/*
 │   ├── auth_router.py              # JWT 认证 /auth/*
 │   ├── chat_memory.py              # 聊天记忆 /chat-memory/*
-│   ├── todos_routers.py            # Todo CRUD /todos/*
-│   ├── rag_router.py               # 手搓 RAG /rag/*
 │   ├── langchain_rag_router.py     # LangChain RAG /langchain-rag/*
+│   ├── prompt_advanced_router.py   # Prompt Engineering 高级 /prompt-advanced/*
+│   ├── rag_router.py               # 手搓 RAG /rag/*
+│   ├── todos_routers.py            # Todo CRUD /todos/*
 │   └── ws_router.py                # WebSocket 实时通信 /ws/*
 │
 ├── 📁 test/                        # pytest 单元测试
@@ -122,6 +123,7 @@ PyCharmMiscProject/
 |------|------|----------|----------|
 | 21 | **pytest 单元测试（FastAPI TestClient、依赖覆盖、断言）** | `test/` | ✅ |
 | 22 | **pytest 进阶（conftest fixture、SSE 流式测试、WebSocket 测试）** | `test/test_sse.py`, `test/test_ws.py` | ✅ |
+| 23 | **Prompt Engineering 进阶（Few-shot、结构化输出、角色隔离）** | `routers/prompt_advanced_router.py` | 🔥 进行中 |
 
 ### 🔥 下一步
 
@@ -187,6 +189,13 @@ PyCharmMiscProject/
 - **文档管理**: 支持文档删除（同步清理 ChromaDB + SQLite）
 - **代码**: [`routers/langchain_rag_router.py`](routers/langchain_rag_router.py)
 
+### 6. Prompt Engineering 高级 (`/prompt-advanced/*`)
+- **任务提取器**: 从自然语言文本中结构化提取任务（标题、优先级、标签）
+- **Few-shot 提示**: 通过示例输入输出引导模型行为
+- **结构化输出**: Pydantic 模型约束 LLM 输出格式（`TaskExtractionResult`）
+- **角色隔离**: System Prompt 明确限定模型为"信息提取器"，拒绝执行指令
+- **代码**: [`routers/prompt_advanced_router.py`](routers/prompt_advanced_router.py)
+
 ---
 
 ## 📖 学习文档速查
@@ -214,6 +223,7 @@ PyCharmMiscProject/
 | [18_WebSocket实时通信](md/18_WebSocket实时通信.md) | WebSocket 协议升级、Query token 认证、房间广播、AI 流式打断 | ⭐⭐⭐⭐ |
 | [19_Alembic数据库迁移](md/19_Alembic数据库迁移.md) | 迁移心智模型、revision、upgrade/downgrade、autogenerate、target_metadata | ⭐⭐⭐⭐ |
 | [20_pytest单元测试](md/20_pytest单元测试.md) | FastAPI TestClient、依赖覆盖、断言、fixture、测试数据库 | ⭐⭐⭐⭐ |
+| [21_Prompt Engineering 进阶](md/21_Prompt_Engineering进阶.md) | Few-shot、结构化输出、角色隔离、Pydantic 约束 | ⭐⭐⭐⭐ |
 | [向量与余弦相似度](md/ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 | ⭐⭐ |
 
 ---
@@ -253,8 +263,7 @@ PyCharmMiscProject/
 - ✅ 章节测试与补考系统（试卷/、答题/、错题本）
 
 ### 待深入学习
-- ✅ pytest 单元测试（FastAPI TestClient、依赖覆盖、fixture、测试数据库、SSE测试、WebSocket测试）
-- ⬜ 高级提示词工程（结构化输出、采样参数、Prompt Injection边界）
+- ⬜ Prompt Engineering 进阶（结构化输出、采样参数、Prompt Injection边界）
 - ⬜ RAG Chunking策略、混合检索、重排序、RAGAS评估
 - ⬜ AI Agents基础（ReAct模式、Function Calling，手动实现优先）
 - ⬜ LangChain Memory & Agents、LangGraph
