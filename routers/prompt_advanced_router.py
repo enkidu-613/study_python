@@ -1,11 +1,14 @@
+import logging
 import os
 from typing import Literal
 
 from dotenv import load_dotenv
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_deepseek import ChatDeepSeek
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -76,4 +79,11 @@ async def extract_task_from_text(text: str) -> TaskExtractionResult:
 
 @router.post("/extract-task", response_model=TaskExtractionResult)
 async def extract_task(request: TaskExtractionRequest) -> TaskExtractionResult:
-    return await extract_task_from_text(request.text)
+    try:
+        return await extract_task_from_text(request.text)
+    except Exception as exc:
+        logger.exception("Task extraction failed")
+        raise HTTPException(
+            status_code=502,
+            detail="结构化输出生成失败",
+        ) from exc
