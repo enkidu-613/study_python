@@ -324,6 +324,7 @@ def get_current_user(
     # ① 查黑名单（不是先验签，先看有没有挂失）
     token_hash = hashlib.sha256(token.encode()).hexdigest()[:64]
     if db.query(RevokedToken).filter(RevokedToken.token_hash == token_hash).first():
+        # HTTPException 是 FastAPI 的异常类——主动抛出一个受控的 HTTP 错误（状态码 + detail）
         raise HTTPException(status_code=401, detail="Token 已被撤销，请重新登录")
 
     # ② 验签

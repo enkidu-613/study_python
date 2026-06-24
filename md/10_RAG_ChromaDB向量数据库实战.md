@@ -262,10 +262,10 @@ results = collection.query(
 ```python
 import chromadb
 from openai import OpenAI
-from dotenv import load_dotenv
+from dotenv import load_dotenv   # 读取 .env 文件，把键值对注入 os.environ
 import os
 
-load_dotenv()
+load_dotenv()                    # 执行后 os.getenv("MODELSCOPE_API_KEY") 才能拿到值
 client = OpenAI(
     base_url="https://api-inference.modelscope.cn/v1",
     api_key=os.getenv("MODELSCOPE_API_KEY")

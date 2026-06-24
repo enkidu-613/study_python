@@ -76,6 +76,8 @@ Web API 接收和返回的都是 JSON 数据，需要一种方式来：
 
 ### 2.2 定义数据模型
 
+> **`BaseModel`** 是 Pydantic 的类——继承它就获得"数据说明书 + 校验器 + 对象生成器"三重身份：声明字段类型时生成 JSON Schema，请求进来时自动校验，通过后转成 Python 对象。
+
 ```python
 from pydantic import BaseModel
 
@@ -130,6 +132,8 @@ POST /todos
 ```
 
 ### 2.4 BaseModel 的更多功能
+
+> **`Field()`** 是 Pydantic 的**函数**（不是类），给字段附加约束规则——`min_length`、`max_length`、`ge`/`le`、`description`、`default_factory` 等。它本身不定义类型，类型靠 `str`、`bool`、`int` 标注。
 
 ```python
 from pydantic import BaseModel, Field
