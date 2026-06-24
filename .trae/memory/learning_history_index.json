@@ -1,7 +1,31 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-24T01:22:53+08:00",
+  "updated_at": "2026-06-24T05:01:00+08:00",
   "entries": [
+    {
+      "id": "dialog-75",
+      "date": "2026-06-24",
+      "title": "项目结构重构为app/分包、移除兼容层、全文档同步、ChromaDB机制与Pydantic/ORM Base辨析",
+      "stage_id": "project-structure",
+      "entry_type": "dialog",
+      "topics": [
+        "项目重构",
+        "目录结构",
+        "app包",
+        "代码分层",
+        "兼容层",
+        "文档更新",
+        "ChromaDB",
+        "持久化",
+        "Pydantic",
+        "BaseModel",
+        "SQLAlchemy",
+        "ORM",
+        "关注点分离"
+      ],
+      "summary": "完成项目结构专业重构：核心代码移入app/包、路由统一命名、早期代码归档到archive/month1-python-basics/、实验代码移到playground/、test/改为tests/；先保留薄封装兼容层，全面测试（12个pytest全过）后移除兼容层；批量更新README.md、md/README.md、md/07_代码分层与模块化架构.md及12-21章核心文档路径；讲解ChromaDB本地持久化机制（两个RAG模块共享documents集合）；用ADHD友好方式辨析Pydantic BaseModel（数据校验，快递单）与SQLAlchemy Base（ORM表结构，仓库货架）的本质区别。",
+      "file_path": ".trae/memory/conversations/2026-06-24.md"
+    },
     {
       "id": "dialog-74",
       "date": "2026-06-24",

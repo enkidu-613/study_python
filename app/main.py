@@ -86,6 +86,6 @@ app.include_router(websocket.router)
 app.include_router(prompt.router)
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
     print("服务器已启动，监听地址：http://127.0.0.1:8000")
     print("文档地址：http://127.0.0.1:8000/docs")
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
