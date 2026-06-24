@@ -139,16 +139,9 @@ result = MySchema.model_validate(raw_json)   # 确定层：校验输出
 
 | 符号 | 是什么 | 干什么 |
 |------|--------|--------|
-| `BaseModel` | 类（Pydantic） | 数据说明书 + 校验器 + 对象生成器；继承它就能用类型标注校验字段 |
-| `Field()` | 函数（Pydantic） | 给字段附加规则（`min_length`、`max_length`、`description`、`default_factory`） |
 | `Literal[...]` | 类型约束（typing） | 把字段可取值缩小到几个固定字面，别的全拒绝 |
 | `list[str]` | 类型标注 | `list` 是容器类型，`str` 是元素类型；Python 不校验元素类型，Pydantic 校验 |
-| `ChatPromptTemplate` | 类（LangChain） | 组织 system/human/ai 消息，`{text}` 是模板变量，调用时填入 |
-| `ChatDeepSeek` | 类（LangChain） | 模型客户端配置——模型名、API 地址、Key、temperature、streaming |
-| `with_structured_output()` | 方法 | 要求模型返回指定 Pydantic 类型，结果自动解析 + 校验 |
-| `APIRouter` | 类（FastAPI） | 收集和管理一组路由，通过 `prefix` 统一前缀、`tags` 分组 |
-| `HTTPException` | 异常类（FastAPI） | 主动抛出一个受控制的 HTTP 错误（状态码 + detail） |
-| `load_dotenv()` | 函数（python-dotenv） | 读取项目根目录 `.env` 文件，把键值对注入环境变量 |
+| `with_structured_output()` | 方法（LangChain） | 要求模型返回指定 Pydantic 类型，结果自动解析 + 校验 |
 
 ```python
 import os
