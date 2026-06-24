@@ -1,0 +1,14 @@
+{
+  "status": "complete",
+  "iterations": 1,
+  "evidence": [
+    "在第二关代码示例前插入10行「名词速查」表格，标注每个符号的类型（类/函数/方法/类型约束）和功能",
+    "在Literal逐行拆解段加标注：Literal不是类也不是函数，是typing的特殊类型约束",
+    "commit: 3c7a0c1"
+  ],
+  "verification": [
+    "rg确认'先看表再看代码'存在",
+    "rg确认'Literal.*不是类'存在",
+    "git diff --check 通过"
+  ]
+}
