@@ -19,6 +19,18 @@ Use this skill when the user:
 
 Do not record trivial shell commands, Git operations, pure status updates, installation chores, or casual non-learning chat unless the user explicitly asks.
 
+## Strict Exclusions
+
+Do not record these into `learning_questions`, even if they are phrased as a question:
+
+- skill architecture, skill merging, or skill boundary discussions;
+- history archiving strategy, sync policy, or memory-file organization;
+- Git, push, commit, branch, or repository management questions;
+- plugin/tool installation, agent configuration, or workspace policy decisions;
+- project-management decisions that are not a technical concept the user needs to review.
+
+If such a discussion should be preserved, put it in normal history archiving instead of the learning question bank.
+
 ## Source Of Truth
 
 Write first to:
@@ -62,6 +74,7 @@ Keep entries short. Do not paste the full conversation unless the user asks for 
 ## Quality Rules
 
 - Prefer "what confused the user" over "what was discussed".
+- Only record items that can become a future recall question, mistake review, or chapter exam patch.
 - Store the corrected mental model, not just a definition.
 - If the user mixed two concepts, name both and record the boundary.
 - If the topic belongs to a chapter, include the chapter file path.
@@ -82,4 +95,3 @@ Keep entries short. Do not paste the full conversation unless the user asks for 
 - reinforce_prompt: 用一句话区分 Few-Shot 和 Fine-Tuning。
 - status: active
 ```
-

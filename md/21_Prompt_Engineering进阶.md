@@ -783,15 +783,15 @@ curl -s -X POST http://127.0.0.1:8000/prompt-advanced/classify-feedback \
 
 ### 🎮 常见陷阱表（贴在显示器上）
 
-| 症状 | 最可能原因 | 改哪里 |
-|------|-----------|--------|
-| 422 Unprocessable Entity | 输入 JSON 字段名/类型不对 | 检查请求体：`{"text": "..."}`，text 是 str |
-| 模型返回的不是合法 JSON | Few-Shot 示例里 JSON 写错了或没给示例 | 检查 human 消息里的示例输出是不是合法 JSON |
-| 模型返回的 priority 是 "紧急" 不是 "high" | 没用 `Literal` 或 Few-Shot 示例用了中文 | 输出 Schema 用 `Literal["low","medium","high"]`，示例也保持一致 |
-| `MODELSCOPE_API_KEY 未配置` | `.env` 文件缺失或变量名拼写错误 | `echo $MODELSCOPE_API_KEY` 确认，检查 `.env` |
-| 500 Internal Server Error | 异常没被 try/except 捕获 | 端点包 `try/except Exception` → 502 |
-| title 输出了一整段话 | `json_mode` 的 Prompt 没明确长度要求 | 在 System Prompt 写“title 是不超过 15 字的简短标题” |
-| 端点注册了但 `/docs` 看不到 | `router` 没 `include_router` | 检查 `app/main.py` 里有没有 `app.include_router(prompt.router)` |
+| 症状                              | 最可能原因                          | 改哪里                                                       |
+| ------------------------------- | ------------------------------ | --------------------------------------------------------- |
+| 422 Unprocessable Entity        | 输入 JSON 字段名/类型不对               | 检查请求体：`{"text": "..."}`，text 是 str                        |
+| 模型返回的不是合法 JSON                  | Few-Shot 示例里 JSON 写错了或没给示例     | 检查 human 消息里的示例输出是不是合法 JSON                               |
+| 模型返回的 priority 是 "紧急" 不是 "high" | 没用 `Literal` 或 Few-Shot 示例用了中文 | 输出 Schema 用 `Literal["low","medium","high"]`，示例也保持一致      |
+| `MODELSCOPE_API_KEY 未配置`        | `.env` 文件缺失或变量名拼写错误            | `echo $MODELSCOPE_API_KEY` 确认，检查 `.env`                   |
+| 500 Internal Server Error       | 异常没被 try/except 捕获             | 端点包 `try/except Exception` → 502                          |
+| title 输出了一整段话                   | `json_mode` 的 Prompt 没明确长度要求   | 在 System Prompt 写“title 是不超过 15 字的简短标题”                   |
+| 端点注册了但 `/docs` 看不到              | `router` 没 `include_router`    | 检查 `app/main.py` 里有没有 `app.include_router(prompt.router)` |
 
 ---
 

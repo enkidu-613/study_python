@@ -1,7 +1,38 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-25T04:40:00+08:00",
+  "updated_at": "2026-06-26T06:42:24+08:00",
   "entries": [
+    {
+      "id": "dialog-77",
+      "date": "2026-06-26",
+      "title": "Prompt Engineering 进阶结构化输出、Few-Shot、采样参数、环境变量、LangChain Chain 与异常处理",
+      "stage_id": "prompt-advanced",
+      "entry_type": "dialog",
+      "topics": [
+        "Prompt Engineering",
+        "结构化输出",
+        "Schema",
+        "Pydantic",
+        "Prisma",
+        "Few-Shot",
+        "Zero-Shot",
+        "temperature",
+        "top_p",
+        "Prompt Injection",
+        "python-dotenv",
+        "os.getenv",
+        "logging",
+        "LangChain",
+        "Chain",
+        "ainvoke",
+        "惰性单例",
+        "HTTPException",
+        "traceback",
+        "学习问题题库"
+      ],
+      "summary": "深入学习第 21 章 Prompt Engineering 进阶：明确本章是把 LLM 输出接入稳定工程系统的升级版；理解 Schema 作为声明式数据契约的跨语言思想，并新增编程语言基础笔记；澄清 Few-Shot 不是训练、任务提取器不是任务规划器；辨析 temperature/top_p 控制采样随机性而非直接控制听话程度；建立第三方库与 import 来源查找方法；理解 load_dotenv/os.getenv/os.environ 分工；掌握 LangChain chain 对象、ainvoke 执行链、Prompt 占位符填充、惰性单例缓存、logger、raise from 与 traceback；新增并同步 learning-question-capture skill 和三端学习困惑题库；生成本章试卷，下午醒来开始作答。",
+      "file_path": ".trae/memory/conversations/2026-06-26.md"
+    },
     {
       "id": "dialog-76",
       "date": "2026-06-25",

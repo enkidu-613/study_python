@@ -1,11 +1,11 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-06-24 after the AI Engineer roadmap review.
+Last updated from `.trae` on 2026-06-26 after Prompt Engineering advanced review and exam preparation.
 
 ## Current Stage
 
 - Current stage id: `prompt-advanced`
-- Current topic: advanced prompt engineering, structured output, output constraints, sampling parameters, and prompt-injection boundaries
+- Current topic: advanced prompt engineering, structured output, output constraints, sampling parameters, prompt-injection boundaries, LangChain chain execution, and engineering glue around environment variables/logging/errors
 - Current document: `md/21_Prompt_Engineering进阶.md` (newly created)
 - Status: in_progress
 - Previous stage: `pytest`, completed on 2026-06-24
@@ -29,6 +29,9 @@ The learner has completed:
 ## Latest History Summary
 
 Latest verified learning result:
+
+- Prompt Engineering advanced study covered Schema as a declarative data contract, Prompt + Pydantic double safety, Few-Shot vs training, task extraction vs planning, temperature/top_p sampling, Prompt Injection boundaries, dotenv/os.getenv, logger, lazy singleton chain caching, `ainvoke` execution flow, `raise from`, and traceback reading.
+- A chapter exam has been generated at `md/试卷/试卷_Prompt_Engineering进阶.md`; next action is to complete it after waking up and then request grading.
 
 - pytest project tests reached `8 passed` with one unrelated existing `extra_body` warning.
 - Initial pytest exam: 12.3/20.
