@@ -313,12 +313,12 @@ async def extract_task(request: TaskExtractionRequest) -> TaskExtractionResult:
 
 ### ⚠️ 常见错误
 
-| 错误 | 后果 | 正确做法 |
-|------|------|----------|
-| Prompt 没写字段契约 | `json_mode` 只保证尽量返回 JSON，字段含义仍可能偏 | 在 System Prompt 明确字段名、类型和枚举值 |
-| `Literal` 用 `str` 代替 | 模型返回"超级紧急"，代码没处理，下游崩溃 | 输出字段用 `Literal` 限定枚举值 |
-| 不设 `max_length` | 用户发 10 万字进来，Token 费用爆炸 | 输入字段加 `max_length` 限制 |
-| `with_structured_output` 忘传 Pydantic 类 | LangChain 不知道输出格式要求 | 第一个参数必须是你的输出 Schema 类 |
+| 错误                                     | 后果                                | 正确做法                         |
+| -------------------------------------- | --------------------------------- | ---------------------------- |
+| Prompt 没写字段契约                          | `json_mode` 只保证尽量返回 JSON，字段含义仍可能偏 | 在 System Prompt 明确字段名、类型和枚举值 |
+| `Literal` 用 `str` 代替                   | 模型返回"超级紧急"，代码没处理，下游崩溃             | 输出字段用 `Literal` 限定枚举值        |
+| 不设 `max_length`                        | 用户发 10 万字进来，Token 费用爆炸            | 输入字段加 `max_length` 限制        |
+| `with_structured_output` 忘传 Pydantic 类 | LangChain 不知道输出格式要求               | 第一个参数必须是你的输出 Schema 类        |
 
 ### 📋 速查表
 

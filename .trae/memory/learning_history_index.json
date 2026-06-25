@@ -1,7 +1,35 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-24T05:01:00+08:00",
+  "updated_at": "2026-06-25T04:40:00+08:00",
   "entries": [
+    {
+      "id": "dialog-76",
+      "date": "2026-06-25",
+      "title": "启动报错排查、TS/Python类型系统对比、LangChain ainvoke/ainvoke/管道模式/惰性单例/占位符深度解析、柯里化vs管道vs单例辨析",
+      "stage_id": "langchain-advanced",
+      "entry_type": "dialog",
+      "topics": [
+        "ModuleNotFoundError",
+        "Python路径",
+        "Literal",
+        "Enum",
+        "TypeScript",
+        "Pydantic",
+        "Field",
+        "LangChain",
+        "ainvoke",
+        "异步",
+        "惰性单例",
+        "全局缓存",
+        "ChatPromptTemplate",
+        "占位符",
+        "管道模式",
+        "柯里化",
+        "设计模式"
+      ],
+      "summary": "解决python app/main.py启动报错（ModuleNotFoundError），明确正确启动方式；对比TS字面量类型/Enum与Python Literal/enum.Enum的对应关系；澄清Field不是必填标记，必填取决于默认值；深度解析LangChain的ainvoke异步调用机制（同步get_task_extractor没问题，await的是发HTTP请求的ainvoke）；理解_task_extractor惰性单例模式（全局只创建1次，服务器生命周期复用）；掌握ChatPromptTemplate中{text}占位符通过ainvoke字典自动填充机制；辨析三种设计模式：柯里化（分批传参）≠管道组合（步骤串联|）≠惰性单例（全局缓存复用）。",
+      "file_path": ".trae/memory/conversations/2026-06-25.md"
+    },
     {
       "id": "dialog-75",
       "date": "2026-06-24",
