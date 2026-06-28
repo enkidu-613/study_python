@@ -1,7 +1,30 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-26T06:42:24+08:00",
+  "updated_at": "2026-06-28T01:45:17+08:00",
   "entries": [
+    {
+      "id": "dialog-78",
+      "date": "2026-06-28",
+      "title": "Prompt Engineering 进阶收尾、语法摩擦复盘与后续四章路线",
+      "stage_id": "ai-safety",
+      "entry_type": "dialog",
+      "topics": [
+        "Prompt Engineering",
+        "结构化输出",
+        "LangChain",
+        "ainvoke",
+        "Python语法",
+        "JavaScript习惯迁移",
+        "Schema契约",
+        "AI Safety",
+        "RAG Chunking",
+        "RAG Evaluation",
+        "AI Agent",
+        "课程规划"
+      ],
+      "summary": "完成第 21 章 Prompt Engineering 进阶收尾：将 JS/Python 语法摩擦与概念错误区分开，按用户判断把本章标记为有条件通过；保留 ainvoke({\"text\": text}) 为轻量复习点；澄清 Literal 省略、ChatDeepSeek 参数逗号/变量名和 Prompt 枚举契约不一致分别属于不同问题类型；确认下一章为 AI 安全与伦理，并规划后续四章为 AI 安全、RAG Chunking、RAG Evaluation、AI Agent 入门。",
+      "file_path": ".reasonix/memory/conversations/2026-06-28.md"
+    },
     {
       "id": "dialog-77",
       "date": "2026-06-26",

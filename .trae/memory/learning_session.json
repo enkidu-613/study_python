@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-26T06:42:24+08:00",
-  "stage_id": "prompt-advanced",
-  "phase": "paused",
-  "pending_action": "下午醒来完成 md/试卷/试卷_Prompt_Engineering进阶.md",
-  "context": "第 21 章 Prompt Engineering 进阶已完成主要讲解与多轮概念澄清；已生成本章试卷，答完后需要批改并决定补漏或进入下一章。",
+  "updated_at": "2026-06-28T02:05:00+08:00",
+  "stage_id": "ai-safety",
+  "phase": "teaching",
+  "pending_action": "阅读 md/22_AI安全与伦理.md 并完成本章检查点",
+  "context": "已创建第 22 章 AI 安全与伦理教学文档。重点：Prompt 不是安全边界、Schema 只校验结构、RAG 要先权限过滤再检索、工具调用必须服务端鉴权和确认。",
   "energy": null,
   "time_budget_minutes": null
 }

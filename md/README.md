@@ -52,6 +52,10 @@
 第19步: 19_Alembic数据库迁移.md → revision、upgrade/downgrade、autogenerate
     ↓
 第20步: 20_pytest单元测试.md → FastAPI TestClient、依赖覆盖、fixture
+    ↓
+第21步: 21_Prompt_Engineering进阶.md → 结构化输出、Few-Shot、采样参数
+    ↓
+第22步: 22_AI安全与伦理.md → Prompt Injection、权限边界、内容安全
 ```
 
 ---
@@ -508,6 +512,32 @@
   - 未认证/权限不足的401/403测试
 - **SSE 流式测试**:
   - `with client.stream(...) as response:` 上下文管理器
+
+---
+
+### [21_Prompt_Engineering进阶.md](./21_Prompt_Engineering进阶.md)
+**对应代码**: `app/routers/prompt.py`、`app/routers/my_prompt.py`
+
+- **结构化输出**: Prompt + Pydantic 双保险
+- **Schema 契约**: `Literal[...]`、`Field(...)`、字段枚举一致性
+- **Few-Shot**: 示例不是训练，只是本次上下文
+- **采样参数**: `temperature` / `top_p` 控制随机性，不控制听话程度
+- **LangChain Chain**: `prompt | llm.with_structured_output(...)`
+- **ainvoke 执行链**: 输入字典 → Prompt 填充 → LLM → JSON → Pydantic
+- **错误边界**: 用户请求体 422，上游/模型结构化失败 502
+
+---
+
+### [22_AI安全与伦理.md](./22_AI安全与伦理.md)
+**对应代码**: `app/routers/ai.py`、`app/routers/prompt.py`、`app/routers/rag.py`、`app/routers/auth.py`
+
+- **Prompt Injection**: 用户输入可能影响模型行为
+- **Prompt 不是安全边界**: `<user_text>` 只降低混淆，不是沙箱
+- **Schema 边界**: Pydantic 校验结构，不判断恶意意图
+- **RAG 安全**: 先权限过滤，再检索，再交给模型
+- **工具权限**: 模型只提出意图，服务端负责鉴权、确认和执行
+- **日志与隐私**: 记录风险元数据，不记录密钥和完整隐私内容
+- **最小安全壳**: 输入校验、风险检查、安全 Prompt、输出校验
   - 迭代`response.iter_lines()`获取流式块
   - 判断停止条件
 - **WebSocket 测试**:
@@ -569,6 +599,9 @@
 - [ ] 能用WebSocket实现房间广播和流式打断
 - [ ] 能用Alembic进行数据库迁移和回滚
 - [ ] 能用pytest写单元测试，理解fixture和依赖覆盖
+- [ ] 能用结构化输出把模型结果交给后端稳定处理
+- [ ] 能区分 Prompt、Schema、服务端权限分别能防什么
+- [ ] 能说明为什么 AI 接口不能只靠 Prompt 防越权
 
 ---
 
@@ -598,6 +631,7 @@
 | 19_Alembic数据库迁移.md | `alembic/` + `alembic.ini` | ⭐⭐⭐⭐ |
 | 20_pytest单元测试.md | `tests/` + `tests/conftest.py` | ⭐⭐⭐⭐ |
 | 21_Prompt_Engineering进阶.md | `app/routers/prompt.py` | ⭐⭐⭐⭐ |
+| 22_AI安全与伦理.md | `app/routers/ai.py` + `app/routers/prompt.py` + `app/routers/rag.py` + `app/routers/auth.py` | ⭐⭐⭐⭐ |
 
 > **📂 目录说明**：
 > - `app/` - 核心代码区（日常开发在这里）
@@ -685,10 +719,10 @@ def verify_token(token: str):
 
 ## 🚀 下一步学习方向
 
-完成本系列（0-20章）学习后，接下来的学习路径（已根据roadmap.sh重新规划）：
+完成本系列基础章节后，接下来的学习路径（已根据roadmap.sh重新规划）：
 
 ### AI 核心深入（当前优先级）
-1. **prompt-advanced**: 高级提示词工程（结构化输出、采样参数、Prompt Injection边界）
+1. **ai-safety**: AI安全与伦理（Prompt Injection、权限边界、内容安全）
 2. **rag-chunking**: RAG分块策略优化、混合检索、重排序
 3. **rag-evaluation**: RAG评估指标（RAGAS、Faithfulness）
 4. **ai-agents**: AI Agents基础（ReAct模式、Function Calling，手动实现优先）
@@ -710,7 +744,6 @@ def verify_token(token: str):
 - LlamaIndex
 - Fine-tuning基础（LoRA、QLoRA）
 - 多模态AI（图片理解、TTS、STT）
-- AI安全与伦理
 
 ---
 

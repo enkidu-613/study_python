@@ -1,14 +1,14 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-06-26 after Prompt Engineering advanced review and exam preparation.
+Last updated from `.trae` on 2026-06-28 after Prompt Engineering advanced completion.
 
 ## Current Stage
 
-- Current stage id: `prompt-advanced`
-- Current topic: advanced prompt engineering, structured output, output constraints, sampling parameters, prompt-injection boundaries, LangChain chain execution, and engineering glue around environment variables/logging/errors
-- Current document: `md/21_Prompt_Engineering进阶.md` (newly created)
+- Current stage id: `ai-safety`
+- Current topic: AI safety and ethics, including Prompt Injection, bias, content moderation, and safety best practices
+- Current document: `md/22_AI安全与伦理.md`
 - Status: in_progress
-- Previous stage: `pytest`, completed on 2026-06-24
+- Previous stage: `prompt-advanced`, completed on 2026-06-28
 
 ## Completed Core Path
 
@@ -25,13 +25,14 @@ The learner has completed:
 - WebSocket realtime communication: protocol upgrade, FastAPI WebSocket routes, Query token auth, room broadcast, SSE comparison, and interruptible AI stream control.
 - Alembic database migrations: Poetry command usage, `target_metadata = Base.metadata`, migration vs backup, `alembic_version`, `stamp head`, empty migration causes, clean initial migration, upgrade/downgrade flow.
 - pytest unit testing: Arrange/Act/Assert, TestClient, isolated test database, fixtures, dependency overrides, auth flow, WebSocket testing, SSE mock testing, and false-positive empty-test diagnosis.
+- Prompt Engineering advanced: structured output, Schema/Pydantic contracts, Few-Shot boundaries, temperature/top_p sampling, Prompt Injection boundaries, dotenv/os.getenv, logger, lazy chain caching, `with_structured_output`, `ainvoke`, and traceback/error wrapping.
 
 ## Latest History Summary
 
 Latest verified learning result:
 
-- Prompt Engineering advanced study covered Schema as a declarative data contract, Prompt + Pydantic double safety, Few-Shot vs training, task extraction vs planning, temperature/top_p sampling, Prompt Injection boundaries, dotenv/os.getenv, logger, lazy singleton chain caching, `ainvoke` execution flow, `raise from`, and traceback reading.
-- A chapter exam has been generated at `md/试卷/试卷_Prompt_Engineering进阶.md`; next action is to complete it after waking up and then request grading.
+- Prompt Engineering advanced was marked completed on 2026-06-28 by user judgment after exams and focused remediation. Remaining reminder: when switching from JavaScript habits to Python, LangChain `ainvoke` input should use a string key such as `{"text": text}`, not `{text: text}`.
+- The user clarified that some exam issues were syntax friction rather than conceptual failure: abbreviated `Literal[...]` meant intentional omission, and missing commas or typo red-lines in Python should be treated as IDE-catchable syntax friction. Future grading should distinguish conceptual errors, contract mismatches, and syntax friction.
 
 - pytest project tests reached `8 passed` with one unrelated existing `extra_body` warning.
 - Initial pytest exam: 12.3/20.
@@ -43,7 +44,7 @@ Latest verified learning result:
 
 ## Replanned Core Path
 
-1. `prompt-advanced` and `ai-safety`.
+1. `ai-safety`.
 2. `rag-chunking` and `rag-evaluation`.
 3. `ai-agents` using direct SDK/manual mechanics.
 4. `langchain-memory`, `langchain-agents`, and `langgraph`.
@@ -104,5 +105,7 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Complete the `prompt-advanced` chapter study, independent rewrite exercise, and checkpoint verification.
-2. Do not start Docker until the AI core, evaluation, and observability stages are complete.
+1. Prepare and study the AI safety chapter.
+2. Continue with RAG Chunking, then RAG Evaluation, then AI Agent basics.
+3. Keep the `ainvoke({"text": text})` Python dict-key reminder in lightweight review.
+4. Do not start Docker until the AI core, evaluation, and observability stages are complete.

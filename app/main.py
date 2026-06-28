@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 from contextlib import asynccontextmanager
-from app.routers import ai, todos, chat_memory, rag, langchain_rag, auth, websocket, prompt
+from app.routers import ai, todos, chat_memory, rag, langchain_rag, auth, websocket, prompt, my_prompt
 
 DESCRIPTION = """
 ## 🎯 Study Python — Python → AI 全栈学习项目
@@ -84,6 +84,7 @@ app.include_router(langchain_rag.router)
 app.include_router(auth.router)
 app.include_router(websocket.router)
 app.include_router(prompt.router)
+app.include_router(my_prompt.router)
 
 if __name__ == "__main__":
     print("服务器已启动，监听地址：http://127.0.0.1:8000")
