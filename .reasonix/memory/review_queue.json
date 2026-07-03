@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-28T01:44:00+08:00",
+  "updated_at": "2026-06-29T05:29:12+08:00",
   "interval_days": [
     1,
     3,
@@ -19,6 +19,72 @@
       "due_at": "2026-06-29",
       "status": "active",
       "source": "md/试卷/试卷_Prompt_Engineering进阶_补考2.md"
+    },
+    {
+      "id": "review-20260629-ai-safety-rag-permission-before-retrieval",
+      "stage_id": "ai-safety",
+      "topic": "RAG 权限过滤",
+      "prompt": "为什么不能先全库检索，再让模型自己保密？",
+      "answer": "无权限资料一旦进入 Prompt，就要假设模型可能说出来。RAG 安全顺序是先根据用户权限过滤文档，再检索，再交给模型。",
+      "interval_index": 0,
+      "due_at": "2026-06-30",
+      "status": "active",
+      "source": "md/试卷/试卷_AI安全与伦理.md"
+    },
+    {
+      "id": "review-20260629-ai-safety-safe-logging",
+      "stage_id": "ai-safety",
+      "topic": "AI 日志边界",
+      "prompt": "AI 接口日志可以记什么，不应该记什么？",
+      "answer": "可以记 user_id、route、risk_level、input_len、文档 ID 等元数据；不应该记 token、API Key、完整用户输入、完整隐私内容、系统提示词或文档全文。",
+      "interval_index": 0,
+      "due_at": "2026-06-30",
+      "status": "active",
+      "source": "md/试卷/试卷_AI安全与伦理.md"
+    },
+    {
+      "id": "review-20260703-rag-chunking-page-content-metadata",
+      "stage_id": "rag-chunking",
+      "topic": "page_content / vector / metadata 边界",
+      "prompt": "Chroma/LangChain 里 `page_content`、embedding vector、`metadata` 分别负责什么？",
+      "answer": "`page_content/document` 是送进 Embedding 模型的原文正文；embedding vector 是模型转换后的向量并由向量库保存；`metadata` 是标签，用于过滤、回查和展示来源。",
+      "interval_index": 0,
+      "due_at": "2026-07-04",
+      "status": "active",
+      "source": "md/试卷/试卷_RAG_Chunking策略.md"
+    },
+    {
+      "id": "review-20260703-rag-evaluation-one-variable",
+      "stage_id": "rag-evaluation",
+      "topic": "RAG 单变量调参",
+      "prompt": "RAG 回答不好时，为什么不应该同时改 chunk_size、n_results、Prompt 和 embedding 模型？",
+      "answer": "因为同时改多个变量会看不出是谁造成了变化。应先定位问题属于 retrieval、context 还是 answer，再固定其他条件，一次只改一个变量，并用同一组 eval cases 对比修改前后。",
+      "interval_index": 0,
+      "due_at": "2026-07-04",
+      "status": "active",
+      "source": "md/试卷/试卷_RAG_评估与指标.md"
+    },
+    {
+      "id": "review-20260704-ai-agents-required-level",
+      "stage_id": "ai-agents",
+      "topic": "Tool Schema required 层级",
+      "prompt": "Tool schema 里 `required` 应该放在哪一层？它和 `properties` 是什么关系？",
+      "answer": "`required` 和 `properties` 同级，都在 `parameters` 这个 object schema 里面。`properties` 描述有哪些参数，`required: [\"query\"]` 声明哪些参数必填。",
+      "interval_index": 0,
+      "due_at": "2026-07-05",
+      "status": "active",
+      "source": "md/试卷/试卷_AI_Agents基础.md"
+    },
+    {
+      "id": "review-20260704-ai-agents-tools-functions",
+      "stage_id": "ai-agents",
+      "topic": "TOOLS 与 TOOL_FUNCTIONS 边界",
+      "prompt": "`TOOLS` 和 `TOOL_FUNCTIONS` 为什么要分开？",
+      "answer": "`TOOLS` 是给模型看的工具说明书列表；`TOOL_FUNCTIONS` 是后端按工具名找到真实 Python 函数的映射。模型只生成 tool call，后端才根据映射执行函数。",
+      "interval_index": 0,
+      "due_at": "2026-07-05",
+      "status": "active",
+      "source": "md/试卷/试卷_AI_Agents基础.md"
     }
   ]
 }

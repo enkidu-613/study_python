@@ -1,7 +1,55 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-28T01:45:17+08:00",
+  "updated_at": "2026-07-03T07:50:57+08:00",
   "entries": [
+    {
+      "id": "dialog-80",
+      "date": "2026-07-03",
+      "title": "RAG Chunking 收口、RAG Evaluation 学习与考试通过",
+      "stage_id": "ai-agents",
+      "entry_type": "dialog",
+      "topics": [
+        "RAG Chunking",
+        "RAG Evaluation",
+        "Retrieval Evaluation",
+        "Context Evaluation",
+        "Answer Evaluation",
+        "context precision",
+        "context recall",
+        "faithfulness",
+        "groundedness",
+        "answer relevance",
+        "eval_cases",
+        "retrieval trace",
+        "chat_history",
+        "ChromaDB",
+        "LangChain",
+        "AI Agents"
+      ],
+      "summary": "完成第 23 章 RAG Chunking 策略收口：澄清 page_content/document、embedding vector、metadata 与 ChromaDB 存储边界；创建并学习第 24 章 RAG 评估与指标，掌握 retrieval/context/answer 三层评估、context precision/recall、faithfulness/groundedness、answer relevance、/search 与 /chat 的职责边界、retrieval trace 与普通对话历史区别、上下文太脏排查、余弦相似度过滤边界和 eval_cases 人工评估清单；第 24 章试卷 38/40 通过，学习计划切换到 ai-agents。",
+      "file_path": ".trae/memory/conversations/2026-07-03.md"
+    },
+    {
+      "id": "dialog-79",
+      "date": "2026-06-28",
+      "title": "Pydantic default_factory、Python 类实例化、字典解包与后续章节确认",
+      "stage_id": "ai-safety",
+      "entry_type": "dialog",
+      "topics": [
+        "Pydantic",
+        "Field",
+        "default_factory",
+        "可变默认值",
+        "类实例化",
+        "new关键字",
+        "BaseModel",
+        "字典解包",
+        "**",
+        "学习路线"
+      ],
+      "summary": "讲解 Field 中 default_factory 的作用（避免可变类型默认值共享陷阱），对比 default=[] 与 default_factory=list；确认后续 4 章路线（AI 安全 → RAG Chunking → RAG Evaluation → AI Agent）；澄清 Python 没有 new 关键字，类名加括号即实例化；演示 Pydantic BaseModel 的三种实例化方式（直接调用、** 字典解包、model_validate_json）；解释 ** 字典解包和 * 列表解包的含义。",
+      "file_path": ".trae/memory/conversations/2026-06-28.md"
+    },
     {
       "id": "dialog-78",
       "date": "2026-06-28",
@@ -23,7 +71,7 @@
         "课程规划"
       ],
       "summary": "完成第 21 章 Prompt Engineering 进阶收尾：将 JS/Python 语法摩擦与概念错误区分开，按用户判断把本章标记为有条件通过；保留 ainvoke({\"text\": text}) 为轻量复习点；澄清 Literal 省略、ChatDeepSeek 参数逗号/变量名和 Prompt 枚举契约不一致分别属于不同问题类型；确认下一章为 AI 安全与伦理，并规划后续四章为 AI 安全、RAG Chunking、RAG Evaluation、AI Agent 入门。",
-      "file_path": ".reasonix/memory/conversations/2026-06-28.md"
+      "file_path": ".trae/memory/conversations/2026-06-28.md"
     },
     {
       "id": "dialog-77",
@@ -54,7 +102,59 @@
         "学习问题题库"
       ],
       "summary": "深入学习第 21 章 Prompt Engineering 进阶：明确本章是把 LLM 输出接入稳定工程系统的升级版；理解 Schema 作为声明式数据契约的跨语言思想，并新增编程语言基础笔记；澄清 Few-Shot 不是训练、任务提取器不是任务规划器；辨析 temperature/top_p 控制采样随机性而非直接控制听话程度；建立第三方库与 import 来源查找方法；理解 load_dotenv/os.getenv/os.environ 分工；掌握 LangChain chain 对象、ainvoke 执行链、Prompt 占位符填充、惰性单例缓存、logger、raise from 与 traceback；新增并同步 learning-question-capture skill 和三端学习困惑题库；生成本章试卷，下午醒来开始作答。",
-      "file_path": ".reasonix/memory/conversations/2026-06-26.md"
+      "file_path": ".trae/memory/conversations/2026-06-26.md"
+    },
+    {
+      "id": "dialog-76",
+      "date": "2026-06-25",
+      "title": "启动报错排查、TS/Python类型系统对比、LangChain ainvoke/ainvoke/管道模式/惰性单例/占位符深度解析、柯里化vs管道vs单例辨析",
+      "stage_id": "langchain-advanced",
+      "entry_type": "dialog",
+      "topics": [
+        "ModuleNotFoundError",
+        "Python路径",
+        "Literal",
+        "Enum",
+        "TypeScript",
+        "Pydantic",
+        "Field",
+        "LangChain",
+        "ainvoke",
+        "异步",
+        "惰性单例",
+        "全局缓存",
+        "ChatPromptTemplate",
+        "占位符",
+        "管道模式",
+        "柯里化",
+        "设计模式"
+      ],
+      "summary": "解决python app/main.py启动报错（ModuleNotFoundError），明确正确启动方式；对比TS字面量类型/Enum与Python Literal/enum.Enum的对应关系；澄清Field不是必填标记，必填取决于默认值；深度解析LangChain的ainvoke异步调用机制（同步get_task_extractor没问题，await的是发HTTP请求的ainvoke）；理解_task_extractor惰性单例模式（全局只创建1次，服务器生命周期复用）；掌握ChatPromptTemplate中{text}占位符通过ainvoke字典自动填充机制；辨析三种设计模式：柯里化（分批传参）≠管道组合（步骤串联|）≠惰性单例（全局缓存复用）。",
+      "file_path": ".trae/memory/conversations/2026-06-25.md"
+    },
+    {
+      "id": "dialog-75",
+      "date": "2026-06-24",
+      "title": "项目结构重构为app/分包、移除兼容层、全文档同步、ChromaDB机制与Pydantic/ORM Base辨析",
+      "stage_id": "project-structure",
+      "entry_type": "dialog",
+      "topics": [
+        "项目重构",
+        "目录结构",
+        "app包",
+        "代码分层",
+        "兼容层",
+        "文档更新",
+        "ChromaDB",
+        "持久化",
+        "Pydantic",
+        "BaseModel",
+        "SQLAlchemy",
+        "ORM",
+        "关注点分离"
+      ],
+      "summary": "完成项目结构专业重构：核心代码移入app/包、路由统一命名、早期代码归档到archive/month1-python-basics/、实验代码移到playground/、test/改为tests/；先保留薄封装兼容层，全面测试（12个pytest全过）后移除兼容层；批量更新README.md、md/README.md、md/07_代码分层与模块化架构.md及12-21章核心文档路径；讲解ChromaDB本地持久化机制（两个RAG模块共享documents集合）；用ADHD友好方式辨析Pydantic BaseModel（数据校验，快递单）与SQLAlchemy Base（ORM表结构，仓库货架）的本质区别。",
+      "file_path": ".trae/memory/conversations/2026-06-24.md"
     },
     {
       "id": "dialog-74",
@@ -77,7 +177,7 @@
         "Docker"
       ],
       "summary": "pytest 阶段通过补考并标记完成；依据 roadmap.sh 重新判断测试与部署位置；明确 LangChain/LangGraph、Dify、n8n 的职责边界；将后续课程重排为提示词与安全、RAG 进阶、Agent、开源模型与多模态、评估与可观测性、最后产品化，并新增 LangGraph 与 n8n 阶段。",
-      "file_path": ".reasonix/memory/conversations/2026-06-24.md"
+      "file_path": ".trae/memory/conversations/2026-06-24.md"
     },
     {
       "id": "dialog-73",
@@ -99,7 +199,7 @@
         "考前准备"
       ],
       "summary": "完成 WebSocket 与 SSE mock 最小测试，澄清 with/self、media_type/Content-Type 和真实路由/模拟生成器边界；复盘缩进导致的空测试绿色与普通比较缺少 assert；完整运行 test/ 得到 8 passed；教程补充空测试陷阱。pytest 内容基本学完，考试通过前保持 in_progress。",
-      "file_path": ".reasonix/memory/conversations/2026-06-23.md"
+      "file_path": ".trae/memory/conversations/2026-06-23.md"
     },
     {
       "id": "dialog-72",
@@ -124,7 +224,7 @@
         "学习节奏"
       ],
       "summary": "深入理解 fixture、with、TestClient、lifespan、Depends 与中间件的职责边界；修复 Todo 局部 get_db 导致测试写入正式数据库的问题并验证隔离；澄清 module/APIRouter、as/is；第八关新增经验证的 SSE mock 最小测试。用户反馈本章偏慢，后续只完成 WebSocket 固定收发和一个 SSE mock 闭环后结束本章。",
-      "file_path": ".reasonix/memory/conversations/2026-06-23.md"
+      "file_path": ".trae/memory/conversations/2026-06-23.md"
     },
     {
       "id": "dialog-71",
@@ -148,7 +248,7 @@
         "__init__.py"
       ],
       "summary": "pytest 单元测试实战：ModuleNotFoundError 模块路径问题解决（pyproject.toml pythonpath 配置 vs 不推荐 test/__init__.py 的原因）；pyproject.toml 各部分作用详解；os.getenv 与环境变量；SQLite check_same_thread=False 多线程必需；conftest.py 缺少 get_db 导入修复；fixture 参数注入规则；APIRouter 不具备 get_db 属性的设计边界；auth 路由注册→登录→验证测试全部通过。",
-      "file_path": ".reasonix/memory/conversations/2026-06-23.md"
+      "file_path": ".trae/memory/conversations/2026-06-23.md"
     },
     {
       "id": "dialog-70",
@@ -168,7 +268,7 @@
         "历史归档"
       ],
       "summary": "Alembic 初考 13.7/20、补考 7.2/10 后，通过两个补救问题确认 migration/backup、空库 upgrade 前提、完整搬家工具边界；判定 Alembic 阶段通过；将 learning_plan 中 alembic 标记 completed，pytest 标记 in_progress；创建第20节教学文档 md/20_pytest单元测试.md。",
-      "file_path": ".reasonix/memory/conversations/2026-06-19.md"
+      "file_path": ".trae/memory/conversations/2026-06-19.md"
     },
     {
       "id": "dialog-69",
@@ -187,7 +287,7 @@
         "downgrade"
       ],
       "summary": "Alembic 实操第二部分：拼写错误 revsion；已有数据时新增 NOT NULL 字段导致 Cannot add a NOT NULL column with default value NULL；ORM 的 default 不等于数据库的 server_default；SQLite 不支持 ALTER COLUMN TYPE；完整演示开发环境删库重来五步流程，生成干净初始迁移 f21e75ca74bd_init.py；总结 upgrade/downgrade/current/history 常用命令。",
-      "file_path": ".reasonix/memory/conversations/2026-06-18.md"
+      "file_path": ".trae/memory/conversations/2026-06-18.md"
     },
     {
       "id": "dialog-68",
@@ -206,7 +306,7 @@
         "stamp head"
       ],
       "summary": "Alembic 实操全流程踩坑：poetry add 与 poetry install 的区别；Poetry 2.0+ 移除 shell 命令；alembic init 需用 poetry run；env.py 中 target_metadata = None 覆盖 Base.metadata 的陷阱；--autogenerate 因数据库已有表而生成空脚本的原理；Prisma 全量快照思维与 Alembic 差异对比思维的设计哲学差异；开发环境删库重来 vs 生产环境 stamp head 的两种方案。",
-      "file_path": ".reasonix/memory/conversations/2026-06-17.md"
+      "file_path": ".trae/memory/conversations/2026-06-17.md"
     },
     {
       "id": "dialog-67",
@@ -226,7 +326,7 @@
         "Python生态"
       ],
       "summary": "澄清 Alembic 不是 ORM，而是对应 Prisma Migrate；SQLAlchemy ORM 对应 Prisma Client；Django ORM + migrations 更像 Prisma 的一体化体验，FastAPI 项目主流组合是 SQLAlchemy + Alembic；对比 Django 和 FastAPI 的框架定位及生产使用场景；解释 Base.metadata 是 ORM 表结构总目录，不是数据、连接或查询器。",
-      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+      "file_path": ".trae/memory/conversations/2026-06-16.md"
     },
     {
       "id": "dialog-66",
@@ -246,7 +346,7 @@
         "autogenerate"
       ],
       "summary": "WebSocket 阶段考试通过后，将 websocket-realtime 标记为 completed；同步 .trae 与 .reasonix 学习计划；更新 .codex study_state；将 Alembic 标记为 in_progress；创建第19节教学文档 md/19_Alembic数据库迁移.md，围绕数据库结构的 Git、Revision、Upgrade、Downgrade、Autogenerate、target_metadata 和项目实战展开。",
-      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+      "file_path": ".trae/memory/conversations/2026-06-16.md"
     },
     {
       "id": "dialog-65",
@@ -266,7 +366,7 @@
         "comfortable-fast-learning-coach"
       ],
       "summary": "按学习 skill 创建并批改 WebSocket 初考、补考和二次补考；成绩从 14.25/20 到 7/8，再到 4.5/5，达到通过标准；复盘 HTTP Upgrade、Query(...) 必填、Sec-WebSocket-Key/Accept、Python != 与 JS !==、聊天室分房结构；将考试必须写入 md/试卷/ 的严格规则同步进 .codex/.trae/.reasonix 的 comfortable-fast-learning-coach skill。",
-      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+      "file_path": ".trae/memory/conversations/2026-06-16.md"
     },
     {
       "id": "dialog-64",
@@ -284,7 +384,7 @@
         "中文界面"
       ],
       "summary": "用户想在 Mac 上安装类似 EasyEffects 的 GUI 降噪工具；选择 Krisp，并通过 Homebrew 获取安装包后使用 macOS installer 完成安装，验证 /Applications/Krisp.app 存在并打开；发现 Krisp 不支持中文界面后，修正建议为中文用户优先使用 macOS 自带语音隔离，Krisp 作为第三方备选。",
-      "file_path": ".reasonix/memory/conversations/2026-06-16.md"
+      "file_path": ".trae/memory/conversations/2026-06-16.md"
     },
     {
       "id": "dialog-63",
@@ -307,7 +407,7 @@
         "多 worker 部署"
       ],
       "summary": "Redis/Postgres/Kafka 三组件概念对比；ConnectionManager 内存列表无法跨 worker 广播的原因；广播时不清理断开连接导致的崩溃与内存泄漏；AI 打断机制中 create_task/cancel/done/CancelledError/raise 的完整 asyncio 取消协议链；stream_ai_reply 为何没有 stop 参数。",
-      "file_path": ".reasonix/memory/conversations/2026-06-13.md"
+      "file_path": ".trae/memory/conversations/2026-06-13.md"
     },
     {
       "id": "dialog-62",
@@ -329,7 +429,7 @@
         "TestClient"
       ],
       "summary": "解释 Query(...) 表示从 URL 查询字符串读取必填参数；区分 HTTP/JWT 认证与 WebSocket 握手阶段认证；检查 ws_router.py 认证路由，修复 WebSocket 中错误使用 HTTPException 的问题，改为 websocket.close(code=4001, reason='token 错误')；排查 Hoppscotch 未显示 token 错误的原因，包括 token 参数拼写成 toekn 导致必填参数缺失，以及 close reason 不一定作为普通消息展示；TestClient 验证正确 token、错误 token、拼写错误三种情况。",
-      "file_path": ".reasonix/memory/conversations/2026-06-14.md"
+      "file_path": ".trae/memory/conversations/2026-06-14.md"
     },
     {
       "id": "dialog-61",
@@ -347,13 +447,13 @@
         "await"
       ],
       "summary": "安装open-websearch技能；DeepSeek SPA页面无法文本抓取；粘贴并归档281行对话全文；清理历史中非编程话题仅保留5类；WebSocket while True+await异步原理",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md"
+      "file_path": ".trae/memory/conversations/2026-06-12.md"
     },
     {
       "id": "dialog-60",
       "date": "2026-06-12",
       "title": "WebSocket while True 异步原理 + DeepSeek 多话题对话归档",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "websocket-realtime",
       "entry_type": "dialog",
       "topics": [
@@ -373,7 +473,7 @@
       "id": "dialog-59",
       "date": "2026-06-12",
       "title": "WebSocket 测试工具、ws vs wss 协议、MCP 探索",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "websocket-realtime",
       "entry_type": "dialog",
       "topics": [
@@ -411,13 +511,13 @@
         "WebSocket测试"
       ],
       "summary": "排查 WebSocket 不出现在 /docs 的原因：/ws/message 已注册为 APIWebSocketRoute，但 OpenAPI 不默认收录 WebSocket 协议路由，因此 Swagger 不展示；新增 /ws/message-docs 作为 HTTP 说明接口进入文档；修正 ws_router 注册说明与 tag 描述；将不标准的 async for message in websocket 改为 websocket.iter_text()，并解释其与 while True + receive_text() 的区别；TestClient 验证 WebSocket 收发通过。",
-      "file_path": ".reasonix/memory/conversations/2026-06-14.md"
+      "file_path": ".trae/memory/conversations/2026-06-14.md"
     },
     {
       "id": "dialog-56",
       "date": "2026-06-12",
       "title": "WebSocket 教学启动 + ADHD 教学原则升级 + 教程编写",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "websocket-realtime",
       "entry_type": "dialog",
       "topics": [
@@ -439,7 +539,7 @@
       "id": "dialog-55",
       "date": "2026-06-12",
       "title": "SHA-256/黑名单代码清理/身份验证机制全面问答",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "jwt-auth",
       "entry_type": "dialog",
       "topics": [
@@ -465,7 +565,7 @@
       "id": "dialog-54",
       "date": "2026-06-12",
       "title": "JWT 黑名单机制与 Token 验证深度问答",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "jwt-auth",
       "entry_type": "dialog",
       "topics": [
@@ -486,7 +586,7 @@
       "id": "dialog-53",
       "date": "2026-06-12",
       "title": "JWT 认证完整教学（4关理论+4步编码+Swagger/CORS+测试）+ 技能升级为试卷模式 + 文档ADHD重写",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "jwt-auth",
       "entry_type": "dialog",
       "topics": [
@@ -514,7 +614,7 @@
       "id": "dialog-52",
       "date": "2026-06-12",
       "title": "bcrypt 密码验证机制与 FastAPI Depends 深度讲解",
-      "file_path": ".reasonix/memory/conversations/2026-06-12.md",
+      "file_path": ".trae/memory/conversations/2026-06-12.md",
       "stage_id": "jwt-auth",
       "entry_type": "dialog",
       "topics": [
@@ -535,7 +635,7 @@
       "id": "dialog-51",
       "date": "2026-06-11",
       "title": "学习计划审计与 AI 应用路线精简",
-      "file_path": ".reasonix/memory/conversations/2026-06-11.md",
+      "file_path": ".trae/memory/conversations/2026-06-11.md",
       "stage_id": "jwt-auth",
       "entry_type": "dialog",
       "topics": [
@@ -554,7 +654,7 @@
       "id": "dialog-50",
       "date": "2026-06-10",
       "title": "async 错题复习检测与 isinstance/Future 深入",
-      "file_path": ".reasonix/memory/conversations/2026-06-10.md",
+      "file_path": ".trae/memory/conversations/2026-06-10.md",
       "stage_id": "async-deep",
       "entry_type": "dialog",
       "topics": [
@@ -572,7 +672,7 @@
       "id": "dialog-49",
       "date": "2026-06-10",
       "title": "Python asyncio 三种协程对象与并发模式深入",
-      "file_path": ".reasonix/memory/conversations/2026-06-10.md",
+      "file_path": ".trae/memory/conversations/2026-06-10.md",
       "stage_id": "async-deep",
       "entry_type": "dialog",
       "topics": [
@@ -593,7 +693,7 @@
       "id": "dialog-48",
       "date": "2026-06-08",
       "title": "Python async 与 JavaScript async 深度对比",
-      "file_path": ".reasonix/memory/conversations/2026-06-08.md",
+      "file_path": ".trae/memory/conversations/2026-06-08.md",
       "stage_id": "async-deep",
       "entry_type": "dialog",
       "topics": [
@@ -612,7 +712,7 @@
       "id": "dialog-47",
       "date": "2026-06-06",
       "title": "错题复习与掌握度升级 + Reasonix 技能开发",
-      "file_path": ".reasonix/memory/conversations/2026-06-06.md",
+      "file_path": ".trae/memory/conversations/2026-06-06.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -634,7 +734,7 @@
       "id": "dialog-46",
       "date": "2026-06-05",
       "title": "LangChain 底层原理深度追问 + 抽象类与单例模式补漏",
-      "file_path": ".reasonix/memory/conversations/2026-06-05.md",
+      "file_path": ".trae/memory/conversations/2026-06-05.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -655,7 +755,7 @@
       "id": "dialog-45",
       "date": "2026-06-05",
       "title": "LangChain 教学文档更新 + 代码逐行深度解析",
-      "file_path": ".reasonix/memory/conversations/2026-06-05.md",
+      "file_path": ".trae/memory/conversations/2026-06-05.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -676,7 +776,7 @@
       "id": "dialog-44",
       "date": "2026-06-04",
       "title": "代码抽象重构 + MPS 硬件加速 + route handover",
-      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -695,7 +795,7 @@
       "id": "dialog-43",
       "date": "2026-06-04",
       "title": "配置集中化 + 本地 Embedding 部署 + lifespan 预加载 + ChromaDB 迁移",
-      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -717,7 +817,7 @@
       "id": "dialog-42",
       "date": "2026-06-04",
       "title": "RAG 检索修复 + LangChain 深度思考攻克 + 响应包装 + tech-search skill",
-      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -737,7 +837,7 @@
       "id": "milestone-langchain-complete",
       "date": "2026-06-04",
       "title": "LangChain 集成阶段完成，推进到异步编程深入",
-      "file_path": ".reasonix/memory/learning_plan.json",
+      "file_path": ".trae/memory/learning_plan.json",
       "stage_id": "langchain",
       "entry_type": "milestone",
       "topics": [
@@ -752,7 +852,7 @@
       "id": "dialog-41",
       "date": "2026-06-04",
       "title": "LangChain RAG 路由完整重写与代码深度讲解",
-      "file_path": ".reasonix/memory/conversations/2026-06-04.md",
+      "file_path": ".trae/memory/conversations/2026-06-04.md",
       "stage_id": "langchain",
       "entry_type": "dialog",
       "topics": [
@@ -771,7 +871,7 @@
       "id": "milestone-roadmap-gap-analysis",
       "date": "2026-06-03",
       "title": "roadmap.sh AI Engineer 查缺补漏计划制定",
-      "file_path": ".reasonix/memory/roadmap查缺补漏计划.md",
+      "file_path": ".trae/memory/roadmap查缺补漏计划.md",
       "stage_id": "langchain",
       "entry_type": "milestone",
       "topics": [
@@ -786,7 +886,7 @@
       "id": "milestone-langchain-start",
       "date": "2026-06-03",
       "title": "进入下一阶段：LangChain 集成",
-      "file_path": ".reasonix/memory/learning_plan.json",
+      "file_path": ".trae/memory/learning_plan.json",
       "stage_id": "langchain",
       "entry_type": "milestone",
       "topics": [
@@ -801,7 +901,7 @@
       "id": "milestone-context-window-start",
       "date": "2026-06-03",
       "title": "进入下一阶段：上下文窗口管理",
-      "file_path": ".reasonix/memory/learning_plan.json",
+      "file_path": ".trae/memory/learning_plan.json",
       "stage_id": "rag-context-window",
       "entry_type": "milestone",
       "topics": [
@@ -815,7 +915,7 @@
       "id": "dialog-29",
       "date": "2026-06-02",
       "title": "DocumentIn source 参数用途解析",
-      "file_path": ".reasonix/memory/conversations/2026-06-02.md",
+      "file_path": ".trae/memory/conversations/2026-06-02.md",
       "stage_id": "rag-test-run",
       "entry_type": "dialog",
       "topics": [
@@ -830,7 +930,7 @@
       "id": "milestone-test-run",
       "date": "2026-06-02",
       "title": "RAG 闭环测试跑通",
-      "file_path": ".reasonix/memory/conversations/2026-06-02.md",
+      "file_path": ".trae/memory/conversations/2026-06-02.md",
       "stage_id": "rag-test-run",
       "entry_type": "milestone",
       "topics": [
@@ -844,7 +944,7 @@
       "id": "dialog-27",
       "date": "2026-06-02",
       "title": "StreamingResponse 流式传输原理深度解析",
-      "file_path": ".reasonix/memory/conversations/2026-06-02.md",
+      "file_path": ".trae/memory/conversations/2026-06-02.md",
       "stage_id": "rag-closed-loop",
       "entry_type": "dialog",
       "topics": [
@@ -861,7 +961,7 @@
       "id": "dialog-26",
       "date": "2026-05-31",
       "title": "RAG 闭环章节掌握度测试",
-      "file_path": ".reasonix/memory/conversations/2026-05-31.md",
+      "file_path": ".trae/memory/conversations/2026-05-31.md",
       "stage_id": "rag-closed-loop",
       "entry_type": "dialog",
       "topics": [
@@ -875,7 +975,7 @@
       "id": "dialog-25",
       "date": "2026-05-31",
       "title": "BaseModel 与 SQLAlchemy Base 辨析",
-      "file_path": ".reasonix/memory/conversations/2026-05-31.md",
+      "file_path": ".trae/memory/conversations/2026-05-31.md",
       "stage_id": "rag-closed-loop",
       "entry_type": "dialog",
       "topics": [
@@ -890,7 +990,7 @@
       "id": "dialog-24",
       "date": "2026-05-31",
       "title": "RAG 闭环核心代码深度讲解",
-      "file_path": ".reasonix/memory/conversations/2026-05-31.md",
+      "file_path": ".trae/memory/conversations/2026-05-31.md",
       "stage_id": "rag-closed-loop",
       "entry_type": "dialog",
       "topics": [
@@ -905,7 +1005,7 @@
       "id": "dialog-23",
       "date": "2026-05-29",
       "title": "对话历史归档规则制定与文件重命名",
-      "file_path": ".reasonix/memory/conversations/2026-05-29.md",
+      "file_path": ".trae/memory/conversations/2026-05-29.md",
       "stage_id": "rag-dual-storage",
       "entry_type": "dialog",
       "topics": [
@@ -918,7 +1018,7 @@
       "id": "dialog-22",
       "date": "2026-05-29",
       "title": "DocumentIn / DocumentChunk 模型问答",
-      "file_path": ".reasonix/memory/conversations/2026-05-29.md",
+      "file_path": ".trae/memory/conversations/2026-05-29.md",
       "stage_id": "rag-dual-storage",
       "entry_type": "dialog",
       "topics": [
@@ -932,7 +1032,7 @@
       "id": "dialog-21",
       "date": "2026-05-28",
       "title": "FastAPI + Chroma 最小原型",
-      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "file_path": ".trae/memory/conversations/2026-05-28.md",
       "stage_id": "rag-fastapi-chroma",
       "entry_type": "dialog",
       "topics": [
@@ -946,7 +1046,7 @@
       "id": "dialog-20",
       "date": "2026-05-28",
       "title": "双存储架构掌握度测试与错题本建立",
-      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "file_path": ".trae/memory/conversations/2026-05-28.md",
       "stage_id": "rag-dual-storage",
       "entry_type": "dialog",
       "topics": [
@@ -960,7 +1060,7 @@
       "id": "dialog-19",
       "date": "2026-05-28",
       "title": "余弦距离与语义检索细节 Q&A",
-      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "file_path": ".trae/memory/conversations/2026-05-28.md",
       "stage_id": "rag-dual-storage",
       "entry_type": "dialog",
       "topics": [
@@ -974,7 +1074,7 @@
       "id": "dialog-18",
       "date": "2026-05-28",
       "title": "双存储架构学习",
-      "file_path": ".reasonix/memory/conversations/2026-05-28.md",
+      "file_path": ".trae/memory/conversations/2026-05-28.md",
       "stage_id": "rag-dual-storage",
       "entry_type": "dialog",
       "topics": [
@@ -989,7 +1089,7 @@
       "id": "dialog-17",
       "date": "2026-05-24",
       "title": "Embedding Playground 实验教学",
-      "file_path": ".reasonix/memory/conversations/2026-05-24.md",
+      "file_path": ".trae/memory/conversations/2026-05-24.md",
       "stage_id": "rag-embedding-exp",
       "entry_type": "dialog",
       "topics": [
@@ -1004,7 +1104,7 @@
       "id": "dialog-16",
       "date": "2026-05-24",
       "title": "ChromaDB 实战教学",
-      "file_path": ".reasonix/memory/conversations/2026-05-24.md",
+      "file_path": ".trae/memory/conversations/2026-05-24.md",
       "stage_id": "rag-chromadb",
       "entry_type": "dialog",
       "topics": [
@@ -1019,7 +1119,7 @@
       "id": "dialog-15",
       "date": "2026-05-21",
       "title": "余弦相似度数学原理深度对话",
-      "file_path": ".reasonix/memory/conversations/2026-05-21.md",
+      "file_path": ".trae/memory/conversations/2026-05-21.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1033,7 +1133,7 @@
       "id": "dialog-14",
       "date": "2026-05-21",
       "title": "向量与余弦相似度数学基础",
-      "file_path": ".reasonix/memory/conversations/2026-05-21.md",
+      "file_path": ".trae/memory/conversations/2026-05-21.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1047,7 +1147,7 @@
       "id": "dialog-13",
       "date": "2026-05-21",
       "title": "余弦相似度公式深度理解",
-      "file_path": ".reasonix/memory/conversations/2026-05-21.md",
+      "file_path": ".trae/memory/conversations/2026-05-21.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1062,7 +1162,7 @@
       "id": "dialog-12",
       "date": "2026-05-19",
       "title": "ModelScope API 配置与 Embedding 实践",
-      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "file_path": ".trae/memory/conversations/2026-05-19.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1076,7 +1176,7 @@
       "id": "dialog-11",
       "date": "2026-05-19",
       "title": "余弦相似度深度讲解",
-      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "file_path": ".trae/memory/conversations/2026-05-19.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1089,7 +1189,7 @@
       "id": "dialog-10",
       "date": "2026-05-19",
       "title": "RAG 入门第一步与包管理器偏好",
-      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "file_path": ".trae/memory/conversations/2026-05-19.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1103,7 +1203,7 @@
       "id": "dialog-9",
       "date": "2026-05-19",
       "title": "全栈 AI 技能树整合",
-      "file_path": ".reasonix/memory/conversations/2026-05-19.md",
+      "file_path": ".trae/memory/conversations/2026-05-19.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1117,7 +1217,7 @@
       "id": "dialog-8",
       "date": "2026-05-14",
       "title": "RAG 向量数据库学习规划",
-      "file_path": ".reasonix/memory/conversations/2026-05-14.md",
+      "file_path": ".trae/memory/conversations/2026-05-14.md",
       "stage_id": "rag-embedding",
       "entry_type": "dialog",
       "topics": [
@@ -1131,7 +1231,7 @@
       "id": "dialog-7",
       "date": "2024",
       "title": "创建记忆结构",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "code-layering",
       "entry_type": "dialog",
       "topics": [
@@ -1144,7 +1244,7 @@
       "id": "dialog-6",
       "date": "2024",
       "title": "APIRouter 补充说明",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "code-layering",
       "entry_type": "dialog",
       "topics": [
@@ -1157,7 +1257,7 @@
       "id": "dialog-5",
       "date": "2024",
       "title": "代码分层文档",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "code-layering",
       "entry_type": "dialog",
       "topics": [
@@ -1170,7 +1270,7 @@
       "id": "dialog-4",
       "date": "2024",
       "title": "创建学习文档",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "fastapi-basics",
       "entry_type": "dialog",
       "topics": [
@@ -1184,7 +1284,7 @@
       "id": "dialog-3",
       "date": "2024",
       "title": "IoC/DI 深入讲解",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "fastapi-orm",
       "entry_type": "dialog",
       "topics": [
@@ -1199,7 +1299,7 @@
       "id": "dialog-2",
       "date": "2024",
       "title": "详细注释版本",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "fastapi-orm",
       "entry_type": "dialog",
       "topics": [
@@ -1212,7 +1312,7 @@
       "id": "dialog-1",
       "date": "2024",
       "title": "注释改进",
-      "file_path": ".reasonix/memory/conversations/2024.md",
+      "file_path": ".trae/memory/conversations/2024.md",
       "stage_id": "fastapi-orm",
       "entry_type": "dialog",
       "topics": [

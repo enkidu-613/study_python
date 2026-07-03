@@ -1,14 +1,14 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-06-28 after Prompt Engineering advanced completion.
+Last updated from `.trae` on 2026-07-04 after AI Agents basics completion.
 
 ## Current Stage
 
-- Current stage id: `ai-safety`
-- Current topic: AI safety and ethics, including Prompt Injection, bias, content moderation, and safety best practices
-- Current document: `md/22_AI安全与伦理.md`
+- Current stage id: `function-calling-loop`
+- Current topic: Function Calling execution loop: parse tool call, execute backend tool, return tool output to model
+- Current document: `md/26_Function_Calling执行Loop.md`
 - Status: in_progress
-- Previous stage: `prompt-advanced`, completed on 2026-06-28
+- Previous stage: `ai-agents`, completed on 2026-07-04 with exam score 96/100
 
 ## Completed Core Path
 
@@ -26,6 +26,10 @@ The learner has completed:
 - Alembic database migrations: Poetry command usage, `target_metadata = Base.metadata`, migration vs backup, `alembic_version`, `stamp head`, empty migration causes, clean initial migration, upgrade/downgrade flow.
 - pytest unit testing: Arrange/Act/Assert, TestClient, isolated test database, fixtures, dependency overrides, auth flow, WebSocket testing, SSE mock testing, and false-positive empty-test diagnosis.
 - Prompt Engineering advanced: structured output, Schema/Pydantic contracts, Few-Shot boundaries, temperature/top_p sampling, Prompt Injection boundaries, dotenv/os.getenv, logger, lazy chain caching, `with_structured_output`, `ainvoke`, and traceback/error wrapping.
+- AI safety and ethics: Prompt is not a security boundary, Schema validates structure not intent, RAG requires permission filtering before retrieval, tool execution requires server-side authorization and confirmation, and logs should record events/metadata rather than secrets or full private content.
+- RAG Chunking strategy: chunk size, overlap, recursive splitting, Chinese separators, page_content/document vs embedding vector vs metadata, and Chroma vector storage under `chroma_db/`.
+- RAG Evaluation and metrics: retrieval/context/answer three-layer evaluation, context precision/recall, faithfulness/groundedness, answer relevance, `/search` vs `/chat`, retrieval trace vs chat history, and single-variable RAG tuning.
+- AI Agents basics: Agent = LLM + Tools + Loop + Safety, Tool/Tool Schema/Tool Call/Tool Output boundaries, Function Calling as tool-call generation rather than direct execution, minimal Agent Loop, and server-side safety boundaries for high-risk tools.
 
 ## Latest History Summary
 
@@ -33,6 +37,12 @@ Latest verified learning result:
 
 - Prompt Engineering advanced was marked completed on 2026-06-28 by user judgment after exams and focused remediation. Remaining reminder: when switching from JavaScript habits to Python, LangChain `ainvoke` input should use a string key such as `{"text": text}`, not `{text: text}`.
 - The user clarified that some exam issues were syntax friction rather than conceptual failure: abbreviated `Literal[...]` meant intentional omission, and missing commas or typo red-lines in Python should be treated as IDE-catchable syntax friction. Future grading should distinguish conceptual errors, contract mismatches, and syntax friction.
+- AI safety exam passed with 34/40 on 2026-06-29. Lightweight review points: RAG must filter by permission before retrieval, and logs must not store token/API Key/full user input/private content.
+- RAG Chunking exam scored 33/40 on 2026-07-03. The chapter is passed but needs one focused repair before completion: distinguish `page_content/document` as the text sent to Embedding, the vector as the model-generated representation stored by the vector database, and `metadata` as labels for filtering/back-reference.
+- After follow-up teaching, the user understood that LangChain auto-handles vector generation/storage via `add_documents()` and the configured `embedding_function`; the RAG Chunking stage is complete and the next stage is RAG Evaluation.
+- RAG Evaluation exam scored 38/40 on 2026-07-03 and passed. Minor review point: RAG tuning should first locate the failing layer, then change one variable at a time and compare with the same eval cases.
+- AI Agents basics exam scored 96/100 on 2026-07-04 after grading correction and passed. Minor review points: `required` and `properties` are siblings under `parameters`, and `TOOLS` is model-facing while `TOOL_FUNCTIONS` is backend-facing.
+- The RAG Evaluation conversation was archived as `dialog-80` on 2026-07-03 and synced across `.trae`, `.reasonix`, and `.codex`.
 
 - pytest project tests reached `8 passed` with one unrelated existing `extra_body` warning.
 - Initial pytest exam: 12.3/20.
@@ -105,7 +115,8 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Prepare and study the AI safety chapter.
-2. Continue with RAG Chunking, then RAG Evaluation, then AI Agent basics.
-3. Keep the `ainvoke({"text": text})` Python dict-key reminder in lightweight review.
+1. Read `md/26_Function_Calling执行Loop.md`.
+2. Complete the bridge checkpoints: parse tool call, find `TOOL_FUNCTIONS`, execute the function, return tool output to the model, then get final answer.
+3. Then enter `langchain-memory`.
+4. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.
 4. Do not start Docker until the AI core, evaluation, and observability stages are complete.

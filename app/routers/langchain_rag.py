@@ -78,8 +78,12 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 
 def estimate_tokens(text: str, model: str = "cl100k_base") -> int:
-    encoding = tiktoken.get_encoding(model)
-    return len(encoding.encode(text))
+    try:
+        encoding = tiktoken.get_encoding(model)
+        return len(encoding.encode(text))
+    except Exception:
+        # 网络不可达时回退到字符估算（中文约 1 token ≈ 2 字符，英文约 1 token ≈ 4 字符）
+        return len(text) // 2
 
 
 def format_docs(docs) -> str:

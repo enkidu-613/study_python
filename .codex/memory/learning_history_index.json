@@ -1,7 +1,34 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-28T01:45:17+08:00",
+  "updated_at": "2026-07-03T07:50:57+08:00",
   "entries": [
+    {
+      "id": "dialog-80",
+      "date": "2026-07-03",
+      "title": "RAG Chunking 收口、RAG Evaluation 学习与考试通过",
+      "stage_id": "ai-agents",
+      "entry_type": "dialog",
+      "topics": [
+        "RAG Chunking",
+        "RAG Evaluation",
+        "Retrieval Evaluation",
+        "Context Evaluation",
+        "Answer Evaluation",
+        "context precision",
+        "context recall",
+        "faithfulness",
+        "groundedness",
+        "answer relevance",
+        "eval_cases",
+        "retrieval trace",
+        "chat_history",
+        "ChromaDB",
+        "LangChain",
+        "AI Agents"
+      ],
+      "summary": "完成第 23 章 RAG Chunking 策略收口：澄清 page_content/document、embedding vector、metadata 与 ChromaDB 存储边界；创建并学习第 24 章 RAG 评估与指标，掌握 retrieval/context/answer 三层评估、context precision/recall、faithfulness/groundedness、answer relevance、/search 与 /chat 的职责边界、retrieval trace 与普通对话历史区别、上下文太脏排查、余弦相似度过滤边界和 eval_cases 人工评估清单；第 24 章试卷 38/40 通过，学习计划切换到 ai-agents。",
+      "file_path": ".codex/memory/conversations/2026-07-03.md"
+    },
     {
       "id": "dialog-78",
       "date": "2026-06-28",

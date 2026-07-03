@@ -56,6 +56,14 @@
 第21步: 21_Prompt_Engineering进阶.md → 结构化输出、Few-Shot、采样参数
     ↓
 第22步: 22_AI安全与伦理.md → Prompt Injection、权限边界、内容安全
+    ↓
+第23步: 23_RAG_Chunking策略.md → chunk_size、overlap、递归切分、metadata
+    ↓
+第24步: 24_RAG_评估与指标.md → retrieval、context、answer 三层评估
+    ↓
+第25步: 25_AI_Agents基础.md → Tool、Function Calling、ReAct、Agent Loop
+    ↓
+第26步: 26_Function_Calling执行Loop.md → tool call、后端执行、tool output 回传
 ```
 
 ---
@@ -538,16 +546,19 @@
 - **工具权限**: 模型只提出意图，服务端负责鉴权、确认和执行
 - **日志与隐私**: 记录风险元数据，不记录密钥和完整隐私内容
 - **最小安全壳**: 输入校验、风险检查、安全 Prompt、输出校验
-  - 迭代`response.iter_lines()`获取流式块
-  - 判断停止条件
-- **WebSocket 测试**:
-  - `with client.websocket_connect(...) as websocket:`
-  - `websocket.send_text()` / `receive_text()`
-- **常见坑点**:
-  - 空测试函数会假阳性通过（一定要有assert）
-  - 异步生成器fixture的依赖覆盖对象身份问题
-  - 测试顺序依赖（测试之间不该互相影响）
-- **测试运行**: `pytest -v` 详细输出，`pytest test_file.py::test_func` 指定测试
+
+---
+
+### [23_RAG_Chunking策略.md](./23_RAG_Chunking策略.md)
+**对应代码**: `app/routers/rag.py`、`app/routers/langchain_rag.py`
+
+- **Chunk 心智模型**: chunk 是向量检索的最小语义单位
+- **参数边界**: `chunk_size` 控制一块多大，`chunk_overlap` 控制边界上下文
+- **手搓切片对比**: 固定长度切片容易切断句子
+- **递归字符切分**: `RecursiveCharacterTextSplitter` 尽量保留段落、句子和中文标点边界
+- **中文 separators**: `。`、`！`、`？`、`，` 比只靠空格更适合中文文档
+- **metadata 设计**: `document_id`、`chunk_index`、`title`、`source` 用于回查、过滤和引用
+- **调参方法**: 一次只改一个变量，用检索命中和 chunk 可读性验证
 
 ---
 
@@ -632,6 +643,7 @@
 | 20_pytest单元测试.md | `tests/` + `tests/conftest.py` | ⭐⭐⭐⭐ |
 | 21_Prompt_Engineering进阶.md | `app/routers/prompt.py` | ⭐⭐⭐⭐ |
 | 22_AI安全与伦理.md | `app/routers/ai.py` + `app/routers/prompt.py` + `app/routers/rag.py` + `app/routers/auth.py` | ⭐⭐⭐⭐ |
+| 23_RAG_Chunking策略.md | `app/routers/rag.py` + `app/routers/langchain_rag.py` | ⭐⭐⭐⭐ |
 
 > **📂 目录说明**：
 > - `app/` - 核心代码区（日常开发在这里）
@@ -722,14 +734,13 @@ def verify_token(token: str):
 完成本系列基础章节后，接下来的学习路径（已根据roadmap.sh重新规划）：
 
 ### AI 核心深入（当前优先级）
-1. **ai-safety**: AI安全与伦理（Prompt Injection、权限边界、内容安全）
-2. **rag-chunking**: RAG分块策略优化、混合检索、重排序
-3. **rag-evaluation**: RAG评估指标（RAGAS、Faithfulness）
-4. **ai-agents**: AI Agents基础（ReAct模式、Function Calling，手动实现优先）
-5. **langchain-memory & agents**: LangChain对话记忆、工具调用
-6. **langgraph**: LangGraph工作流
-7. **dify**: Dify平台实战（可视化对比）
-8. **llm-evaluation & observability**: LLM评估、LangSmith/Langfuse可观测性
+1. **rag-chunking**: RAG分块策略优化、chunk_size、overlap、递归切分
+2. **rag-evaluation**: RAG评估指标（RAGAS、Faithfulness）
+3. **ai-agents**: AI Agents基础（ReAct模式、Function Calling，手动实现优先）
+4. **langchain-memory & agents**: LangChain对话记忆、工具调用
+5. **langgraph**: LangGraph工作流
+6. **dify**: Dify平台实战（可视化对比）
+7. **llm-evaluation & observability**: LLM评估、LangSmith/Langfuse可观测性
 
 ### 全栈补全（暂缓，AI核心后再做）
 9. **docker-deploy**: Docker部署、CI/CD

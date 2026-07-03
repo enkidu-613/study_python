@@ -401,9 +401,9 @@
       "id": "ai-safety",
       "name": "AI 安全与伦理",
       "description": "Prompt Injection、Bias、Content Moderation、Safety Best Practices",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-06-03",
-      "completed_at": null,
+      "completed_at": "2026-06-29",
       "documents": [
         "md/22_AI安全与伦理.md"
       ],
@@ -418,10 +418,12 @@
       "id": "rag-chunking",
       "name": "RAG Chunking 策略",
       "description": "分块策略、重叠窗口、语义分块、递归字符拆分",
-      "status": "pending",
+      "status": "completed",
       "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
+      "completed_at": "2026-07-03",
+      "documents": [
+        "md/23_RAG_Chunking策略.md"
+      ],
       "dependencies": [
         "prompt-advanced",
         "langchain"
@@ -435,10 +437,12 @@
       "id": "rag-evaluation",
       "name": "RAG 评估与指标",
       "description": "RAGAS、Faithfulness、Answer Relevance、Context Precision",
-      "status": "pending",
+      "status": "completed",
       "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
+      "completed_at": "2026-07-03",
+      "documents": [
+        "md/24_RAG_评估与指标.md"
+      ],
       "dependencies": [
         "rag-chunking"
       ],
@@ -451,10 +455,12 @@
       "id": "ai-agents",
       "name": "AI Agents 基础",
       "description": "先用直接 SDK/手动方式理解 ReAct、Function Calling、Tools 与 Agent 循环",
-      "status": "pending",
+      "status": "completed",
       "created_at": "2026-06-03",
-      "completed_at": null,
-      "documents": [],
+      "completed_at": "2026-07-04",
+      "documents": [
+        "md/25_AI_Agents基础.md"
+      ],
       "dependencies": [
         "prompt-advanced",
         "rag-evaluation"
@@ -466,6 +472,25 @@
       ]
     },
     {
+      "id": "function-calling-loop",
+      "name": "Function Calling 执行 Loop",
+      "description": "手写最小 tool call 执行链路：解析参数、查找函数、执行工具、回传 tool output",
+      "status": "in_progress",
+      "created_at": "2026-07-04",
+      "completed_at": null,
+      "documents": [
+        "md/26_Function_Calling执行Loop.md"
+      ],
+      "dependencies": [
+        "ai-agents"
+      ],
+      "roadmap_tags": [
+        "AI Agents",
+        "Function Calling",
+        "Tool Calling"
+      ]
+    },
+    {
       "id": "langchain-memory",
       "name": "LangChain 对话记忆",
       "description": "短期消息历史、长期记忆、状态持久化与上下文注入",
@@ -474,7 +499,7 @@
       "completed_at": null,
       "documents": [],
       "dependencies": [
-        "ai-agents"
+        "function-calling-loop"
       ],
       "roadmap_tags": [
         "LangChain",
@@ -752,5 +777,5 @@
       ]
     }
   ],
-  "current_stage_id": "ai-safety"
+  "current_stage_id": "function-calling-loop"
 }

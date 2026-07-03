@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-28T02:05:00+08:00",
-  "stage_id": "ai-safety",
+  "updated_at": "2026-07-04T04:10:00+08:00",
+  "stage_id": "function-calling-loop",
   "phase": "teaching",
-  "pending_action": "阅读 md/22_AI安全与伦理.md 并完成本章检查点",
-  "context": "已创建第 22 章 AI 安全与伦理教学文档。重点：Prompt 不是安全边界、Schema 只校验结构、RAG 要先权限过滤再检索、工具调用必须服务端鉴权和确认。",
+  "pending_action": "阅读 md/26_Function_Calling执行Loop.md，并完成 tool call -> 后端执行 -> tool output -> final answer 的流程检查点。",
+  "context": "已创建第 26 章 Function Calling 执行 Loop 教学文档。它是 AI Agents 基础和 LangChain 对话记忆之间的桥接章，重点：模型输出 tool_call，后端解析 arguments，用 TOOL_FUNCTIONS 找真实函数，执行工具，把 role=tool 的 tool output 放回 messages，再让模型生成最终回答。",
   "energy": null,
   "time_budget_minutes": null
 }
