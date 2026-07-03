@@ -42,6 +42,7 @@ Latest verified learning result:
 - After follow-up teaching, the user understood that LangChain auto-handles vector generation/storage via `add_documents()` and the configured `embedding_function`; the RAG Chunking stage is complete and the next stage is RAG Evaluation.
 - RAG Evaluation exam scored 38/40 on 2026-07-03 and passed. Minor review point: RAG tuning should first locate the failing layer, then change one variable at a time and compare with the same eval cases.
 - AI Agents basics exam scored 96/100 on 2026-07-04 after grading correction and passed. Minor review points: `required` and `properties` are siblings under `parameters`, and `TOOLS` is model-facing while `TOOL_FUNCTIONS` is backend-facing.
+- The AI Agents / Function Calling bridge conversation was archived as `dialog-81` on 2026-07-04 and synced across `.trae`, `.reasonix`, and `.codex`.
 - The RAG Evaluation conversation was archived as `dialog-80` on 2026-07-03 and synced across `.trae`, `.reasonix`, and `.codex`.
 
 - pytest project tests reached `8 passed` with one unrelated existing `extra_body` warning.
@@ -119,4 +120,4 @@ WebSocket:
 2. Complete the bridge checkpoints: parse tool call, find `TOOL_FUNCTIONS`, execute the function, return tool output to the model, then get final answer.
 3. Then enter `langchain-memory`.
 4. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.
-4. Do not start Docker until the AI core, evaluation, and observability stages are complete.
+5. Do not start Docker until the AI core, evaluation, and observability stages are complete.

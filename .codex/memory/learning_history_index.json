@@ -1,7 +1,30 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-03T07:50:57+08:00",
+  "updated_at": "2026-07-04T04:18:00+08:00",
   "entries": [
+    {
+      "id": "dialog-81",
+      "date": "2026-07-04",
+      "title": "AI Agents 基础通关与 Function Calling 执行 Loop 桥接章",
+      "stage_id": "function-calling-loop",
+      "entry_type": "dialog",
+      "topics": [
+        "AI Agents",
+        "Function Calling",
+        "Tool Call",
+        "Tool Schema",
+        "TOOLS",
+        "TOOL_FUNCTIONS",
+        "required",
+        "Agent Loop",
+        "Safety",
+        "audit",
+        "Function Calling 执行 Loop",
+        "LangChain Memory"
+      ],
+      "summary": "完成第 25 章 AI Agents 基础考试并批改，因第 25 章一句话理解未显式包含 Safety，评分由 94/100 修正为 96/100；补讲 required 层级、TOOLS 与 TOOL_FUNCTIONS 边界、Function Calling 与 tool call 层级；新增第 26 章 Function Calling 执行 Loop，讲清 tool call -> 后端解析 arguments -> 查找函数 -> 执行工具 -> role=tool 回传 -> final answer；解释 audit 是安全审计/留痕，并恢复第 25 章 Safety 文案。",
+      "file_path": ".codex/memory/conversations/2026-07-04.md"
+    },
     {
       "id": "dialog-80",
       "date": "2026-07-03",
