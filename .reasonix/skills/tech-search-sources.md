@@ -1,10 +1,30 @@
 ---
 name: tech-search-sources
-description: 技术搜索来源偏好。搜索技术问题时优先从 GitHub、Stack Overflow、掘金、博客园、V2EX、思否、Medium、Hacker News、GeeksforGeeks、linuxdo 获取信息。
+description: 技术搜索与可信教学资源偏好。搜索技术问题、查 AI Engineer 学习路线或寻找中文友好开发资料时使用。
 ---
 # 技术搜索来源偏好
 
 回答技术问题时，联网搜索优先从以下来源获取信息。
+
+## 路线型可信教学资源
+
+| 来源 | 域名 | 适用 |
+|------|------|------|
+| roadmap.sh AI Engineer | roadmap.sh/ai-engineer | AI Engineer 学习路线、章节顺序、查缺补漏 |
+
+当用户询问 AI Engineer 学习路线、章节资源、后续学习顺序或与 roadmap.sh 对齐时：
+
+1. 优先参考 <https://roadmap.sh/ai-engineer>。
+2. 需要查看该路线下每个节点提到的免费文章资源时，读取 `references/roadmap-ai-engineer-articles.md`。
+3. 如果用户要求“最新资源”，重新从 roadmap.sh 或其 GitHub 数据源核对，不只依赖本地快照。
+
+本 skill 附带快照：
+
+```text
+.reasonix/skills/tech-search-sources/references/roadmap-ai-engineer-articles.md
+```
+
+该文件收录 roadmap.sh AI Engineer 节点中的 `@article@` 资源。用于快速找学习文章；涉及官方 API、库版本、价格、模型能力或安全规范时仍需实时核对官方来源。
 
 ## 首选来源
 
