@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-04T04:10:00+08:00",
-  "stage_id": "function-calling-loop",
+  "updated_at": "2026-07-06T07:10:00+08:00",
+  "stage_id": "langchain-memory",
   "phase": "teaching",
-  "pending_action": "阅读 md/26_Function_Calling执行Loop.md，并完成 tool call -> 后端执行 -> tool output -> final answer 的流程检查点。",
-  "context": "已创建第 26 章 Function Calling 执行 Loop 教学文档。它是 AI Agents 基础和 LangChain 对话记忆之间的桥接章，重点：模型输出 tool_call，后端解析 arguments，用 TOOL_FUNCTIONS 找真实函数，执行工具，把 role=tool 的 tool output 放回 messages，再让模型生成最终回答。",
+  "pending_action": "阅读 md/27_LangChain对话记忆.md，先完成 messages、chat history、memory、state 的边界检查点，再看 RunnableWithMessageHistory 最小模板。",
+  "context": "已生成第 27 章 LangChain 对话记忆教程。它承接第 26 章 messages/tool output，再回到旧版 app/routers/chat_memory.py，重点区分 messages、chat history、memory、state，并学习 session_id -> InMemoryChatMessageHistory -> RunnableWithMessageHistory 的最小结构。",
   "energy": null,
   "time_budget_minutes": null
 }

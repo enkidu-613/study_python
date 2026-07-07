@@ -1,4 +1,4 @@
-# 26. Function Calling 执行 Loop：模型吐出 tool call 后，后端到底做什么
+		# 26. Function Calling 执行 Loop：模型吐出 tool call 后，后端到底做什么
 
 > 本章目标不是马上写复杂 Agent。  
 > 本章目标是：你能看懂一次 Function Calling 的完整后端执行链路，知道 `tool_call` 怎么变成真实函数调用，再怎么把 `tool output` 交回模型。

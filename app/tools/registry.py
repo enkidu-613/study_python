@@ -21,7 +21,7 @@ TOOLS = [ #是把所有的工具说明书集合为一个列表，发给大模型
     }
 ]
 
-TOOLS_FUNCTIONS = { #后端自己使用的工具列表
+TOOL_FUNCTIONS = { #后端自己使用的工具列表
     "search_knowledge_base": search_knowledge_base
 }
 # 一句话 tools 给模型看， tools_functions 给后端使用

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-24T02:42:20+08:00",
+  "updated_at": "2026-07-06T07:10:00+08:00",
   "stages": [
     {
       "id": "python-basics",
@@ -475,9 +475,9 @@
       "id": "function-calling-loop",
       "name": "Function Calling 执行 Loop",
       "description": "手写最小 tool call 执行链路：解析参数、查找函数、执行工具、回传 tool output",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-07-04",
-      "completed_at": null,
+      "completed_at": "2026-07-06",
       "documents": [
         "md/26_Function_Calling执行Loop.md"
       ],
@@ -494,10 +494,12 @@
       "id": "langchain-memory",
       "name": "LangChain 对话记忆",
       "description": "短期消息历史、长期记忆、状态持久化与上下文注入",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-06-03",
       "completed_at": null,
-      "documents": [],
+      "documents": [
+        "md/27_LangChain对话记忆.md"
+      ],
       "dependencies": [
         "function-calling-loop"
       ],
@@ -777,5 +779,5 @@
       ]
     }
   ],
-  "current_stage_id": "function-calling-loop"
+  "current_stage_id": "langchain-memory"
 }

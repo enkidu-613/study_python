@@ -1,14 +1,14 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-04 after AI Agents basics completion.
+Last updated from `.trae` on 2026-07-06 after Function Calling execution loop completion.
 
 ## Current Stage
 
-- Current stage id: `function-calling-loop`
-- Current topic: Function Calling execution loop: parse tool call, execute backend tool, return tool output to model
-- Current document: `md/26_Function_Calling执行Loop.md`
+- Current stage id: `langchain-memory`
+- Current topic: LangChain conversation memory: chat history, messages, memory/state boundaries, and context injection
+- Current document: `md/27_LangChain对话记忆.md`
 - Status: in_progress
-- Previous stage: `ai-agents`, completed on 2026-07-04 with exam score 96/100
+- Previous stage: `function-calling-loop`, completed on 2026-07-06 with exam score 92/100
 
 ## Completed Core Path
 
@@ -30,6 +30,7 @@ The learner has completed:
 - RAG Chunking strategy: chunk size, overlap, recursive splitting, Chinese separators, page_content/document vs embedding vector vs metadata, and Chroma vector storage under `chroma_db/`.
 - RAG Evaluation and metrics: retrieval/context/answer three-layer evaluation, context precision/recall, faithfulness/groundedness, answer relevance, `/search` vs `/chat`, retrieval trace vs chat history, and single-variable RAG tuning.
 - AI Agents basics: Agent = LLM + Tools + Loop + Safety, Tool/Tool Schema/Tool Call/Tool Output boundaries, Function Calling as tool-call generation rather than direct execution, minimal Agent Loop, and server-side safety boundaries for high-risk tools.
+- Function Calling execution loop: send `TOOLS` with messages, read model `tool_call`, parse and validate `arguments`, use `TOOL_FUNCTIONS` to execute backend functions, append `role="tool"` output to messages, and let the backend request the model again for the final answer.
 
 ## Latest History Summary
 
@@ -42,6 +43,7 @@ Latest verified learning result:
 - After follow-up teaching, the user understood that LangChain auto-handles vector generation/storage via `add_documents()` and the configured `embedding_function`; the RAG Chunking stage is complete and the next stage is RAG Evaluation.
 - RAG Evaluation exam scored 38/40 on 2026-07-03 and passed. Minor review point: RAG tuning should first locate the failing layer, then change one variable at a time and compare with the same eval cases.
 - AI Agents basics exam scored 96/100 on 2026-07-04 after grading correction and passed. Minor review points: `required` and `properties` are siblings under `parameters`, and `TOOLS` is model-facing while `TOOL_FUNCTIONS` is backend-facing.
+- Function Calling execution loop exam scored 92/100 on 2026-07-06 and passed after correction. Review points: tool execution is followed by a backend-initiated second model request with `role="tool"` in `messages`; model-provided `arguments` require JSON format, field, type, range, and permission validation.
 - The AI Agents / Function Calling bridge conversation was archived as `dialog-81` on 2026-07-04 and synced across `.trae`, `.reasonix`, and `.codex`.
 - The RAG Evaluation conversation was archived as `dialog-80` on 2026-07-03 and synced across `.trae`, `.reasonix`, and `.codex`.
 
@@ -116,8 +118,8 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Read `md/26_Function_Calling执行Loop.md`.
-2. Complete the bridge checkpoints: parse tool call, find `TOOL_FUNCTIONS`, execute the function, return tool output to the model, then get final answer.
-3. Then enter `langchain-memory`.
+1. Start the `langchain-memory` stage.
+2. Read `md/27_LangChain对话记忆.md`.
+3. First distinguish `messages`, chat history, memory, and durable state, then read the `RunnableWithMessageHistory` minimal template.
 4. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.
 5. Do not start Docker until the AI core, evaluation, and observability stages are complete.

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-29T05:29:12+08:00",
+  "updated_at": "2026-07-06T06:43:22+08:00",
   "interval_days": [
     1,
     3,
@@ -85,6 +85,28 @@
       "due_at": "2026-07-05",
       "status": "active",
       "source": "md/试卷/试卷_AI_Agents基础.md"
+    },
+    {
+      "id": "review-20260706-function-calling-tool-output-messages",
+      "stage_id": "function-calling-loop",
+      "topic": "tool output 回到 messages",
+      "prompt": "工具执行完后，为什么不是用户再次提问，而是后端再次请求模型？",
+      "answer": "后端把工具结果作为 role=\"tool\" 追加进 messages，并带着更新后的 messages 再请求模型。模型基于工具结果组织最终自然语言回答，用户不需要重新提问。",
+      "interval_index": 0,
+      "due_at": "2026-07-07",
+      "status": "active",
+      "source": "md/试卷/试卷_Function_Calling执行Loop.md"
+    },
+    {
+      "id": "review-20260706-function-calling-arguments-validation",
+      "stage_id": "function-calling-loop",
+      "topic": "arguments 后端校验",
+      "prompt": "为什么不能完全信任模型给的 arguments？至少说出三类风险。",
+      "answer": "arguments 可能不是合法 JSON；即使 JSON 格式正确，也可能缺字段或字段名不对；参数值可能类型错误、范围过大或越权，例如 limit=9999，所以后端必须做 schema、类型、范围和权限校验。",
+      "interval_index": 0,
+      "due_at": "2026-07-07",
+      "status": "active",
+      "source": "md/试卷/试卷_Function_Calling执行Loop.md"
     }
   ]
 }
