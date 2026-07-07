@@ -316,6 +316,88 @@ session_id -> ChatMessageHistory
 session_id 的作用是把不同人的历史分开。
 ```
 
+### 5.1 `session_id` 是用户 ID 吗？
+
+更准确地说：
+
+```text
+session_id 是会话 ID，不是单纯的用户 ID。
+```
+
+用户 ID 表示：
+
+```text
+这个人是谁
+```
+
+会话 ID 表示：
+
+```text
+这是这个人的哪一段对话
+```
+
+一个用户可以有多个会话：
+
+```text
+user-1 / chat-001 -> 学 LangChain memory 的对话
+user-1 / chat-002 -> 问 RAG 评估的对话
+user-1 / chat-003 -> 写周报的对话
+```
+
+所以真实项目里常见结构是：
+
+```text
+user_id -> session_id -> messages
+```
+
+学习版为了简单，常把 `session_id` 写成：
+
+```text
+"user-1"
+```
+
+但这只是简化写法。更准确的写法应该像：
+
+```text
+"user-1:chat-001"
+```
+
+或者：
+
+```text
+"chat-001"
+```
+
+然后在数据库里记录它属于哪个 `user_id`。
+
+### 5.2 怎么判断是不是新对话？
+
+不是模型判断，而是应用判断。
+
+通常由前端或后端决定：
+
+| 场景 | 应该怎么做 |
+| --- | --- |
+| 用户点“新建对话” | 创建新的 `session_id` |
+| 用户打开旧聊天记录 | 继续使用旧的 `session_id` |
+| 用户刷新页面但还在同一个聊天窗口 | 继续使用旧的 `session_id` |
+| 用户切换到另一个聊天窗口 | 使用另一个 `session_id` |
+| 用户很久没说话后再回来 | 可以继续旧会话，也可以按产品规则新建会话 |
+
+最小规则：
+
+```text
+同一个聊天窗口 = 同一个 session_id
+新建聊天窗口 = 新的 session_id
+```
+
+后端只根据传来的 `session_id` 找历史：
+
+```text
+传旧 session_id -> 接着旧对话
+传新 session_id -> 开始新对话
+```
+
 ---
 
 ## 第六关：`RunnableWithMessageHistory` 做了什么
@@ -458,7 +540,7 @@ store = {}
 
 def get_session_history(session_id: str):
     if session_id not in store:
-        store[session_id] = InMemoryChatMessageHistory()
+	        store[session_id] = InMemoryChatMessageHistory()
     return store[session_id]
 
 
