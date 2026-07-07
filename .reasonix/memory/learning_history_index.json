@@ -1,7 +1,29 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-04T04:18:00+08:00",
+  "updated_at": "2026-07-08T03:50:00+08:00",
   "entries": [
+    {
+      "id": "dialog-82",
+      "date": "2026-07-08",
+      "title": "LangChain Agent 工具调用教学文档生成",
+      "stage_id": "langchain-agents",
+      "entry_type": "dialog",
+      "topics": [
+        "LangChain Agent",
+        "create_agent",
+        "@tool",
+        "Tool",
+        "Tool schema",
+        "Function Calling Loop",
+        "LangChain Memory",
+        "checkpointer",
+        "thread_id",
+        "search_knowledge_base",
+        "knowledge base tool"
+      ],
+      "summary": "生成第 28 章 LangChain Agent 工具调用教学文档，承接第 26 章手写 Function Calling Loop 和第 27 章 LangChain 记忆，讲清 create_agent 如何封装 tool call 解析、工具执行、tool output 回传和最终回答生成；解释 @tool 如何从函数名、类型注解和 docstring 生成工具说明；用当前项目 search_knowledge_base 设计最小知识库搜索 Agent，并同步学习计划、学习会话和 Codex 状态。",
+      "file_path": ".reasonix/memory/conversations/2026-07-08.md"
+    },
     {
       "id": "dialog-81",
       "date": "2026-07-04",

@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-06T07:10:00+08:00",
-  "stage_id": "langchain-memory",
+  "updated_at": "2026-07-08T03:37:29+08:00",
+  "stage_id": "langchain-agents",
   "phase": "teaching",
-  "pending_action": "阅读 md/27_LangChain对话记忆.md，先完成 messages、chat history、memory、state 的边界检查点，再看 RunnableWithMessageHistory 最小模板。",
-  "context": "已生成第 27 章 LangChain 对话记忆教程。它承接第 26 章 messages/tool output，再回到旧版 app/routers/chat_memory.py，重点区分 messages、chat history、memory、state，并学习 session_id -> InMemoryChatMessageHistory -> RunnableWithMessageHistory 的最小结构。",
+  "pending_action": "阅读第 28 章 LangChain Agent 工具调用；先理解 create_agent 如何封装 Function Calling loop，再跟写最小知识库搜索 Agent。",
+  "context": "第 27 章 LangChain 对话记忆已通过：考试 86/100。第 28 章教学文档已生成到 md/28_LangChain_Agent工具调用.md，主线是 create_agent + @tool + search_knowledge_base，并说明 thread_id/checkpointer 如何承接上一章记忆概念。",
   "energy": null,
   "time_budget_minutes": null
 }

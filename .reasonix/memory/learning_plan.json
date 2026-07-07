@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-06T07:10:00+08:00",
+  "updated_at": "2026-07-08T03:37:29+08:00",
   "stages": [
     {
       "id": "python-basics",
@@ -494,9 +494,9 @@
       "id": "langchain-memory",
       "name": "LangChain 对话记忆",
       "description": "短期消息历史、长期记忆、状态持久化与上下文注入",
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-06-03",
-      "completed_at": null,
+      "completed_at": "2026-07-08",
       "documents": [
         "md/27_LangChain对话记忆.md"
       ],
@@ -512,10 +512,12 @@
       "id": "langchain-agents",
       "name": "LangChain Agent 工具调用",
       "description": "现代 create_agent、Tool 定义、自定义工具与运行时控制",
-      "status": "pending",
+      "status": "in_progress",
       "created_at": "2026-06-03",
       "completed_at": null,
-      "documents": [],
+      "documents": [
+        "md/28_LangChain_Agent工具调用.md"
+      ],
       "dependencies": [
         "langchain-memory",
         "ai-agents"
@@ -779,5 +781,5 @@
       ]
     }
   ],
-  "current_stage_id": "langchain-memory"
+  "current_stage_id": "langchain-agents"
 }

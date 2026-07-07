@@ -160,6 +160,71 @@ messages=chat_history
 | `memory` | 读取历史、注入历史、保存新消息的机制 | LangChain 帮你包一层 |
 | `state` | 应用运行中的完整状态，不只聊天 | 后面 LangGraph 会重点学 |
 
+### 2.1 `state` 到底有什么用？
+
+先记一句话：
+
+```text
+state 是应用当前这轮运行时需要保存和传递的“状态包”。
+```
+
+`messages` 只是状态里的一部分。
+
+比如一个 AI 应用运行时可能不只需要知道“聊过什么”，还需要知道：
+
+```text
+当前用户是谁
+当前 session_id 是什么
+已经检索到哪些文档
+工具调用到第几步
+当前任务是否完成
+是否需要继续追问用户
+临时计算结果是什么
+```
+
+这些合在一起，就更像 `state`。
+
+### 和 `chat history` 的区别
+
+`chat history` 更窄：
+
+```text
+只管历史对话消息
+```
+
+`state` 更宽：
+
+```text
+管一次任务/一次对话流程里所有需要继续传下去的信息
+```
+
+例如：
+
+```python
+state = {
+    "user_id": 1,
+    "session_id": "chat-001",
+    "messages": [...],
+    "retrieved_docs": [...],
+    "tool_steps": 2,
+    "finished": False,
+}
+```
+
+本章你只需要知道：
+
+```text
+memory 主要负责历史消息怎么保存和注入；
+state 是更大的运行状态容器，后面学 LangGraph 会重点用。
+```
+
+所以现在不要把 `state` 想复杂。  
+它的作用就是：
+
+```text
+让一次 AI 流程在多步执行时，不丢掉中间信息。
+```
+
 ### 最容易错的地方
 
 错误理解：
@@ -533,14 +598,27 @@ RunnableWithMessageHistory 是拿着记录本帮你跑 chain 的人。
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_deepseek import ChatDeepSeek
+from dotenv import load_dotenv
+import os
 
+
+load_dotenv(dotenv_path=".env")
 
 store = {}
+
+llm = ChatDeepSeek(
+    model=os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2"),
+    api_base=os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1"),
+    api_key=os.getenv("MODELSCOPE_API_KEY"),
+    temperature=0.7,
+    streaming=False,
+)
 
 
 def get_session_history(session_id: str):
     if session_id not in store:
-	        store[session_id] = InMemoryChatMessageHistory()
+        store[session_id] = InMemoryChatMessageHistory()
     return store[session_id]
 
 
@@ -564,7 +642,9 @@ chain_with_history = RunnableWithMessageHistory(
 
 | 代码 | 意义 |
 | --- | --- |
+| `load_dotenv()` | 读取 `.env` 里的模型配置 |
 | `store = {}` | 保存多个 session 的历史记录本 |
+| `llm = ChatDeepSeek(...)` | 创建真正调用模型的 LangChain Chat 模型 |
 | `get_session_history` | 根据 session_id 找到对应记录本 |
 | `InMemoryChatMessageHistory()` | 创建一本新的内存记录本 |
 | `MessagesPlaceholder("history")` | prompt 里给历史消息留位置 |
@@ -642,6 +722,71 @@ chat_history 对 chat_history
 
 名字不重要，前后对得上才重要。
 
+### 6.7 `HumanMessage(content="{question}")` 可以吗？
+
+不推荐这样写：
+
+```python
+from langchain_core.messages import HumanMessage
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个简洁的学习助手。"),
+    MessagesPlaceholder(variable_name="history"),
+    HumanMessage(content="{question}"),
+])
+```
+
+原因是：
+
+```text
+HumanMessage(content="{question}") 是已经创建好的消息对象
+LangChain 会把 "{question}" 当成普通文本
+不会再把它当成模板变量替换
+```
+
+也就是说，模型可能真的收到：
+
+```text
+{question}
+```
+
+而不是用户的问题。
+
+本章最稳写法是：
+
+```python
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个简洁的学习助手。"),
+    MessagesPlaceholder(variable_name="history"),
+    ("human", "{question}"),
+])
+```
+
+这里的：
+
+```python
+("human", "{question}")
+```
+
+才是模板消息。它会等你调用：
+
+```python
+chain_with_history.invoke({"question": "我叫什么？"}, ...)
+```
+
+时，把 `{question}` 替换成：
+
+```text
+我叫什么？
+```
+
+最小规则：
+
+```text
+要变量替换，用 ("human", "{question}")。
+要固定文本，才用 HumanMessage(content="...")。
+```
+
 调用时要带 session 信息：
 
 ```python
@@ -669,7 +814,7 @@ RunnableWithMessageHistory 根据 session_id 找到历史
 回答结束后再把新消息写回历史
 ```
 
-### 6.7 最小检查点
+### 6.8 最小检查点
 
 看到这行：
 
@@ -810,9 +955,22 @@ Token 越来越多
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_deepseek import ChatDeepSeek
+from dotenv import load_dotenv
+import os
 
+
+load_dotenv(dotenv_path=".env")
 
 store = {}
+
+llm = ChatDeepSeek(
+    model=os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2"),
+    api_base=os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1"),
+    api_key=os.getenv("MODELSCOPE_API_KEY"),
+    temperature=0.7,
+    streaming=False,
+)
 
 
 def get_session_history(session_id: str):
@@ -836,17 +994,15 @@ chain_with_history = RunnableWithMessageHistory(
     history_messages_key="history",
 )
 
-answer = chain_with_history.invoke(
-    {"question": "我叫什么？"},
-    config={"configurable": {"session_id": "user-1"}},
-)
 ```
 
 ### 这段代码要读懂什么
 
 | 代码 | 意义 |
 | --- | --- |
+| `load_dotenv()` | 读取 `.env` 里的模型配置 |
 | `store = {}` | 临时保存不同 session 的历史 |
+| `llm = ChatDeepSeek(...)` | 创建真正调用模型的 LangChain Chat 模型 |
 | `get_session_history` | 根据 session_id 找历史 |
 | `MessagesPlaceholder("history")` | 历史消息插入点 |
 | `RunnableWithMessageHistory` | 给 chain 加历史管理 |

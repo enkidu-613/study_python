@@ -1,14 +1,14 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-06 after Function Calling execution loop completion.
+Last updated from `.trae` on 2026-07-08 after LangChain conversation memory completion.
 
 ## Current Stage
 
-- Current stage id: `langchain-memory`
-- Current topic: LangChain conversation memory: chat history, messages, memory/state boundaries, and context injection
-- Current document: `md/27_LangChain对话记忆.md`
+- Current stage id: `langchain-agents`
+- Current topic: LangChain Agent tool calling: combining tools, model, memory, and execution control
+- Current document: `md/28_LangChain_Agent工具调用.md`
 - Status: in_progress
-- Previous stage: `function-calling-loop`, completed on 2026-07-06 with exam score 92/100
+- Previous stage: `langchain-memory`, completed on 2026-07-08 with exam score 86/100
 
 ## Completed Core Path
 
@@ -31,6 +31,7 @@ The learner has completed:
 - RAG Evaluation and metrics: retrieval/context/answer three-layer evaluation, context precision/recall, faithfulness/groundedness, answer relevance, `/search` vs `/chat`, retrieval trace vs chat history, and single-variable RAG tuning.
 - AI Agents basics: Agent = LLM + Tools + Loop + Safety, Tool/Tool Schema/Tool Call/Tool Output boundaries, Function Calling as tool-call generation rather than direct execution, minimal Agent Loop, and server-side safety boundaries for high-risk tools.
 - Function Calling execution loop: send `TOOLS` with messages, read model `tool_call`, parse and validate `arguments`, use `TOOL_FUNCTIONS` to execute backend functions, append `role="tool"` output to messages, and let the backend request the model again for the final answer.
+- LangChain conversation memory: distinguish `messages`, `chat history`, `memory`, and `state`; use `session_id -> InMemoryChatMessageHistory`; understand `RunnableWithMessageHistory` as the wrapper that reads history before invocation and writes new user/assistant messages afterward; use `MessagesPlaceholder` and matching `input_messages_key` / `history_messages_key`.
 
 ## Latest History Summary
 
@@ -44,6 +45,8 @@ Latest verified learning result:
 - RAG Evaluation exam scored 38/40 on 2026-07-03 and passed. Minor review point: RAG tuning should first locate the failing layer, then change one variable at a time and compare with the same eval cases.
 - AI Agents basics exam scored 96/100 on 2026-07-04 after grading correction and passed. Minor review points: `required` and `properties` are siblings under `parameters`, and `TOOLS` is model-facing while `TOOL_FUNCTIONS` is backend-facing.
 - Function Calling execution loop exam scored 92/100 on 2026-07-06 and passed after correction. Review points: tool execution is followed by a backend-initiated second model request with `role="tool"` in `messages`; model-provided `arguments` require JSON format, field, type, range, and permission validation.
+- LangChain conversation memory exam scored 86/100 on 2026-07-08 and passed after correction. Review points: model memory is application-managed by saving history and injecting it into future `messages`; `llm` must be created first, in this project with `ChatDeepSeek(...)` and `MODEL_NAME`, `MODEL_API_URL`, `MODELSCOPE_API_KEY`.
+- The LangChain Agent teaching document conversation was archived as `dialog-82` on 2026-07-08 and synced across `.trae`, `.reasonix`, and `.codex`. Current chapter is `md/28_LangChain_Agent工具调用.md`, focusing on `create_agent`, `@tool`, knowledge-base search tools, `thread_id`, and `checkpointer`.
 - The AI Agents / Function Calling bridge conversation was archived as `dialog-81` on 2026-07-04 and synced across `.trae`, `.reasonix`, and `.codex`.
 - The RAG Evaluation conversation was archived as `dialog-80` on 2026-07-03 and synced across `.trae`, `.reasonix`, and `.codex`.
 
@@ -118,8 +121,8 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Start the `langchain-memory` stage.
-2. Read `md/27_LangChain对话记忆.md`.
-3. First distinguish `messages`, chat history, memory, and durable state, then read the `RunnableWithMessageHistory` minimal template.
+1. Read `md/28_LangChain_Agent工具调用.md`.
+2. Follow the minimal `create_agent + @tool + search_knowledge_base` template.
+3. First connect prior chapters: Function Calling loop + LangChain memory + tool schema/function mapping.
 4. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.
 5. Do not start Docker until the AI core, evaluation, and observability stages are complete.
