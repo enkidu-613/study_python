@@ -465,7 +465,57 @@ user_id -> session_id -> messages
 
 ---
 
-## 第六关：`RunnableWithMessageHistory` 做了什么
+## 第六关：`MessagesPlaceholder` 是什么
+
+这个模板：
+
+```python
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个简洁的学习助手。"),
+    MessagesPlaceholder(variable_name="history"),
+    ("human", "{question}"),
+])
+```
+
+可以理解成：
+
+```text
+system
+历史消息插入位置
+当前用户问题
+```
+
+如果历史是：
+
+```text
+HumanMessage("我叫 Enkidu")
+AIMessage("好的，我记住了。")
+```
+
+当前问题是：
+
+```text
+我叫什么？
+```
+
+最终送给模型的 messages 类似：
+
+```text
+SystemMessage("你是一个简洁的学习助手。")
+HumanMessage("我叫 Enkidu")
+AIMessage("好的，我记住了。")
+HumanMessage("我叫什么？")
+```
+
+一句话：
+
+```text
+MessagesPlaceholder 是给历史消息预留的插槽。
+```
+
+---
+
+## 第七关：`RunnableWithMessageHistory` 做了什么
 
 先记一句话：
 
@@ -835,121 +885,12 @@ chain_with_history.invoke(...)
 
 ---
 
-## 第七关：`MessagesPlaceholder` 是什么
-
-这个模板：
-
-```python
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "你是一个简洁的学习助手。"),
-    MessagesPlaceholder(variable_name="history"),
-    ("human", "{question}"),
-])
-```
-
-可以理解成：
-
-```text
-system
-历史消息插入位置
-当前用户问题
-```
-
-如果历史是：
-
-```text
-HumanMessage("我叫 Enkidu")
-AIMessage("好的，我记住了。")
-```
-
-当前问题是：
-
-```text
-我叫什么？
-```
-
-最终送给模型的 messages 类似：
-
-```text
-SystemMessage("你是一个简洁的学习助手。")
-HumanMessage("我叫 Enkidu")
-AIMessage("好的，我记住了。")
-HumanMessage("我叫什么？")
-```
-
-一句话：
-
-```text
-MessagesPlaceholder 是给历史消息预留的插槽。
-```
-
 ---
 
-## 第八关：这一章和 Function Calling 的关系
+### 可抄模板
 
-上一章你刚学过：
 
-```text
-tool output 要作为 role="tool" 放回 messages
-然后后端再次请求模型
-```
-
-这一章继续讲：
-
-```text
-messages 不只服务于一次工具调用
-messages 也可以保存成某个 session 的对话历史
-下一轮继续拿出来用
-```
-
-但要注意：
-
-```text
-Function Calling 的 tool messages 通常是某次工具调用的执行证据
-Chat memory 的历史 messages 是多轮对话上下文
-```
-
-它们都在 `messages` 里，但用途不同。
-
-### 最小边界
-
-```text
-tool message：告诉模型“刚才工具执行结果是什么”
-chat history：告诉模型“前几轮用户和助手说过什么”
-```
-
----
-
-## 第九关：为什么不能无限保存完整历史
-
-完整历史很直观，但有三个问题：
-
-```text
-Token 越来越多
-旧信息可能污染新回答
-隐私内容会长期留在上下文里
-```
-
-所以真实项目常见做法是：
-
-```text
-短窗口：只保留最近 N 轮
-摘要：把很早以前的内容压缩成 summary
-数据库：把历史持久化，按需取出
-向量长期记忆：把可复用事实提取出来检索
-```
-
-本章先不做这些，只记住：
-
-```text
-记忆要进入模型上下文才会生效，但进入上下文就会消耗 Token。
-```
-
----
-
-## 第十关：本章最小可抄模板
-
-你现在最值得抄的是这个结构：
+> 这段代码的解释见上关（RunnableWithMessageHistory）的逐行表格。这里只保留可抄模板：
 
 ```python
 from langchain_core.chat_history import InMemoryChatMessageHistory
@@ -995,24 +936,34 @@ chain_with_history = RunnableWithMessageHistory(
 )
 
 ```
+## 第八关：常见坑
 
-### 这段代码要读懂什么
+### Token 会越来越多
 
-| 代码 | 意义 |
-| --- | --- |
-| `load_dotenv()` | 读取 `.env` 里的模型配置 |
-| `store = {}` | 临时保存不同 session 的历史 |
-| `llm = ChatDeepSeek(...)` | 创建真正调用模型的 LangChain Chat 模型 |
-| `get_session_history` | 根据 session_id 找历史 |
-| `MessagesPlaceholder("history")` | 历史消息插入点 |
-| `RunnableWithMessageHistory` | 给 chain 加历史管理 |
-| `input_messages_key="question"` | 当前用户输入在哪个字段 |
-| `history_messages_key="history"` | 历史消息要塞到 prompt 的哪个变量 |
-| `configurable.session_id` | 这次调用属于哪个会话 |
+完整历史很直观，但有三个问题：
+
+```text
+Token 越来越多
+旧信息可能污染新回答
+隐私内容会长期留在上下文里
+```
+
+所以真实项目常见做法是：
+
+```text
+短窗口：只保留最近 N 轮
+摘要：把很早以前的内容压缩成 summary
+数据库：把历史持久化，按需取出
+向量长期记忆：把可复用事实提取出来检索
+```
+
+本章先不做这些，只记住：
+
+```text
+记忆要进入模型上下文才会生效，但进入上下文就会消耗 Token。
+```
 
 ---
-
-## 第十一关：常见坑
 
 ### 坑 1：以为 memory 在模型里面
 
@@ -1071,7 +1022,7 @@ session_id -> history
 
 ---
 
-## 第十二关：三遍主动练习
+## 第九关：三遍主动练习
 
 ### 第一遍：读懂
 
@@ -1187,3 +1138,41 @@ Prompt 消息：app/routers/langchain_rag.py 的 ChatPromptTemplate.from_message
 3. 说清楚为什么需要 `session_id`。
 4. 说清楚 `MessagesPlaceholder` 在 prompt 里的作用。
 5. 画出 `session_id -> history -> messages -> model -> save reply` 的流程。
+
+---
+
+## 第十关：这一章和 Function Calling 的关系
+
+上一章你刚学过：
+
+```text
+tool output 要作为 role="tool" 放回 messages
+然后后端再次请求模型
+```
+
+这一章继续讲：
+
+```text
+messages 不只服务于一次工具调用
+messages 也可以保存成某个 session 的对话历史
+下一轮继续拿出来用
+```
+
+但要注意：
+
+```text
+Function Calling 的 tool messages 通常是某次工具调用的执行证据
+Chat memory 的历史 messages 是多轮对话上下文
+```
+
+它们都在 `messages` 里，但用途不同。
+
+### 最小边界
+
+```text
+tool message：告诉模型“刚才工具执行结果是什么”
+chat history：告诉模型“前几轮用户和助手说过什么”
+```
+
+---
+
