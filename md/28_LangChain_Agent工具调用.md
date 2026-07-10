@@ -1,4 +1,4 @@
-# 28. LangChain Agent 工具调用：把手写 Function Calling Loop 交给框架
+	# 28. LangChain Agent 工具调用：把手写 Function Calling Loop 交给框架
 
 > 本章目标不是把 Agent 做成生产系统。  
 > 本章目标是：你能看懂 `create_agent(...)` 内部大概替你做了什么，并能把你项目里的知识库搜索函数包装成一个 LangChain Tool。
@@ -9,12 +9,12 @@
 
 本章参考 LangChain 官方文档，并结合你当前项目改写成学习版：
 
-| 来源 | 本章采用的结论 |
-| --- | --- |
-| LangChain Agents 官方文档 | Agent 是模型在循环中调用工具，直到任务完成；`create_agent` 可以配置 `model`、`tools`、`system_prompt` |
-| LangChain Tools 官方文档 | Tool 本质是有明确输入输出的可调用函数；`@tool` 会用函数签名和 docstring 生成工具说明 |
-| LangChain Short-term memory 官方文档 | Agent 的短期记忆依靠 `checkpointer` 和 `thread_id` 持久化同一对话线程 |
-| 你当前项目 | 先把 `app/tools/knowledge_base.py` 里的 `search_knowledge_base` 包成只读搜索工具 |
+| 来源                               | 本章采用的结论                                                                      |
+| -------------------------------- | ---------------------------------------------------------------------------- |
+| LangChain Agents 官方文档            | Agent 是模型在循环中调用工具，直到任务完成；`create_agent` 可以配置 `model`、`tools`、`system_prompt` |
+| LangChain Tools 官方文档             | Tool 本质是有明确输入输出的可调用函数；`@tool` 会用函数签名和 docstring 生成工具说明                       |
+| LangChain Short-term memory 官方文档 | Agent 的短期记忆依靠 `checkpointer` 和 `thread_id` 持久化同一对话线程                         |
+| 你当前项目                            | 先把 `app/tools/knowledge_base.py` 里的 `search_knowledge_base` 包成只读搜索工具         |
 
 参考链接：
 
@@ -54,12 +54,12 @@ LangSmith 观测平台
 
 ## ADHD 四条铁律
 
-| # | 铁律 | 本章怎么做 |
-| --- | --- | --- |
-| 1 | 模型仍然不会自己执行 Python | 模型只提出 tool call，执行仍在后端 |
-| 2 | LangChain Agent 不是魔法 | 它封装了你第 26 章手写的 loop |
-| 3 | Tool 必须有清楚的输入输出 | 函数签名、类型注解、docstring 要写清楚 |
-| 4 | 记忆要靠 thread_id/checkpointer | 不传 checkpointer 就不要期待它记住上一轮 |
+| #   | 铁律                          | 本章怎么做                       |
+| --- | --------------------------- | --------------------------- |
+| 1   | 模型仍然不会自己执行 Python           | 模型只提出 tool call，执行仍在后端      |
+| 2   | LangChain Agent 不是魔法        | 它封装了你第 26 章手写的 loop         |
+| 3   | Tool 必须有清楚的输入输出             | 函数签名、类型注解、docstring 要写清楚    |
+| 4   | 记忆要靠 thread_id/checkpointer | 不传 checkpointer 就不要期待它记住上一轮 |
 
 ---
 
@@ -99,18 +99,18 @@ result = agent.invoke({"messages": [{"role": "user", "content": question}]})
 
 ## 准确术语
 
-| 术语 | 一句话 | 不要误解成 |
-| --- | --- | --- |
-| Agent | 模型在循环中调用工具完成任务 | 一个有自我意识的程序 |
-| Tool | 可被模型请求调用的后端函数 | 模型自己拥有的能力 |
-| `@tool` | 把 Python 函数包装成 LangChain Tool 的装饰器 | 普通注释 |
-| Tool schema | 工具的名称、描述、参数结构 | 真实函数执行结果 |
-| Tool call | 模型生成的“我要调用哪个工具、传什么参数” | 已经执行完工具 |
-| Tool output | 后端工具执行后的结果 | 最终用户答案 |
-| `create_agent` | 创建 Agent 执行框架 | 只创建 prompt |
-| `thread_id` | LangChain Agent 区分对话线程的 ID | 用户 ID 本身 |
-| `checkpointer` | 保存/恢复 Agent state 的组件 | 数据库 ORM |
-| state | Agent 当前运行状态包，至少包含 messages | 只有聊天历史 |
+| 术语             | 一句话                                | 不要误解成      |
+| -------------- | ---------------------------------- | ---------- |
+| Agent          | 模型在循环中调用工具完成任务                     | 一个有自我意识的程序 |
+| Tool           | 可被模型请求调用的后端函数                      | 模型自己拥有的能力  |
+| `@tool`        | 把 Python 函数包装成 LangChain Tool 的装饰器 | 普通注释       |
+| Tool schema    | 工具的名称、描述、参数结构                      | 真实函数执行结果   |
+| Tool call      | 模型生成的“我要调用哪个工具、传什么参数”              | 已经执行完工具    |
+| Tool output    | 后端工具执行后的结果                         | 最终用户答案     |
+| `create_agent` | 创建 Agent 执行框架                      | 只创建 prompt |
+| `thread_id`    | LangChain Agent 区分对话线程的 ID         | 用户 ID 本身   |
+| `checkpointer` | 保存/恢复 Agent state 的组件              | 数据库 ORM    |
+| state          | Agent 当前运行状态包，至少包含 messages        | 只有聊天历史     |
 
 ---
 
@@ -152,11 +152,26 @@ TOOL_FUNCTIONS = {
 `create_agent` 替你包住了这条链路：
 
 ```python
+from langchain.agents import create_agent
+
+
 agent = create_agent(
     model=llm,
     tools=[search_project_knowledge],
     system_prompt="你是一个严谨的知识库助手。",
 )
+```
+
+`create_agent` 是 LangChain 真实提供的函数，在你当前项目环境里这样引入：
+
+```python
+from langchain.agents import create_agent
+```
+
+如果不确定一个函数是不是真的存在，可以在项目根目录验证：
+
+```bash
+poetry run python -c "from langchain.agents import create_agent; print(create_agent)"
 ```
 
 你只要调用：
@@ -165,6 +180,105 @@ agent = create_agent(
 result = agent.invoke(
     {"messages": [{"role": "user", "content": "退款需要几天内申请？"}]}
 )
+```
+
+### 这两行分别在干什么
+
+先看第一行：
+
+```python
+agent = create_agent(model=llm, tools=[search_project_knowledge])
+```
+
+这行不是在问模型问题。
+
+它是在组装一个 Agent 对象：
+
+| 部分 | 作用 |
+| --- | --- |
+| `create_agent(...)` | 创建一个会按 Agent loop 工作的对象 |
+| `model=llm` | 告诉 Agent：用哪个大模型思考和回答 |
+| `tools=[search_project_knowledge]` | 告诉 Agent：模型可以请求哪些工具 |
+| `agent = ...` | 把组装好的 Agent 保存到变量 `agent` 里，后面反复调用 |
+
+你可以把它理解成：
+
+```text
+先装配机器：
+模型用 llm
+工具有 search_project_knowledge
+装配结果叫 agent
+```
+
+再看第二行：
+
+```python
+result = agent.invoke({"messages": [{"role": "user", "content": question}]})
+```
+
+这行才是真的开始执行一次对话。
+
+| 部分 | 作用 |
+| --- | --- |
+| `agent.invoke(...)` | 启动 Agent 跑一轮 |
+| `{"messages": ...}` | 传给 Agent 的输入状态 |
+| `role: "user"` | 这条消息来自用户 |
+| `content: question` | 用户这次真正问的问题 |
+| `result = ...` | 保存 Agent 跑完后的完整状态 |
+
+一句话：
+
+```text
+create_agent 是创建工具型助手；agent.invoke 是把用户问题交给这个助手执行。
+```
+
+这和上一章很像：
+
+```text
+chain_with_history = RunnableWithMessageHistory(...)
+  -> 先组装一个带记忆能力的 chain
+
+chain_with_history.invoke(...)
+  -> 再启动一次真实调用
+```
+
+本章也是：
+
+```text
+agent = create_agent(...)
+  -> 先组装一个带工具能力的 Agent
+
+agent.invoke(...)
+  -> 再启动一次真实调用
+```
+
+### `messages` 为什么要这样写
+
+Agent 的输入不是单纯一个字符串：
+
+```python
+"退款需要几天内申请？"
+```
+
+而是一个消息列表：
+
+```python
+{"messages": [{"role": "user", "content": question}]}
+```
+
+因为 Agent 内部还要继续往 `messages` 里追加东西：
+
+```text
+HumanMessage：用户问题
+AIMessage：模型提出 tool_call
+ToolMessage：工具执行结果
+AIMessage：模型最终回答
+```
+
+所以它从一开始就接收：
+
+```text
+一个 state 字典，里面有 messages。
 ```
 
 ### 对照表
@@ -209,11 +323,11 @@ def search_database(query: str, limit: int = 10) -> str:
 
 `@tool` 会读取三类信息：
 
-| 来源 | 作用 |
-| --- | --- |
-| 函数名 `search_database` | 工具名，模型会看到 |
-| 类型注解 `query: str, limit: int` | 参数 schema |
-| docstring | 工具描述，告诉模型什么时候该用 |
+| 来源                            | 作用              |
+| ----------------------------- | --------------- |
+| 函数名 `search_database`         | 工具名，模型会看到       |
+| 类型注解 `query: str, limit: int` | 参数 schema       |
+| docstring                     | 工具描述，告诉模型什么时候该用 |
 
 所以你不要把 docstring 写得太空：
 
@@ -221,6 +335,59 @@ def search_database(query: str, limit: int = 10) -> str:
 @tool
 def search_project_knowledge(query: str, limit: int = 3) -> str:
     """Search the local project knowledge base for relevant document chunks."""
+```
+
+### docstring 写在哪里
+
+docstring 就写在函数定义下面第一行，放在函数体里面：
+
+```python
+@tool
+def search_project_knowledge(query: str, limit: int = 3) -> str:
+    """Search the local project knowledge base for relevant document chunks."""
+    docs = search_knowledge_base(query=query, limit=limit)
+    return "..."
+```
+
+它长得像注释，但不完全等于普通注释。
+
+普通注释是：
+
+```python
+# 这是普通注释，Python 和 LangChain 不会把它当成工具说明
+```
+
+docstring 是：
+
+```python
+"""这是函数说明，放在函数体第一行。"""
+```
+
+对普通 Python 来说，docstring 是函数的说明文档：
+
+```python
+print(search_project_knowledge.__doc__)
+```
+
+对 `@tool` 来说，docstring 还会变成模型看到的工具描述。
+
+所以本章写工具时可以这样记：
+
+```text
+# 注释：给人看
+"""docstring"""：给人看，也会被 @tool 用来生成工具说明
+```
+
+docstring 要写“这个工具什么时候该用”，不要只写：
+
+```python
+"""Search."""
+```
+
+更推荐：
+
+```python
+"""Search the local project knowledge base for relevant document chunks."""
 ```
 
 这句话是在告诉模型：
@@ -716,6 +883,82 @@ def search_project_knowledge(query: str, limit: int = 3) -> str:
 agent = create_agent(model=llm, tools=[search_project_knowledge])
 ```
 
+### `tools=` 这里要不要放 `TOOLS`
+
+本章先记这个结论：
+
+```text
+create_agent(..., tools=...) 里优先放真实可执行的工具函数或 @tool 包装后的 Tool，不是放第 26 章那个 TOOLS 说明书列表。
+```
+
+第 26 章的手写写法是：
+
+```python
+TOOLS = [...]
+TOOL_FUNCTIONS = {
+    "search_knowledge_base": search_knowledge_base,
+}
+```
+
+这里分成两份：
+
+| 名字 | 给谁用 | 作用 |
+| --- | --- | --- |
+| `TOOLS` | 模型看 | 说明有哪些工具、参数怎么填 |
+| `TOOL_FUNCTIONS` | 后端看 | 根据工具名找到真实 Python 函数 |
+
+但 LangChain Agent 的写法是：
+
+```python
+agent = create_agent(
+    model=llm,
+    tools=[search_project_knowledge],
+)
+```
+
+这里的 `tools=[search_project_knowledge]` 同时承担两件事：
+
+```text
+给模型生成工具说明
+保留后端可执行函数
+```
+
+因为 `search_project_knowledge` 被 `@tool` 包装后，LangChain 可以从函数名、类型注解和 docstring 生成工具说明，也知道真正要执行哪个 Python 函数。
+
+所以对你当前项目来说：
+
+```python
+# 第 26 章手写 loop 用
+TOOLS = [...]
+
+# 第 28 章 LangChain Agent 用
+tools=[search_project_knowledge]
+```
+
+不要写成：
+
+```python
+agent = create_agent(model=llm, tools=TOOLS)
+```
+
+这样即使某些版本的 LangChain 支持 dict 形式的工具描述，也会让你在当前学习阶段重新混淆：
+
+```text
+工具说明书
+真实可执行函数
+框架包装后的 Tool
+```
+
+本章先用最清楚的方式：
+
+```python
+@tool
+def search_project_knowledge(...):
+    ...
+
+agent = create_agent(..., tools=[search_project_knowledge])
+```
+
 ### 哪个更适合现在
 
 | 场景 | 更适合 |
@@ -843,6 +1086,160 @@ content = doc.page_content[:800]
 学习阶段先限制长度，后面再学更细的 context management。
 
 ---
+
+### 这段格式化代码输出什么
+
+你会看到这样的代码：
+
+```python
+return "\n\n".join(
+    f"[{index}] {doc.page_content[:800]}"
+    for index, doc in enumerate(docs, start=1)
+)
+```
+
+它的作用是：
+
+```text
+把多个 Document，变成一个给模型看的字符串。
+```
+
+假设 `docs` 里有 3 个文档切片：
+
+```text
+docs = [doc_a, doc_b, doc_c]
+```
+
+`enumerate(docs, start=1)` 会变成：
+
+```text
+1, doc_a
+2, doc_b
+3, doc_c
+```
+
+所以：
+
+```python
+f"[{index}] {doc.page_content[:800]}"
+```
+
+会分别生成：
+
+```text
+[1] 第一个切片的正文，最多取前 800 个字符
+[2] 第二个切片的正文，最多取前 800 个字符
+[3] 第三个切片的正文，最多取前 800 个字符
+```
+
+最后：
+
+```python
+"\n\n".join(...)
+```
+
+会用两个换行把它们拼成一个字符串：
+
+```text
+[1] 第一个切片的正文，最多取前 800 个字符
+
+[2] 第二个切片的正文，最多取前 800 个字符
+
+[3] 第三个切片的正文，最多取前 800 个字符
+```
+
+这一整段不是给用户界面看的漂亮排版，而是给模型看的证据文本。
+
+你可以拆成普通写法来理解：
+
+```python
+formatted_docs = []
+
+for index, doc in enumerate(docs, start=1):
+    text = f"[{index}] {doc.page_content[:800]}"
+    formatted_docs.append(text)
+
+return "\n\n".join(formatted_docs)
+```
+
+### f-string 是怎么把变量塞进字符串的
+
+这一段不是“前面的字符串去拿后面的 `doc`”：
+
+```python
+f"[{index}] {doc.page_content[:800]}"
+```
+
+它是 Python 的 f-string，和 JavaScript 模板字符串很像。
+
+JavaScript 写法：
+
+```javascript
+`[${index}] ${doc.pageContent}`
+```
+
+Python 写法：
+
+```python
+f"[{index}] {doc.page_content}"
+```
+
+规则是：
+
+```text
+字符串前面加 f
+花括号 {...} 里面可以写变量或表达式
+Python 会先计算 {...} 里的值
+再把结果塞回字符串
+```
+
+例如：
+
+```python
+index = 1
+content = "秦始皇是秦朝的建立者"
+
+text = f"[{index}] {content}"
+
+print(text)
+```
+
+输出：
+
+```text
+[1] 秦始皇是秦朝的建立者
+```
+
+所以：
+
+```python
+f"[{index}] {doc.page_content[:800]}"
+```
+
+可以拆成：
+
+```text
+先算 {index}
+  -> 比如 1
+
+再算 {doc.page_content[:800]}
+  -> 比如 "秦始皇是秦朝的建立者..."
+
+最后拼成
+  -> "[1] 秦始皇是秦朝的建立者..."
+```
+
+`doc.page_content[:800]` 也是一个表达式：
+
+```text
+从 doc 的 page_content 字段里，取前 800 个字符。
+```
+
+一句话：
+
+```text
+enumerate 负责编号；f-string 负责拼每条文本；join 负责把多条文本拼成一个工具输出字符串。
+```
 
 ### 坑 4：docstring 写得太抽象
 

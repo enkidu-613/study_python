@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-08T03:37:29+08:00",
+  "updated_at": "2026-07-10T00:00:00+08:00",
   "stage_id": "langchain-agents",
-  "phase": "teaching",
-  "pending_action": "阅读第 28 章 LangChain Agent 工具调用；先理解 create_agent 如何封装 Function Calling loop，再跟写最小知识库搜索 Agent。",
-  "context": "第 27 章 LangChain 对话记忆已通过：考试 86/100。第 28 章教学文档已生成到 md/28_LangChain_Agent工具调用.md，主线是 create_agent + @tool + search_knowledge_base，并说明 thread_id/checkpointer 如何承接上一章记忆概念。",
+  "phase": "practicing",
+  "pending_action": "完成 md/试卷/试卷_LangChain_Agent工具调用.md；重点检查 create_agent/invoke、tools 与 TOOLS、@tool、Tool 输出、AIMessage.content、checkpointer/thread_id、state/messages。",
+  "context": "第 28 章 LangChain Agent 工具调用已完成跟写和多轮排错：VSCode 解释器已指向 .venv；app/routers/langchain_agent.py 已修复 .content 和 invoke config；用户确认可以开始考试。",
   "energy": null,
   "time_budget_minutes": null
 }

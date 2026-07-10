@@ -1,7 +1,36 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-08T03:50:00+08:00",
+  "updated_at": "2026-07-10T00:00:00+08:00",
   "entries": [
+    {
+      "id": "dialog-83",
+      "date": "2026-07-10",
+      "title": "LangChain Agent 跟写、报错修复、状态记忆边界与考前准备",
+      "stage_id": "langchain-agents",
+      "entry_type": "dialog",
+      "topics": [
+        "LangChain Agent",
+        "create_agent",
+        "agent.invoke",
+        "@tool",
+        "Tool",
+        "TOOLS",
+        "TOOL_FUNCTIONS",
+        "docstring",
+        "f-string",
+        "join",
+        "AIMessage",
+        "checkpointer",
+        "thread_id",
+        "state",
+        "messages",
+        "LangGraph",
+        "LangChain Memory",
+        "VSCode Interpreter"
+      ],
+      "summary": "完成第 28 章 LangChain Agent 跟写和考前排错：讲清 create_agent/invoke、tools 与 TOOLS、@tool docstring、Document 格式化、f-string/join、safe_limit、AIMessage.content、checkpointer/thread_id、state/messages 与传统 memory 的边界；修复 VSCode 解释器配置、Agent 代码取值和 invoke config 问题；用户确认可以开始考试。",
+      "file_path": ".trae/memory/conversations/2026-07-10.md"
+    },
     {
       "id": "dialog-82",
       "date": "2026-07-08",

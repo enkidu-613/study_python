@@ -1,6 +1,6 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-08 after LangChain conversation memory completion.
+Last updated from `.trae` on 2026-07-10 during LangChain Agent exam preparation.
 
 ## Current Stage
 
@@ -46,6 +46,7 @@ Latest verified learning result:
 - AI Agents basics exam scored 96/100 on 2026-07-04 after grading correction and passed. Minor review points: `required` and `properties` are siblings under `parameters`, and `TOOLS` is model-facing while `TOOL_FUNCTIONS` is backend-facing.
 - Function Calling execution loop exam scored 92/100 on 2026-07-06 and passed after correction. Review points: tool execution is followed by a backend-initiated second model request with `role="tool"` in `messages`; model-provided `arguments` require JSON format, field, type, range, and permission validation.
 - LangChain conversation memory exam scored 86/100 on 2026-07-08 and passed after correction. Review points: model memory is application-managed by saving history and injecting it into future `messages`; `llm` must be created first, in this project with `ChatDeepSeek(...)` and `MODEL_NAME`, `MODEL_API_URL`, `MODELSCOPE_API_KEY`.
+- The LangChain Agent follow-up and debugging conversation was archived as `dialog-83` on 2026-07-10 and synced across `.trae`, `.reasonix`, and `.codex`. The user is ready for the chapter exam; focus points are `create_agent` vs `agent.invoke`, `tools=[@tool function]` vs `TOOLS`, docstring, tool output formatting, `AIMessage.content`, `checkpointer/thread_id`, and `state/messages` boundaries.
 - The LangChain Agent teaching document conversation was archived as `dialog-82` on 2026-07-08 and synced across `.trae`, `.reasonix`, and `.codex`. Current chapter is `md/28_LangChain_Agent工具调用.md`, focusing on `create_agent`, `@tool`, knowledge-base search tools, `thread_id`, and `checkpointer`.
 - The AI Agents / Function Calling bridge conversation was archived as `dialog-81` on 2026-07-04 and synced across `.trae`, `.reasonix`, and `.codex`.
 - The RAG Evaluation conversation was archived as `dialog-80` on 2026-07-03 and synced across `.trae`, `.reasonix`, and `.codex`.

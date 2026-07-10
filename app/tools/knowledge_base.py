@@ -1,3 +1,5 @@
+from langchain_core.tools import tool
+
 from app.embedding import get_langchain_embeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document as LCDocument
@@ -24,9 +26,26 @@ def get_vector_store():
         )
     return _vector_store
 
-
-def search_knowledge_base(query: str, limit: int = 3) -> list[LCDocument]:
+@tool
+def search_knowledge_base(query: str, limit: int = 3) -> str:
     """
     在知识库中搜索相关文档切片，并返回结果列表。
     """
-    return get_vector_store().similarity_search(query, k=limit)
+    safe_limit = max(1, min(limit, 5))  # 限制返回的文档数量在1到5之间
+    docs = get_vector_store().similarity_search(query, k=safe_limit)
+
+    if not docs:
+        return "没有找到相关的文档。"
+    
+    formatted_docs = []
+    
+    for index,doc in enumerate(docs, start=1):
+        metadata = doc.metadata
+        title = metadata.get("title", "未知标题")
+        source = metadata.get("source", "未知来源")
+        chunk_index = metadata.get("chunk_index", "未知索引")
+        content = doc.page_content[:800]  # 截取前800个字符
+        text = f"[{index}] 来源：《{title}》({source},chunk={chunk_index})\n{content}"
+        formatted_docs.append(text)
+    
+    return "\n\n".join(formatted_docs)
