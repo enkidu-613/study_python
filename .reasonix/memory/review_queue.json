@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-08T03:37:29+08:00",
+  "updated_at": "2026-07-10T08:53:00+08:00",
   "interval_days": [
     1,
     3,
@@ -9,6 +9,28 @@
     30
   ],
   "items": [
+    {
+      "id": "review-20260710-langchain-agent-checkpointer-state",
+      "stage_id": "langchain-agents",
+      "topic": "checkpointer / thread_id / state 边界",
+      "prompt": "为什么没有 checkpointer 时每次 invoke 都从新 state 开始？thread_id、checkpointer、messages 各负责什么？",
+      "answer": "checkpointer 按 thread_id 保存和恢复 Agent state 的快照；messages 是 state 中最重要的字段。没有 checkpointer 就没有跨 invoke 的恢复；只传 thread_id 也没有可恢复的存档。",
+      "interval_index": 0,
+      "due_at": "2026-07-11",
+      "status": "active",
+      "source": "md/试卷/试卷_LangChain_Agent工具调用.md"
+    },
+    {
+      "id": "review-20260710-langchain-agent-result-content",
+      "stage_id": "langchain-agents",
+      "topic": "Agent result 与 AIMessage.content",
+      "prompt": "为什么最终回答通常写成 result[\"messages\"][-1].content，而不是 result[\"messages\"][-1][\"content\"]？",
+      "answer": "result 是字典形式的 Agent state，先用 [] 取 messages 列表；最后一项是 AIMessage 对象，不支持 [] 下标取 content，要用对象属性 .content。",
+      "interval_index": 0,
+      "due_at": "2026-07-11",
+      "status": "active",
+      "source": "md/试卷/试卷_LangChain_Agent工具调用.md"
+    },
     {
       "id": "review-20260628-prompt-advanced-ainvoke-dict-key",
       "stage_id": "prompt-advanced",

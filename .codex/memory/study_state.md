@@ -1,14 +1,14 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-10 during LangChain Agent exam preparation.
+Last updated from `.trae` on 2026-07-10 after the LangChain Agent exam.
 
 ## Current Stage
 
-- Current stage id: `langchain-agents`
-- Current topic: LangChain Agent tool calling: combining tools, model, memory, and execution control
-- Current document: `md/28_LangChain_Agent工具调用.md`
-- Status: in_progress
-- Previous stage: `langchain-memory`, completed on 2026-07-08 with exam score 86/100
+- Current stage id: `langgraph`
+- Current topic: LangGraph 状态工作流：把 Agent 的 state、节点、边和 checkpoint 变成可控流程
+- Current document: 待创建
+- Status: pending
+- Previous stage: `langchain-agents`, completed on 2026-07-10 with normalized exam score 95/100
 
 ## Completed Core Path
 
@@ -48,6 +48,7 @@ Latest verified learning result:
 - LangChain conversation memory exam scored 86/100 on 2026-07-08 and passed after correction. Review points: model memory is application-managed by saving history and injecting it into future `messages`; `llm` must be created first, in this project with `ChatDeepSeek(...)` and `MODEL_NAME`, `MODEL_API_URL`, `MODELSCOPE_API_KEY`.
 - The LangChain Agent follow-up and debugging conversation was archived as `dialog-83` on 2026-07-10 and synced across `.trae`, `.reasonix`, and `.codex`. The user is ready for the chapter exam; focus points are `create_agent` vs `agent.invoke`, `tools=[@tool function]` vs `TOOLS`, docstring, tool output formatting, `AIMessage.content`, `checkpointer/thread_id`, and `state/messages` boundaries.
 - The LangChain Agent teaching document conversation was archived as `dialog-82` on 2026-07-08 and synced across `.trae`, `.reasonix`, and `.codex`. Current chapter is `md/28_LangChain_Agent工具调用.md`, focusing on `create_agent`, `@tool`, knowledge-base search tools, `thread_id`, and `checkpointer`.
+- LangChain Agent exam passed on 2026-07-10: 90/95 valid points, normalized to 95/100 because one prompt exposed its full answer and the declared total was inconsistent. Lightweight review: `enumerate` defaults to 0 unless `start=1`; `join` concatenates generated strings; final agent text is `result["messages"][-1].content`.
 - The AI Agents / Function Calling bridge conversation was archived as `dialog-81` on 2026-07-04 and synced across `.trae`, `.reasonix`, and `.codex`.
 - The RAG Evaluation conversation was archived as `dialog-80` on 2026-07-03 and synced across `.trae`, `.reasonix`, and `.codex`.
 

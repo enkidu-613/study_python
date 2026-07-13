@@ -13,6 +13,7 @@ SESSION_PATHS = [
     PROJECT_ROOT / ".trae/memory/learning_session.json",
     PROJECT_ROOT / ".reasonix/memory/learning_session.json",
 ]
+LEARNING_PLAN_PATH = PROJECT_ROOT / ".trae/memory/learning_plan.json"
 REVIEW_QUEUE_PATHS = [
     PROJECT_ROOT / ".trae/memory/review_queue.json",
     PROJECT_ROOT / ".reasonix/memory/review_queue.json",
@@ -57,7 +58,10 @@ def test_learning_session_state_is_synced_and_resumable():
     ]
 
     assert sessions[0] == sessions[1]
-    assert sessions[0]["stage_id"] == "prompt-advanced"
+    learning_plan = json.loads(LEARNING_PLAN_PATH.read_text(encoding="utf-8"))
+    planned_stage_ids = {stage["id"] for stage in learning_plan["stages"]}
+
+    assert sessions[0]["stage_id"] in planned_stage_ids
     assert sessions[0]["phase"] in {
         "idle",
         "teaching",

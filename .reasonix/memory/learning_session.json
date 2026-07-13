@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-10T00:00:00+08:00",
-  "stage_id": "langchain-agents",
-  "phase": "practicing",
-  "pending_action": "完成 md/试卷/试卷_LangChain_Agent工具调用.md；重点检查 create_agent/invoke、tools 与 TOOLS、@tool、Tool 输出、AIMessage.content、checkpointer/thread_id、state/messages。",
-  "context": "第 28 章 LangChain Agent 工具调用已完成跟写和多轮排错：VSCode 解释器已指向 .venv；app/routers/langchain_agent.py 已修复 .content 和 invoke config；用户确认可以开始考试。",
+  "updated_at": "2026-07-10T08:53:00+08:00",
+  "stage_id": "langgraph",
+  "phase": "idle",
+  "pending_action": "开始 LangGraph 状态工作流；先用本章 Agent 的 state、messages、checkpointer 和 thread_id 作为连接点。",
+  "context": "第 28 章 LangChain Agent 工具调用考试通过，归一化得分 95/100。保留轻量复习：enumerate 默认从 0、join 的拼接方向、result[\"messages\"][-1].content。",
   "energy": null,
   "time_budget_minutes": null
 }

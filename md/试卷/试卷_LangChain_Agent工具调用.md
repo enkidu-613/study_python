@@ -40,7 +40,7 @@
 
 ### 5. 只要创建了 Agent，不配置 `checkpointer` 也会自动记住上一轮对话。
 
-我的答案：不，必须陪许
+我的答案：不，必须配置，checkpointer是保存state最后状态的快照，不配置checkpointer和therad_id的话，agent每次运行都不会合并新消息，而是以一个新state/会话状态来回答
 
 
 ---
@@ -62,6 +62,7 @@ ToolMessage / tool output
 
 我的答案：
 
+用户消息请求模型，模型读取tools，模型生成tool_call，然后后端调用后端工具函数，工具函数返回的值经过文本话处理后返回给tool message，然后塞进state里，模型根据这个做出最终回答
 
 ---
 
@@ -76,7 +77,7 @@ from langchain.tools import tool
 
 @tool
 def search_project_knowledge(query: str, limit: int = 3) -> str:
-    """______________________________"""
+    """当用户回答需要查询项目向量库时，使用此工具函数"""
     docs = search_knowledge_base(query=query, limit=min(limit, 5))
     if not docs:
         return "没有检索到相关内容。"
@@ -88,8 +89,8 @@ def search_project_knowledge(query: str, limit: int = 3) -> str:
 
 
 agent = create_agent(
-    model=______,
-    tools=[______],
+    model=llm,
+    tools=[search_project_knowledge],
     system_prompt="你是一个严谨的知识库助手。",
 )
 
@@ -104,7 +105,7 @@ result = agent.invoke(
     }
 )
 
-answer = result["messages"][-1].______
+answer = result["messages"][-1].content
 ```
 
 我的答案：
@@ -127,6 +128,16 @@ agent = create_agent(
 
 我的答案：
 
+```python
+@tool
+def tool_fun():
+	#......
+	
+agent = create_agent(
+	model=llm;
+	tools=[tool_fun]
+)
+```
 
 ---
 
@@ -151,6 +162,16 @@ f"[{index}] {doc.page_content[:800]}"
 
 我的答案：
 
+1.  给docs 加上序号，默认值为1
+2. 模版字符串，index序号占位符 和 chunks存储的原文，截取800个字符
+3. 将循环的输出赋值给模板字符串，然后拼接
+```python
+# 这是输出格式
+"""
+[1] xxxxxxx...
+[2] xxxxxxx....
+"""
+```
 
 ---
 
@@ -172,6 +193,7 @@ answer = result["messages"][-1]["content"]
 
 我的答案：
 
+[] 是取dict 的 但是result的message是object，要使用 . 取值
 
 ---
 
@@ -201,7 +223,17 @@ second_result = agent.invoke(
 请解释为什么错，并写出应该补什么。
 
 我的答案：
-
+```python
+config = {
+	"configurable":{
+		"thread_id":"user-1-thread-1"
+	}
+}
+second_result = agent.invoke(
+    {"messages": [{"role": "user", "content": "上面的对话说了什么？"}]}
+    config = config
+)
+```
 
 ---
 
@@ -215,6 +247,9 @@ second_result = agent.invoke(
 
 我的答案：
 
+1. 可以理解为一个state对象，里面有调用工具的步骤和 message 历史记录等等
+2. 是agent的对话历史记录
+3. agent模式下是可以承担历史记录的作用，但是如果使用工具，那么还回有工具的执行轨迹
 
 ---
 
@@ -240,7 +275,10 @@ thread_id
 后端调用 Agent 时，`thread_id` 可以怎么设置？为什么？
 
 我的答案：
-
+1. 用户 id
+2. 作为会话id给前端使用
+3. agent历史记录id
+4. 如果前端使用conversation_id调用后端的时候，使用conversation_id查询关联的tread_id,并给agent使用
 
 ---
 
@@ -261,3 +299,27 @@ thread_id
 ## 批改区
 
 > 等你答完后，把答案发给我。我会把评分、错题、补救建议追加到这里。
+
+### 批改结果（2026-07-10）
+
+**最终评定：通过，95/100。**
+
+本卷的标称总分是 100 分，但分项实际相加为 110 分；第三题还把完整答案直接写在题干里，不能作为有效考题。因此第三题作废，按其余 95 分有效题归一化：你拿到 90/95，折算为 95/100。
+
+| 题目 | 评分 | 结论 |
+| --- | ---: | --- |
+| 一、判断题 | 20/20 | 全对；`create_agent`、`invoke`、`@tool`、`checkpointer` 的边界清楚。 |
+| 二、Agent 工具流程 | 15/15 | 主链路正确：模型生成 tool call，后端执行工具，ToolMessage 回到 state，再由模型生成最终回答。 |
+| 三、最小骨架 | 作废 | 题干已给出完整实现，无法检验填空能力。 |
+| 四、`TOOLS` 与 `tools` | 9/10 | 知道要传 `@tool` 函数；补充一点：旧 `TOOLS` 是模型可读 schema，不能直接当作 LangChain 工具对象。 |
+| 五、Document 格式化 | 8/10 | 输出格式和 f-string 都对；`start=1` 是指定从 1 开始，`enumerate` 不传 `start` 时默认从 0 开始；`join` 是收集循环产出的多条字符串并拼接。 |
+| 六、AIMessage 取值 | 8/10 | 原因正确；完整写法应为 `answer = result["messages"][-1].content`。 |
+| 七、缺少 thread_id | 10/10 | 正确补上 `config` 并传给 `invoke`。 |
+| 八、state/messages 边界 | 10/10 | 正确理解 state 包含消息和工具轨迹，传统 history 只关注对话消息。 |
+| 九、三类 ID | 10/10 | 业务映射合理：前端 conversation_id 可映射或直接作为 Agent thread_id。 |
+
+### 只需保留的复习点
+
+1. `enumerate(docs, start=1)` 才从 1 开始；不传 `start` 的默认值是 0。
+2. `"\n\n".join(...)` 负责把循环产生的多条字符串拼成一个字符串，不是把循环输出“赋值给模板字符串”。
+3. `result` 是字典形式的 Agent state；`result["messages"][-1]` 是 `AIMessage` 对象，因此最终正文取 `.content`。
