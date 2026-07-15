@@ -3,15 +3,20 @@ from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
 from app.tools.knowledge_base import search_knowledge_base
 from dotenv import load_dotenv
+from pydantic import SecretStr
 
 import os
 
 load_dotenv()
 
+api_key = os.getenv("MODELSCOPE_API_KEY")
+if not api_key:
+    raise RuntimeError("MODELSCOPE_API_KEY 未配置")
+
 llm = ChatDeepSeek(
     model=os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2"),
     api_base=os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1"),
-    api_key=os.getenv("MODELSCOPE_API_KEY"),
+    api_key=SecretStr(api_key),
     temperature=0.7,
     streaming=False,
 )

@@ -11,7 +11,7 @@ LangChain RAG 路由：纯 LangChain 原生实现
 
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, SecretStr
 from sqlalchemy.orm import Session
 from typing import AsyncIterator
 import json
@@ -39,6 +39,8 @@ load_dotenv()
 
 MODELSCOPE_BASE_URL = os.getenv("MODEL_API_URL", "https://api-inference.modelscope.cn/v1")
 MODELSCOPE_API_KEY = os.getenv("MODELSCOPE_API_KEY")
+if not MODELSCOPE_API_KEY:
+    raise RuntimeError("MODELSCOPE_API_KEY 未配置")
 LLM_MODEL = os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-V3.2")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL_NAME", "Qwen/Qwen3-Embedding-8B")
 
@@ -49,7 +51,7 @@ MAX_OUTPUT_TOKENS = 2000
 llm = ChatDeepSeek(
     model=LLM_MODEL,
     api_base=MODELSCOPE_BASE_URL,
-    api_key=MODELSCOPE_API_KEY,
+    api_key=SecretStr(MODELSCOPE_API_KEY),
     temperature=0.7,
     streaming=True,
     model_kwargs={"extra_body": {"thinking": {"type": "enabled"}}},

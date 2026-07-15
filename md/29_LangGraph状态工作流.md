@@ -88,16 +88,16 @@ START
 
 ## 准确术语
 
-| 名称 | 准确含义 | 在本章里的职责 |
-| --- | --- | --- |
-| `State` | 工作流当前共享数据的 schema | 规定节点可以读写哪些字段。 |
-| `StateGraph` | 构建状态图的 builder | 注册节点和边。 |
-| Node | 普通 Python 函数 | 读取当前 state，返回本节点要更新的字段。 |
-| Edge | 节点之间的连接规则 | 决定固定的下一步。 |
-| `START` | 框架提供的起点标记 | 指向第一个 node。 |
-| `END` | 框架提供的结束标记 | 表示流程完成。 |
-| `compile()` | 把 builder 编译成可运行 graph | 检查基本图结构，并可接收 runtime 配置。 |
-| `invoke()` | 执行编译后的 graph | 传入初始 state，返回最终 state。 |
+| 名称           | 准确含义                   | 在本章里的职责                  |
+| ------------ | ---------------------- | ------------------------ |
+| `State`      | 工作流当前共享数据的 schema      | 规定节点可以读写哪些字段。            |
+| `StateGraph` | 构建状态图的 builder         | 注册节点和边。                  |
+| Node         | 普通 Python 函数           | 读取当前 state，返回本节点要更新的字段。  |
+| Edge         | 节点之间的连接规则              | 决定固定的下一步。                |
+| `START`      | 框架提供的起点标记              | 指向第一个 node。              |
+| `END`        | 框架提供的结束标记              | 表示流程完成。                  |
+| `compile()`  | 把 builder 编译成可运行 graph | 检查基本图结构，并可接收 runtime 配置。 |
+| `invoke()`   | 执行编译后的 graph           | 传入初始 state，返回最终 state。   |
 
 ### 先分清三个容易混的词
 
@@ -133,7 +133,7 @@ poetry add langgraph
 
 马上验证当前 Poetry 环境能导入它：
 
-```bash
+```bashr
 poetry run python -c "from langgraph.graph import StateGraph; print('LangGraph import ok')"
 ```
 
@@ -301,7 +301,7 @@ state 负责传递工作数据
 graph = builder.compile()
 ```
 
-`builder` 只是你正在搭建的图纸。`compile()` 把图纸变成可运行的 graph，并做基本结构检查，例如节点有没有正确接入图。
+`builder` 只是你正在搭建的图纸。`compile()` 把图纸变成可运行的 graph(图表)，并做基本结构检查，例如节点有没有正确接入图。
 
 ```python
 result = graph.invoke({"question": " Checkpointer 是什么？ "})
