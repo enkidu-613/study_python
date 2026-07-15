@@ -14,6 +14,29 @@ SESSION_PATHS = [
     PROJECT_ROOT / ".reasonix/memory/learning_session.json",
 ]
 LEARNING_PLAN_PATH = PROJECT_ROOT / ".trae/memory/learning_plan.json"
+LANGGRAPH_CHAPTER_PATH = PROJECT_ROOT / "md/29_LangGraph状态工作流.md"
+FUTURE_CHAPTERS = {
+    PROJECT_ROOT / "md/30_Dify平台实战.md": [
+        "工作流画布",
+        "知识检索",
+        "POST /workflows/run",
+        "具体锚点优先",
+    ],
+    PROJECT_ROOT / "md/31_Multi-Agent与复杂工作流.md": [
+        "Subagent",
+        "Router",
+        "Handoff",
+        "create_agent",
+        "具体锚点优先",
+    ],
+    PROJECT_ROOT / "md/32_HuggingFace生态.md": [
+        "Hugging Face Hub",
+        "pipeline()",
+        "InferenceClient",
+        "SentenceTransformer",
+        "具体锚点优先",
+    ],
+}
 REVIEW_QUEUE_PATHS = [
     PROJECT_ROOT / ".trae/memory/review_queue.json",
     PROJECT_ROOT / ".reasonix/memory/review_queue.json",
@@ -37,10 +60,34 @@ def test_learning_coach_contains_active_learning_contracts():
         "难度自适应",
         "最多 3 个复习项",
         "独立重写",
+        "具体锚点优先",
     ]
 
     for marker in required_markers:
         assert marker in content
+
+
+def test_langgraph_agent_mapping_shows_concrete_object_shapes_first():
+    content = LANGGRAPH_CHAPTER_PATH.read_text(encoding="utf-8")
+
+    required_markers = [
+        "真实代码形态",
+        "ToolNode",
+        "普通 Python 函数",
+        "model_with_tools = llm.bind_tools(tools)",
+    ]
+
+    for marker in required_markers:
+        assert marker in content
+
+
+def test_next_three_chapters_have_concrete_learning_anchors():
+    for path, required_markers in FUTURE_CHAPTERS.items():
+        assert path.exists(), f"missing chapter: {path.name}"
+
+        content = path.read_text(encoding="utf-8")
+        for marker in required_markers:
+            assert marker in content, f"{path.name} is missing: {marker}"
 
 
 def test_learning_coach_keeps_existing_project_as_source_of_truth():

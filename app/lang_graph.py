@@ -1,7 +1,8 @@
-from typing_extensions import TypedDict
+from typing_extensions import NotRequired, TypedDict
 
-from langgraph.graph import END,START,StateGraph
+from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.graph import END, START, StateGraph
 
 class LearningState(TypedDict):
     """
@@ -9,8 +10,8 @@ class LearningState(TypedDict):
     TypedDict 含义：在这里让LearningState，成为有类型约束的字典结构
     """
     question: str
-    normalized_question: str
-    answer: str
+    normalized_question: NotRequired[str]
+    answer: NotRequired[str]
 
 def normalize_question(state: LearningState) -> dict[str,str]:
     return {
@@ -22,7 +23,9 @@ def create_answer(state: LearningState) -> dict[str,str]:
         "answer": f"准备回答：{state['normalized_question']}"
     }
 
-builder = StateGraph(LearningState)
+# LangGraph's runtime accepts this TypedDict; the ignore targets a known
+# static-protocol mismatch in the installed type definitions.
+builder = StateGraph(LearningState)  # pyright: ignore[reportArgumentType]
 builder.add_node("normalize_question", normalize_question)
 """
 normalize_question 节点
@@ -38,13 +41,24 @@ builder.add_edge(START, "normalize_question")
 builder.add_edge("normalize_question", "create_answer")
 builder.add_edge("create_answer", END)
 
-graph = builder.compile()
+graph = builder.compile(
+    checkpointer=InMemorySaver()
+)
 """
 builder 只是正在搭建的图纸，compile把图纸变为可运行的graph（图表），并做基本结构检查
 例如节点有没有正确接入图表
 """
 
-result = graph.invoke({"question": "Dog 是什么？"})  # type: ignore[arg-type]
+config: RunnableConfig = {
+    "configurable": {
+        "thread_id": "user_1-thread-1"
+    }
+}
+
+result = graph.invoke(
+    {"question": "Dog 是什么？"},
+    config=config,
+)
 # invoke 才是真正执行
 
 print(result)

@@ -334,7 +334,7 @@ result = graph.invoke({"question": " Checkpointer 是什么？ "})
 
 ```text
 thread_id 决定恢复哪条线程
-checkpointer 负责保存和恢复 Agent state 快照
+	checkpointer 负责保存和恢复 Agent state 快照
 ```
 
 LangGraph 里这个组件放在 `compile()`：
@@ -369,35 +369,113 @@ InMemorySaver：只在当前 Python 进程内；重启服务就会丢失。
 
 ---
 
-## 第六关：它怎样映射到你的 RAG Agent
+## 第六关：先看你的 RAG Agent 里的对象长什么样
 
-你目前的代码已经有这些真实部件：
+上一章的 `create_agent(...)` 已经能工作，但它把模型、工具和循环藏在框架内部。本节先不要求你手写完整 Agent；先认清真实代码形态：每个名字到底是函数、类还是对象。
 
-| 现有部件 | 放进 LangGraph 后会是什么 |
-| --- | --- |
-| `app/tools/knowledge_base.py` 的知识库搜索 | 一个工具执行 node 的底层能力 |
-| `@tool` 包装函数 | 给模型或工具 node 调用的工具定义 |
-| `ChatDeepSeek` | 模型 node 使用的模型对象 |
-| `messages` | 聊天类 state 的一个字段 |
-| `InMemorySaver()` | 编译 graph 时可选的 checkpointer |
+### 先认四个已有或即将出现的对象
 
-后续真正的 Agent 图会接近：
+```python
+from app.tools.knowledge_base import search_knowledge_base
+from langgraph.prebuilt import ToolNode, tools_condition
+
+tools = [search_knowledge_base]
+model_with_tools = llm.bind_tools(tools)
+```
+
+| 代码 | 它是什么 | 谁创建它 | 用途 |
+| --- | --- | --- | --- |
+| `search_knowledge_base` | `@tool` 装饰后的 Tool 对象 | 你在 `knowledge_base.py` 里定义函数，再由 `@tool` 包装 | 描述工具名称、参数和说明，并能真正搜索知识库。 |
+| `tools` | Tool 对象列表 | 你自己创建的 list | 告诉模型和工具节点：当前允许使用哪些工具。 |
+| `llm` | `ChatDeepSeek(...)` 创建的模型对象 | 你在路由中创建 | 能调用大模型，但还不知道有哪些工具可用。 |
+| `model_with_tools` | 绑定了工具说明的模型对象 | `llm.bind_tools(tools)` 返回 | 模型现在可以在回答中提出 `tool_call`。 |
+
+`bind_tools(...)` 不是执行工具。它只是把工具的 schema 交给模型，作用和你第 26 章手写 Function Calling 时“把 tools 发给模型”相同。
+
+### Model Node 是你写的普通 Python 函数
+
+```python
+from langgraph.graph import MessagesState
+
+
+def call_model(state: MessagesState):
+    response = model_with_tools.invoke(state["messages"])
+    return {"messages": [response]}
+```
+
+`call_model` 不是 LangGraph 内置类。它就是一个普通 Python 函数，注册到图以后才成为一个 model node：
+
+```python
+builder.add_node("model", call_model)
+```
+
+它读取 `state["messages"]`，调用模型，然后把模型的新消息写回 State。模型的新消息可能是普通回答，也可能携带 `tool_call`。
+
+### Tool Node 是 LangGraph 提供的预制对象
+
+```python
+tool_node = ToolNode(tools)
+
+builder.add_node("tools", tool_node)
+```
+
+`ToolNode` 是一个类；`ToolNode(tools)` 创建的是能执行工具的对象。它读取模型消息里的 `tool_call`，找到对应的 `search_knowledge_base`，调用它，并把工具结果作为消息写回 State。
+
+你当然也可以自己写一个普通函数来执行工具，但 `ToolNode` 已经处理了常见的工具调用、结果回写和错误处理。入门阶段先使用它，后面再拆开手写。
+
+### 再把对象连成一张图
+
+```python
+from langgraph.graph import END, START, MessagesState, StateGraph
+from langgraph.prebuilt import ToolNode, tools_condition
+
+
+builder = StateGraph(MessagesState)
+builder.add_node("model", call_model)
+builder.add_node("tools", ToolNode(tools))
+
+builder.add_edge(START, "model")
+builder.add_conditional_edges("model", tools_condition)
+builder.add_edge("tools", "model")
+
+graph = builder.compile()
+```
+
+`tools_condition` 是 LangGraph 提供的路由函数：它查看 model node 最新返回的消息。
 
 ```text
-START
-  -> model_node
-  -> 判断模型是否提出 tool_call
-     -> 有：tool_node -> model_node
+有 tool_call  -> 去 "tools"
+没有 tool_call -> 去 END
+```
+
+因此真实执行路径是：
+
+```text
+用户消息
+  -> call_model（普通函数，调用绑定工具后的模型）
+  -> tools_condition（查看模型是否提出 tool_call）
+     -> 有：ToolNode(tools) 执行 search_knowledge_base
+           -> 工具结果写回 messages
+           -> call_model 再次调用模型，生成最终回答
      -> 无：END
 ```
 
-这里最重要的安全边界没有变：
+这正是你已学过的 Function Calling loop。区别只是：第 26 章你手写“判断、找函数、执行、回传”；这里 LangGraph 用 Node 和 Edge 把同一流程显式画出来。
 
-```text
-模型 node 只能提出 tool_call。
-工具 node 才执行 Python 函数。
-LangGraph 负责把两者连接成可见流程，不能替你跳过参数校验、权限校验或高风险确认。
-```
+### 和你当前 `create_agent(...)` 的关系
+
+| 你当前代码 | 显式 LangGraph 图里的对应部分 |
+| --- | --- |
+| `ChatDeepSeek(...)` | `llm` |
+| `tools=[search_knowledge_base]` | `tools`，再通过 `llm.bind_tools(tools)` 交给模型 |
+| `create_agent(...)` | 替你封装 `call_model`、`ToolNode`、条件边和循环 |
+| `checkpointer=InMemorySaver()` | 编译图时传给 `graph.compile(checkpointer=...)` |
+
+### 本节边界
+
+这节的目标是认得真实代码形态和调用链，不要求你现在复制运行完整图。`MessagesState`、`tools_condition` 和完整 Agent 实战会在下一章逐个写出来；现在只需能指出：哪个是普通函数、哪个是框架类、哪个对象真正执行工具。
+
+安全边界没有变：模型 node 只能提出 `tool_call`；`ToolNode` 才执行 Python 工具。LangGraph 不能替你跳过参数校验、权限校验或高风险确认。
 
 ---
 
