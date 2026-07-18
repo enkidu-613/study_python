@@ -441,12 +441,29 @@ builder.add_edge("tools", "model")
 graph = builder.compile()
 ```
 
-`tools_condition` 是 LangGraph 提供的路由函数：它查看 model node 最新返回的消息。
+注意：`builder.add_edge("tools", "model")` 不是流程终止，而是把工具结果送回模型继续处理。这里先结束的是“图的节点和边定义”，下一步本来应当是 `compile()`，再下一步才是 `graph.invoke(...)`。本节为了先看懂对象形状，暂不要求你继续完成真实 Agent 的调用。
+
+### `tools_condition`：决定模型下一步去哪
+
+`tools_condition` 是 LangGraph 提供的路由函数。它只检查一件事：模型刚才的消息里有没有 `tool_call`。
 
 ```text
 有 tool_call  -> 去 "tools"
 没有 tool_call -> 去 END
 ```
+
+因此本例不需要手写 `builder.add_edge("model", END)`：`tools_condition` 已经负责在“没有新工具调用”时结束流程。`END` 不是普通业务函数，而是 LangGraph 提供的结束标记。
+
+这里的“没有 tool_call”不是说模型没有输出内容。模型可能已经生成了完整的普通回答：
+
+```text
+model 节点等待模型完成本次响应
+  -> 得到 AIMessage(content="最终回答", tool_calls=[])
+  -> tools_condition 发现没有 tool_call
+  -> 走 END，但 AIMessage 的回答已经保留在 State/messages 中
+```
+
+`tools_condition` 只会在 `model` 节点完成一次响应后运行，不会在模型生成过程中打断模型。普通回答已经写入 `messages`，再走 `END`；`END` 只结束后续节点，不会删除回答。
 
 因此真实执行路径是：
 
@@ -461,6 +478,22 @@ graph = builder.compile()
 ```
 
 这正是你已学过的 Function Calling loop。区别只是：第 26 章你手写“判断、找函数、执行、回传”；这里 LangGraph 用 Node 和 Edge 把同一流程显式画出来。
+
+### 多次调用工具时如何循环
+
+一次工具调用不是整个流程的终点。模型拿到工具结果后，可能继续提出另一个 `tool_call`；只要还有 `tool_call`，就会再次经过 `tools` 节点，再回到 `model`：
+
+```text
+model：调用 search_weather
+  -> tools：执行并返回天气
+  -> model：根据天气，继续调用 search_calendar
+  -> tools：执行并返回日历
+  -> model：根据两个结果生成普通回答
+  -> tools_condition：发现没有 tool_call
+  -> END
+```
+
+所以 `builder.add_edge("tools", "model")` 形成的是循环回边，不是“工具只执行一次”。真正结束的条件是：某次 `model` 响应中没有新的 `tool_call`。如果图一直产生工具调用而始终不结束，LangGraph 会在达到递归限制后报错；生产代码还应限制工具次数、校验参数并处理异常。
 
 ### 和你当前 `create_agent(...)` 的关系
 
