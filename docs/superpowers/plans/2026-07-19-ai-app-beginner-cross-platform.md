@@ -25,10 +25,10 @@
 - Modify: `md/新手需要学习的前置知识/01_电脑文件与开发环境.md`
 - Modify: `md/新手需要学习的前置知识/02_终端命令与程序运行.md`
 
-- [ ] **Step 1: Add the supported operating systems and the “choose your column” rule to README.**
-- [ ] **Step 2: Add Windows, macOS, and Linux development-environment entry points and path examples to chapter 01.**
-- [ ] **Step 3: Replace macOS-default terminal instructions in chapter 02 with PowerShell and macOS/Linux command matrices for opening a terminal, locating a project, listing files, and running Python.**
-- [ ] **Step 4: Verify command blocks contain `python hello.py` for Windows and `python3 hello.py` for macOS/Linux.**
+- [x] **Step 1: Add the supported operating systems and the “choose your column” rule to README.**
+- [x] **Step 2: Add Windows, macOS, and Linux development-environment entry points and path examples to chapter 01.**
+- [x] **Step 3: Replace macOS-default terminal instructions in chapter 02 with PowerShell and macOS/Linux command matrices for opening a terminal, locating a project, listing files, and running Python.**
+- [x] **Step 4: Verify command blocks contain `python hello.py` for Windows and `python3 hello.py` for macOS/Linux.**
 
 Run:
 
@@ -45,11 +45,11 @@ Expected: all three operating systems appear; both Python execution commands app
 - Modify: `md/新手需要学习的前置知识/07_Git与GitHub_保存代码历史.md`
 - Modify: `md/新手需要学习的前置知识/09_数据库与SQL入门.md`
 
-- [ ] **Step 1: Add side-by-side virtual-environment creation, activation, and package commands to chapter 06.**
-- [ ] **Step 2: Explain PowerShell execution-policy failure safely: use a process-scoped bypass only when the learner understands the message, then activate the local `.venv`.**
-- [ ] **Step 3: Add Git cross-platform and Windows-path notes to chapter 07 without changing Git commands.**
-- [ ] **Step 4: Add three-system terminal guidance and a no-install fallback to chapter 09.**
-- [ ] **Step 5: Audit all curriculum Shell examples for an accompanying PowerShell or macOS/Linux form.**
+- [x] **Step 1: Add side-by-side virtual-environment creation, activation, and package commands to chapter 06.**
+- [x] **Step 2: Explain PowerShell execution-policy failure safely: use a process-scoped bypass only when the learner understands the message, then activate the local `.venv`.**
+- [x] **Step 3: Add Git cross-platform and Windows-path notes to chapter 07 without changing Git commands.**
+- [x] **Step 4: Add three-system terminal guidance and a no-install fallback to chapter 09.**
+- [x] **Step 5: Audit all curriculum Shell examples for an accompanying PowerShell or macOS/Linux form.**
 
 Run:
 
@@ -64,9 +64,9 @@ Expected: the virtual-environment activation pair and three-system instructions 
 **Files:**
 - Modify: `docs/superpowers/plans/2026-07-19-ai-app-beginner-cross-platform.md`
 
-- [ ] **Step 1: Run a Markdown audit for all three operating systems, required activation commands, teaching-contract headings, relative links, and Python code syntax.**
-- [ ] **Step 2: Confirm no chapter presents macOS as the default operating system or requires WSL.**
-- [ ] **Step 3: Mark this plan complete only after the audit passes.**
+- [x] **Step 1: Run a Markdown audit for all three operating systems, required activation commands, teaching-contract headings, relative links, and Python code syntax.**
+- [x] **Step 2: Confirm no chapter presents macOS as the default operating system or requires WSL.**
+- [x] **Step 3: Mark this plan complete only after the audit passes.**
 
 Run:
 

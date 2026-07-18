@@ -21,7 +21,7 @@
 
 ## 最小模板：完成第一次提交
 
-进入你的项目目录后执行：
+先在自己系统的终端进入项目目录：Windows PowerShell 使用 `cd $HOME\Documents\ai-beginner`；macOS/Linux 使用 `cd ~/Documents/ai-beginner`。进入后，下面的 Git 命令在三个系统中完全相同：
 
 ```bash
 git init
@@ -62,6 +62,7 @@ git status
 - 以为 GitHub 等于 Git：没有网络也能使用本地 Git。
 - 提交后继续修改却以为已保存：新的修改还在工作区，需要新提交。
 - 已提交密钥才添加 `.gitignore`：`.gitignore` 不会删除历史中的秘密，应立刻轮换该密钥。
+- Windows 路径常用 `\`，macOS/Linux 常用 `/`；Git 命令本身不因系统而改变。
 
 ## 检查点
 

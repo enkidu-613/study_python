@@ -53,16 +53,27 @@ except ValueError:
 
 ## 最小模板：建立虚拟环境
 
-在项目目录执行：
+先在项目目录打开自己系统的终端，再执行对应一列：
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install requests
-python -m pip show requests
-```
+| 目标 | Windows PowerShell | macOS / Linux Shell |
+| --- | --- | --- |
+| 创建环境 | `python -m venv .venv` | `python3 -m venv .venv` |
+| 激活环境 | `.\.venv\Scripts\Activate.ps1` | `source .venv/bin/activate` |
+| 安装包 | `python -m pip install requests` | `python -m pip install requests` |
+| 检查包 | `python -m pip show requests` | `python -m pip show requests` |
 
 第一条创建 `.venv`；第二条激活它；后两条在该环境中安装并检查 `requests`。以后优先使用 `python -m pip`，确保包安装到当前 Python 对应的环境。
+
+### Windows PowerShell 出现“禁止运行脚本”怎么办
+
+如果运行激活命令时出现执行策略错误，先确认你正在项目目录且命令确实是 `.\.venv\Scripts\Activate.ps1`。只为**当前这个 PowerShell 窗口**临时允许本地环境激活：
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+关闭该窗口后这个设置自动失效。不要为了激活一个项目而修改全局执行策略，也不要下载来历不明的 `.ps1` 脚本。
 
 ## Traceback 的阅读顺序
 
@@ -73,6 +84,7 @@ python -m pip show requests
 ## 常见坑
 
 - 安装了包却仍然 `ModuleNotFoundError`：可能没有激活同一个 `.venv`。
+- Windows 使用 `.\.venv\Scripts\Activate.ps1`，macOS/Linux 使用 `source .venv/bin/activate`；两者不能互换。
 - 文件命名为 `requests.py`：会遮住第三方 `requests` 包。
 - 用 `except Exception: pass`：错误被藏起来，之后更难查。
 - 只看报错第一行：真正原因通常在最后一行。
@@ -82,7 +94,7 @@ python -m pip show requests
 - [ ] 能说出模块、虚拟环境和依赖的分工。
 - [ ] 能让 `main.py` 导入并调用另一个文件的函数。
 - [ ] 能从 Traceback 中指出自己的文件名、行号和异常类型。
-- [ ] 能创建并激活 `.venv`。
+- [ ] 能用自己系统的命令创建并激活 `.venv`。
 
 ## 小练习
 

@@ -22,11 +22,14 @@
 
 ## 最小模板：一张待办表
 
-如果本机有 SQLite，终端执行：
+先在自己系统的终端检查 SQLite。三个系统执行的命令相同；区别只在于打开终端的方式：Windows 打开 PowerShell，macOS/Linux 打开 Terminal。
 
 ```bash
+sqlite3 --version
 sqlite3 tasks.db
 ```
+
+如果第一条提示找不到 `sqlite3`，先不要为了本章临时安装一堆软件：你仍可阅读 SQL 与表设计，后续进入项目的 Python/SQLAlchemy 章节时会通过 Python 操作 SQLite。想立刻练习时，可按自己系统的官方包管理方式安装 SQLite 后再回到本章。
 
 进入 SQLite 后依次执行：
 
