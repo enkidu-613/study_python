@@ -1,4 +1,4 @@
-# 18. 创建 GitHub 仓库并首次推送
+# 22. 创建 GitHub 仓库并首次推送
 > **一句话理解：remote 是本地仓库认识的远程地址；push 把本地提交上传到该地址。**
 ## 学什么，不学什么
 学：网页建空仓库、添加 `origin`、首次 push、网页验证。 不学：分支协作。
@@ -25,4 +25,4 @@ git push -u origin main
 ## 小练习
 本地改一行、提交、再 `git push`，刷新网页确认第二次提交出现。
 ## 下一步
-[19. 克隆、同步、分支与 Pull Request 入门](19_克隆_同步_分支与PullRequest入门.md)
+[23. 克隆、同步、分支与 Pull Request 入门](23_克隆_同步_分支与PullRequest入门.md)

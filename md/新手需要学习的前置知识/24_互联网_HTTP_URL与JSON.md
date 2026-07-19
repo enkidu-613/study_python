@@ -1,4 +1,4 @@
-# 20. 互联网、HTTP、URL 与 JSON
+# 24. 互联网、HTTP、URL 与 JSON
 > **一句话理解：客户端用 HTTP 请求把 JSON 发给服务器，服务器处理后再返回 JSON。**
 ## 学什么，不学什么
 学：客户端、服务器、URL、GET/POST、状态码、JSON。 不学：前端框架。
@@ -25,4 +25,4 @@ Content-Type: application/json
 ## 小练习
 为“课程问答”设计请求 JSON（question、course_id）和响应 JSON（answer、sources）。
 ## 下一步
-[21. 数据库、SQLite 与 SQL 实操](21_数据库_SQLite与SQL实操.md)
+[25. 数据库、SQLite 与 SQL 实操](25_数据库_SQLite与SQL实操.md)

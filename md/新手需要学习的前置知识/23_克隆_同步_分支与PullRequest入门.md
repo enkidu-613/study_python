@@ -1,4 +1,4 @@
-# 19. 克隆、同步、分支与 Pull Request 入门
+# 23. 克隆、同步、分支与 Pull Request 入门
 > **一句话理解：clone 下载仓库副本，pull 获取远程更新，分支让实验不直接影响主线。**
 ## 学什么，不学什么
 学：clone、pull、branch、Pull Request。 不学：解决复杂冲突。
@@ -29,4 +29,4 @@ git push -u origin improve-readme
 ## 小练习
 创建分支，只改 README 一行，按上面流程创建 PR。
 ## 下一步
-[20. 互联网、HTTP、URL 与 JSON](20_互联网_HTTP_URL与JSON.md)
+[24. 互联网、HTTP、URL 与 JSON](24_互联网_HTTP_URL与JSON.md)
