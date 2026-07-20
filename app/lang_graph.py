@@ -38,12 +38,12 @@ builder.add_edge(START, "normalize_question")
 """
 节点之间的连接规则，决定固定的下一步
 """
-builder.add_edge("normalize_question", "create_answer")
+builder.add_edge("normalize_question", "create_answer") # 边是执行
 builder.add_edge("create_answer", END)
 
 graph = builder.compile(
     checkpointer=InMemorySaver()
-)
+) # builder状态图构建器，像是正在绘制的图纸，compile编译并构建状态图，这里不会执行Node
 """
 builder 只是正在搭建的图纸，compile把图纸变为可运行的graph（图表），并做基本结构检查
 例如节点有没有正确接入图表
@@ -55,7 +55,7 @@ config: RunnableConfig = {
     }
 }
 
-result = graph.invoke(
+result = graph.invoke( # graph 编译后可以运行的状态图，invoke执行这个状态图，这里会按照图纸顺序执行node
     {"question": "Dog 是什么？"},
     config=config,
 )

@@ -291,6 +291,33 @@ edge 负责安排下一步
 state 负责传递工作数据
 ```
 
+换成执行时序就是：
+
+```python
+builder.add_edge("normalize_question", "create_answer")
+```
+
+这行代码此刻不会执行 `normalize_question`，也不会立刻执行 `create_answer`。它只是把一条规则登记到图里：
+
+```text
+当 normalize_question 节点完成
+-> 把更新后的 state 交给 create_answer 节点
+```
+
+等你之后调用 `graph.invoke(...)`，LangGraph 才会按照这条边安排节点执行。因此，Edge 不是“做具体工作的函数”，而是图的流程连接规则。普通边指定固定下一步；条件边则会根据当前 state 或消息判断应该走哪条路。
+
+两种方法并排看：
+
+```python
+# 普通边：终点固定
+builder.add_edge("normalize_question", "create_answer")
+
+# 条件边：先运行路由函数，再根据返回值选择终点
+builder.add_conditional_edges("model", tools_condition)
+```
+
+因此，`add_edge` 的终点在注册时就确定；`add_conditional_edges` 的终点要等 `invoke()` 运行到 source 节点后，调用路由函数才能确定。
+
 别把它理解成 node 返回下一个 node 名。这个例子的固定流向由 edge 定义；“根据 state 选不同边”是条件边，后面再学。
 
 ---
@@ -302,6 +329,8 @@ graph = builder.compile()
 ```
 
 `builder` 只是你正在搭建的图纸。`compile()` 把图纸变成可运行的 graph(图表)，并做基本结构检查，例如节点有没有正确接入图。
+
+更专业地说，`compile()` 返回的是**编译后的状态图**（compiled state graph）；当前项目安装版本中的具体类型名是 `CompiledStateGraph`。因此可以这样记：`StateGraph`/`builder` 负责构建，`compile()` 负责生成可运行的状态图，`invoke()` 负责执行它。
 
 ```python
 result = graph.invoke({"question": " Checkpointer 是什么？ "})
@@ -356,6 +385,19 @@ result = graph.invoke(
 )
 ```
 
+把这行拆开看：
+
+```python
+saver = InMemorySaver()                 # 创建一个内存检查点保存器实例
+graph = builder.compile(
+    checkpointer=saver,                 # 把实例传给 compile 的 checkpointer 参数
+)
+```
+
+这里的 `checkpointer` 是 `compile()` 的**参数名**，`saver` 是传进去的**参数值**；`InMemorySaver()` 会创建一个具体的保存器对象。编译后，图在执行节点时可以把 state 快照交给这个保存器。下一次使用同一个 `thread_id` 调用图时，LangGraph 才能找到并恢复对应线程的 state。
+
+注意：`compile(checkpointer=...)` 只是给图接入保存/恢复能力，不会自动执行 Node，也不会单独生成对话记忆；真正运行仍然要调用 `graph.invoke(...)`，而启用 checkpointer 后还要在 `configurable` 中提供 `thread_id`。
+
 边界要非常准确：
 
 ```text
@@ -364,6 +406,8 @@ result = graph.invoke(
 只有 thread_id：没有组件负责保存，不能产生记忆。
 InMemorySaver：只在当前 Python 进程内；重启服务就会丢失。
 ```
+
+因此，`checkpointer` 确实让 LangGraph 获得了“保存和恢复执行历史”的能力；但它保存的是图的 `State` 快照。只有当 `State` 中包含 `messages` 字段时，聊天消息才会随快照保存。要跨进程或重启后保留数据，还需要数据库等持久化 checkpointer。
 
 本章只连接概念。下一章再决定什么状态该长期保存、什么状态只能临时保存。
 
@@ -392,6 +436,32 @@ model_with_tools = llm.bind_tools(tools)
 
 `bind_tools(...)` 不是执行工具。它只是把工具的 schema 交给模型，作用和你第 26 章手写 Function Calling 时“把 tools 发给模型”相同。
 
+为什么同一个 `tools` 要用两次？因为它们面对的是两个不同的消费者：
+
+```python
+model_with_tools = llm.bind_tools(tools)  # 给模型看：工具叫什么、参数是什么、何时使用
+tool_node = ToolNode(tools)               # 给执行器用：真正找到并调用哪个 Python 函数
+```
+
+前者解决“模型能不能提出规范的 `tool_call`”，后者解决“提出后由谁真正执行”。`ToolNode` 不会自动把工具说明发送给模型；`bind_tools` 也不会自己执行 Python 工具。
+
+```text
+没有 bind_tools：模型通常不知道可用工具，可能直接回答，工具节点没有调用可执行
+没有 ToolNode：模型可能提出 tool_call，但没有节点执行并回传工具结果
+```
+
+注意：本章使用的名字是 `model_with_tools`，不是 LangGraph 固定提供的 `call_with_tools`。`model_with_tools` 只是我们给 `llm.bind_tools(tools)` 返回对象取的变量名；如果你自己写成 `call_with_tools`，也只是本地变量改名，不会新增一个特殊函数。
+
+把上一章的 `create_agent(...)` 也放在这里对照：
+
+```python
+llm = ChatDeepSeek(...)                 # ChatDeepSeek 类创建模型实例
+agent = create_agent(model=llm, tools=tools)  # 工厂函数创建 Agent
+model_with_tools = llm.bind_tools(tools)      # 模型实例绑定工具后的对象
+```
+
+`create_agent(...)` 不是模型类，也不是 `ChatDeepSeek(...)` 的别名；它接收模型和工具，并把模型调用、工具执行和循环封装成一个 Agent。第六关把这层封装拆开，分别展示 `call_model`、`ToolNode` 和 Edge。
+
 ### Model Node 是你写的普通 Python 函数
 
 ```python
@@ -402,6 +472,8 @@ def call_model(state: MessagesState):
     response = model_with_tools.invoke(state["messages"])
     return {"messages": [response]}
 ```
+
+这里的 `call_model` 才是普通 Python 函数；函数内部调用的是 `model_with_tools.invoke(...)`。因此不要把 `call_model`、`model_with_tools` 和 `call_with_tools` 当成同一个东西。
 
 `call_model` 不是 LangGraph 内置类。它就是一个普通 Python 函数，注册到图以后才成为一个 model node：
 
@@ -441,11 +513,41 @@ builder.add_edge("tools", "model")
 graph = builder.compile()
 ```
 
+这里的 `START` 只在一次 `graph.invoke(...)` 的开头经过一次，不会被 `tools -> model` 这条回边重新触发。循环的准确位置是：
+
+```text
+START
+  -> model
+  -> tools_condition
+       ├─ 有 tool_call -> tools -> model
+       └─ 没有 tool_call -> END
+```
+
+因此，工具执行后回到的只是 `model` 节点；这个新的 `model` 响应完成后，还会再次经过 `tools_condition`。如果这次没有新的 `tool_call`，就走 `END`；如果还有新的 `tool_call`，就再次走 `tools`。
+
 注意：`builder.add_edge("tools", "model")` 不是流程终止，而是把工具结果送回模型继续处理。这里先结束的是“图的节点和边定义”，下一步本来应当是 `compile()`，再下一步才是 `graph.invoke(...)`。本节为了先看懂对象形状，暂不要求你继续完成真实 Agent 的调用。
 
 ### `tools_condition`：决定模型下一步去哪
 
 `tools_condition` 是 LangGraph 提供的路由函数。它只检查一件事：模型刚才的消息里有没有 `tool_call`。
+
+它的真实形态可以先看成一个普通函数：
+
+```python
+next_step = tools_condition(state)
+```
+
+它读取 `state["messages"]` 的最后一条消息：
+
+```text
+最后一条 AIMessage 有 tool_calls
+  -> 返回 "tools"
+
+最后一条 AIMessage 没有 tool_calls
+  -> 返回 "__end__"（内部结束标签，对应 END）
+```
+
+`builder.add_conditional_edges("model", tools_condition)` 的意思就是：模型节点执行完后，把当前 state 交给这个函数，让它返回下一步的目的地。它不执行模型、不执行工具，也不修改 State；它只负责路由判断。
 
 ```text
 有 tool_call  -> 去 "tools"
