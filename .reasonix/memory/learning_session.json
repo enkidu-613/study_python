@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-10T08:53:00+08:00",
+  "updated_at": "2026-07-20T23:25:28+08:00",
   "stage_id": "langgraph",
   "phase": "idle",
-  "pending_action": "开始 LangGraph 状态工作流；先用本章 Agent 的 state、messages、checkpointer 和 thread_id 作为连接点。",
-  "context": "第 28 章 LangChain Agent 工具调用考试通过，归一化得分 95/100。保留轻量复习：enumerate 默认从 0、join 的拼接方向、result[\"messages\"][-1].content。",
+  "pending_action": "第 29 章已完成；等待开始下一章。",
+  "context": "第 29 章初考 79/100；按学习规则复核补写通过。主干已掌握：State/Node/Edge、tools_condition、工具循环、checkpointer/thread_id，以及 Node 之间通过 State 传递字段。",
   "energy": null,
   "time_budget_minutes": null
 }

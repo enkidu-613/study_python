@@ -1,6 +1,7 @@
 from langchain_deepseek import ChatDeepSeek
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.pregel.debug import RunnableConfig
 from app.tools.knowledge_base import search_knowledge_base
 from dotenv import load_dotenv
 from pydantic import SecretStr
@@ -32,7 +33,7 @@ agent = create_agent(
     checkpointer = InMemorySaver(),  # 使用内存检查点
 )
 
-config ={
+config:RunnableConfig ={
     "configurable": {
         "thread_id": "user-1-thread-1",
     }
@@ -70,4 +71,3 @@ print("Agent Answer Second:", second_answer)
 
 for message in first_result["messages"]:
     print(type(message).__name__,message)
-

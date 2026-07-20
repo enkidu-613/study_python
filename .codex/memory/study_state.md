@@ -6,8 +6,8 @@ Last updated from `.trae` on 2026-07-10 after the LangChain Agent exam.
 
 - Current stage id: `langgraph`
 - Current topic: LangGraph 状态工作流：把 Agent 的 state、节点、边和 checkpoint 变成可控流程
-- Current document: 待创建
-- Status: pending
+- Current document: md/29_LangGraph状态工作流.md
+- Status: completed on 2026-07-20 after targeted rewrite review
 - Previous stage: `langchain-agents`, completed on 2026-07-10 with normalized exam score 95/100
 
 ## Completed Core Path

@@ -473,6 +473,40 @@ def call_model(state: MessagesState):
     return {"messages": [response]}
 ```
 
+### 这段函数执行前后，State 怎么变
+
+假设执行前的 State 是：
+
+```python
+state = {
+    "messages": [HumanMessage(content="退款需要几天？")]
+}
+```
+
+函数先把已有消息列表交给模型：
+
+```python
+response = model_with_tools.invoke(state["messages"])
+```
+
+此时 `response` 是模型新返回的一条 `AIMessage`：没有工具需求时是普通回答；需要工具时则可能带有 `tool_calls`。函数返回的是一份 State 更新：
+
+```python
+{"messages": [response]}
+```
+
+它不是完整的新 State，也不是函数直接修改旧 State。`MessagesState` 为 `messages` 配置了消息追加/合并规则，所以 LangGraph 会把这条新 `AIMessage` 合并回原消息列表：
+
+```text
+执行前：HumanMessage
+        -> call_model
+函数返回：AIMessage
+        -> LangGraph 合并
+执行后：HumanMessage, AIMessage
+```
+
+如果 `AIMessage` 带有 `tool_calls`，后续 `tools_condition` 会把流程送到 `ToolNode`；如果没有，就把这条普通回答保留在 `messages` 后结束。
+
 这里的 `call_model` 才是普通 Python 函数；函数内部调用的是 `model_with_tools.invoke(...)`。因此不要把 `call_model`、`model_with_tools` 和 `call_with_tools` 当成同一个东西。
 
 `call_model` 不是 LangGraph 内置类。它就是一个普通 Python 函数，注册到图以后才成为一个 model node：
