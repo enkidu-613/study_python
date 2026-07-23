@@ -1,13 +1,13 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-10 after the LangChain Agent exam.
+Last updated from `.trae` on 2026-07-23 after the Dify RAG, workflow API, and publication visibility review.
 
 ## Current Stage
 
-- Current stage id: `langgraph`
-- Current topic: LangGraph 状态工作流：把 Agent 的 state、节点、边和 checkpoint 变成可控流程
-- Current document: md/29_LangGraph状态工作流.md
-- Status: completed on 2026-07-20 after targeted rewrite review
+- Current stage id: `dify`
+- Current topic: Dify 平台实战：用可视化工作流复现 RAG 与 Agent
+- Current document: md/30_Dify平台实战.md
+- Status: pending; LangGraph completed on 2026-07-20 and Dify is the next stage
 - Previous stage: `langchain-agents`, completed on 2026-07-10 with normalized exam score 95/100
 
 ## Completed Core Path
@@ -34,6 +34,11 @@ The learner has completed:
 - LangChain conversation memory: distinguish `messages`, `chat history`, `memory`, and `state`; use `session_id -> InMemoryChatMessageHistory`; understand `RunnableWithMessageHistory` as the wrapper that reads history before invocation and writes new user/assistant messages afterward; use `MessagesPlaceholder` and matching `input_messages_key` / `history_messages_key`.
 
 ## Latest History Summary
+
+Latest archived conversation:
+
+- `dialog-85` on 2026-07-23: verified the Dify TEI and semantic retrieval chain using successful `retrieve_chunks` responses; clarified that retrieval output normally exposes chunks and relevance scores, not raw embedding arrays. Clarified that the workflow API uses an app API key, fixed `/workflows/run` endpoint, and start-node inputs rather than a workflow name. Publishing activates a version but does not automatically make the workflow public; API keys and shared Web App access define the actual boundary.
+- `dialog-84` on 2026-07-21: clarified Dify Cloud versus self-hosted installation, compared Dify and Coze in the Chinese market, and estimated that the learner can begin applying around October 2026, with November to December 2026 as a steadier job-search window if project, deployment, resume, and interview work are completed.
 
 Latest verified learning result:
 
@@ -115,7 +120,7 @@ WebSocket:
 - Learning plan: `.trae/memory/learning_plan.json`
 - History index: `.trae/memory/learning_history_index.json`
 - Mistake book: `md/错题本.md`
-- Current chapter: `md/21_Prompt_Engineering进阶.md`
+- Current chapter: `md/30_Dify平台实战.md`
 - Alembic chapter: `md/19_Alembic数据库迁移.md`
 - Alembic exams: `md/试卷/试卷_Alembic数据库迁移.md`, `md/试卷/试卷_Alembic数据库迁移_补考.md`
 - WebSocket chapter: `md/18_WebSocket实时通信.md`
@@ -123,8 +128,8 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Read `md/28_LangChain_Agent工具调用.md`.
-2. Follow the minimal `create_agent + @tool + search_knowledge_base` template.
-3. First connect prior chapters: Function Calling loop + LangChain memory + tool schema/function mapping.
-4. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.
-5. Do not start Docker until the AI core, evaluation, and observability stages are complete.
+1. Start `md/30_Dify平台实战.md` with Dify Cloud; no local Dify installation is required for this chapter.
+2. Complete one Dify RAG Workflow and one small API integration.
+3. Continue to Multi-Agent, Hugging Face/multimodal, LLM evaluation, and observability.
+4. Finish Docker deployment, portfolio polishing, resume, and interview practice before treating the estimate as job-ready evidence.
+5. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.

@@ -1,7 +1,23 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-10T00:00:00+08:00",
+  "updated_at": "2026-07-23T00:00:00+08:00",
   "entries": [
+    {
+      "id": "dialog-84",
+      "date": "2026-07-21",
+      "title": "Dify 与 Coze 选择、Dify 使用方式和求职时间预测",
+      "stage_id": "dify",
+      "entry_type": "dialog",
+      "topics": [
+        "Dify Cloud",
+        "Dify 自托管",
+        "Docker 部署边界",
+        "Coze/扣子",
+        "AI 应用工程求职规划"
+      ],
+      "summary": "核对第 30 章是否包含 Dify 安装内容，明确本章使用 Dify Cloud 或已有实例，不要求下载 Dify；自托管 Dify、Docker、反向代理和升级属于后续部署阶段。比较 Dify 与 Coze 的定位，明确 Coze 在中国大陆具有较强本土产品生态，但公开资料不足以严谨证明其整体用户量高于 Dify；当前路线继续优先学习 Dify。根据学习计划统计，45 个阶段中 31 个已完成，完成率约 68.9%；结合剩余核心课程、项目实战、部署、简历和面试准备，预测 2026 年 10 月左右可以开始投递初级 AI 应用开发岗位，2026 年 11 月到 12 月是较稳妥的求职窗口。",
+      "file_path": ".trae/memory/conversations/2026-07-21.md"
+    },
     {
       "id": "dialog-83",
       "date": "2026-07-10",
@@ -1394,6 +1410,25 @@
         "代码质量"
       ],
       "summary": "分析代码注释优缺点，提供改进建议"
+    },
+    {
+      "id": "dialog-85",
+      "date": "2026-07-23",
+      "title": "Dify 向量检索、工作流 API 与发布可见性",
+      "file_path": ".trae/memory/conversations/2026-07-23.md",
+      "stage_id": "dify",
+      "entry_type": "dialog",
+      "topics": [
+        "Dify",
+        "Text Embedding Inference",
+        "向量检索",
+        "semantic_search",
+        "knowledge_pro",
+        "工作流 API",
+        "API Key",
+        "发布与可见性"
+      ],
+      "summary": "核对 Dify 中 TEI 向量模型与知识库检索链路。确认旧数据集曾因 Collection not found 失败，但官方召回测试和新数据集的 retrieve_chunks 已成功返回 semantic_search 结果与 score；说明检索输出通常只返回 chunk、metadata 和相关性分数，不展示原始向量数组。澄清 Dify 工作流 API 使用应用 API Key、固定 /workflows/run 入口和 inputs，不需要工作流名称；发布表示版本生效，不等于自动公开，API Key 或 Web App 分享链接分别决定实际访问边界。"
     }
   ]
 }
