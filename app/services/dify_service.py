@@ -8,13 +8,13 @@ async def run_dify_workflow(question:str,user_id:str)-> str:
     try:
         async with httpx.AsyncClient(timeout=60) as client:
             response = await client.post(
-                f"{os.environ['DIFY_API_BASE']}/workflow/run",
+                f"{os.environ['DIFY_API_BASE']}/workflows/run",
                 headers={
                     "Authorization":f"Bearer {os.environ['DIFY_API_KEY']}",
                     "Content-Type":"application/json"
                 },
                 json={
-                    "inputs":{"quesion":question},
+                    "inputs":{"question":question},
                     "response_mode":"blocking",
                     "user":user_id
                 }
@@ -26,7 +26,7 @@ async def run_dify_workflow(question:str,user_id:str)-> str:
     payload = response.json() # 这里是反序列化，将json转化为dict或者list，这里是dict
     data = payload.get("data",{}) # 这里表示从dict中取出data，如果没有就返回空dict
 
-    if data.get("status") != "succeded":
+    if data.get("status") != "succeeded":
         error = data.get("error") or "unknown workflow error"
         raise RuntimeError(f"Dify workflow failed: {error}")
 
