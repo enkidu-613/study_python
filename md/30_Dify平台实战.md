@@ -387,7 +387,7 @@ Maximum Iterations ≠ 权限控制
 `.env`：
 
 ```dotenv
-DIFY_API_BASE=https://api.dify.ai/v1
+	DIFY_API_BASE=https://api.dify.ai/v1
 DIFY_API_KEY=app-替换为你的应用密钥
 ```
 

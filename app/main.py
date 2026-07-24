@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import uvicorn
 from contextlib import asynccontextmanager
-from app.routers import ai, todos, chat_memory, rag, langchain_rag, auth, websocket, prompt, my_prompt
+from app.routers import ai, todos, chat_memory, rag, langchain_rag, auth, websocket, prompt, my_prompt,dify_workflow
 
 DESCRIPTION = """
 ## 🎯 Study Python — Python → AI 全栈学习项目
@@ -37,6 +37,10 @@ TAGS_METADATA = [
         "name": "Prompt Engineering",
         "description": "结构化输出、Few-Shot 与输出约束示例。",
     },
+    {
+        "name": "dify_workflow",
+        "description": "接入dify入口的示例"
+    }
 ]
 
 
@@ -85,6 +89,7 @@ app.include_router(auth.router)
 app.include_router(websocket.router)
 app.include_router(prompt.router)
 app.include_router(my_prompt.router)
+app.include_router(dify_workflow.router)
 
 if __name__ == "__main__":
     print("服务器已启动，监听地址：http://127.0.0.1:8000")
