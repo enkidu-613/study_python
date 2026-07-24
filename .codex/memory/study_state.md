@@ -1,13 +1,13 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-23 after the Dify RAG, workflow API, and publication visibility review.
+Last updated from `.trae` on 2026-07-25 after Dify practice validation.
 
 ## Current Stage
 
-- Current stage id: `dify`
-- Current topic: Dify 平台实战：用可视化工作流复现 RAG 与 Agent
+- Current stage id: `ai-agents-advanced`
+- Current topic: Multi-Agent 与复杂工作流
 - Current document: md/30_Dify平台实战.md
-- Status: pending; LangGraph completed on 2026-07-20 and Dify is the next stage
+- Status: Dify completed on 2026-07-25 by practical validation; LangGraph completed on 2026-07-20
 - Previous stage: `langchain-agents`, completed on 2026-07-10 with normalized exam score 95/100
 
 ## Completed Core Path
@@ -32,6 +32,7 @@ The learner has completed:
 - AI Agents basics: Agent = LLM + Tools + Loop + Safety, Tool/Tool Schema/Tool Call/Tool Output boundaries, Function Calling as tool-call generation rather than direct execution, minimal Agent Loop, and server-side safety boundaries for high-risk tools.
 - Function Calling execution loop: send `TOOLS` with messages, read model `tool_call`, parse and validate `arguments`, use `TOOL_FUNCTIONS` to execute backend functions, append `role="tool"` output to messages, and let the backend request the model again for the final answer.
 - LangChain conversation memory: distinguish `messages`, `chat history`, `memory`, and `state`; use `session_id -> InMemoryChatMessageHistory`; understand `RunnableWithMessageHistory` as the wrapper that reads history before invocation and writes new user/assistant messages afterward; use `MessagesPlaceholder` and matching `input_messages_key` / `history_messages_key`.
+- Dify platform practice: distinguish Workflow and Chatflow, configure knowledge retrieval and Embedding, publish a retrieval Workflow as an Agent tool, verify the Agent tool-call loop, and call the published Workflow through FastAPI `/dify/rag`; practical validation passed on 2026-07-25, with the written canvas-design portion waived by user request.
 
 ## Latest History Summary
 
@@ -128,8 +129,8 @@ WebSocket:
 
 ## Next Likely Study Steps
 
-1. Start `md/30_Dify平台实战.md` with Dify Cloud; no local Dify installation is required for this chapter.
-2. Complete one Dify RAG Workflow and one small API integration.
-3. Continue to Multi-Agent, Hugging Face/multimodal, LLM evaluation, and observability.
+1. Start the Multi-Agent and complex workflow chapter; Dify Cloud does not need local installation for the completed chapter.
+2. Keep the Dify practical template available as a visual comparison for LangGraph and Agent loops.
+3. Continue to Hugging Face/multimodal, LLM evaluation, and observability.
 4. Finish Docker deployment, portfolio polishing, resume, and interview practice before treating the estimate as job-ready evidence.
 5. Keep the `ainvoke({"text": text})`, RAG permission filtering, safe logging, RAG metadata boundary, single-variable RAG tuning, `required` level, and `TOOLS` / `TOOL_FUNCTIONS` reminders in lightweight review.

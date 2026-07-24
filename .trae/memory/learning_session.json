@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-20T23:25:28+08:00",
-  "stage_id": "dify",
+  "updated_at": "2026-07-25T00:44:16+08:00",
+  "stage_id": "ai-agents-advanced",
   "phase": "idle",
-  "pending_action": "开始第 30 章：打开 Dify Cloud，完成最小 RAG Workflow 的第一遍跟做。",
-  "context": "第 29 章 LangGraph 已于 2026-07-20 完成。第 30 章 Dify 教程已写入并审查；当前选择 Dify Cloud，不要求本地安装 Dify，Coze 作为后续可选对照。",
+  "pending_action": "开始 Multi-Agent 与复杂工作流章节。",
+  "context": "第 30 章 Dify 已于 2026-07-25 通过实践验收：知识检索、Agent 工具调用、Dify Workflow 发布和 FastAPI /dify/rag 调用均已跑通；书面画布结构题按用户实际成果豁免。",
   "energy": null,
   "time_budget_minutes": null
 }

@@ -461,7 +461,7 @@ class DifyQuestion(BaseModel):
 
 
 @router.post("/rag")
-async def ask_dify(
+	async def ask_dify(
     request: DifyQuestion,
     current_user: dict = Depends(get_current_user),
 ):
