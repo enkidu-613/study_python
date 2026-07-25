@@ -1,12 +1,12 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-25 after Dify practice validation.
+Last updated from `.trae` on 2026-07-25 after Dify mistake-book review and history sync.
 
 ## Current Stage
 
 - Current stage id: `ai-agents-advanced`
 - Current topic: Multi-Agent 与复杂工作流
-- Current document: md/30_Dify平台实战.md
+- Current document: md/31_Multi-Agent与复杂工作流.md
 - Status: Dify completed on 2026-07-25 by practical validation; LangGraph completed on 2026-07-20
 - Previous stage: `langchain-agents`, completed on 2026-07-10 with normalized exam score 95/100
 
@@ -37,6 +37,8 @@ The learner has completed:
 ## Latest History Summary
 
 Latest archived conversation:
+
+- `dialog-86` on 2026-07-25: Dify 章节通过实践验收；将 Agent 调用链、固定 RAG 与 Agentic RAG、HTTP 与工作流业务错误、Dify 排错顺序四个轻量复习点写入错题本，并同步到三个 agent 历史记录。
 
 - `dialog-85` on 2026-07-23: verified the Dify TEI and semantic retrieval chain using successful `retrieve_chunks` responses; clarified that retrieval output normally exposes chunks and relevance scores, not raw embedding arrays. Clarified that the workflow API uses an app API key, fixed `/workflows/run` endpoint, and start-node inputs rather than a workflow name. Publishing activates a version but does not automatically make the workflow public; API keys and shared Web App access define the actual boundary.
 - `dialog-84` on 2026-07-21: clarified Dify Cloud versus self-hosted installation, compared Dify and Coze in the Chinese market, and estimated that the learner can begin applying around October 2026, with November to December 2026 as a steadier job-search window if project, deployment, resume, and interview work are completed.

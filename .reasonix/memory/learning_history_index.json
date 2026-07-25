@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-23T00:00:00+08:00",
+  "updated_at": "2026-07-25T14:55:00+08:00",
   "entries": [
     {
       "id": "dialog-84",
@@ -1429,6 +1429,24 @@
         "发布与可见性"
       ],
       "summary": "核对 Dify 中 TEI 向量模型与知识库检索链路。确认旧数据集曾因 Collection not found 失败，但官方召回测试和新数据集的 retrieve_chunks 已成功返回 semantic_search 结果与 score；说明检索输出通常只返回 chunk、metadata 和相关性分数，不展示原始向量数组。澄清 Dify 工作流 API 使用应用 API Key、固定 /workflows/run 入口和 inputs，不需要工作流名称；发布表示版本生效，不等于自动公开，API Key 或 Web App 分享链接分别决定实际访问边界。"
+    },
+    {
+      "id": "dialog-86",
+      "date": "2026-07-25",
+      "title": "Dify 章节复盘、错题归档与博客同步",
+      "file_path": ".reasonix/memory/conversations/2026-07-25.md",
+      "stage_id": "dify",
+      "entry_type": "dialog",
+      "topics": [
+        "Dify",
+        "错题复盘",
+        "Agent 调用链",
+        "Agentic RAG",
+        "工作流排错",
+        "教程同步",
+        "博客同步"
+      ],
+      "summary": "用户已亲自实践 Maximum Iterations、Dify 内置知识检索和 Agent 工具检索知识库，Dify 章节按实践通过。将 Agent 内部调用链、固定 RAG 与 Agentic RAG 边界、HTTP 与工作流业务错误区别、Dify Agent/RAG 排错顺序四个轻量复习点写入错题本，并同步学习历史与博客课程。"
     }
   ]
 }
