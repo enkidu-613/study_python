@@ -1,7 +1,26 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-25T14:55:00+08:00",
+  "updated_at": "2026-07-28T04:38:58+08:00",
   "entries": [
+    {
+      "id": "dialog-87",
+      "date": "2026-07-28",
+      "title": "Multi-Agent Handoff、invoke 执行链与新知识判定规则",
+      "stage_id": "multi-agent",
+      "entry_type": "dialog",
+      "topics": [
+        "Multi-Agent",
+        "Handoff",
+        "create_agent",
+        "invoke 执行链",
+        "Command",
+        "middleware",
+        "State",
+        "教学新知识判定"
+      ],
+      "summary": "解释 create_agent 的 model、tools、state_schema、middleware 和 checkpointer 配置，并逐步追踪 handoff_agent.invoke 后的线程状态读取、middleware 配置、模型 tool call、Command 更新 State、工具循环回到模型、最终保存并返回 State。修正教学规则：只出现名称、被列入暂不学、只有 import、错误日志或一句带过但没有完整解释和验证的对象，仍按新知识重点教学；只有有定义、代码形态、调用关系和验证结果的对象才算已学。",
+      "file_path": ".reasonix/memory/conversations/2026-07-28.md"
+    },
     {
       "id": "dialog-84",
       "date": "2026-07-21",
