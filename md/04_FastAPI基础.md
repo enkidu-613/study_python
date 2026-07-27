@@ -21,6 +21,11 @@
 
 FastAPI 就是把 Python 函数变成 HTTP 接口：浏览器或前端发请求，FastAPI 调用对应函数，再把 Python 数据变成 JSON 返回。
 
+### 本章学到哪里，不学到哪里
+
+- **本章要会**：用 `json.dumps`/`json.loads` 做 JSON 序列化与反序列化；创建 FastAPI 应用并注册路由；用路径参数接收 URL 中的变量；用查询参数接收 `?key=value` 数据；用 `uvicorn` 启动服务器。
+- **本章暂不要求**：请求体（POST body）和 Pydantic 模型校验、数据库操作、中间件、CORS、身份认证——这些在后续 CRUD 和 ORM 章节。
+
 ## 🔧 准确术语速查
 
 | 术语 | 准确含义 | 本章怎么识别 |
