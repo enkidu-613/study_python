@@ -27,6 +27,30 @@
 
 本章暂时不学：Cloudflare Workers、Pages Functions、数据库、CDN 缓存规则和复杂多环境发布。你的 Fuwari 博客是静态站点，先把最小发布链路跑通。
 
+## 本章工具职责与最小路径
+
+| 工具/对象 | 它负责什么 | 它不负责什么 | 本章掌握边界 |
+| --- | --- | --- | --- |
+| GitHub Actions | 在云端 Runner 执行 YAML 工作流 | 不替你编写 Astro 代码 | 会读日志、判断步骤是否成功 |
+| `pnpm` | 安装依赖并执行 `check`、`build` | 不负责把文件发布到 Cloudflare | 会使用锁文件进行可重复安装 |
+| Astro | 把 Markdown、组件和配置构建成静态 `dist/` | 不负责 GitHub 凭据和部署认证 | 会区分源码与构建产物 |
+| Wrangler | 调用 Cloudflare Pages 上传接口 | 不负责检查 Astro 代码质量 | 会执行 `pages deploy dist` |
+| Cloudflare Pages | 托管静态构建产物并提供域名 | 不负责 GitHub Actions 的构建过程 | 会绑定 Pages 项目和自定义域名 |
+
+最小调用链：
+
+```text
+git push main
+  -> GitHub Actions Runner
+  -> pnpm install --frozen-lockfile
+  -> pnpm check
+  -> pnpm build
+  -> dist/
+  -> Wrangler 上传到 Cloudflare Pages
+```
+
+本章中的 GitHub Actions、Wrangler 和 Pages 都是平台/命令行工具，不是 Python 库。你当前要求的是会配置和验证发布链路，不要求学习 Actions Runner 或 Wrangler 的内部实现。
+
 ---
 
 ## 第一关：先看懂这条自动化链路

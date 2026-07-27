@@ -99,6 +99,24 @@ START
 | `compile()`  | 把 builder 编译成可运行 graph | 检查基本图结构，并可接收 runtime 配置。 |
 | `invoke()`   | 执行编译后的 graph           | 传入初始 state，返回最终 state。   |
 
+## 本章首次进入运行链路的包
+
+### `langgraph`
+
+`langgraph` 是本项目直接由 Poetry 管理的 **第三方状态工作流框架**；`pyproject.toml` 的版本边界为 `>=1.2.9,<2.0.0`，当前锁定为 `1.2.9`。本章从它拿到 `StateGraph`、`START`、`END`、`MessagesState`、`ToolNode`、`tools_condition` 和 `InMemorySaver`：分别用来声明图、标记流程边界、承载消息 state、执行工具调用、决定是否转工具节点，以及保存内存快照。
+
+它适合两类业务：把“分类 -> 检索 -> 回答”这种多步骤流程写成可观察的节点和边；以及给含工具调用、分支或人工审批的 Agent 明确状态流。它**不负责**提供模型、自动设计业务流程、鉴权或永久存储；简单固定步骤可以直接用普通 Python 函数，标准的模型工具循环可继续用第 28 章的 `create_agent(...)`，需要持久保存则要换数据库型 checkpointer。
+
+本章要求你能运行最小 `StateGraph -> compile() -> invoke()`，并识别预制的 `ToolNode` / `tools_condition`；不要求掌握 LangGraph 的内部调度或生产级持久化。
+
+### `typing_extensions`
+
+`typing_extensions` 是本项目直接依赖的 **第三方类型标注兼容包**，当前固定为 `4.15.0`。本章从它拿到 `TypedDict`，用它声明 `LearningState` 这份字典有哪些字段；它主要服务于编辑器、类型检查器和框架读取 schema。
+
+它常用于给工作流 state、API 载荷或配置字典补充清晰类型。它**不负责**在运行时校验数据，也不会自动创建字典；需要运行时校验用 Pydantic，需要纯 Python 字典则直接写 `{}`。Python 3.11 也可以从标准库 `typing` 导入 `TypedDict`，这里沿用项目代码的 `typing_extensions` 写法。
+
+本章只要求会读写 `class LearningState(TypedDict): ...` 的形状，不要求研究类型系统实现。
+
 ### 先分清三个容易混的词
 
 ```text
