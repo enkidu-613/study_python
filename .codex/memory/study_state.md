@@ -1,6 +1,6 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-25 after Dify mistake-book review and history sync.
+Last updated from `.trae` on 2026-07-29 after Multi-Agent Handoff review, Zed diagnosis, and history sync.
 
 ## Current Stage
 
@@ -37,6 +37,8 @@ The learner has completed:
 ## Latest History Summary
 
 Latest archived conversation:
+
+- `dialog-89` on 2026-07-29: 整理第31章的 Multi-Agent Handoff 调用链，确认工具通过 `Command(update=...)` 更新 State，下一轮模型调用前 middleware 读取 State 并用 `request.override(...)` 切换 Prompt/tools，再由 `handler` 继续执行；同时记录 Zed Copilot 编辑预测的 402 quota exceeded 与 DeepSeek V4 Flash 的 Agent/chat 配置边界。
 
 - `dialog-86` on 2026-07-25: Dify 章节通过实践验收；将 Agent 调用链、固定 RAG 与 Agentic RAG、HTTP 与工作流业务错误、Dify 排错顺序四个轻量复习点写入错题本，并同步到三个 agent 历史记录。
 
