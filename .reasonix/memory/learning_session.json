@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "updated_at": "2026-07-25T00:44:16+08:00",
+  "updated_at": "2026-07-31T00:00:00+08:00",
   "stage_id": "ai-agents-advanced",
   "phase": "idle",
-  "pending_action": "开始 Multi-Agent 与复杂工作流章节。",
-  "context": "第 30 章 Dify 已于 2026-07-25 通过实践验收：知识检索、Agent 工具调用、Dify Workflow 发布和 FastAPI /dify/rag 调用均已跑通；书面画布结构题按用户实际成果豁免。",
+  "pending_action": "开始第 32 章 Hugging Face 生态：先生成教学文档。",
+  "context": "第 31 章补考 15/20（75%）。已补清 State、ModelRequest、middleware、override、handler 的边界，可以进入下一章；第 31 章保留一个间隔复习点，后续用实际 Agent 调用链验证排错能力。",
   "energy": null,
   "time_budget_minutes": null
 }

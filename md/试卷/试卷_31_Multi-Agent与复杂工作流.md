@@ -47,6 +47,10 @@ def ask_research_agent(question: str) -> str:
 
 我的答案：
 
+1. 是子agent对象，如果只是问对象的话那就是已编译的agent图
+2. tool注解的langchain tool 对象，可以被主agent调用
+3. 主agent
+4. ask_research_agent
 ### 2. Supervisor + Subagent 的主流程
 
 把下面步骤按真实发生的顺序排列，并说明最后是谁组织面向用户的答案：
@@ -60,7 +64,7 @@ E. supervisor 的模型提出 ask_research_agent 的 tool call
 ```
 
 我的答案：
-
+d,e,c,a,b
 ### 3. 三种模式的边界
 
 为每个场景选择最合适的模式，并说明理由：
@@ -72,7 +76,9 @@ E. supervisor 的模型提出 ask_research_agent 的 tool call
 可选模式：`Router`、`Subagent`、`Handoff`。
 
 我的答案：
-
+1. Router
+2. sub agent
+3. handoff
 ### 4. 什么时候不该拆 Multi-Agent？
 
 下面需求是“为项目知识库回答问题”。只有一个领域，只有两个工具，没有独立权限和上下文要求。
@@ -92,6 +98,8 @@ active_agent = "support_agent"
 这行代码是否自动创建、发现或跳转到了一个 Python 变量名为 `support_agent` 的 Agent？请解释它实际改变了什么，以及真正的多 Agent 子图还需要哪些东西。
 
 我的答案：
+
+不是，本质上是将当前agent切换了不同的prompt和tools子集，只是切换了当前agent的角色，需要langgraph的节点和边和多个create agent和不同的prompt和tools工具子集
 
 ---
 
@@ -123,6 +131,9 @@ return Command(
 3. 为什么第二段仍要提供匹配当前工具调用的 `ToolMessage`？
 
 我的答案：
+1. command交给框架之后框架根据内容更新到State
+2. 第二段可以修改State已经定义的active_agent
+3. 第二段不是继承AgentState的HandoffState定义的么
 
 ### 7. `tool_call_id` 的来源和用途
 
@@ -140,6 +151,10 @@ runtime: ToolRuntime[None, HandoffState]
 4. 它是不是 `runtime.state` 里的业务字段？
 
 我的答案：
+1. 框架通过tool注解传递的
+2. llm发起调用的时候生成，框架附上的
+3. 他负责和带有tool call的AIMessage对应起来
+4. 不是，因为业务字段是程序员自己定义，有业务逻辑使用的字段，这个是框架自带数据
 
 ### 8. `thread_id`、State 与 Checkpointer
 
@@ -154,6 +169,13 @@ InMemorySaver checkpointer
 再回答：为什么没有 checkpointer 时，连续两次独立 `supervisor.invoke(...)` 不会天然记住上一轮？
 
 我的答案：
+
+State：会话的状态快照
+thread_id：绑定一个会话，当相同的id的会话请求来的时候，恢复绑定这个会话id的State快照
+InMemorySaver：是状态检查点，当当前会话结束之后保存最终State到绑定id的会话
+
+---
+不会，因为模型没有记忆，需要State保存上下文对话
 
 ### 9. Router 与 Handoff 实际改变的东西
 
@@ -171,6 +193,8 @@ return Command(update={"active_agent": "support_agent"})
 请从“下一步执行路径”和“共享 State / 角色配置”两个角度解释差别。
 
 我的答案：
+第一个是根据用户的对话中是否有知识库决定了是回答还是继续resarch的agent执行路径
+第二个是根据用户回答分配用户应该使用哪一个角色配置prompt和tools，临时修改了State
 
 ### 10. `Command(update=...)` 的边界
 
@@ -192,6 +216,7 @@ D. 当前模型的 temperature
 ```
 
 我的答案：
+a 和 b 因为command只是和修改State定义的框架自带属性和继承框架State类后自定义的属性
 
 ---
 
@@ -229,7 +254,10 @@ handoff_agent = create_agent(
 4. `handler(updated_request)` 不调用会怎样？
 
 我的答案：
-
+1. wrap_model_call把函数变为模型调用前的拦截器，再在模型创建时注册成为agent的中间件，当模型调用之前会首先触发改函数
+2. 是apply_role_config拦截器函数调用的
+3. 返回的是一个被修改的ModelResponse对象
+4. 不调用就会卡住，永远请求不了模型
 ### 12. middleware 是否“继承记忆”？
 
 有人说：“middleware 每次都执行，所以它自己继承了记忆和 `active_agent`。”
@@ -245,6 +273,7 @@ checkpointer + 相同 thread_id
 在这件事上各自负责什么。
 
 我的答案：
+不对，继承记忆因为是每次在相同thread id 的会话使用的同一个State快照，在请求模型时框架注入进了runtime.state，state内有框架上次存到快照里的参数
 
 ### 13. 追踪一轮 Handoff
 
@@ -263,6 +292,7 @@ handler
 ```
 
 我的答案：
+middleware->select_prompt->request.override->handler->ToolRuntime->Command->State
 
 ### 14. `handler` 的本质
 
@@ -271,6 +301,7 @@ handler
 请用自己的话解释：它像 Express 的 `next` 的哪一部分，又与 Express 的 `next` 有什么不能直接画等号的地方？重点说明它接收什么、返回什么、在本例中为什么能让“改后的 Prompt 和 Tools”生效。
 
 我的答案：
+handler将修改好后的ModelRequest交给llm，至于next，我没有深入学习Express，这个我不想回答，他是一个可调用对象，接收一个ModelRequest参数，返回一个ModelResponse参数，因为request.override修改了给llm的State，handler接收update的时候收到的是修改过后的ModelResponse
 
 ### 15. 一个状态驱动 Handoff 的排错题
 
@@ -285,6 +316,7 @@ handler
 请给出最可能的两个原因，并分别写出修复方向。
 
 我的答案：
+没有使用checkpoint，第二没有使用thread id绑定到会话中
 
 ---
 
@@ -302,7 +334,12 @@ handler
 6. 这个场景为什么适合 Subagent，而不是 Handoff？
 
 我的答案：
-
+1. supervisor只对用户负责，指挥subagent干活，subagent只对spuervisor负责，不直接对用户负责
+2. 因为 supervisor 不能直接调用subagent，需要一个工具来进行
+3. 输入一个str，返回一个str，经过tool message包装
+4. 由checkpoint InMemorySaver 存储最后的快照State保留
+5. 最终答案由主supervisor接收subagent的返回信息交给llm做最后输出
+6. 当一个agent想要其subagent做不同的事情，有明确分工而且不需要直接与用户对话的时候
 ### 17. 阅读代码并判断边界（10 分）
 
 ```python
@@ -324,9 +361,58 @@ result = agent.invoke(
 4. 如果要跨轮记忆，至少要增加哪两类配置？
 
 我的答案：
+1. 不能，因为用户没有明确要求检索知识库
+2. 首先这个模型没有提示词，第二检查tool注解函数的第一行注释
+3. 不能，因为invoke没有设置config，agent也没有注册checkpoint
+4. 注册checkpoint InMemorySaver 定义 config
 
 ---
 
 ## 交卷格式
 
 答完后直接告诉我“答完了”。我会按 [第 31 章 Multi-Agent 与复杂工作流](</Users/enkidu/PyCharmMiscProject/md/31_Multi-Agent与复杂工作流.md>) 批改：先给总分与通过结论，再逐题解释真正需要补的知识点；不会因 Python 标点细节重复扣分。
+
+---
+
+## 批改结果（2026-07-31）
+
+| 题号 | 得分 | 结论 |
+| --- | ---: | --- |
+| 1 | 5 / 5 | 对象关系准确。 |
+| 2 | 4 / 5 | 顺序正确；漏写“supervisor 组织最终答复”。 |
+| 3 | 4 / 5 | 三种模式选对；理由没有展开。 |
+| 4 | 0 / 5 | 未作答。 |
+| 5 | 5 / 5 | 清楚区分了角色状态值和真实 Agent 子图。 |
+| 6 | 2 / 6 | 混淆普通字符串返回和 `Command(update=...)`；`ToolMessage` 的关联作用没有答到。 |
+| 7 | 6 / 6 | `ToolRuntime`、`tool_call_id` 和 `AIMessage` 的关联答得准确。 |
+| 8 | 5 / 6 | 基本正确；还应明确 `thread_id` 和 checkpointer 都不是 `Command(update=...)` 可直接修改的 State 字段。 |
+| 9 | 5 / 6 | Handoff 部分正确；Router 更准确地说是选图中的后续路径，而不是直接选择另一个 Agent。 |
+| 10 | 4 / 6 | 正确选出 A、B；漏写 C、D 不适合的原因。 |
+| 11 | 4 / 5 | 调用关系正确；`override()` 返回的是修改后的 `ModelRequest`，不是 `ModelResponse`。 |
+| 12 | 4 / 5 | 已知道记忆来自 State 快照；还需分清 middleware 只读取/改写本次请求，不保存记忆。 |
+| 13 | 1 / 5 | 术语都出现了，但顺序倒置；这是本章当前最需要补的链路。 |
+| 14 | 3 / 5 | 知道 handler 是可调用对象并会继续模型调用；仍混淆了 `ModelRequest` 与 `ModelResponse`。 |
+| 15 | 0 / 5 | checkpointer/thread_id 影响跨轮恢复，不是同一次 Agent loop 内 Prompt/Tools 没切换的直接原因。 |
+| 16 | 7 / 10 | Supervisor、最终答复和适用边界正确；用户上下文在本次调用内由 supervisor 的 State 保留，不必一定依赖 checkpointer。 |
+| 17 | 9 / 10 | 已正确识别模型不保证调用 Tool、Prompt/Tool 描述的排查层面，以及跨轮记忆所需配置。 |
+
+**总分：68 / 100**
+
+**评定：需要重学关键关卡，但不需要重学整章。**
+
+你已经掌握 Supervisor + Subagent、三种模式边界、`tool_call_id`、跨轮记忆的基本边界。当前卡点集中在“状态驱动 Handoff 的一次完整循环”，不是 Multi-Agent 概念整体没懂。
+
+### 必补的三件事
+
+1. **普通字符串与 `Command` 的差别**：普通字符串由 Agent / ToolNode 自动包装成 `ToolMessage` 并追加到 `messages`；`Command(update=...)` 除了写入消息，还能修改 `active_agent` 等 State 字段。
+2. **Handoff 的正确时序**：模型先提出 tool call，框架再注入 `ToolRuntime` 执行工具，工具返回 `Command` 更新 State；之后 Agent loop 再次进入 middleware，`select_prompt` 才会读到新的 `active_agent`，`request.override(...)` 生成新的 `ModelRequest`，`handler(...)` 用它继续真实模型调用。
+3. **本次切换与跨轮记忆分层**：同一次 `invoke()` 中切换 Prompt/Tools 靠 `Command -> State -> middleware -> override -> handler`；跨第二次 `invoke()` 恢复旧 State 才需要 `checkpointer + 相同 thread_id`。
+
+### 最小补写检查
+
+不用重答整卷。下次只需用自己的话写清下面两条：
+
+1. 当 `transfer_to_support` 返回 `Command(update={"active_agent": "support_agent", ...})` 后，下一次模型调用前依次发生什么？
+2. “State 已经变成 support_agent，但 Prompt 仍没变”时，优先检查哪两个地方？
+
+这两条答清楚后，再做一份 20 分以内的补考。

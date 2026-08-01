@@ -151,6 +151,17 @@
       "due_at": "2026-07-09",
       "status": "active",
       "source": "md/试卷/试卷_LangChain对话记忆.md"
+    },
+    {
+      "id": "review-20260731-multi-agent-state-request-boundary",
+      "stage_id": "ai-agents-advanced",
+      "topic": "State 到 ModelRequest 的边界",
+      "prompt": "State、ModelRequest 和 handler 分别是什么？当 State 已更新但 Prompt 没切换时，优先检查哪条链？",
+      "answer": "State 是 Agent 的共享状态；middleware 读取 State 并选择 Prompt 和 tools；override 生成新的 ModelRequest；handler 接收它并继续模型调用。优先检查 middleware 注册、select_prompt、tools 分支、override 结果和 handler 参数；checkpointer 与 thread_id 主要负责跨 invoke 恢复 State。",
+      "interval_index": 0,
+      "due_at": "2026-08-01",
+      "status": "active",
+      "source": "md/试卷/试卷_31_Multi-Agent与复杂工作流_补考.md"
     }
   ]
 }

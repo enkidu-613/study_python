@@ -49,7 +49,7 @@ When the user asks to test/review a chapter:
 1. Determine the current chapter from `.trae/memory/learning_plan.json`.
 2. Read the chapter document in `md/`.
 3. Read `md/错题本.md` and relevant history entries.
-4. Generate a markdown exam under `md/试卷/` with:
+4. Generate a markdown exam under `md/试卷/` using `试卷_<two-digit chapter number>_<chapter name>.md` (append `_补考` before `.md` for a retake), with:
    - Round 1: five foundation questions.
    - Round 2: five detail/boundary questions.
    - Round 3: two or three scenario/code/debug questions.
