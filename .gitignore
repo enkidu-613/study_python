@@ -43,6 +43,9 @@ env/
 *.sqlite
 *.sqlite3
 
+# ChromaDB 本地向量存储(可由 ingest_notes 重新灌入生成,不入库)
+chroma_db/
+
 # Logs
 *.log
 logs/
@@ -53,6 +56,9 @@ logs/
 .reasonix/mcp/
 .trae/mcp/
 .obsidian/
+
+# 其他工具本地状态(不入库)
+.workbuddy/
 
 # OS
 .DS_Store

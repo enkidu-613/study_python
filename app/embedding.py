@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import platform
-import threading
+import threading # 标准库，用来创建和管理多个线程，让程序能“同时”做多件事
 from typing import Any
 
 import torch # 导入 PyTorch 库，一个深度学习计算框架
@@ -32,7 +32,7 @@ _model: SentenceTransformer | None = None
 _device_info: dict[str, str] | None = None
 _loaded_model_name: str | None = None
 _loaded_device: str | None = None
-_load_lock = threading.Lock()
+_load_lock = threading.Lock() # 创建一个锁对象
 
 
 def _try_tensor(device: Any) -> bool:
@@ -76,6 +76,7 @@ def _detect_device() -> dict[str, str]:
     info = {"tier": "cpu", "device_str": "cpu", "name": "CPU"}
 
     if torch.cuda.is_available() and _try_tensor("cuda"):
+        #torch.cuda.is_available() 检查 CUDA 是否可用，是PyTorch提供的方法
         try:
             gpu_name = torch.cuda.get_device_name(0)
             vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
@@ -93,6 +94,7 @@ def _detect_device() -> dict[str, str]:
                 "name": "CUDA GPU",
             }
     elif torch.backends.mps.is_available() and _try_tensor("mps"):
+        # torch.backends.mps.is_available() 检查 MPS 是否可用，是PyTorch提供的方法
         os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
         info = {
             "tier": "mps",
@@ -100,6 +102,8 @@ def _detect_device() -> dict[str, str]:
             "name": f"MPS: {platform.machine() or 'Apple Silicon'}",
         }
     elif os.name == "nt":
+        # os.name == "nt" 检查当前操作系统是否为 Windows，如果系统在nt内，尝试直接使用 torch-directml
+        # 因为mac和linux没有directml加速
         try:
             import torch_directml
 
@@ -160,6 +164,7 @@ def _load_model(model_name: str, device: str) -> SentenceTransformer:
 def get_embedding_model() -> SentenceTransformer:
     global _model, _loaded_device, _loaded_model_name
     if _model is not None:
+        # 如果模型加载过那就快速返回模型
         return _model
 
     with _load_lock:
