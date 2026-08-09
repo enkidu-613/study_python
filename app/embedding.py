@@ -151,11 +151,13 @@ def _get_batch_size(tier: str) -> int:
 
 
 def _load_model(model_name: str, device: str) -> SentenceTransformer:
+    # 1.加载模型到指定设备
     model = SentenceTransformer(model_name, device=device)
+    # 2.跑一条测试数据，确保模型加载成功
     model.encode(
-        "test",
-        convert_to_numpy=True,
-        normalize_embeddings=True,
+        "test",# 随便一条文本
+        convert_to_numpy=True,# 输出numpy数组
+        normalize_embeddings=True,# 归一化（和正式调用保持一致）
     )
     logger.info("[model] loaded OK, running on: %s", model.device)
     return model
@@ -171,13 +173,13 @@ def get_embedding_model() -> SentenceTransformer:
         if _model is not None:
             return _model
 
-        info = _detect_device()
-        model_name = _get_model_name()
-        device = info["device_str"]
+        info = _detect_device() # 获取设备信息
+        model_name = _get_model_name() # 获取模型名称
+        device = info["device_str"] # 获取设备字符串
         logger.info("[model] loading %s on %s", model_name, info["name"])
 
         try:
-            model = _load_model(model_name, device)
+            model = _load_model(model_name, device) # 在制定设备上加载模型，返回一个SentenceTransformer对象
             loaded_device = str(getattr(model, "device", device))
         except Exception as exc:
             if device == "cpu":

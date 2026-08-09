@@ -47,13 +47,39 @@ poetry run python -m app.tools.kb_search "查询关键词" --json
 
 ### 2. 更新知识库
 
-当学习笔记有新增或修改后，重新灌入：
+**当用户说"同步知识库"、"更新库"、"我改了笔记要同步"时,用增量同步(推荐):**
 
 ```bash
-# 增量灌入默认三个目录(已有的不重复)
-poetry run python -m app.tools.ingest_notes
+# 增量同步:只重灌变更的文件,删除其旧版本 chunks(3-5 秒/文件)
+poetry run python -m app.tools.sync_notes
 
-# 清空后重新灌入(笔记有大量修改时用)
+# 清理已删除文件的残留 chunks(笔记被删掉后用)
+poetry run python -m app.tools.sync_notes --prune
+
+# 强制全量重建(清空 + 重灌 + 重建索引,2-5 分钟,慎用)
+poetry run python -m app.tools.sync_notes --full
+
+# 同步指定目录(覆盖默认三目录)
+poetry run python -m app.tools.sync_notes --path "/Users/enkidu/某目录" --tag my_notes
+```
+
+**增量同步原理:** 基于 `chroma_db/file_index.json` 索引记录每个文件的 mtime 和 chunk_ids。
+- 新文件:灌入 + 记录索引
+- mtime 变了:删除该文件旧 chunks → 灌入新的 → 更新索引
+- mtime 没变:跳过
+- 文件被删除:默认不处理,需 `--prune` 清理
+
+**AI 使用流程:**
+1. 用户说"同步"时,直接跑 `sync_notes`(不传参数,用默认三目录)
+2. 同步完成后,把 `[summary]` 行的统计结果告诉用户(新增 X / 更新 Y / 跳过 Z)
+3. 如果用户说"我删了某篇笔记",用 `--prune` 清理残留
+4. 只有在索引损坏或大量数据异常时才用 `--full`
+
+**旧的全量灌库命令(仍可用,但不推荐日常使用):**
+
+```bash
+# 全量灌入(不维护索引,无法增量)
+poetry run python -m app.tools.ingest_notes
 poetry run python -m app.tools.ingest_notes --reset
 ```
 
