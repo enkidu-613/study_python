@@ -1,50 +1,54 @@
-"""
-本地 Embedding 模型统一封装
+"""本地 Embedding 模型的统一加载与编码入口。"""
 
-支持的硬件后端（自动检测，按优先级）:
-1. CUDA      (NVIDIA GPU)
-2. MPS       (Apple Silicon)
-3. DirectML  (Windows AMD/Intel)
-4. CPU       (兜底)
-"""
+from __future__ import annotations
 
+import logging
 import os
 import platform
-import logging
 import threading
-from typing import Optional
+from typing import Any
 
-import torch
+import torch # 导入 PyTorch 库，一个深度学习计算框架
+from langchain_core.embeddings import Embeddings
 from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
 
-_model: Optional[SentenceTransformer] = None
-_device_info: Optional[dict] = None
-_load_lock = threading.Lock()
+DEFAULT_EMBEDDING_MODEL = "BAAI/bge-small-zh-v1.5"
+DEFAULT_QUERY_INSTRUCTION = "为这个句子生成表示以用于检索相关文章："
 
-TIER_DISPATCH = {
-    "cuda_high":  {"model": "BAAI/bge-large-zh-v1.5", "batch_size": 64},
-    "cuda_low":   {"model": "BAAI/bge-base-zh-v1.5",  "batch_size": 16},
-    "mps":        {"model": "BAAI/bge-base-zh-v1.5",  "batch_size": 32},
-    "directml":   {"model": "BAAI/bge-base-zh-v1.5",  "batch_size": 16},
-    "cpu":        {"model": "BAAI/bge-small-zh-v1.5", "batch_size": 8},
+# 硬件只决定批量大小，不决定模型。否则建库和查询可能落入不同向量空间。
+# 批量大小：对应的是模型一次并行处理多少文本，批量越大通常更快，但更占内存和显存，不影响模型名称，不影响向量维度
+# 单条查询不会使用它，主要是影响批量文档编码
+TIER_BATCH_SIZES = {
+    "cuda_high": 64,
+    "cuda_low": 16,
+    "mps": 32,
+    "directml": 16,
+    "cpu": 8,
 }
 
+_model: SentenceTransformer | None = None
+_device_info: dict[str, str] | None = None
+_loaded_model_name: str | None = None
+_loaded_device: str | None = None
+_load_lock = threading.Lock()
 
-def _try_tensor(device_str: str) -> bool:
+
+def _try_tensor(device: Any) -> bool:
+    """设备可用性探测函数，用来验证设备是否可用"""
     try:
-        t = torch.tensor([1.0, 2.0], device=device_str)
-        _ = t * 2
-        if device_str == "cuda":
-            torch.cuda.synchronize()
-        return True
-    except Exception as e:
-        logger.debug(f"device {device_str} tensor test failed: {e}")
+        tensor = torch.tensor([1.0, 2.0], device=device) #1.在目标设备上创建张量
+        _ = tensor * 2 #2.做一次简单张量运算
+        if str(device).startswith("cuda"):
+            torch.cuda.synchronize() #3，CUDA需要同步，确保指令真正执行完
+        return True #4.都成功了 -> 设备可用
+    except Exception as exc:
+        logger.debug("device %s tensor test failed: %s", device, exc)
         return False
 
 
-def _detect_device() -> dict:
+def _detect_device() -> dict[str, str]:
     global _device_info
     if _device_info is not None:
         return _device_info
@@ -57,13 +61,16 @@ def _detect_device() -> dict:
             "directml": "directml",
             "cpu": "cpu",
         }
-        tier = tier_map.get(force, "cpu")
+        if force not in tier_map: # 如果写入的值不是tier_map的任意一个，那么久返回报错
+            choices = ", ".join(tier_map) #这里是拼接字符串
+            raise ValueError(f"FORCE_DEVICE 必须是以下值之一: {choices}")
+
         _device_info = {
-            "tier": tier,
+            "tier": tier_map[force],
             "device_str": force,
             "name": f"FORCE: {force}",
         }
-        logger.info(f"[device] 强制指定: {force}")
+        logger.info("[device] 强制指定: %s", force)
         return _device_info
 
     info = {"tier": "cpu", "device_str": "cpu", "name": "CPU"}
@@ -71,85 +78,87 @@ def _detect_device() -> dict:
     if torch.cuda.is_available() and _try_tensor("cuda"):
         try:
             gpu_name = torch.cuda.get_device_name(0)
-            vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024 ** 3)
+            vram_gb = torch.cuda.get_device_properties(0).total_memory / (1024**3)
             tier = "cuda_high" if vram_gb >= 6 else "cuda_low"
             info = {
                 "tier": tier,
                 "device_str": "cuda",
                 "name": f"CUDA: {gpu_name} ({vram_gb:.1f}GB)",
             }
-        except Exception as e:
-            logger.warning(f"CUDA info query failed: {e}")
-            info = {"tier": "cuda_low", "device_str": "cuda", "name": "CUDA GPU"}
-
+        except Exception as exc:
+            logger.warning("CUDA info query failed: %s", exc)
+            info = {
+                "tier": "cuda_low",
+                "device_str": "cuda",
+                "name": "CUDA GPU",
+            }
     elif torch.backends.mps.is_available() and _try_tensor("mps"):
         os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
-        chip = platform.machine() or "Apple Silicon"
         info = {
             "tier": "mps",
             "device_str": "mps",
-            "name": f"MPS: {chip}",
+            "name": f"MPS: {platform.machine() or 'Apple Silicon'}",
         }
-
     elif os.name == "nt":
         try:
             import torch_directml
-            dml = torch_directml.device()
-            if _try_tensor(dml):
+
+            directml_device = torch_directml.device()
+            if _try_tensor(directml_device):
                 info = {
                     "tier": "directml",
-                    "device_str": str(dml),
-                    "name": f"DirectML: {dml}",
+                    "device_str": str(directml_device),
+                    "name": f"DirectML: {directml_device}",
                 }
         except ImportError:
-            pass
-        except Exception as e:
-            logger.warning(f"DirectML init failed: {e}")
+            logger.debug("torch-directml is not installed")
+        except Exception as exc:
+            logger.warning("DirectML init failed: %s", exc)
 
     if info["tier"] == "cpu":
-        logger.info(f"[device] fallback to CPU ({platform.processor() or 'unknown'})")
+        logger.info("[device] fallback to CPU (%s)", platform.processor() or "unknown")
     else:
-        logger.info(f"[device] detected: {info['name']} (tier={info['tier']})")
+        logger.info("[device] detected: %s (tier=%s)", info["name"], info["tier"])
 
     _device_info = info
     return info
 
 
-def _get_model_name(tier: str) -> str:
-    return os.getenv("EMBEDDING_MODEL_NAME") or TIER_DISPATCH[tier]["model"]
+def _get_model_name() -> str:
+    model_name = os.getenv("EMBEDDING_MODEL_NAME", DEFAULT_EMBEDDING_MODEL).strip()
+    if not model_name:
+        raise ValueError("EMBEDDING_MODEL_NAME 模型名称不能为空")
+    return model_name
 
 
 def _get_batch_size(tier: str) -> int:
-    env = os.getenv("EMBEDDING_BATCH_SIZE")
-    return int(env) if env else TIER_DISPATCH[tier]["batch_size"]
+    raw_value = os.getenv("EMBEDDING_BATCH_SIZE")
+    if raw_value is None:
+        return TIER_BATCH_SIZES[tier]
+
+    try:
+        batch_size = int(raw_value)
+    except ValueError as exc:
+        raise ValueError("EMBEDDING_BATCH_SIZE 必须是正整数") from exc
+
+    if batch_size <= 0:
+        raise ValueError("EMBEDDING_BATCH_SIZE 必须是正整数")
+    return batch_size
 
 
 def _load_model(model_name: str, device: str) -> SentenceTransformer:
     model = SentenceTransformer(model_name, device=device)
-    actual = str(model.device)
-
-    if device != "cpu" and device not in actual:
-        logger.warning(f"loaded on {actual} (expected {device}), fallback to CPU")
-        model = SentenceTransformer(model_name, device="cpu")
-        actual = "cpu"
-
-    try:
-        _ = model.encode("test", convert_to_numpy=True)
-        logger.info(f"[model] loaded OK, running on: {actual}")
-    except Exception as e:
-        if actual != "cpu":
-            logger.warning(f"dummy inference failed on {actual}: {e}, fallback to CPU")
-            model = SentenceTransformer(model_name, device="cpu")
-            _ = model.encode("test", convert_to_numpy=True)
-            logger.info("[model] loaded OK on CPU")
-        else:
-            raise RuntimeError(f"模型在 CPU 上也无法推理: {e}")
-
+    model.encode(
+        "test",
+        convert_to_numpy=True,
+        normalize_embeddings=True,
+    )
+    logger.info("[model] loaded OK, running on: %s", model.device)
     return model
 
 
 def get_embedding_model() -> SentenceTransformer:
-    global _model
+    global _model, _loaded_device, _loaded_model_name
     if _model is not None:
         return _model
 
@@ -158,65 +167,135 @@ def get_embedding_model() -> SentenceTransformer:
             return _model
 
         info = _detect_device()
-        model_name = _get_model_name(info["tier"])
+        model_name = _get_model_name()
         device = info["device_str"]
-
-        logger.info(f"[model] loading {model_name} on {info['name']}")
+        logger.info("[model] loading %s on %s", model_name, info["name"])
 
         try:
-            _model = _load_model(model_name, device)
-        except (RuntimeError, torch.OutOfMemoryError) as e:
-            logger.error(f"load on {device} failed: {e}")
-            if info["tier"] != "cpu":
-                fallback_model = TIER_DISPATCH["cpu"]["model"]
-                logger.warning(f"fallback to CPU model: {fallback_model}")
-                _model = _load_model(fallback_model, "cpu")
-            else:
-                raise
-        except Exception as e:
-            logger.error(f"load on {device} failed: {e}")
-            logger.warning("fallback to CPU")
-            _model = _load_model(model_name, "cpu")
+            model = _load_model(model_name, device)
+            loaded_device = str(getattr(model, "device", device))
+        except Exception as exc:
+            if device == "cpu":
+                raise RuntimeError(f"模型 {model_name} 在 CPU 上加载失败") from exc
 
+            logger.warning(
+                "[model] %s failed on %s: %s; retrying the same model on CPU",
+                model_name,
+                device,
+                exc,
+            )
+            model = _load_model(model_name, "cpu")
+            loaded_device = str(getattr(model, "device", "cpu"))
+
+        _model = model
+        _loaded_model_name = model_name
+        _loaded_device = loaded_device
         return _model
 
 
-def get_embedding(text: str) -> list[float]:
+def _validate_text(text: str, *, field_name: str) -> str:
+    if not isinstance(text, str) or not text.strip():
+        raise ValueError(f"{field_name}不能为空")
+    return text.strip()
+
+
+def _encode_one(text: str, *, is_query: bool) -> list[float]:
+    clean_text = _validate_text(text, field_name="查询文本" if is_query else "文档文本")
+    if is_query:
+        instruction = os.getenv(
+            "EMBEDDING_QUERY_INSTRUCTION",
+            DEFAULT_QUERY_INSTRUCTION,
+        )
+        clean_text = f"{instruction}{clean_text}"
+
     model = get_embedding_model()
-    return model.encode(text, convert_to_numpy=True).tolist()
+    return model.encode(
+        clean_text,
+        convert_to_numpy=True,
+        normalize_embeddings=True,
+    ).tolist()
+
+
+def get_query_embedding(text: str) -> list[float]:
+    """为检索查询生成向量；BGE 查询指令只在这里添加。"""
+
+    return _encode_one(text, is_query=True)
+
+
+def get_document_embedding(text: str) -> list[float]:
+    """为单条文档生成归一化向量，保持文档原文不加查询指令。"""
+
+    return _encode_one(text, is_query=False)
+
+
+def get_document_embeddings(texts: list[str]) -> list[list[float]]:
+    """批量生成文档向量。"""
+
+    if not texts:
+        return []
+
+    clean_texts = [
+        _validate_text(text, field_name=f"第 {index} 条文档文本")
+        for index, text in enumerate(texts, start=1)
+    ]
+    model = get_embedding_model()
+    tier = _detect_device()["tier"]
+    return model.encode(
+        clean_texts,
+        batch_size=_get_batch_size(tier),
+        convert_to_numpy=True,
+        normalize_embeddings=True,
+    ).tolist()
+
+
+def get_embedding(text: str) -> list[float]:
+    """兼容旧调用；语义等同于文档向量。新代码应使用明确命名的函数。"""
+
+    return get_document_embedding(text)
 
 
 def get_embeddings(texts: list[str]) -> list[list[float]]:
-    model = get_embedding_model()
-    bs = _get_batch_size(_device_info["tier"])
-    return model.encode(texts, batch_size=bs, convert_to_numpy=True).tolist()
+    """兼容旧调用；语义等同于批量文档向量。"""
+
+    return get_document_embeddings(texts)
 
 
-def model_info() -> dict:
+def model_info() -> dict[str, Any]:
     info = _detect_device()
+    dimension = None
+    if _model is not None:
+        dimension = _model.get_sentence_embedding_dimension()
+
     return {
-        "device": info,
-        "model_name": _get_model_name(info["tier"]) if _model is None else str(_model),
+        "configured_model": _get_model_name(),
+        "loaded_model": _loaded_model_name,
+        "selected_device": info,
+        "loaded_device": _loaded_device,
         "loaded": _model is not None,
+        "dimension": dimension,
         "batch_size": _get_batch_size(info["tier"]),
+        "normalize_embeddings": True,
+        "query_instruction": os.getenv(
+            "EMBEDDING_QUERY_INSTRUCTION",
+            DEFAULT_QUERY_INSTRUCTION,
+        ),
     }
 
 
-from langchain_core.embeddings import Embeddings
-
-
 class LocalLangChainEmbeddings(Embeddings):
+    """把项目函数适配为 LangChain 的 Embeddings 接口。"""
+
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        return get_embeddings(texts)
+        return get_document_embeddings(texts)
 
     def embed_query(self, text: str) -> list[float]:
-        return get_embedding(text)
+        return get_query_embedding(text)
 
 
-_local_lc_embeddings = None
+_local_lc_embeddings: LocalLangChainEmbeddings | None = None
 
 
-def get_langchain_embeddings() -> "LocalLangChainEmbeddings":
+def get_langchain_embeddings() -> LocalLangChainEmbeddings:
     global _local_lc_embeddings
     if _local_lc_embeddings is None:
         _local_lc_embeddings = LocalLangChainEmbeddings()

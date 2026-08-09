@@ -80,7 +80,7 @@ class EstimateTokensRequest(BaseModel):
     text: str
 
 
-from app.embedding import get_embedding
+from app.embedding import get_document_embedding, get_query_embedding
 
 
 def split_text(text: str, chunk_size: int = 80, overlap: int = 10) -> list[str]:
@@ -122,7 +122,7 @@ def add_document(doc: DocumentIn, db: Session = Depends(get_db)):
         )
         db.add(chunk)
 
-        vec = get_embedding(chunk_text)
+        vec = get_document_embedding(chunk_text)
 
         chroma_ids.append(f"doc{document.id}_chunk{idx}")
         chroma_embeddings.append(vec)
@@ -151,7 +151,7 @@ def add_document(doc: DocumentIn, db: Session = Depends(get_db)):
 
 
 def _semantic_search(query_text: str, n_results: int, db: Session) -> List[SearchResult]:
-    query_vec = get_embedding(query_text)
+    query_vec = get_query_embedding(query_text)
 
     chroma_results = collection.query(
         query_embeddings=[query_vec],

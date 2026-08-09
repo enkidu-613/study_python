@@ -1,6 +1,6 @@
 # Study State Memory
 
-Last updated from `.trae` on 2026-07-29 after Multi-Agent Handoff review, Zed diagnosis, and history sync.
+Last updated from `.trae` on 2026-08-07 after Hugging Face Embedding implementation review and history sync.
 
 ## Current Stage
 
@@ -37,6 +37,8 @@ The learner has completed:
 ## Latest History Summary
 
 Latest archived conversation:
+
+- `dialog-91` on 2026-08-07: 优化第 32 章 Embedding 实践代码和第三关教学顺序，复习 batch size、torch/PyTorch、SentenceTransformer 与向量索引一致性；相关专项检查通过，完整测试仍受既有演示文件收集错误影响。
 
 - `dialog-89` on 2026-07-29: 整理第31章的 Multi-Agent Handoff 调用链，确认工具通过 `Command(update=...)` 更新 State，下一轮模型调用前 middleware 读取 State 并用 `request.override(...)` 切换 Prompt/tools，再由 `handler` 继续执行；同时记录 Zed Copilot 编辑预测的 402 quota exceeded 与 DeepSeek V4 Flash 的 Agent/chat 配置边界。
 

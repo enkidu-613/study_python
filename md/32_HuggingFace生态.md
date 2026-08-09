@@ -4,6 +4,8 @@
 >
 > 学习起点：`app/embedding.py` 主要由 AI 辅助生成。代码已经能用，不等于你已经掌握。本章不会让你重写整套跨平台封装，而是先获得最小能力，再追踪它如何被工程代码放大。
 
+基础概念参考：[文本进入模型：Token、Tokenizer 与 Pooling](/Users/enkidu/PyCharmMiscProject/md/AI基础概念/01_文本进入模型_Token与Pooling.md:1)。本章负责带着项目实践；基础概念文档负责跨章节复用和快速复习。
+
 ## 本章在课程中的位置
 
 | 项目状态 | 本章新增能力 | 后面会怎样复用 |
@@ -303,50 +305,280 @@ embedding = model.encode(TEXT)
 
 另外两层由库自动执行。以后如果业务代码开始直接 import `transformers` 或 `huggingface_hub`，再把它们明确写入 `pyproject.toml` 并正式学习相应 API。
 
+### 把第二关代码按“谁调用谁”读一遍
+
+不要把上面三段代码看成三份并列程序。它们是一层包调用下一层包：
+
+```text
+你写的 model = SentenceTransformer(MODEL_ID)
+  -> sentence-transformers 内部请求 huggingface_hub 准备模型文件
+  -> sentence-transformers 内部请求 transformers 创建底层模型组件
+  -> sentence-transformers 组合组件并返回 model
+```
+
+#### 第一层：你的代码调用高级类
+
+```python
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer(MODEL_ID)
+embedding = model.encode(TEXT)
+```
+
+逐行看：
+
+1. `from ... import ...`：从第三方包中取出 `SentenceTransformer` 这个类；这行只是在准备名字，不会把文本变成向量。
+2. `SentenceTransformer(MODEL_ID)`：调用类创建 `model` 实例。创建过程中会准备模型文件、加载权重并组装句向量模型。
+3. `model`：保存这个已经可以工作的模型实例，不是模型 ID，也不是向量。
+4. `model.encode(TEXT)`：调用实例的方法，把 `TEXT` 送入模型，返回 `embedding`。
+
+这就是本章要求你会写的部分。
+
+#### 第二层：`transformers` 负责模型计算组件
+
+```python
+from transformers import AutoModel, AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+base_model = AutoModel.from_pretrained(MODEL_ID)
+```
+
+逐行看：
+
+1. `AutoTokenizer`：根据模型配置选择具体分词器的类，把文本拆成模型能处理的 token ID。
+2. `AutoTokenizer.from_pretrained(MODEL_ID)`：根据同一个模型 ID 加载分词规则和词表，返回 `tokenizer` 对象。
+3. `AutoModel`：根据模型配置选择底层 Transformer 网络（神经网络）的类。
+4. `AutoModel.from_pretrained(MODEL_ID)`：根据模型 ID 加载网络结构和权重，返回 `base_model` 对象。
+
+### token ID 到底是什么
+
+`token ID` 是 token 在当前模型词表中的整数编号。它不是原文、不是词义向量，也不是相似度分数，只是模型查找词表和处理输入时使用的数字索引。
+
+### Tokenizer 是什么
+
+`Tokenizer` 可以直译为“分词器”，但它不只做切分。它是模型前面的文本预处理对象，主要负责：
+
+1. 把原始文本拆成 token。
+2. 把 token 映射成 token ID。
+3. 按模型要求补充特殊 token、截断过长输入或进行填充。
+4. 把这些结果整理成模型可以接收的输入数据。
+
+最小调用形状如下：
+
+```python
+from transformers import AutoTokenizer
+
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+encoded = tokenizer("退款需要几天内申请？")
+
+print(encoded["input_ids"])
+```
+
+这里的 `encoded` 通常是一个字典：`input_ids` 保存 token ID；实际批量或补齐输入时还可能包含 `attention_mask` 等字段。Tokenizer 负责把文字变成数字输入，但不负责执行 Transformer 的神经网络计算；真正的模型计算由 `AutoModel` 或 `SentenceTransformer` 完成。
+
+```text
+Tokenizer：文本 -> token -> token ID -> 模型输入字典
+AutoModel：模型输入字典 -> 隐藏表示
+```
+
+可以用一个简化例子理解：
+
+```text
+原始文本："退款需要几天"
+    ↓ tokenizer 拆分
+tokens： ["退款", "需要", "几天"]
+    ↓ 查当前模型的词表
+token IDs： [1205, 884, 3912]   # 仅为示意，真实编号由模型决定
+    ↓ 交给 Transformer
+隐藏表示：一组浮点数
+    ↓ 池化
+句向量：一条代表整段文本的向量
+```
+
+### 池化是什么
+
+Transformer 会为每个 token 产生一条隐藏向量。假设一段文本被拆成 3 个 token，并且每条隐藏向量只有 2 个数字：
+
+```text
+token 1 -> [1, 2]
+token 2 -> [3, 4]
+token 3 -> [5, 6]
+```
+
+向量数据库通常需要“这一整段文本对应一条向量”，所以需要把 3 条向量汇总成 1 条。最简单的平均池化是逐列求平均：
+
+```text
+([1, 2] + [3, 4] + [5, 6]) / 3
+  -> [3, 4]
+```
+
+这就是池化的核心：**把 token 级表示聚合成文本级表示**。它不是对 token ID 求平均，也不是把向量维度随意压小。
+
+### 一个 token 不一定等于一个词
+
+`token` 是 Tokenizer 规定的最小文本片段，可能是：
+
+```text
+完整词：      "退款"
+单个汉字：    "退"
+英文子词：    "play" + "##ing"
+标点：        "？"
+特殊标记：    "[CLS]"、"[SEP]"
+```
+
+不同模型的 Tokenizer 词表不同，所以同一段文字可能被拆成不同数量的 token。这里的“多个词”更准确应说成“多个 token”。
+
+### 为什么要汇总多个 token
+
+因为模型面对的是一段长度不固定的文本，而向量检索需要一条长度固定的向量：
+
+```text
+短文本：2 个 token  -> 2 条隐藏向量 -> 1 条 768 维句向量
+长文本：20 个 token -> 20 条隐藏向量 -> 1 条 768 维句向量
+```
+
+平均池化能把不同长度的 token 序列汇总成相同维度的结果。更重要的是，隐藏向量不是原始词典编号：经过 Transformer 的上下文计算后，每个 token 的表示已经受到周围文本影响，因此汇总它们是在形成整段文本的语义表示。
+
+实际实现不会把填充位置无条件算进去，通常会通过 `attention_mask` 只聚合真实 token。也不要把平均池化当成唯一正确答案；模型可能配置为 Mean、CLS 或 Max Pooling，具体策略要看模型配置。
+
+常见池化方式有：
+
+- **Mean Pooling**：对多个 token 的隐藏向量逐维求平均。
+- **CLS Pooling**：只取特殊的 `[CLS]` token 对应的隐藏向量。
+- **Max Pooling**：每个维度取多个 token 中的最大值。
+
+具体使用哪种方式由模型结构和配置决定。BGE 官方的底层 Transformers 示例使用 `[CLS]` pooling；使用 `SentenceTransformer` 时，池化通常已经被封装在模型对象里，所以你只调用 `encode()` 即可。
+
+```text
+	多个 token 隐藏向量
+  -> Pooling
+  -> 一条固定长度的句向量
+  -> 存入向量数据库或参与相似度检索
+```
+
+实际拆分结果可能不同：中文可能按词、字或更小的子词拆分，英文也可能把一个单词拆成多个子词。必须使用与模型配套的 Tokenizer，因为模型训练时使用的词表和编号就是固定配套的。
+
+还要区分：
+
+| 数据 | 例子 | 作用 |
+| --- | --- | --- |
+| 原始文本 | `"退款需要几天"` | 人类阅读的输入。 |
+| token | `"退款"`、`"需要"` | Tokenizer 拆出的文本片段。 |
+| token ID | `1205`、`884` | 片段在词表中的整数编号。 |
+| 隐藏表示 | 一组浮点数 | Transformer 计算后的中间表示。 |
+| 句向量 | 长度固定的一维浮点数组 | 用于语义相似度和向量检索。 |
+
+所以 `token ID` 不是最终向量。它更像模型输入侧的“编号化文本”。
+
+这时还没有得到最终的一条句向量。底层模型先输出每个 token 的隐藏表示，`sentence-transformers` 再处理这些表示，得到代表整段文本的句向量。这里展示的是底层形状，不是本章要求你现在手写的方案。
+
+#### 第三层：`huggingface_hub` 负责文件来源
+
+```python
+from huggingface_hub import snapshot_download
+
+model_path = snapshot_download(repo_id=MODEL_ID)
+```
+
+逐行看：
+
+1. `snapshot_download`：从 Hugging Face Hub 获取模型仓库文件，并使用本地缓存。
+2. `repo_id=MODEL_ID`：把变量 `MODEL_ID` 作为名为 `repo_id` 的参数传入；`repo_id` 就是仓库 ID。
+3. `model_path`：保存下载后模型文件所在的本地目录路径。
+
+它只负责“文件在哪里、是否需要下载、缓存放在哪里”，不负责把文本编码成向量，也不负责在 GPU 上执行模型计算。
+
+#### 用一个现实动作重新串起来
+
+```text
+SentenceTransformer(MODEL_ID)
+  1. huggingface_hub：找到或下载 MODEL_ID 的文件
+  2. transformers：根据文件创建 tokenizer 和底层模型
+  3. sentence-transformers：补上池化等句向量处理
+  4. 返回 model 实例
+
+model.encode(TEXT)
+  5. tokenizer：文本 -> token ID
+  6. base_model：token ID -> token 级隐藏表示
+  7. sentence-transformers：token 表示 -> 一条句向量
+```
+
+因此，第二关真正要你记住的不是三个包的 API，而是这条分工：
+
+> `huggingface_hub` 找文件，`transformers` 提供底层模型组件，`sentence-transformers` 提供句向量高级接口。
+
 ---
 
-## 第三关：回到项目，追踪工程封装
+## 第三关：回到项目，按加载顺序读懂封装
 
 标记：`[追踪]`
 
-最小示例解决了“能不能生成一条向量”。项目中的 [app/embedding.py](/Users/enkidu/PyCharmMiscProject/app/embedding.py:1) 还要解决：
+本关继续遵循“具体锚点优先”：先认清真实变量、函数和返回值，再总结工程原则。
 
-- 不同机器使用什么设备；
-- 模型加载失败如何回退；
-- 同一进程如何避免重复加载；
-- 多条文本如何批量编码；
-- LangChain 如何使用同一套向量能力。
-
-真实调用链是：
+第二关的最小示例只解决了一件事：
 
 ```text
-get_embedding(text)
-  -> get_embedding_model()
-     -> _detect_device()
-     -> _get_model_name(tier)
-     -> _load_model(model_name, device)
-        -> SentenceTransformer(...)
-  -> model.encode(text)
+一段文本 -> model.encode() -> 一条向量
+```
+
+项目中的 [app/embedding.py](/Users/enkidu/PyCharmMiscProject/app/embedding.py) 还要解决六件工程问题：
+
+1. 使用哪个模型；
+2. 模型在哪个设备上运行；
+3. 设备失败后怎样回退；
+4. 怎样避免反复加载模型；
+5. 怎样区分查询和文档；
+6. 怎样接入 LangChain。
+
+先不要钻进所有内部函数。先记住这条主干：
+
+```text
+业务代码传入文本
+  -> 取得已经加载好的模型
+  -> model.encode(...)
   -> ndarray.tolist()
   -> list[float]
 ```
 
-### 1. `TIER_DISPATCH` 只是配置表
+下面再按照代码真正发生的顺序，一层一层展开。
 
-[TIER_DISPATCH](/Users/enkidu/PyCharmMiscProject/app/embedding.py:26) 是普通字典：
+### 1. 配置只负责“告诉代码用什么”
+
+模型名称现在固定为：
 
 ```python
-TIER_DISPATCH = {
-    "mps": {"model": "BAAI/bge-base-zh-v1.5", "batch_size": 32},
-    "cpu": {"model": "BAAI/bge-small-zh-v1.5", "batch_size": 8},
+DEFAULT_EMBEDDING_MODEL = "BAAI/bge-small-zh-v1.5"
+```
+
+也可以在 `.env` 中覆盖：
+
+```dotenv
+EMBEDDING_MODEL_NAME=BAAI/bge-small-zh-v1.5
+```
+
+设备对应的配置表只保存批量大小：
+
+```python
+TIER_BATCH_SIZES = {
+    "mps": 32,
+    "cpu": 8,
 }
 ```
 
-它把设备等级映射到模型 ID 和批量大小。字典自己不会检测设备，也不会加载模型。
+这里的字典自己不会检测设备，也不会加载模型。它只是保存配置，等其他函数来读取。
 
-### 2. `_detect_device()` 产生设备信息
+为什么不再让 MPS、CUDA、CPU 自动选择不同模型？
 
-它返回类似：
+```text
+模型名称 -> 决定生成哪一种向量，不能随硬件变化
+运行设备 -> 决定在哪里计算，可以变化
+batch_size -> 决定一次计算几条，可以变化
+```
+
+### 2. `_detect_device()` 只负责选择运行设备
+
+它会检查 CUDA、MPS、DirectML，最后使用 CPU 兜底，返回类似：
 
 ```python
 {
@@ -356,78 +588,202 @@ TIER_DISPATCH = {
 }
 ```
 
-后续代码读取 `tier` 选择配置，读取 `device_str` 指定推理设备。本章不要求重写完整硬件检测。
+三个值的用途分别是：
 
-### 3. `_load_model()` 才创建模型对象
+| 属性 | 交给谁使用 | 用途 |
+| --- | --- | --- |
+| `tier` | `_get_batch_size()` | 查询这一档设备的批量大小。 |
+| `device_str` | `SentenceTransformer` | 指定模型运行在 `mps`、`cuda` 或 `cpu`。 |
+| `name` | 日志 | 让人知道检测到了什么设备。 |
 
-核心仍是你刚运行过的语句：
+本章不要求你默写完整硬件检测，只要知道它的输出会交给后面的加载函数。
+
+### 3. `_load_model()` 才真正创建模型对象
+
+核心代码仍是第二关见过的：
 
 ```python
 model = SentenceTransformer(model_name, device=device)
 ```
 
-项目又增加了一次试运行和失败回退。这是工程保护层，不是另一套模型原理。
-
-### 4. `_model` 是进程内缓存
-
-```python
-_model = None
-```
-
-第一次调用 `get_embedding_model()` 时加载模型并赋给 `_model`。同一进程后续调用直接返回它，避免每个请求都重新加载权重。
+输入与输出是：
 
 ```text
-第一次请求 -> 加载模型 -> 保存到 _model
-第二次请求 -> 直接返回 _model
-服务重启   -> _model 重新变成 None
+输入：模型名称字符串 + 设备字符串
+  -> SentenceTransformer(...)
+输出：可以调用 encode() 的 model 对象
 ```
 
-`threading.Lock` 防止并发请求同时加载多份模型。本章知道用途即可，不要求默写双重检查。
+项目随后用一条测试文本做试运行，确认这个模型真的能在当前设备上计算。
 
-### 5. 单条与批量编码
+如果 MPS 或 CUDA 失败，`get_embedding_model()` 会改用 CPU，再加载一次**同一个模型**：
+
+```text
+bge-small 在 MPS 加载失败
+  -> bge-small 改到 CPU 加载
+  -> 模型没变，只是运行位置变了
+```
+
+旧实现可能在回退时换成另一个模型，这会破坏已有向量库；新实现已经避免了这个问题。
+
+### 4. `_model` 避免每次请求都重新加载
 
 ```python
-get_embedding("问题")
-# -> list[float]
-
-get_embeddings(["文档 A", "文档 B"])
-# -> list[list[float]]
+_model: SentenceTransformer | None = None
 ```
 
-批量编码不是把多个字符串拼起来，而是一次给模型多条独立输入，通常能更充分利用硬件。
+程序刚启动时，`_model` 是 `None`，表示模型还没有加载：
 
-### 6. LangChain 适配层
+```text
+第一次调用 get_embedding_model()
+  -> 发现 _model 是 None
+  -> 检测设备
+  -> 加载模型
+  -> 把模型保存到 _model
 
-[LocalLangChainEmbeddings](/Users/enkidu/PyCharmMiscProject/app/embedding.py:208) 把项目函数适配成 LangChain 认识的接口：
+第二次调用 get_embedding_model()
+  -> 发现 _model 已经有模型
+  -> 直接返回，不再加载
+```
+
+服务重启后，内存会被清空，`_model` 又从 `None` 开始。
+
+`threading.Lock` 是为了防止两个并发请求同时加载两份模型。本章知道它在保护“首次加载”即可，不要求默写锁的写法。
+
+### 5. 最后才区分“文档”和“查询”
+
+现在有三个主要入口：
+
+```python
+get_document_embedding("退款应在七天内申请。")
+# 一条文档 -> list[float]
+
+get_query_embedding("退款需要几天内申请？")
+# 一条查询 -> list[float]
+
+get_document_embeddings(["文档 A", "文档 B"])
+# 多条文档 -> list[list[float]]
+```
+
+它们最终都调用同一个模型的 `encode()`。区别只发生在文本送入模型之前：
+
+| 入口 | 送入模型的内容 |
+| --- | --- |
+| 文档入口 | 保持文档原文。 |
+| 查询入口 | 在问题前添加 BGE 查询指令。 |
+
+例如：
+
+```text
+用户原问题：退款需要几天内申请？
+
+查询入口实际交给模型：
+为这个句子生成表示以用于检索相关文章：退款需要几天内申请？
+```
+
+这段指令相当于给短文本补充一个“用途说明”：这句话是用来查找相关文档的。文档本身不需要添加。
+
+代码内部用 `_encode_one(text, is_query=...)` 复用共同逻辑：
+
+```text
+get_document_embedding(text)
+  -> _encode_one(text, is_query=False)
+
+get_query_embedding(text)
+  -> _encode_one(text, is_query=True)
+```
+
+`_encode_one()` 前面的下划线表示它是内部辅助函数。业务代码直接调用上面两个名称清楚的公开函数。
+
+### 6. 两边都使用同一种归一化策略
+
+文档和查询最终都会执行：
+
+```python
+model.encode(
+    text,
+    convert_to_numpy=True,
+    normalize_embeddings=True,
+)
+```
+
+这里先这样理解：
+
+```text
+normalize_embeddings=True
+  -> 把每条向量的长度统一缩放为 1
+  -> 使用同一把尺子比较向量方向
+```
+
+它不会减少向量维度，也不会修改原始文本。最重要的是文档和查询必须采用相同的归一化策略。
+
+### 7. LangChain 适配层只是“改接口名称”
+
+LangChain 希望 Embeddings 对象具有两个固定方法：
 
 ```text
 LangChain 调用 embed_query(text)
-  -> get_embedding(text)
+  -> get_query_embedding(text)
 
 LangChain 调用 embed_documents(texts)
-  -> get_embeddings(texts)
+  -> get_document_embeddings(texts)
 ```
 
-它没有创建第二个向量模型，只是把方法名称和返回格式接到 LangChain 的约定上。
+`LocalLangChainEmbeddings` 就负责这层转接。它不会创建第二个模型，底下仍然调用同一个 `get_embedding_model()`。
+
+旧函数 `get_embedding()` 和 `get_embeddings()` 暂时保留，方便旧教程代码继续运行；它们现在按“文档向量”处理。新代码优先使用含义明确的新函数。
+
+### 把完整流程重新合起来
+
+文档入库：
+
+```text
+chunk_text
+  -> get_document_embedding()
+  -> get_embedding_model()
+  -> model.encode(原始文档，归一化)
+  -> list[float]
+  -> 存入 Chroma
+```
+
+用户查询：
+
+```text
+query_text
+  -> get_query_embedding()
+  -> 添加查询指令
+  -> get_embedding_model()
+  -> model.encode(带指令的问题，归一化)
+  -> list[float]
+  -> 交给 Chroma 检索
+```
+
+两条路线不是使用两个模型。它们是：
+
+```text
+同一个模型 + 两种输入角色 + 一致的向量规则
+```
+
+### 第三关立即检查
+
+1. `_detect_device()` 会不会加载模型？
+2. CPU 回退时，模型名称和运行设备分别怎么变化？
+3. 为什么第二次调用 `get_embedding_model()` 不会重新加载模型？
+4. 查询入口和文档入口最终是不是使用同一个模型？
 
 ---
 
-## 第四关：发现当前项目真正的风险
+## 第四关：迁移现有向量库
 
-标记：`[追踪] [改]`
+标记：`[改] [验]`
 
-当前封装会按硬件选择模型：CPU 默认 `bge-small`，MPS 默认 `bge-base`，高配置 CUDA 可能使用 `bge-large`。
-
-这对“临时生成向量”很方便，但对持久化向量库存在风险：
+第三关已经修复“按硬件自动换模型”的风险，并且启用了统一归一化和查询侧指令。但你以前存入 Chroma 的文档向量是按旧规则生成的。
 
 ```text
-建库机器使用 bge-base
-  -> 文档向量属于 bge-base 的向量空间
+旧索引：旧模型选择规则 + 未显式归一化
+新查询：固定模型 + 归一化 + 查询指令
 
-查询机器自动改用 bge-small
-  -> 查询向量属于另一套向量空间
-  -> 维度或语义空间可能不兼容
-  -> 检索报错或结果失真
+=> 不能把新查询直接长期用于旧索引
 ```
 
 ### 一致性不只是一句“使用同一个模型”
@@ -442,54 +798,22 @@ LangChain 调用 embed_documents(texts)
 | 文本预处理 | 清洗、截断、查询指令会改变输入。 |
 | 归一化策略 | 会影响点积、余弦相似度等计算方式。 |
 
-对当前项目，最小修正思路不是立刻重写封装，而是在 `.env` 中固定模型：
+当前 `.env` 应固定模型：
 
 ```dotenv
-EMBEDDING_MODEL_NAME=BAAI/bge-base-zh-v1.5
+EMBEDDING_MODEL_NAME=BAAI/bge-small-zh-v1.5
 ```
 
-然后用同一配置重新建立向量库。不要给已经由另一模型建立的旧索引直接换模型。
+然后重新建立向量库。不要只更新查询端，却继续长期使用旧文档向量。
 
-### `normalize_embeddings=True` 是什么
-
-```python
-embedding = model.encode(
-    TEXT,
-    convert_to_numpy=True,
-    normalize_embeddings=True,
-)
-```
-
-它把向量长度归一化为 1，便于使用点积表达余弦相似度。它不是“让语义更准确”的开关；查询和文档必须采用一致策略。
-
-### BGE 的查询指令边界
-
-BGE 模型卡会给检索场景提供查询侧指令。核心思想是：
-
-```text
-短查询 -> 可按模型卡要求添加检索指令
-文档   -> 通常保持原文
-```
-
-不要把这条经验机械套到所有模型。是否需要指令、具体文本是什么，都以当前模型卡为准；建库与查询策略要固定并记录。
-
-当前项目的真实情况是：
-
-```text
-embed_query(text)     -> get_embedding(text)  -> model.encode(text)
-embed_documents(...)  -> get_embeddings(...)  -> model.encode(texts)
-```
-
-也就是说，当前代码没有区分查询侧与文档侧的预处理，也没有显式传入 `normalize_embeddings=True`。这不代表程序一定不能运行：向量库可能采用余弦相似度并在内部处理归一化，BGE v1.5 在不加指令时也仍能生成向量。但它意味着当前实现没有完整落实模型卡的推荐检索方式。
-
-正确处理顺序是：
+推荐迁移顺序：
 
 1. 先用固定评估问题记录当前召回结果。
-2. 再统一设计查询指令、归一化和模型版本。
-3. 用新配置重新生成文档向量并重建索引。
-4. 对比修改前后的 Retrieval Evaluation，而不是只凭感觉判断。
+2. 备份或删除旧的学习用 Chroma collection。
+3. 使用固定模型重新导入原始文档，让所有 chunk 重新生成向量。
+4. 使用同一组问题重新检索，对比修改前后的 Retrieval Evaluation。
 
-本章先识别这个缺口，不直接修改生产封装，避免只改查询端却继续使用旧文档向量。
+不要机械地把 BGE 查询指令套到所有 Embedding 模型。以后更换模型时，要重新查看对应模型卡，并重新确认查询预处理和归一化要求。
 
 ---
 
@@ -584,10 +908,12 @@ list[str]
 
 标记：`[追踪]`
 
-从项目调用入口向下追：
+分别从两个项目入口向下追：
 
 ```text
-get_embedding(text)
+文档：get_document_embedding(text)
+查询：get_query_embedding(text)
+  -> _encode_one(text, is_query=...)
   -> get_embedding_model()
   -> _detect_device()
   -> _get_model_name()
@@ -612,7 +938,11 @@ model = SentenceTransformer("BAAI/bge-base-zh-v1.5", device="cpu")
 
 
 def get_embedding_demo(text: str) -> list[float]:
-    embedding = model.encode(text, convert_to_numpy=True)
+    embedding = model.encode(
+        text,
+        convert_to_numpy=True,
+        normalize_embeddings=True,
+    )
     return embedding.tolist()
 ```
 
@@ -671,9 +1001,9 @@ model_id.encode("hello")  # 错误
 
 缓存避免重复下载，但每个新进程仍需把权重读进内存。
 
-### 4. 建库和查询自动选择了不同模型
+### 4. 自己又让建库和查询使用不同模型
 
-这是当前工程最需要警惕的风险。持久化向量库应固定并记录模型配置。
+当前封装已经避免按硬件自动换模型，但修改 `.env` 后仍可能造成不一致。持久化向量库应固定并记录模型配置；修改模型或预处理策略后必须重建索引。
 
 ### 5. 一看到 Hub 就以为必须联网推理
 
@@ -709,7 +1039,7 @@ Hub 保存模型文件
 
 1. **它解决什么问题？** `SentenceTransformer` 把预训练句向量模型加载成可调用对象，`encode()` 把文本转换成向量。
 2. **不这样做会怎样？** 没有模型对象就无法本地推理；建库和查询配置不一致会导致报错或检索质量失真。
-3. **项目在哪里使用？** [app/embedding.py](/Users/enkidu/PyCharmMiscProject/app/embedding.py:127) 负责加载，[get_embedding()](/Users/enkidu/PyCharmMiscProject/app/embedding.py:184) 和 [get_embeddings()](/Users/enkidu/PyCharmMiscProject/app/embedding.py:189) 负责调用。
+3. **项目在哪里使用？** [app/embedding.py](/Users/enkidu/PyCharmMiscProject/app/embedding.py) 负责加载；`get_query_embedding()` 处理查询，`get_document_embedding()` 和 `get_document_embeddings()` 处理文档；`LocalLangChainEmbeddings` 把它们接到 LangChain。
 4. **怎么验证真的懂了？** 不看讲义写出 `get_embeddings_demo()`，运行后解释输入类型、模型对象和二维输出的关系。
 
 ## 本章通过标准
