@@ -1,4 +1,7 @@
 # 18. Python 类、对象与实例
+
+> 课程主题参考：David J. Malan 与 CS50 团队（Harvard University）的 [CS50P 单元 8](https://cs50.harvard.edu/python/notes/8/)。enkidu-613 将本项目中文讲义纳入该主题路线并加入项目练习，非官方译本；本页按 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 分享。[来源与改编说明](CS50P_来源与许可.md) · [本课程阅读顺序](CS50P_Python基础学习路线.md)。
+
 > **一句话理解：类描述一类对象的属性和行为；实例是根据类创建出的具体对象。**
 ## 学什么，不学什么
 学：类、实例、属性、方法、`__init__`。 不学：继承体系和手动内存管理。
@@ -29,4 +32,4 @@ print(task.title, task.done)
 ## 小练习
 为 Task 增加 `describe()` 方法，返回任务标题和完成状态。
 ## 下一步
-[19. Git 安装与首次身份配置](19_Git安装与首次身份配置.md)
+[CS50P 单元 9：常用 Python 写法](CS50P_09_常用写法与阅读边界.md)，然后完成结课练习，再进入 Git。

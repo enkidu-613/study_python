@@ -1,4 +1,7 @@
 # 17. Python 函数进阶：Lambda 与闭包
+
+> 课程主题参考：David J. Malan 与 CS50 团队（Harvard University）的 [CS50P 单元 9](https://cs50.harvard.edu/python/notes/9/)。enkidu-613 将本项目中文讲义纳入该主题路线并加入项目练习，非官方译本；本页按 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 分享。[来源与改编说明](CS50P_来源与许可.md) · [本课程阅读顺序](CS50P_Python基础学习路线.md)。
+
 > **一句话理解：函数也是值；lambda 是短函数写法，闭包是仍能使用外层名字的函数。**
 ## 学什么，不学什么
 学：函数对象、简单 lambda、闭包。 不学：复杂装饰器。
@@ -23,4 +26,4 @@ print(warning("保存代码"))
 ## 小练习
 用 lambda 把 `[1, 2, 3]` 映射成平方列表：`list(map(lambda x: x * x, ...))`。
 ## 下一步
-[18. Python 类、对象与实例](18_Python类_对象与实例.md)
+这是按需补充课，学完后回到 [CS50P 单元 9](CS50P_09_常用写法与阅读边界.md)，再完成结课练习。

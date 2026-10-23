@@ -1,4 +1,7 @@
 # 13. Python 模块、虚拟环境与依赖
+
+> 课程主题参考：David J. Malan 与 CS50 团队（Harvard University）的 [CS50P 单元 4](https://cs50.harvard.edu/python/notes/4/)。enkidu-613 将本项目中文讲义纳入该主题路线并加入项目练习，非官方译本；本页按 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 分享。[来源与改编说明](CS50P_来源与许可.md) · [本课程阅读顺序](CS50P_Python基础学习路线.md)。
+
 > **一句话理解：模块把代码分文件；虚拟环境让每个项目的第三方包互不干扰。**
 ## 学什么，不学什么
 学：`import`、`.venv`、安装包。 不学：线上部署。
@@ -31,4 +34,4 @@ print(normalize(" Hello "))
 ## 小练习
 把格式化待办函数移到 `task_tools.py` 再导入。
 ## 下一步
-[14. 调试 Traceback 与小项目整理](14_调试Traceback与小项目整理.md)
+[CS50P 单元 5：单元测试](CS50P_05_单元测试.md)。

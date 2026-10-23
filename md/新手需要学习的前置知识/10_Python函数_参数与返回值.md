@@ -1,4 +1,7 @@
 # 10. Python 函数、参数与返回值
+
+> 课程主题参考：David J. Malan 与 CS50 团队（Harvard University）的 [CS50P 单元 0](https://cs50.harvard.edu/python/notes/0/)。enkidu-613 将本项目中文讲义纳入该主题路线并加入项目练习，非官方译本；本页按 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 分享。[来源与改编说明](CS50P_来源与许可.md) · [本课程阅读顺序](CS50P_Python基础学习路线.md)。
+
 > **一句话理解：函数把可重复步骤取一个名字；参数进来，返回值出去。**
 ## 学什么，不学什么
 学：`def`、参数、`return`。不学：文件读写。
@@ -23,4 +26,4 @@ print(message)
 ## 小练习
 写 `is_passed(score)`，返回布尔值；用它判断两名学生。
 ## 下一步
-[11. Python 列表、字典与集合](11_Python列表_字典与集合.md)
+[09. 条件部分](09_Python条件_循环与输入.md#条件根据输入选择输出)，再按 [CS50P 路线表](CS50P_Python基础学习路线.md) 补真值判断和循环。
