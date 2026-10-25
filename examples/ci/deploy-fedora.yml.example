@@ -1,0 +1,32 @@
+# 第 47 章的部署模板：请先在 Fedora 准备好仓库、Podman 与 compose.yaml。
+# 此文件不放在 .github/workflows/，不会自动执行。
+name: Deploy Study Python to Fedora
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Configure temporary SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.FEDORA_SSH_PRIVATE_KEY }}
+          FEDORA_HOST: ${{ secrets.FEDORA_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$FEDORA_HOST" >> ~/.ssh/known_hosts
+      - name: Update the checked-out release and restart the API
+        env:
+          FEDORA_HOST: ${{ secrets.FEDORA_HOST }}
+          FEDORA_USER: ${{ secrets.FEDORA_USER }}
+          APP_PATH: ${{ vars.FEDORA_APP_PATH }}
+        run: |
+          ssh "$FEDORA_USER@$FEDORA_HOST" \
+            "cd '$APP_PATH' && git fetch origin main && git checkout --detach origin/main && podman compose up --build -d"

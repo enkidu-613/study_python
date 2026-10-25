@@ -1,0 +1,643 @@
+{
+  "version": 1,
+  "cards": {
+    "checkpointer / thread_id / state 边界": {
+      "card": {
+        "card_id": 1787087823999,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.000651+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_LangChain_Agent工具调用.md",
+      "tags": [
+        "langchain-agents"
+      ],
+      "created": "2026-08-18T21:17:04.000656+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "为什么没有 checkpointer 时每次 invoke 都从新 state 开始？thread_id、checkpointer、messages 各负责什么？",
+        "answer": "checkpointer 按 thread_id 保存和恢复 Agent state 的快照；messages 是 state 中最重要的字段。没有 checkpointer 就没有跨 invoke 的恢复；只传 thread_id 也没有可恢复的存档。",
+        "legacy_id": "review-20260710-langchain-agent-checkpointer-state"
+      }
+    },
+    "Agent result 与 AIMessage.content": {
+      "card": {
+        "card_id": 1787087824000,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.001922+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_LangChain_Agent工具调用.md",
+      "tags": [
+        "langchain-agents"
+      ],
+      "created": "2026-08-18T21:17:04.001933+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "为什么最终回答通常写成 result[\"messages\"][-1].content，而不是 result[\"messages\"][-1][\"content\"]？",
+        "answer": "result 是字典形式的 Agent state，先用 [] 取 messages 列表；最后一项是 AIMessage 对象，不支持 [] 下标取 content，要用对象属性 .content。",
+        "legacy_id": "review-20260710-langchain-agent-result-content"
+      }
+    },
+    "LangChain ainvoke 输入字典": {
+      "card": {
+        "card_id": 1787087824001,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.003195+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_Prompt_Engineering进阶_补考2.md",
+      "tags": [
+        "prompt-advanced"
+      ],
+      "created": "2026-08-18T21:17:04.003200+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "为什么 `await chain.ainvoke({\"text\": text})` 不能写成 `{text: text}`？",
+        "answer": "Prompt 占位符叫 `{text}`，所以输入字典 key 必须是字符串 `\"text\"`。`{text: text}` 会用变量 text 的值当 key，这是 JS 习惯切到 Python 时容易写错的地方。",
+        "legacy_id": "review-20260628-prompt-advanced-ainvoke-dict-key"
+      }
+    },
+    "RAG 权限过滤": {
+      "card": {
+        "card_id": 1787087824003,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.004319+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_AI安全与伦理.md",
+      "tags": [
+        "ai-safety"
+      ],
+      "created": "2026-08-18T21:17:04.004334+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "为什么不能先全库检索，再让模型自己保密？",
+        "answer": "无权限资料一旦进入 Prompt，就要假设模型可能说出来。RAG 安全顺序是先根据用户权限过滤文档，再检索，再交给模型。",
+        "legacy_id": "review-20260629-ai-safety-rag-permission-before-retrieval"
+      }
+    },
+    "AI 日志边界": {
+      "card": {
+        "card_id": 1787087824004,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.005600+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_AI安全与伦理.md",
+      "tags": [
+        "ai-safety"
+      ],
+      "created": "2026-08-18T21:17:04.005609+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "AI 接口日志可以记什么，不应该记什么？",
+        "answer": "可以记 user_id、route、risk_level、input_len、文档 ID 等元数据；不应该记 token、API Key、完整用户输入、完整隐私内容、系统提示词或文档全文。",
+        "legacy_id": "review-20260629-ai-safety-safe-logging"
+      }
+    },
+    "page_content / vector / metadata 边界": {
+      "card": {
+        "card_id": 1787087824005,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.006875+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_RAG_Chunking策略.md",
+      "tags": [
+        "rag-chunking"
+      ],
+      "created": "2026-08-18T21:17:04.006881+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "Chroma/LangChain 里 `page_content`、embedding vector、`metadata` 分别负责什么？",
+        "answer": "`page_content/document` 是送进 Embedding 模型的原文正文；embedding vector 是模型转换后的向量并由向量库保存；`metadata` 是标签，用于过滤、回查和展示来源。",
+        "legacy_id": "review-20260703-rag-chunking-page-content-metadata"
+      }
+    },
+    "RAG 单变量调参": {
+      "card": {
+        "card_id": 1787087824006,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.008147+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_RAG_评估与指标.md",
+      "tags": [
+        "rag-evaluation"
+      ],
+      "created": "2026-08-18T21:17:04.008155+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "RAG 回答不好时，为什么不应该同时改 chunk_size、n_results、Prompt 和 embedding 模型？",
+        "answer": "因为同时改多个变量会看不出是谁造成了变化。应先定位问题属于 retrieval、context 还是 answer，再固定其他条件，一次只改一个变量，并用同一组 eval cases 对比修改前后。",
+        "legacy_id": "review-20260703-rag-evaluation-one-variable"
+      }
+    },
+    "Tool Schema required 层级": {
+      "card": {
+        "card_id": 1787087824008,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.009300+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_AI_Agents基础.md",
+      "tags": [
+        "ai-agents"
+      ],
+      "created": "2026-08-18T21:17:04.009302+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "Tool schema 里 `required` 应该放在哪一层？它和 `properties` 是什么关系？",
+        "answer": "`required` 和 `properties` 同级，都在 `parameters` 这个 object schema 里面。`properties` 描述有哪些参数，`required: [\"query\"]` 声明哪些参数必填。",
+        "legacy_id": "review-20260704-ai-agents-required-level"
+      }
+    },
+    "TOOLS 与 TOOL_FUNCTIONS 边界": {
+      "card": {
+        "card_id": 1787087824009,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.010559+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_AI_Agents基础.md",
+      "tags": [
+        "ai-agents"
+      ],
+      "created": "2026-08-18T21:17:04.010565+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "`TOOLS` 和 `TOOL_FUNCTIONS` 为什么要分开？",
+        "answer": "`TOOLS` 是给模型看的工具说明书列表；`TOOL_FUNCTIONS` 是后端按工具名找到真实 Python 函数的映射。模型只生成 tool call，后端才根据映射执行函数。",
+        "legacy_id": "review-20260704-ai-agents-tools-functions"
+      }
+    },
+    "tool output 回到 messages": {
+      "card": {
+        "card_id": 1787087824010,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.011671+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_Function_Calling执行Loop.md",
+      "tags": [
+        "function-calling-loop"
+      ],
+      "created": "2026-08-18T21:17:04.011674+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "工具执行完后，为什么不是用户再次提问，而是后端再次请求模型？",
+        "answer": "后端把工具结果作为 role=\"tool\" 追加进 messages，并带着更新后的 messages 再请求模型。模型基于工具结果组织最终自然语言回答，用户不需要重新提问。",
+        "legacy_id": "review-20260706-function-calling-tool-output-messages"
+      }
+    },
+    "arguments 后端校验": {
+      "card": {
+        "card_id": 1787087824011,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.012936+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_Function_Calling执行Loop.md",
+      "tags": [
+        "function-calling-loop"
+      ],
+      "created": "2026-08-18T21:17:04.012941+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "为什么不能完全信任模型给的 arguments？至少说出三类风险。",
+        "answer": "arguments 可能不是合法 JSON；即使 JSON 格式正确，也可能缺字段或字段名不对；参数值可能类型错误、范围过大或越权，例如 limit=9999，所以后端必须做 schema、类型、范围和权限校验。",
+        "legacy_id": "review-20260706-function-calling-arguments-validation"
+      }
+    },
+    "模型无状态与历史注入": {
+      "card": {
+        "card_id": 1787087824012,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.014210+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_LangChain对话记忆.md",
+      "tags": [
+        "langchain-memory"
+      ],
+      "created": "2026-08-18T21:17:04.014216+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "为什么只说“模型无状态”还不够？完整机制是什么？",
+        "answer": "模型每次只看本次请求里的 messages。历史必须由应用保存成 chat history，并在下一次请求时重新注入 messages，模型才表现得像有记忆。",
+        "legacy_id": "review-20260708-langchain-memory-stateless-model"
+      }
+    },
+    "llm 创建配置": {
+      "card": {
+        "card_id": 1787087824014,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.015484+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_LangChain对话记忆.md",
+      "tags": [
+        "langchain-memory"
+      ],
+      "created": "2026-08-18T21:17:04.015490+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "`chain = prompt | llm` 之前，本项目里的 `llm` 应该怎么创建？",
+        "answer": "先用 ChatDeepSeek(...) 创建 LangChain Chat 模型对象，并从 .env 读取 MODEL_NAME、MODEL_API_URL、MODELSCOPE_API_KEY；然后 prompt 的输出才能通过管道交给 llm。",
+        "legacy_id": "review-20260708-langchain-memory-llm-config"
+      }
+    },
+    "State 到 ModelRequest 的边界": {
+      "card": {
+        "card_id": 1787087824015,
+        "state": 1,
+        "step": 0,
+        "stability": null,
+        "difficulty": null,
+        "due": "2026-08-18T21:17:04.016757+00:00",
+        "last_review": null
+      },
+      "source": "md/试卷/试卷_31_Multi-Agent与复杂工作流_补考.md",
+      "tags": [
+        "ai-agents-advanced"
+      ],
+      "created": "2026-08-18T21:17:04.016763+00:00",
+      "history": [],
+      "review_material": {
+        "prompt": "State、ModelRequest 和 handler 分别是什么？当 State 已更新但 Prompt 没切换时，优先检查哪条链？",
+        "answer": "State 是 Agent 的共享状态；middleware 读取 State 并选择 Prompt 和 tools；override 生成新的 ModelRequest；handler 接收它并继续模型调用。优先检查 middleware 注册、select_prompt、tools 分支、override 结果和 handler 参数；checkpointer 与 thread_id 主要负责跨 invoke 恢复 State。",
+        "legacy_id": "review-20260731-multi-agent-state-request-boundary"
+      }
+    },
+    "范数与余弦相似度": {
+      "card": {
+        "card_id": 1787087827167,
+        "state": 2,
+        "step": null,
+        "stability": 2.3065,
+        "difficulty": 2.111214235785395,
+        "due": "2026-08-20T21:17:18.192667+00:00",
+        "last_review": "2026-08-18T21:17:18.192667+00:00"
+      },
+      "source": "md/ai学习应用数学/01_向量与余弦相似度.md",
+      "tags": [
+        "数学"
+      ],
+      "created": "2026-08-18T21:17:07.168902+00:00",
+      "history": [
+        {
+          "time": "2026-08-18T21:17:07.168903+00:00",
+          "rating": "good",
+          "note": "initial"
+        },
+        {
+          "time": "2026-08-18T21:17:18.192694+00:00",
+          "rating": "good",
+          "note": ""
+        }
+      ]
+    },
+    "threading.Lock": {
+      "card": {
+        "card_id": 1787087829911,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-18T21:27:09.912650+00:00",
+        "last_review": "2026-08-18T21:17:09.912650+00:00"
+      },
+      "source": "md/编程语言基础/threading基础.md",
+      "tags": [],
+      "created": "2026-08-18T21:17:09.912675+00:00",
+      "history": [
+        {
+          "time": "2026-08-18T21:17:09.912676+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "SIMD": {
+      "card": {
+        "card_id": 1787087832708,
+        "state": 1,
+        "step": 0,
+        "stability": 0.7750839828558984,
+        "difficulty": 7.394502741279718,
+        "due": "2026-08-18T21:18:21.033303+00:00",
+        "last_review": "2026-08-18T21:17:21.033303+00:00"
+      },
+      "source": "",
+      "tags": [],
+      "created": "2026-08-18T21:17:12.709420+00:00",
+      "history": [
+        {
+          "time": "2026-08-18T21:17:12.709421+00:00",
+          "rating": "good",
+          "note": "initial"
+        },
+        {
+          "time": "2026-08-18T21:17:21.033325+00:00",
+          "rating": "again",
+          "note": "刚学,还不稳"
+        }
+      ]
+    },
+    "Supervisor/Subagent 与 Router/Handoff": {
+      "card": {
+        "card_id": 1787098927577,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-19T00:32:07.578419+00:00",
+        "last_review": "2026-08-19T00:22:07.578419+00:00"
+      },
+      "source": "md/31_Multi-Agent与复杂工作流.md",
+      "tags": [
+        "第31章",
+        "Multi-Agent"
+      ],
+      "created": "2026-08-19T00:22:07.578486+00:00",
+      "history": [
+        {
+          "time": "2026-08-19T00:22:07.578486+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "SentenceTransformer 句向量与池化": {
+      "card": {
+        "card_id": 1787099136103,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-19T00:35:36.104545+00:00",
+        "last_review": "2026-08-19T00:25:36.104545+00:00"
+      },
+      "source": "md/32_HuggingFace生态.md",
+      "tags": [
+        "第32章",
+        "Hugging Face"
+      ],
+      "created": "2026-08-19T00:25:36.104600+00:00",
+      "history": [
+        {
+          "time": "2026-08-19T00:25:36.104603+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "FSRS 算法与记忆三状态": {
+      "card": {
+        "card_id": 1787844319580,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-27T15:35:19.581284+00:00",
+        "last_review": "2026-08-27T15:25:19.581284+00:00"
+      },
+      "source": "md/编程语言基础",
+      "tags": [
+        "python_ai"
+      ],
+      "created": "2026-08-27T15:25:19.581305+00:00",
+      "history": [
+        {
+          "time": "2026-08-27T15:25:19.581305+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "多模态消息与 VLM": {
+      "card": {
+        "card_id": 1787844322245,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-27T15:35:22.246815+00:00",
+        "last_review": "2026-08-27T15:25:22.246815+00:00"
+      },
+      "source": "md/33_多模态AI_图像理解.md",
+      "tags": [
+        "python_ai"
+      ],
+      "created": "2026-08-27T15:25:22.246852+00:00",
+      "history": [
+        {
+          "time": "2026-08-27T15:25:22.246853+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "OpenRouter 免费模型与限流": {
+      "card": {
+        "card_id": 1787844324910,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-27T15:35:24.911693+00:00",
+        "last_review": "2026-08-27T15:25:24.911693+00:00"
+      },
+      "source": "md/33_多模态AI_图像理解.md",
+      "tags": [
+        "python_ai"
+      ],
+      "created": "2026-08-27T15:25:24.911710+00:00",
+      "history": [
+        {
+          "time": "2026-08-27T15:25:24.911711+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "MPS 与 ANE 区别": {
+      "card": {
+        "card_id": 1787844327729,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-27T15:35:27.730615+00:00",
+        "last_review": "2026-08-27T15:25:27.730615+00:00"
+      },
+      "source": "app/embedding.py",
+      "tags": [
+        "python_ai"
+      ],
+      "created": "2026-08-27T15:25:27.730632+00:00",
+      "history": [
+        {
+          "time": "2026-08-27T15:25:27.730633+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "Plan-and-Solve 范式": {
+      "card": {
+        "card_id": 1788044556361,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-29T23:12:36.362667+00:00",
+        "last_review": "2026-08-29T23:02:36.362667+00:00"
+      },
+      "source": "md/25_AI_Agents基础.md",
+      "tags": [
+        "agent"
+      ],
+      "created": "2026-08-29T23:02:36.362706+00:00",
+      "history": [
+        {
+          "time": "2026-08-29T23:02:36.362708+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "Reflection 范式": {
+      "card": {
+        "card_id": 1788044558774,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-29T23:12:38.775620+00:00",
+        "last_review": "2026-08-29T23:02:38.775620+00:00"
+      },
+      "source": "md/25_AI_Agents基础.md",
+      "tags": [
+        "agent"
+      ],
+      "created": "2026-08-29T23:02:38.775676+00:00",
+      "history": [
+        {
+          "time": "2026-08-29T23:02:38.775679+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "Agent 记忆系统分层": {
+      "card": {
+        "card_id": 1788044561171,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-29T23:12:41.172948+00:00",
+        "last_review": "2026-08-29T23:02:41.172948+00:00"
+      },
+      "source": "md/AI基础概念/02_Agent上下文上限与多Agent_Memory冲突.md",
+      "tags": [
+        "agent"
+      ],
+      "created": "2026-08-29T23:02:41.172983+00:00",
+      "history": [
+        {
+          "time": "2026-08-29T23:02:41.172985+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "A2A 与 ANP 协议": {
+      "card": {
+        "card_id": 1788044563576,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-29T23:12:43.577915+00:00",
+        "last_review": "2026-08-29T23:02:43.577915+00:00"
+      },
+      "source": "md/49_MCP_Server与Agent工具权限.md",
+      "tags": [
+        "agent"
+      ],
+      "created": "2026-08-29T23:02:43.577968+00:00",
+      "history": [
+        {
+          "time": "2026-08-29T23:02:43.577971+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    },
+    "上下文工程四操作": {
+      "card": {
+        "card_id": 1788044566014,
+        "state": 1,
+        "step": 1,
+        "stability": 2.3065,
+        "difficulty": 2.118103970459016,
+        "due": "2026-08-29T23:12:46.016395+00:00",
+        "last_review": "2026-08-29T23:02:46.016395+00:00"
+      },
+      "source": "md/14_上下文窗口管理.md",
+      "tags": [
+        "agent"
+      ],
+      "created": "2026-08-29T23:02:46.016435+00:00",
+      "history": [
+        {
+          "time": "2026-08-29T23:02:46.016437+00:00",
+          "rating": "good",
+          "note": "initial"
+        }
+      ]
+    }
+  }
+}

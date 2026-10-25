@@ -590,11 +590,11 @@ batch_size -> 决定一次计算几条，可以变化
 
 三个值的用途分别是：
 
-| 属性 | 交给谁使用 | 用途 |
-| --- | --- | --- |
-| `tier` | `_get_batch_size()` | 查询这一档设备的批量大小。 |
+| 属性           | 交给谁使用                 | 用途                            |
+| ------------ | --------------------- | ----------------------------- |
+| `tier`       | `_get_batch_size()`   | 查询这一档设备的批量大小。                 |
 | `device_str` | `SentenceTransformer` | 指定模型运行在 `mps`、`cuda` 或 `cpu`。 |
-| `name` | 日志 | 让人知道检测到了什么设备。 |
+| `name`       | 日志                    | 让人知道检测到了什么设备。                 |
 
 本章不要求你默写完整硬件检测，只要知道它的输出会交给后面的加载函数。
 
@@ -821,16 +821,16 @@ EMBEDDING_MODEL_NAME=BAAI/bge-small-zh-v1.5
 
 标记：`[看]`
 
-| 名称 | 你可以先把它理解成 | 当前项目中的位置 |
-| --- | --- | --- |
-| Hugging Face Hub | 模型、数据集和应用的托管平台 | BGE 模型文件来源 |
-| 模型 ID | Hub 资源坐标，如 `BAAI/bge-base-zh-v1.5` | 告诉加载器用哪个模型 |
-| `sentence-transformers` | 句向量任务的高层 Python 库 | 当前 Embedding 主入口 |
-| `transformers` | 多种 Transformer 任务的通用库 | 下一章多模态还会遇到 |
-| `pipeline()` | 按任务创建推理管道的高层工厂函数 | 本章只识别 |
-| `huggingface_hub` | 下载、缓存、鉴权和远程推理客户端 | 本章只识别 |
-| `InferenceClient` | 调用远程端点的客户端对象 | 不是本地模型对象 |
-| TEI | 把 Embedding 模型作为 HTTP 服务运行 | 你给 Dify 提供向量模型时用过 |
+| 名称                      | 你可以先把它理解成                          | 当前项目中的位置          |
+| ----------------------- | ---------------------------------- | ----------------- |
+| Hugging Face Hub        | 模型、数据集和应用的托管平台                     | BGE 模型文件来源        |
+| 模型 ID                   | Hub 资源坐标，如 `BAAI/bge-base-zh-v1.5` | 告诉加载器用哪个模型        |
+| `sentence-transformers` | 句向量任务的高层 Python 库                  | 当前 Embedding 主入口  |
+| `transformers`          | 多种 Transformer 任务的通用库              | 下一章多模态还会遇到        |
+| `pipeline()`            | 按任务创建推理管道的高层工厂函数                   | 本章只识别             |
+| `huggingface_hub`       | 下载、缓存、鉴权和远程推理客户端                   | 本章只识别             |
+| `InferenceClient`       | 调用远程端点的客户端对象                       | 不是本地模型对象          |
+| TEI                     | 把 Embedding 模型作为 HTTP 服务运行         | 你给 Dify 提供向量模型时用过 |
 
 ### 本地调用与远程调用
 

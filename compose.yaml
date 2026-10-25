@@ -1,0 +1,27 @@
+name: study-python
+
+services:
+  api:
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      DATABASE_URL: sqlite:////app/data/my_database.db
+    volumes:
+      - ./data:/app/data
+      - ./data/chroma_db:/app/chroma_db
+      - ./data/huggingface:/root/.cache/huggingface
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/docs')"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    restart: unless-stopped

@@ -1,11 +1,35 @@
 {
   "version": 1,
   "skills": {
+    "fastapi": {
+      "source": "fastapi/fastapi",
+      "sourceType": "github",
+      "skillPath": "fastapi/.agents/skills/fastapi/SKILL.md",
+      "computedHash": "e85d9e223fbc3183b1a599bbe8b02d2edf275d046ff5bcfd14352c92cdff52b3"
+    },
+    "langchain": {
+      "source": "langchain-ai/docs",
+      "sourceType": "github",
+      "skillPath": "src/.mintlify/skills/langchain/SKILL.md",
+      "computedHash": "00630bc3849cb4f50595b43774c1a2201dac1177e2b36066d67fb44bd8a7b412"
+    },
     "open-websearch": {
       "source": "Aas-ee/open-webSearch",
       "sourceType": "github",
       "skillPath": "skills/open-websearch/SKILL.md",
       "computedHash": "8cc08e12802199add7e65850c5e5646fcb5daf9aea4b9e4e5b4025717a2b3df0"
+    },
+    "python-testing": {
+      "source": "ahgraber/skills",
+      "sourceType": "github",
+      "skillPath": "skills/python-testing/SKILL.md",
+      "computedHash": "72aa686b0fc4ef5688c6b79874e21126cecd908cac8af9efe439da913255f411"
+    },
+    "python-types-contracts": {
+      "source": "ahgraber/skills",
+      "sourceType": "github",
+      "skillPath": "skills/python-types-contracts/SKILL.md",
+      "computedHash": "baac48ffb6cea1c3e271fe050572ca083eb9b7391e857010357f523cc03a0c36"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",

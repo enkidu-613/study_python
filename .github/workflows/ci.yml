@@ -1,0 +1,39 @@
+name: Verify Study Python
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ci-only-placeholder-not-a-production-secret
+      SKIP_EMBEDDING_PRELOAD: "1"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: poetry
+      - name: Install Poetry
+        run: pipx install poetry==2.3.4
+      - name: Install dependencies
+        run: poetry install --with dev --no-interaction
+      - name: Run tests
+        run: poetry run pytest
+
+  build-container:
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build the FastAPI container image
+        run: docker build --tag study-python-api:${{ github.sha }} .

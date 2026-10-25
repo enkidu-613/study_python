@@ -126,7 +126,7 @@ PyCharmMiscProject/
 | **AI 核心深入** | LLM评估与可观测性（LangSmith/Langfuse） | llm-eval |
 | **全栈补全（暂缓）** | Docker部署、CI/CD、日志监控 | 工程能力补全 |
 | **全栈补全（暂缓）** | React/Vue基础、前后端对接 | 全栈能力 |
-| **详见** | roadmap.sh AI Engineer 查缺补漏计划 | `.trae/memory/roadmap查缺补漏计划.md` |
+| **详见** | roadmap.sh AI Engineer 查缺补漏计划 | `.agents/memory/roadmap查缺补漏计划.md` |
 
 ---
 
@@ -261,7 +261,7 @@ PyCharmMiscProject/
 - ⬜ Docker 部署
 - ⬜ CI/CD、日志与监控
 - ⬜ 前端框架 (React/Vue)
-- ⬜ roadmap 查缺补漏（详见 `.trae/memory/roadmap查缺补漏计划.md`）
+- ⬜ roadmap 查缺补漏（详见 `.agents/memory/roadmap查缺补漏计划.md`）
 
 ---
 
@@ -279,7 +279,7 @@ PyCharmMiscProject/
 
 ## 📝 项目记忆
 
-本项目使用 `.trae/memory/` 目录记录完整的学习历史：
+本项目使用 `.agents/memory/` 目录记录完整的学习历史：
 
 - **learning_plan.json**：学习计划主数据（42 个阶段）
 - **learning_history_index.json**：历史文件索引（含对话记录索引，JSON 格式）

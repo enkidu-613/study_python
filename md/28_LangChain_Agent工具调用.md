@@ -132,11 +132,13 @@ result = agent.invoke({"messages": [{"role": "user", "content": question}]})
 
 ### `langchain.agents` 和 `langchain.tools`
 
-它们属于 **LangChain 第三方框架**。当前 Poetry 虚拟环境可导入 `langchain 1.3.4`；本项目由 `langchain-deepseek` 间接带入 LangChain 核心能力，若你要让新环境稳定使用 `from langchain.agents import create_agent`，应把实际需要的 `langchain` 依赖明确记录在 Poetry 配置中。
+它们属于 **LangChain 第三方框架**。当前工作区的 Poetry 锁文件解析到 `langchain 1.3.11`；本项目由 `langchain-deepseek` 间接带入 LangChain 核心能力，若你要让新环境稳定使用 `from langchain.agents import create_agent`，应把实际需要的 `langchain` 依赖明确记录在 Poetry 配置中。这里的版本是锁文件现状，不代表教程要求所有人固定使用这个补丁版本。
 
 这里从 `langchain.agents` 拿到 `create_agent`，从 `langchain.tools` 拿到 `@tool`。前者把“模型调用、工具执行、继续循环”组装成 Agent；后者把普通 Python 函数变成带名称、参数 schema 和说明的 Tool。它们常用于“模型按需检索知识库后再回答”和“让客服/运营助手调用受控的查询工具”。
 
 它们**不负责**提供大模型、执行数据库权限校验或让模型直接运行任意 Python；模型实例仍由 `ChatDeepSeek(...)` 创建，真正工具逻辑仍在你的函数中，鉴权和参数上限也仍是后端责任。想完全掌控每一步可继续用第 26 章手写 loop；需要显式节点和边时下一章用 LangGraph。
+
+**选学边界：** LangChain 还有 MCP 接入能力，可以把 MCP Server 暴露的工具转成 Agent 可用的工具；它不是本章 `@tool` 的替代品，也不是这段代码运行的前提。官方当前把 `langchain.mcp` 标为 beta，并要求 `langchain[mcp]>=1.4.0`；本项目锁文件是 `1.3.11`，所以本章先不安装、不切换，等学完第 49 章再按当时官方文档决定是否实践。[LangChain MCP 官方说明](https://docs.langchain.com/oss/python/langchain/mcp)
 
 本章要求你会用并能追踪这一小段，不要求阅读 Agent 内部实现：
 

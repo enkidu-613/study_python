@@ -576,6 +576,7 @@
 
 | 文档 | 内容 |
 |------|------|
+| [复习/](./复习/README.md) | 00–33 章重点总复习与第 33 章详细复习；第 33 章尚未完成 |
 | [向量与余弦相似度](./ai学习应用数学/01_向量与余弦相似度.md) | 数学基础复习 |
 | [从数字到平均池化](./ai学习应用数学/02_从数字到平均池化.md) | 从数字、向量、矩阵和行列关系理解 Mean Pooling |
 | [错题本.md](./错题本.md) | 练习中记录的错题与易错点 |
@@ -751,12 +752,20 @@ def verify_token(token: str):
 4. **langchain-memory & agents**: LangChain对话记忆、工具调用
 5. **langgraph**: LangGraph工作流
 6. **dify**: Dify平台实战（可视化对比）
-7. **llm-evaluation & observability**: LLM评估、LangSmith/Langfuse可观测性
+7. **multi-modal AI**: 图像理解、STT、TTS 和多模态问答流程整合（第 33-36 章）
+8. **llm-evaluation**: 确定性评估、RAG 回归、Agent 工具轨迹（第 37-39 章）
+9. **llm-observability**: 本地 AI 日志与 LangSmith tracing（第 40-41 章）
 
 ### 全栈补全（暂缓，AI核心后再做）
-9. **docker-deploy**: Docker部署、CI/CD
-10. **frontend-basics**: React/Vue前端基础
-11. **frontend-backend**: 前后端对接
+10. **docker-deploy**: Docker 镜像、Compose 与 GitHub Actions 上线（第 42-43、47 章）
+11. **frontend-basics**: Vue3 AI 流式交互（第 45 章）
+12. **frontend-backend**: 前后端 AI 接口对接（第 44 章）
+13. **ai-capstone**: AI 应用作品整合（第 46 章）
+14. **ci-cd**: GitHub Actions 验证与受控上线（第 47 章）
+15. **production-rag**: Qdrant、PostgreSQL、权限过滤与 reranker（第 48 章）
+16. **mcp-production**: MCP Server 与 Agent 工具权限（第 49 章）
+17. **ai-service-reliability**: timeout、retry、并发、限流和缓存（第 50 章）
+18. **ai-portfolio-job-readiness**: 可验证作品、演示与求职表达（第 51 章）
 
 ### 选修课
 - 多向量数据库对比（Pinecone、Weaviate、Qdrant、FAISS）
@@ -765,7 +774,7 @@ def verify_token(token: str):
 - Hugging Face生态
 - LlamaIndex
 - Fine-tuning基础（LoRA、QLoRA）
-- 多模态AI（图片理解、TTS、STT）
+- 多模态AI（图片理解、TTS、STT、语音问答流程整合）
 
 ---
 

@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-08-19T08:37:37+08:00",
+  "stage_id": "multimodal-ai",
+  "phase": "idle",
+  "pending_action": "阅读第 33 章多模态 AI：图像理解，先运行 app/multimodal_vision_demo.py 的最小消息示例。",
+  "context": "第 31 章 Multi-Agent 与复杂工作流、第 32 章 Hugging Face 生态均已完成。第 33 章先学习文字 + 图片的多模态消息、视觉模型能力边界和最小调用链；音频、视频与视觉 RAG 后置。",
+  "energy": null,
+  "time_budget_minutes": null
+}

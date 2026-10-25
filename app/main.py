@@ -1,8 +1,10 @@
+import os
+from contextlib import asynccontextmanager
+
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-import uvicorn
-from contextlib import asynccontextmanager
 from app.routers import ai, todos, chat_memory, rag, langchain_rag, auth, websocket, prompt, my_prompt,dify_workflow
 
 DESCRIPTION = """
@@ -44,12 +46,21 @@ TAGS_METADATA = [
 ]
 
 
+def should_preload_embedding() -> bool:
+    """测试或纯接口检查时允许跳过耗时的本地模型预加载。"""
+    return os.getenv("SKIP_EMBEDDING_PRELOAD") != "1"
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("[启动] 预加载本地 Embedding 模型...")
-    from app.embedding import get_embedding_model
-    get_embedding_model()
-    print("[启动] Embedding 模型加载完成")
+    if should_preload_embedding():
+        print("[启动] 预加载本地 Embedding 模型...")
+        from app.embedding import get_embedding_model
+
+        get_embedding_model()
+        print("[启动] Embedding 模型加载完成")
+    else:
+        print("[启动] 已跳过本地 Embedding 模型预加载")
     yield
     print("[关闭] 应用已停止")
 

@@ -5,15 +5,12 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SKILL_PATHS = [
     PROJECT_ROOT / ".codex/skills/comfortable-fast-learning-coach/SKILL.md",
-    PROJECT_ROOT / ".trae/skills/comfortable-fast-learning-coach/SKILL.md",
-    PROJECT_ROOT / ".reasonix/skills/comfortable-fast-learning-coach/SKILL.md",
-    PROJECT_ROOT / ".reasonix/skills/comfortable-fast-learning-coach.md",
+    PROJECT_ROOT / ".agents/skills/comfortable-fast-learning-coach/SKILL.md",
 ]
 SESSION_PATHS = [
-    PROJECT_ROOT / ".trae/memory/learning_session.json",
-    PROJECT_ROOT / ".reasonix/memory/learning_session.json",
+    PROJECT_ROOT / ".agents/memory/learning_session.json",
 ]
-LEARNING_PLAN_PATH = PROJECT_ROOT / ".trae/memory/learning_plan.json"
+LEARNING_PLAN_PATH = PROJECT_ROOT / ".agents/memory/learning_plan.json"
 LANGGRAPH_CHAPTER_PATH = PROJECT_ROOT / "md/29_LangGraph状态工作流.md"
 FUTURE_CHAPTERS = {
     PROJECT_ROOT / "md/30_Dify平台实战.md": [
@@ -38,8 +35,7 @@ FUTURE_CHAPTERS = {
     ],
 }
 REVIEW_QUEUE_PATHS = [
-    PROJECT_ROOT / ".trae/memory/review_queue.json",
-    PROJECT_ROOT / ".reasonix/memory/review_queue.json",
+    PROJECT_ROOT / ".agents/memory/review_queue.json",
 ]
 
 
@@ -93,7 +89,7 @@ def test_next_three_chapters_have_concrete_learning_anchors():
 def test_learning_coach_keeps_existing_project_as_source_of_truth():
     content = SKILL_PATHS[0].read_text(encoding="utf-8")
 
-    assert ".trae/memory/learning_plan.json" in content
+    assert ".agents/memory/learning_plan.json" in content
     assert "不要创建第二套 `.study-config.json`" in content
     assert "不要因为学习状态变化而每轮对话自动提交 Git" in content
 
@@ -104,7 +100,6 @@ def test_learning_session_state_is_synced_and_resumable():
         for path in SESSION_PATHS
     ]
 
-    assert sessions[0] == sessions[1]
     learning_plan = json.loads(LEARNING_PLAN_PATH.read_text(encoding="utf-8"))
     planned_stage_ids = {stage["id"] for stage in learning_plan["stages"]}
 
@@ -128,6 +123,5 @@ def test_review_queue_is_synced_and_has_stable_schema():
         for path in REVIEW_QUEUE_PATHS
     ]
 
-    assert queues[0] == queues[1]
     assert queues[0]["version"] == "1.0"
     assert isinstance(queues[0]["items"], list)

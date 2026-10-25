@@ -28,7 +28,7 @@ TIER_BATCH_SIZES = {
     "cpu": 8,
 }
 
-_model: SentenceTransformer | None = None
+_model: SentenceTransformer | None = None #避免模型每次都加载
 _device_info: dict[str, str] | None = None
 _loaded_model_name: str | None = None
 _loaded_device: str | None = None
@@ -156,10 +156,11 @@ def _load_model(model_name: str, device: str) -> SentenceTransformer:
     # 2.跑一条测试数据，确保模型加载成功
     model.encode(
         "test",# 随便一条文本
-        convert_to_numpy=True,# 输出numpy数组
-        normalize_embeddings=True,# 归一化（和正式调用保持一致）
+        convert_to_numpy=True,# 输出numpy数组，比列表更快，原因是底层是c写的，支持向量化运算，就是直接计算整个数组的数据
+        normalize_embeddings=True,# 归一化（和正式调用保持一致），让余弦相似度计算更快
     )
     logger.info("[model] loaded OK, running on: %s", model.device)
+    # 写进日志让你知道模型究竟跑在哪里
     return model
 
 
@@ -181,7 +182,10 @@ def get_embedding_model() -> SentenceTransformer:
         try:
             model = _load_model(model_name, device) # 在制定设备上加载模型，返回一个SentenceTransformer对象
             loaded_device = str(getattr(model, "device", device))
+            # getattr 安全读取属性，读取model对象里的device属性，如果没有这个属性则使用默认值
+            # 拿到模型实际跑在什么设备上，存到全局变量，下次调用get_embedding_model时，会拿他和当前请求的设备做对比
         except Exception as exc:
+            # 当获取的设备出现错误的的时候，兜底使用cpu
             if device == "cpu":
                 raise RuntimeError(f"模型 {model_name} 在 CPU 上加载失败") from exc
 
@@ -201,19 +205,21 @@ def get_embedding_model() -> SentenceTransformer:
 
 
 def _validate_text(text: str, *, field_name: str) -> str:
-    if not isinstance(text, str) or not text.strip():
+    if not isinstance(text, str) or not text.strip(): #检查text是不是空字符串和去掉首尾空格后是不是空字符串
         raise ValueError(f"{field_name}不能为空")
     return text.strip()
 
 
 def _encode_one(text: str, *, is_query: bool) -> list[float]:
-    clean_text = _validate_text(text, field_name="查询文本" if is_query else "文档文本")
-    if is_query:
+    clean_text = _validate_text(text, field_name="查询文本" if is_query else "文档文本") # 去除文本首尾空格
+    if is_query: #只有处理查询文本的时候执行这一段，文档文本直接跳过
         instruction = os.getenv(
             "EMBEDDING_QUERY_INSTRUCTION",
             DEFAULT_QUERY_INSTRUCTION,
         )
+        # 从环境变量里读取配置，如果用户设置了环境变量配置就读取用户的值，没有就使用默认值
         clean_text = f"{instruction}{clean_text}"
+        # 拼接之后常量加的文本相当于一个暗号提醒bge模型这是一个搜索问题
 
     model = get_embedding_model()
     return model.encode(
@@ -242,14 +248,17 @@ def get_document_embeddings(texts: list[str]) -> list[list[float]]:
         return []
 
     clean_texts = [
-        _validate_text(text, field_name=f"第 {index} 条文档文本")
+        _validate_text(text, field_name=f"第 {index} 条文档文本") # 去除空格
         for index, text in enumerate(texts, start=1)
+        # 这是列表推导式固定结构是 [结果表达式 for 变量 in 可迭代对象]
+        # 列表推导式每次执行完成后都会执行类似 list.append(表达式返回的值) 将值新增到list末尾
+        # enumerate是内置函数，他可以将可遍历对象中的元素包装成编号+元素的一对值，正好对应代码里的index，text
     ]
     model = get_embedding_model()
-    tier = _detect_device()["tier"]
+    tier = _detect_device()["tier"] # 获取设备
     return model.encode(
         clean_texts,
-        batch_size=_get_batch_size(tier),
+        batch_size=_get_batch_size(tier),# 通过设备返回并行处理批量大小
         convert_to_numpy=True,
         normalize_embeddings=True,
     ).tolist()
