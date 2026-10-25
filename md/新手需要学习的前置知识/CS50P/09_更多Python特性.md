@@ -4,8 +4,6 @@
 > 原始资料：[Lecture 9 笔记](https://cs50.harvard.edu/python/notes/9/) · [Week 9](https://cs50.harvard.edu/python/weeks/9/)。
 > 本文按官方 Et Cetera 的完整顺序进行中文改编，不是逐字翻译或 AI 项目知识子集；按 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 分享，详见[来源与许可](来源与许可.md)。
 
-[上一章：08 面向对象编程](08_面向对象编程.md) · [下一章：10 最终项目](10_最终项目.md)
-
 ## 起点、环境与边界
 
 前置：前面各单元的函数、容器、异常、模块、测试、类与方法。本章完整学习官方主题；心智模型是用不同工具管理集合、作用域、调用接口与按需计算，明确各自契约。
@@ -348,3 +346,7 @@ countdown(3)
 官方目录已覆盖：Et Cetera → set → Global Variables → Constants → Type Hints → Docstrings → argparse → Unpacking → args/kwargs → map → List Comprehensions → filter → Dictionary Comprehensions → enumerate → Generators and Iterators → Congratulations / This was CS50。周主题的 `mypy`、`print`、`yield` 与递归短片均保留；结语回顾十个单元。
 四条理解标准：核心模型、解决的问题、替代方案、调用与结果。常见坑：把注解当强制；混淆收集与展开；重复消费迭代器；以为生成器免除全部计算成本。
 补充依据：[Python 生成器教程](https://docs.python.org/3/tutorial/classes.html#generators)、[内置函数](https://docs.python.org/3/library/functions.html)、[mypy 入门](https://mypy.readthedocs.io/en/stable/getting_started.html)。本地 Python 3.13.15 已逐块运行 15 个示例；未运行 mypy 或安装依赖。
+
+## 单元导航
+
+[上一单元：08 面向对象编程](08_面向对象编程.md) · [课程目录](README.md) · [下一篇：最终项目](10_最终项目.md)
