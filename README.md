@@ -10,7 +10,9 @@
 
 这是一个**从零开始的 Python 后端学习项目**，专为 ADHD 学习者设计。通过丰富的类比、流程图、表格和实战代码，帮助理解从 Python 基础到 AI 应用开发的完整技术栈。
 
-Python 入门采用 David J. Malan 与 CS50 团队（Harvard University）的 [CS50P](https://cs50.harvard.edu/python/) 主题骨架，配合本项目的中文讲义与学习待办练习：[基础学习路线](md/新手需要学习的前置知识/CS50P_Python基础学习路线.md)。对应改编材料按 CC BY-NC-SA 4.0 分享，详见 [署名与许可范围](md/新手需要学习的前置知识/CS50P_来源与许可.md)。本项目为非官方改编。
+Python 入门统一使用 David J. Malan 与 CS50 团队（Harvard University）的 [CS50P](https://cs50.harvard.edu/python/) 课程：从 [中文讲义目录](md/新手需要学习的前置知识/CS50P/README.md) 按 0–9 单元学习，再完成官方 Final Project。中文改编材料按 CC BY-NC-SA 4.0 分享，详见 [署名与许可](md/新手需要学习的前置知识/CS50P/来源与许可.md)。本项目为非官方中文改编。
+
+补计算机基础从 [CS50x 指引与基础实验](md/计算机基础/README.md)继续：开发工具、数据结构、算法、操作系统、网络、数据库和综合实践；与现有 AI 主线并行衔接，不重置已完成进度。
 
 **当前阶段**：pytest 单元测试（已完成 ✅），下一阶段：高级提示词工程（prompt-advanced）
 
